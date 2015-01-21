@@ -15,9 +15,10 @@
 @property (nonatomic, strong) NSString *promptMessage;
 
 -(void)postAction:(HttpRequestAction) action params:(id)firstObject, ...;
+-(void)postAppendUriAction:(HttpRequestAction)action withValue:(NSString *)appendValue params:(id)firstObject, ...;
 -(void)loadAction:(HttpRequestAction) action params:(id)firstObject, ...;
--(void)onRequestFinished:(NSInteger)tag response:(Response *)response;
-//-(NSDictionary*)argsToMap:(va_list)args;
+-(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response;
+//-(NSDictionary*)argsToMap:(va_list)args firstObj:(id)firstObj;
 //@property(strong, nonatomic) UILabel *loadingLabel;
 @property(strong, nonatomic) MBProgressHUD * hud;
 

@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
 #define UserRegister_Uri    @"/v1/register"
 #define UserLogin_Uri       @"/v1/login/entry"
 #define SendSms_Uri         @"/v1/notification/sms"
-#define SmsToken            @"/v1/notification/sms/:token"
+#define SmsToken_Uri        @"/v1/notification/sms/:smsToken"
 
 
 

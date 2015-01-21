@@ -47,8 +47,7 @@
 #pragma mark 网络数据请求
 -(void)executeRequest:(NSString *)uri method:(HttpRequestMethod)method params:(NSDictionary *)params successBlockCallback:(SuccessResponseBlock)successcallback failBlockCallBack:(void (^)(Response *))failcallback
 {
-    //AFJSONRequestOperation
-//    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:self.baseUrl]];
+
     Response* response = [[Response alloc]init];
     response.afManager = _manager;
     [self beforeExecute:response];

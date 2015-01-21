@@ -10,6 +10,8 @@
 
 @interface BaseViewController ()
 
+@property (nonatomic) HttpRequestAction requestAction;
+
 @end
 
 @implementation BaseViewController
@@ -31,21 +33,21 @@
     
     NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
     id param;
-    id object = firstObject;
-    NSString *key;
+    id object;
+    NSString *key = firstObject;
     BOOL isFrist = true;
-    if(object != nil) {
+    if(key != nil) {
         va_start(arguments, firstObject);
         
         while((param = va_arg(arguments, id))) {
             if(param == nil)
                 break;
             if(isFrist) {
-                key = param;
+                object = param;
                 isFrist = false;
             } else {
-                object = param;
-                key = va_arg(arguments, id);
+                key = param;
+                object = va_arg(arguments, id);
                 if(key == nil) {
                     break;
                 }
@@ -58,7 +60,6 @@
     if(self.hud == nil) {
         self.hud = [[MBProgressHUD alloc] init];
         self.hud.labelText = self.promptMessage ? self.promptMessage : @"正在加载...";
-        [self.hud setRemoveFromSuperViewOnHide:YES];
         [self.view addSubview:self.hud];
     }
     [self.hud show:YES];
@@ -72,28 +73,29 @@
     }];
 }
 
-#pragma mark 数据请求post 一般用于参数传递 请求数据
+
+#pragma mark - 数据请求post 一般用于参数传递 请求数据
 -(void)postAction:(HttpRequestAction)action params:(id)firstObject, ...
 {
     va_list arguments;
     
     NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
     id param;
-    id object = firstObject;
-    NSString *key;
+    id object;
+    NSString *key = firstObject;
     BOOL isFrist = true;
-    if(object != nil) {
+    if(key != nil) {
         va_start(arguments, firstObject);
         
         while((param = va_arg(arguments, id))) {
             if(param == nil)
                 break;
             if(isFrist) {
-                key = param;
+                object = param;
                 isFrist = false;
             } else {
-                object = param;
-                key = va_arg(arguments, id);
+                key = param;
+                object = va_arg(arguments, id);
                 if(key == nil) {
                     break;
                 }
@@ -102,23 +104,65 @@
         }
         va_end(arguments);
     }
+    self.requestAction = action;
+    NSString *uriString = [self uriStringFromAction:action];
+    [self executePost:uriString params:md];
+}
+#pragma mark uri中需要做替换时使用
+-(void)postAppendUriAction:(HttpRequestAction)action withValue:(NSString *)appendValue params:(id)firstObject, ...
+{
+    va_list arguments;
     
+    NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
+    id param;
+    id object;
+    NSString *key = firstObject;
+    BOOL isFrist = true;
+    if(key != nil) {
+        va_start(arguments, firstObject);
+        
+        while((param = va_arg(arguments, id))) {
+            if(param == nil)
+                break;
+            if(isFrist) {
+                object = param;
+                isFrist = false;
+            } else {
+                key = param;
+                object = va_arg(arguments, id);
+                if(key == nil) {
+                    break;
+                }
+            }
+            [md setObject:object forKey:key];
+        }
+        va_end(arguments);
+    }
+    self.requestAction = action;
+    NSString *uriString = [self uriStringFromAction:action];
+    NSRange rang = [uriString rangeOfString:@":"];
+    uriString = [[uriString substringWithRange:NSMakeRange(0, rang.location)] stringByAppendingString:appendValue];
+    [self executePost:uriString params:md];
+}
+
+#pragma post
+-(void)executePost:(NSString *)uristring params:(NSDictionary *)param
+{
     if(self.hud == nil) {
         self.hud = [[MBProgressHUD alloc] init];
         self.hud.labelText = self.promptMessage ? self.promptMessage : @"正在加载";
-        [self.hud setRemoveFromSuperViewOnHide:YES];
         [self.view addSubview:self.hud];
     }
     [self.hud show:YES];
-    
-    [[HttpClient httpManager] executeRequest:[self uriStringFromAction:action] method:RequestMethodPost params:md successBlockCallback:^(Response *response) {
+    DLog(@"Post data:%@",param);
+    [[HttpClient httpManager] executeRequest:uristring method:RequestMethodPost params:param successBlockCallback:^(Response *response) {
         [self.hud hide:YES];
         DLog(@"Request url:%@, Success Response string:%@",response.url,response.contentText);
-        [self onRequestFinished:action response:response];
+        [self onRequestFinished:self.requestAction response:response];
     } failBlockCallBack:^(Response *response) {
         [self.hud hide:YES];
         DLog(@"Request url:%@, Fail Response string:%@, Error:%@",response.url,response.contentText,response.error);
-        [self onRequestFinished:action response:response];
+        [self onRequestFinished:self.requestAction response:response];
     }];
 }
 
@@ -142,13 +186,18 @@
             uristring = SendSms_Uri;
         }
             break;
+        case SmsTokenAction:
+        {
+            uristring = SmsToken_Uri;
+            break;
+        }
         default:
             break;
     }
     return uristring;
 }
 
--(void)onRequestFinished:(NSInteger)tag response:(Response *)response
+-(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
     
 }

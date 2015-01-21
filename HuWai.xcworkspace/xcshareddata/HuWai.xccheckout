@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>94378483-D8EA-437F-AB30-C73BDF0C952D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>HuWai</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8D5C6AE277F41D457DA9535E44F947D5E71317B3</key>
+		<string>http://180.96.22.100/xing.jin/huwai.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>HuWai.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8D5C6AE277F41D457DA9535E44F947D5E71317B3</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://180.96.22.100/xing.jin/huwai.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8D5C6AE277F41D457DA9535E44F947D5E71317B3</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8D5C6AE277F41D457DA9535E44F947D5E71317B3</string>
+			<key>IDESourceControlWCCName</key>
+			<string>huwai_IOS</string>
+		</dict>
+	</array>
+</dict>
+</plist>
