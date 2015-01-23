@@ -25,8 +25,8 @@
     [super viewWillAppear:animated];
     if (![APPInfo shareInit].isLogin) {
         
-        UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNav"];
-        [self presentViewController:loginNav animated:NO completion:nil];
+//        UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNav"];
+//        [self presentViewController:loginNav animated:NO completion:nil];
         //[UIApplication sharedApplication].keyWindow.rootViewController
     }
 }

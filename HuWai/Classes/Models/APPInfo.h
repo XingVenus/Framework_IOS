@@ -18,8 +18,8 @@
 @property (nonatomic, strong) NSString *star;
 @property (nonatomic, strong) NSString *role_id;
 @property (nonatomic, strong) NSString *status;
-
-@property (nonatomic) BOOL  isLogin;
+@property (nonatomic, strong) NSString *token; //鉴别用户的token，每次数据请求需要发送
+@property (nonatomic,getter = isLogin) BOOL  login;
 
 +(instancetype)shareInit;
 

@@ -76,7 +76,7 @@
     //    CFStringTrimWhitespace((CFMutableStringRef)string);
     //
     //    return [string autorelease];
-    return [buf stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return [buf.description stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
 +(BOOL)isEmptyString:(NSString *)str
@@ -136,7 +136,7 @@
 	[alert show];
 }
 
-+ (BOOL)stringIsValidEmail:(NSString *)checkString
++ (BOOL)checkEmail:(NSString *)checkString
 {
     NSString *stricterFilterString = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", stricterFilterString];
@@ -144,7 +144,7 @@
     return [emailTest evaluateWithObject:checkString];
 }
 
-+(BOOL)stringisValidPhoneNo:(NSString *)checkString
++(BOOL)checkPhoneNo:(NSString *)checkString
 {
     NSString *regex = @"^((13[0-9])|(147)|(15[^4,\\D])|(18[0-9]))\\d{8}$";
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];

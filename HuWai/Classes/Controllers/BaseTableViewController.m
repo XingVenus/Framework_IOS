@@ -6,17 +6,67 @@
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
 
-#import "BaseTableTableViewController.h"
+#import "BaseTableViewController.h"
 
-@interface BaseTableTableViewController ()
-
+@interface BaseTableViewController ()
+/**
+ *  判断tableView是否支持iOS7的api方法
+ *
+ *  @return 返回预想结果
+ */
+- (BOOL)validateSeparatorInset;
 @end
 
-@implementation BaseTableTableViewController
+@implementation BaseTableViewController
 
+#pragma mark - TableView Helper Method
+
+- (BOOL)validateSeparatorInset {
+    if ([_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - Publish Method
+
+- (void)configuraTableViewNormalSeparatorInset {
+    if ([self validateSeparatorInset]) {
+        [_tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+
+- (void)configuraSectionIndexBackgroundColorWithTableView:(UITableView *)tableView {
+    if ([tableView respondsToSelector:@selector(setSectionIndexBackgroundColor:)]) {
+        tableView.sectionIndexBackgroundColor = [UIColor clearColor];
+    }
+}
+
+- (void)loadDataSource {
+    // subClasse
+}
+
+#pragma mark - Propertys
+- (NSMutableArray *)dataSource {
+    if (!_dataSource) {
+        _dataSource = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+    return _dataSource;
+}
+
+#pragma mark
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]){
+        self.automaticallyAdjustsScrollViewInsets = NO;
+        self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+    }
+
+//    self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+//    [self.tableView setNeedsLayout];
+//    [self.tableView setNeedsUpdateConstraints];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -29,29 +79,33 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    self.dataSource = nil;
+    self.tableView.delegate = nil;
+    self.tableView.dataSource = nil;
+    self.tableView = nil;
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.dataSource.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
+
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
     // Configure the cell...
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface profile : BaseViewController
+@interface Profile : BaseViewController
 
 @end

@@ -131,17 +131,17 @@
          cancelButton:(NSString *)cancelButton
           otherButton:(NSString *)otherButton;
 
-/**   函数名称 :stringIsValidEmail:
+/**   函数名称 :checkEmail:
  **   函数作用 :检测邮箱是否合法
  **   函数参数 : 待检测的邮箱地址
  **   函数返回值:  YES 合法 NO 不合法
  **/
-+ (BOOL)stringIsValidEmail:(NSString *)checkString;
++ (BOOL)checkEmail:(NSString *)checkString;
 /**
  *  checkString - 待检测的电话号码字符串
  *  检测电话号码的合法性
  */
-+(BOOL)stringisValidPhoneNo:(NSString *)checkString;
++ (BOOL)checkPhoneNo:(NSString *)checkString;
 
 + (NSString *)MD5Value:(NSString *)str;
 

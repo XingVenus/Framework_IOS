@@ -6,8 +6,10 @@
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BaseTableViewController.h"
 
-@interface CommonPerson : BaseViewController
+@interface CommonPerson : BaseTableViewController
+
+
 
 @end

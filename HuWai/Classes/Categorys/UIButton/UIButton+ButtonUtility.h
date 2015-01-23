@@ -15,8 +15,10 @@ typedef NS_ENUM(NSInteger, ButtonTitlePostionType) {
     ButtonTitlePostionTypeRight
 };
 
-@interface UIButton (ButtonTitlePosition)
+@interface UIButton (ButtonUtility)
 
+//设置button中的图片和标题的相对位置
 - (void)setTitlePositionWithType:(ButtonTitlePostionType)type withSpacing:(CGFloat)space;
-
+//给button中的标题设置单下划线
+- (void)underSingleLineWithTitle;
 @end

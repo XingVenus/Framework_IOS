@@ -6,13 +6,13 @@
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
 
-#import "profile.h"
+#import "Profile.h"
 
-@interface profile ()
+@interface Profile ()
 
 @end
 
-@implementation profile
+@implementation Profile
 
 - (void)viewDidLoad {
     [super viewDidLoad];

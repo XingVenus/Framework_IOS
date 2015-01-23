@@ -11,8 +11,8 @@
 
 @interface HttpClient ()
 
--(void)beforeExecute:(Response*)response;
--(void)afterExecute:(Response*)response;
+-(void)beforeExecute;
+-(void)afterExecute:(NSError*)error;
 
 @end
 
@@ -47,60 +47,74 @@
 #pragma mark 网络数据请求
 -(void)executeRequest:(NSString *)uri method:(HttpRequestMethod)method params:(NSDictionary *)params successBlockCallback:(SuccessResponseBlock)successcallback failBlockCallBack:(void (^)(Response *))failcallback
 {
-
-    Response* response = [[Response alloc]init];
-    response.afManager = _manager;
-    [self beforeExecute:response];
+    WEAKSELF;
+    [self beforeExecute];
     if (method == RequestMethodPost) {
         //post请求
         [_manager POST:uri parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
-            response.url = operation.request.URL.description;
-            response.contentText = operation.responseString;
-            response.status = [responseObject objectForKey:@"status"];
-            response.code = [responseObject objectForKey:@"code"];
-            response.message = [responseObject objectForKey:@"message"];
-            response.data = [responseObject objectForKey:@"data"];
-            response.token = [responseObject objectForKey:@"token"];
-            response.error = nil;
+            Response *response = [weakSelf extractRespon:operation responseObj:responseObject error:nil ];
             if(successcallback != nil)
                 successcallback(response);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            response.url = operation.request.URL.description;
-            response.contentText = operation.responseString;
-            response.status = nil;
-            response.code = nil;
-            response.message = nil;
-            response.data = nil;
-            response.token = nil;
-            response.error = error;
-            [self afterExecute:response];
+            Response *response = [weakSelf extractRespon:operation responseObj:nil error:error ];
+            [self afterExecute:error]; //错误信息提示
             if(failcallback != nil)
                 failcallback(response);
         }];
     }else{
         //get method
         [_manager GET:uri parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            response.contentText = operation.responseString;
+            Response *response = [weakSelf extractRespon:operation responseObj:responseObject error:nil ];
             if (successcallback!=nil) {
                 successcallback(response);
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            response.contentText = operation.responseString;
-            if (failcallback!=nil) {
+            Response *response = [weakSelf extractRespon:operation responseObj:nil error:error];
+            [self afterExecute:error];//错误信息提示
+            if (failcallback != nil) {
                 failcallback(response);
             }
         }];
     }
 }
 
-#pragma mark 请求执行前的网络判断
--(void)beforeExecute:(Response*)response
+#pragma mark 组织返回数据
+-(Response *)extractRespon:(AFHTTPRequestOperation *)operation responseObj:(id)responseObject error:(NSError *)error
 {
-    NSOperationQueue *operationQueue = response.afManager.operationQueue;
+    Response* response = [[Response alloc]init];
+    response.afManager = _manager;
+    if (responseObject) {
+        response.url = operation.request.URL.description;
+        response.contentText = operation.responseString;
+        response.status = [responseObject objectForKey:@"status"];
+        response.code = [responseObject objectForKey:@"code"];
+        response.message = [responseObject objectForKey:@"message"];
+        response.data = [responseObject objectForKey:@"data"];
+        response.token = [responseObject objectForKey:@"token"];
+        response.error = nil;
+        
+    }else{
+        response.url = operation.request.URL.description;
+        response.contentText = operation.responseString;
+        response.status = nil;
+        response.code = nil;
+        response.message = nil;
+        response.data = nil;
+        response.token = nil;
+        response.error = error;
+    }
+    
+    return response;
+}
+
+#pragma mark 请求执行前的网络判断
+-(void)beforeExecute
+{
+    NSOperationQueue *operationQueue = _manager.operationQueue;
     __weak  __typeof(NSOperationQueue) *weekOperationQueue = operationQueue;
-    [response.afManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+    [_manager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status) {
             case AFNetworkReachabilityStatusReachableViaWWAN:
             case AFNetworkReachabilityStatusReachableViaWiFi:
@@ -116,12 +130,12 @@
 }
 
 #pragma mark 请求执行后的错误信息提示
--(void)afterExecute:(Response *)response
+-(void)afterExecute:(NSError *)error
 {
-    if (response.error == nil) {
+    if (error == nil) {
         return;
     }
-    if ([response.error code] == NSURLErrorNotConnectedToInternet) {
+    if ([error code] == NSURLErrorNotConnectedToInternet) {
         [self alertErrorMessage:@"网络不给力"];
         return;
     }

@@ -45,8 +45,9 @@
 */
 
 - (IBAction)getTextCode:(id)sender {
-    if (![CommonFoundation stringisValidPhoneNo:self.phoneNumber.text]) {
-        [self.view makeToast:@"请输入正确的手机号码" duration:2 position:CSToastPositionCenter];
+    if (![CommonFoundation checkPhoneNo:self.phoneNumber.text]) {
+        [self showMessageWithThreeSecondAtCenter:@"请输入正确的手机号码"];
+        return;
     }
     
     [self postAction:SendSmsAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"type",@"regist",nil];
@@ -54,7 +55,7 @@
 #pragma mark 发起注册
 - (IBAction)registerAction:(id)sender {
     NSString *errorString = nil;
-    if (![CommonFoundation stringisValidPhoneNo:self.phoneNumber.text]) {
+    if (![CommonFoundation checkPhoneNo:self.phoneNumber.text]) {
         errorString = @"请输入正确的手机号码";
     }else if ([CommonFoundation isEmptyString:self.password.text]){
         errorString = @"密码不能为空";
@@ -65,7 +66,7 @@
     }
     
     if (errorString) {
-        [self.view makeToast:errorString duration:2 position:CSToastPositionCenter];
+        [self showMessageWithThreeSecondAtCenter:errorString];
         return;
     }
     
@@ -86,6 +87,6 @@
         }
     }
     
-    [self.view makeToast:response.message duration:2 position:CSToastPositionCenter];
+    [self showMessageWithThreeSecondAtCenter:response.message];
 }
 @end

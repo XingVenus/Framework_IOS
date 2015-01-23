@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
 
-#import "UIButton+ButtonTitlePosition.h"
+#import "UIButton+ButtonUtility.h"
 
-@implementation UIButton (ButtonTitlePosition)
+@implementation UIButton (ButtonUtility)
 
 - (void)setTitlePositionWithType:(ButtonTitlePostionType)type withSpacing:(CGFloat)space{
     // the space between the image and text
@@ -59,4 +59,10 @@
     }
 }
 
+-(void)underSingleLineWithTitle
+{
+    NSMutableAttributedString *hyperLinkString = [[NSMutableAttributedString alloc] initWithString:self.titleLabel.text];
+    [hyperLinkString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSUnderlineStyleSingle] range:NSMakeRange(0, hyperLinkString.length)];
+    [self setAttributedTitle:hyperLinkString forState:UIControlStateNormal];
+}
 @end

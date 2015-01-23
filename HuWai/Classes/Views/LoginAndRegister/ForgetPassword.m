@@ -39,5 +39,15 @@
 */
 
 - (IBAction)getTextCodeAction:(id)sender {
+    if ([CommonFoundation checkPhoneNo:self.phoneNumber.text]) {
+        [self showMessageWithThreeSecondAtCenter:@"手机号码格式不正确"];
+        return;
+    }
+    [self postAction:SendSmsAction params:@"post",[CommonFoundation trimString:self.phoneNumber.text],@"type",@"lostpasswd",nil];
+}
+
+-(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
+{
+    
 }
 @end
