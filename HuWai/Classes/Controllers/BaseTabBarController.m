@@ -16,7 +16,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //--------设置选中时的图片颜色tintColor-------
+    if (floor(NSFoundationVersionNumber)>=7.0) {        
+        [UITabBar appearance].tintColor = RGBA(46, 181, 220, 1);
+    }
+    //设置选中tab的文字的颜色,默认为tintcolor的颜色一致
+//    [[UITabBarItem appearance] setTitleTextAttributes:@{UITextAttributeTextColor : RGBA(46, 181, 220, 1)} forState:UIControlStateSelected];
     // Do any additional setup after loading the view.
+    /*
+    //-------badgeValue-------
+     //设置指定的tabbaritem的badgeValue
+    UITabBarItem *item = [self.tabBar.items objectAtIndex:1];
+    item.badgeValue = @"44";
+     //在某个对应的viewcontroller中使用下面的方法设置badgeValue
+     self.tabBarController.tabBar.selectedItem.badgeValue = @"11";
+     或者
+     [[self navigationController] tabBarItem].badgeValue = @"11";
+     或者
+     [[[[[self tabBarController] tabBar] items]
+     objectAtIndex:1] setBadgeValue:@"12"];
+     */
+
 }
 
 - (void)didReceiveMemoryWarning {

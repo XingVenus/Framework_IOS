@@ -22,12 +22,12 @@
 
 -(void)steupWithView:(UIView *)view {
     UIActionSheet *myActionSheet = [[UIActionSheet alloc]
-                                    initWithTitle:nil
+                                    initWithTitle:@"更换头像"
                                     delegate:self
                                     cancelButtonTitle:@"取消"
                                     destructiveButtonTitle:nil
-                                    otherButtonTitles: @"从相册选择", @"拍照",nil];
-    [myActionSheet showInView:view];
+                                    otherButtonTitles: @"相册", @"拍照",nil];
+    [myActionSheet showInView:[UIApplication sharedApplication].keyWindow];
     
 }
 

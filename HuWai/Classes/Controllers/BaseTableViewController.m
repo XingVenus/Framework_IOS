@@ -58,8 +58,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]){
-        self.automaticallyAdjustsScrollViewInsets = NO;
-        self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+//        self.automaticallyAdjustsScrollViewInsets = NO;
+        //tableview分组样式时，表头与导航之间的距离上移20
+        if (self.tableView.style == UITableViewStyleGrouped) {
+            self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+        }
     }
 
 //    self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
@@ -106,7 +109,10 @@
     return cell;
 }
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

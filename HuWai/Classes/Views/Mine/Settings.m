@@ -9,6 +9,10 @@
 #import "Settings.h"
 
 @interface Settings ()
+{
+    NSArray *_settingList;
+    UIButton *_loginOrOutBtn;
+}
 
 @end
 
@@ -16,7 +20,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _settingList = @[@[@"开启消息提醒",@"清除图片缓存"],@[@"意见反馈",@"版本更新"],@[@"关于我们",@"用户协议",@"鼓励我们"]];
+    UIView *footerview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 70)];
+    _loginOrOutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _loginOrOutBtn.frame = CGRectMake(20, 10, SCREEN_WIDTH - 20*2, 40);
+    [_loginOrOutBtn setTitle:@"登 录" forState:UIControlStateNormal];
+    [_loginOrOutBtn setTitle:@"退 出" forState:UIControlStateSelected];
+    [_loginOrOutBtn addTarget:self action:@selector(loginOrOutAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_loginOrOutBtn setBackgroundImage:[UIImage imageNamed:@"quit-mutual"] forState:UIControlStateNormal];
+    [_loginOrOutBtn setBackgroundImage:[UIImage imageNamed:@"quit"] forState:UIControlStateHighlighted];
+    [footerview addSubview:_loginOrOutBtn];
+    
+    self.tableView.tableFooterView = footerview;
     // Do any additional setup after loading the view.
+}
+
+-(void)loginOrOutAction:(UIButton *)sender
+{
+    if (!_loginOrOutBtn.selected) {
+        UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNav"];
+        [self presentViewController:loginNav animated:YES completion:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,6 +48,82 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [_settingList[section] count];
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
+    static NSString *cellIdentifier = @"settingcell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    if (section == 0 && row == 0) {
+        UISwitch *switchBtn = [[UISwitch alloc] init];
+        switchBtn.center = CGPointMake(SCREEN_WIDTH - 45, cell.centerY);
+        [switchBtn addTarget:self action:@selector(oneSwitchValueChanged:) forControlEvents:UIControlEventValueChanged]; // 添加事件监听器的方法
+        [cell addSubview:switchBtn];
+    }
+    cell.textLabel.text = _settingList[section][row];
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
+    switch (section) {
+        case 0:
+        {
+            if (row == 1) {
+                //清除图片缓存
+            }
+        }
+            break;
+        case 1:
+        {
+            if (row == 0) {
+                //意见反馈
+                
+            }else if (row == 1){
+                //版本更新
+                
+            }
+        }
+            break;
+        case 2:
+        {
+            if (row == 0) {
+                //关于我们
+                
+            }else if (row == 1){
+                //用户协议
+                
+            }else if (row == 2){
+                //鼓励我们
+                
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)oneSwitchValueChanged:(UISwitch *) sender
+{
+    NSLog(@"%@", sender.isOn ? @"ON" : @"OFF");
+}
 /*
 #pragma mark - Navigation
 

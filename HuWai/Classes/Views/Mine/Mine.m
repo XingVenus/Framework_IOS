@@ -10,7 +10,7 @@
 
 @interface Mine ()
 {
-    NSArray *_arrayCells;
+    NSMutableArray *_arrayCells;
 }
 
 @end
@@ -19,8 +19,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _arrayCells = @[@"我的订阅",@"我的订单",@"领队打分",@"收藏的活动",@"常用出行人",@"消息",@"系统设置"];
+    _arrayCells = [NSMutableArray arrayWithCapacity:1];
+    NSDictionary *listDic = @{@"icon":@"subscribe",@"title":@"我的订阅"};
+    [_arrayCells addObject:listDic];
+    listDic = @{@"icon":@"form",@"title":@"我的订单"};
+    [_arrayCells addObject:listDic];
+    listDic = @{@"icon":@"grade",@"title":@"领队打分"};
+    [_arrayCells addObject:listDic];
+    listDic = @{@"icon":@"collect",@"title":@"收藏的活动"};
+    [_arrayCells addObject:listDic];
+    listDic = @{@"icon":@"contacts",@"title":@"常用出行人"};
+    [_arrayCells addObject:listDic];
+    listDic = @{@"icon":@"mynews",@"title":@"消息"};
+    [_arrayCells addObject:listDic];
+    listDic = @{@"icon":@"setup",@"title":@"系统设置"};
+    [_arrayCells addObject:listDic];
+    
     self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+//    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -69,13 +85,12 @@
     }else{
         
         UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier2 forIndexPath:indexPath];
-        cell2.textLabel.text = _arrayCells[row];
+        NSDictionary *dic = _arrayCells[row];
+        cell2.imageView.image = [UIImage imageNamed:dic[@"icon"]];
+        cell2.textLabel.text = dic[@"title"];
         return cell2;
     }
     
-    // Configure the cell...
-    
-
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -89,19 +104,22 @@
         switch (row) {
             case 0:
             {
-                
+                [self performSegueWithIdentifier:@"subscribe" sender:self];
             }
                 break;
             case 1:
             {
+                [self performSegueWithIdentifier:@"myorder" sender:self];
                 break;
             }
             case 2:
             {
+                [self performSegueWithIdentifier:@"leaderscore" sender:self];
                 break;
             }
             case 3:
             {
+                [self performSegueWithIdentifier:@"collected" sender:self];
                 break;
             }
             case 4:
@@ -111,6 +129,12 @@
             }
             case 5:
             {
+                [self performSegueWithIdentifier:@"messagelist" sender:self];
+                break;
+            }
+            case 6:
+            {
+                [self performSegueWithIdentifier:@"settings" sender:self];
                 break;
             }
             default:

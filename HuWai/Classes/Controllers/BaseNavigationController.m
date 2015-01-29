@@ -15,22 +15,24 @@
 @implementation BaseNavigationController
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    return UIStatusBarStyleDefault;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    if (floor(NSFoundationVersionNumber) >= 7.0) {
-        [[UINavigationBar appearance] setBarTintColor:RGBA(87, 196, 211, 1)];
-        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    } else {
-        [[UINavigationBar appearance] setTintColor:RGBA(87, 196, 211, 1)];
+//    if (floor(NSFoundationVersionNumber) >= 7.0) {
+//        [[UINavigationBar appearance] setBarTintColor:RGBA(87, 196, 211, 1)];
+//        [[UINavigationBar appearance] setTintColor:[UIColor grayColor]];
+//    } else {
+//        [[UINavigationBar appearance] setTintColor:RGBA(87, 196, 211, 1)];
+//    }
+//
+//    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:18], NSFontAttributeName, nil]];
+    if (floor(NSFoundationVersionNumber)>=7.0) {
+        self.navigationBar.tintColor = [UIColor colorWithWhite:.2 alpha:1];
     }
-    
-    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
-                                                           [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:18], NSFontAttributeName, nil]];
     
 }
 

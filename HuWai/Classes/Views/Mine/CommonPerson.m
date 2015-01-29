@@ -7,10 +7,9 @@
 //
 
 #import "CommonPerson.h"
+#import "CommonPersonAddOrEdit.h"
 
 @interface CommonPerson ()
-
-@property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 @end
 
@@ -49,6 +48,7 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         UITableViewCell *cell1 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier1 forIndexPath:indexPath];
+        cell1.imageView.image = [UIImage imageNamed:@"add-p"];
         cell1.textLabel.text = @"添加一位";
         return cell1;
     }else{
@@ -58,22 +58,22 @@
     }
 }
 
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSInteger section = indexPath.section;
-    if (section == 0) {
-//        [self performSegueWithIdentifier:@"addCommonPerson" sender:self];
-    }else{
-        
-    }
-}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    CommonPersonAddOrEdit *addoreditController = segue.destinationViewController;
+    
+    NSIndexPath *selectedRowIndex=[self.tableView indexPathForSelectedRow];
+
+    if (selectedRowIndex.section == 0) {
+        addoreditController.pageType = AddType;
+    }else{
+        addoreditController.pageType = EditType;
+    }
+    
 }
 
 

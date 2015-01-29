@@ -19,7 +19,7 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIView+Toast.h"
-#import "Harpy.h"
+//#import "Harpy.h"
 #import "HttpClient.h"
 #import "APPInfo.h"
 

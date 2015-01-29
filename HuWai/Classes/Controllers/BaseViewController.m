@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = RGBA(242, 242, 243, 1);
     self.showRequestHUD = YES;//默认显示
     if (self.navigationController.viewControllers.count>1) {
@@ -178,8 +179,11 @@
     
     NSString *uriString = [ApiServer uriStringFromAction:action];
     NSRange rang = [uriString rangeOfString:@":"];
-    uriString = [[uriString substringWithRange:NSMakeRange(0, rang.location)] stringByAppendingString:appendValue];
-    [self executeRequest:uriString params:md];
+    if (appendValue) {
+        uriString = [[uriString substringWithRange:NSMakeRange(0, rang.location)] stringByAppendingString:appendValue];
+        [self executeRequest:uriString params:md];
+    }
+    
 }
 
 #pragma mark - 发起请求
