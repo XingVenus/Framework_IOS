@@ -10,4 +10,6 @@
 
 @interface Login : BaseViewController
 
+- (IBAction)dismissLoginVC;
+
 @end

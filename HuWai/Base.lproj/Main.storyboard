@@ -32,14 +32,36 @@
                             <constraint firstItem="82a-Hb-rn5" firstAttribute="leading" secondItem="hlg-y2-7qM" secondAttribute="leading" id="sd7-WZ-gpN"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" prompt=" " id="tq3-wr-eNc"/>
+                    <navigationItem key="navigationItem" id="tq3-wr-eNc">
+                        <nil key="title"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="82a-Hb-rn5" id="fqA-3e-Dd5"/>
+                        <segue destination="HCc-zo-pb2" kind="push" identifier="citylist" id="P4g-za-ybD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qNC-oI-VyB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="417" y="-2545"/>
+        </scene>
+        <!--城市选择-->
+        <scene sceneID="z15-dn-E5z">
+            <objects>
+                <viewController storyboardIdentifier="cityListBoard" title="城市选择" id="HCc-zo-pb2" customClass="CityList" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bxr-cs-wjP"/>
+                        <viewControllerLayoutGuide type="bottom" id="wUc-yd-cTk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ePZ-Uo-ZH8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="城市选择" id="STL-iz-i3s"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ALW-X8-qHB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="796" y="-2545"/>
         </scene>
         <!--MainTab-->
         <scene sceneID="RyB-cJ-0po">
@@ -190,7 +212,13 @@
                             <constraint firstItem="6pe-OW-scA" firstAttribute="baseline" secondItem="gNE-l1-xs7" secondAttribute="baseline" id="yIB-Cn-4zm"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="登录" id="3LI-59-UFy"/>
+                    <navigationItem key="navigationItem" title="登录" id="3LI-59-UFy">
+                        <barButtonItem key="leftBarButtonItem" image="close" id="MdG-ON-kQn">
+                            <connections>
+                                <action selector="dismissLoginVC" destination="vXZ-lx-hvc" id="N5r-0W-Gxd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="forgetPasswordButton" destination="6pe-OW-scA" id="mQA-J9-Guh"/>
                         <outlet property="loginButton" destination="FNP-IJ-fcQ" id="3Km-gE-ESi"/>
@@ -1395,6 +1423,7 @@
         <image name="Login" width="317" height="56"/>
         <image name="avatar" width="61" height="61"/>
         <image name="cellphone" width="27" height="27"/>
+        <image name="close" width="13" height="13"/>
         <image name="k-xici" width="27" height="27"/>
         <image name="lock" width="27" height="27"/>
         <image name="message" width="27" height="27"/>

@@ -58,6 +58,7 @@
 		04EA26A61A77804600CCB35E /* MyOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA26A51A77804600CCB35E /* MyOrder.m */; };
 		04EA26A91A7780BD00CCB35E /* LeaderScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA26A81A7780BD00CCB35E /* LeaderScore.m */; };
 		04EA26AD1A7794C900CCB35E /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA26AC1A7794C900CCB35E /* ActivityCell.m */; };
+		04FBF4601A79EC7F004A0A74 /* CityList.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FBF45F1A79EC7F004A0A74 /* CityList.m */; };
 		D6327F38BC3909F158CBB89B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2326C7CAC01BA5D0F91806D /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -170,6 +171,8 @@
 		04EA26A81A7780BD00CCB35E /* LeaderScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderScore.m; sourceTree = "<group>"; };
 		04EA26AB1A7794C900CCB35E /* ActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityCell.h; sourceTree = "<group>"; };
 		04EA26AC1A7794C900CCB35E /* ActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityCell.m; sourceTree = "<group>"; };
+		04FBF45E1A79EC7F004A0A74 /* CityList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityList.h; sourceTree = "<group>"; };
+		04FBF45F1A79EC7F004A0A74 /* CityList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityList.m; sourceTree = "<group>"; };
 		59094FCF7084AF5E34F759EA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CFC618B8A95FAC3AC591B8A6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D2326C7CAC01BA5D0F91806D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,6 +213,8 @@
 			children = (
 				0427192D1A6D01FB001645AA /* MainPlay.h */,
 				0427192E1A6D01FB001645AA /* MainPlay.m */,
+				04FBF45E1A79EC7F004A0A74 /* CityList.h */,
+				04FBF45F1A79EC7F004A0A74 /* CityList.m */,
 			);
 			path = GoOutPlay;
 			sourceTree = "<group>";
@@ -699,6 +704,7 @@
 				04605F321A6E2C70004EBB2D /* UIView+Subviews.m in Sources */,
 				042B3F7E1A66792A000E896D /* UIView+SimplifyExtend.m in Sources */,
 				043F6AEA1A76487700EEA0B3 /* MessageList.m in Sources */,
+				04FBF4601A79EC7F004A0A74 /* CityList.m in Sources */,
 				048E97E91A71DCFA003697D1 /* ApiServer.m in Sources */,
 				042719211A6CF1C1001645AA /* BaseTabBarController.m in Sources */,
 				042719281A6CFDE0001645AA /* Login.m in Sources */,
