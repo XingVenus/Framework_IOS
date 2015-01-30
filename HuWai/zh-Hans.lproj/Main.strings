@@ -1,0 +1,213 @@
+
+/* Class = "IBUITabBarItem"; title = "我的"; ObjectID = "1LU-mz-ICf"; */
+"1LU-mz-ICf.title" = "我的";
+
+/* Class = "IBUIViewController"; title = "出去玩"; ObjectID = "1MM-3p-WPi"; */
+"1MM-3p-WPi.title" = "出去玩";
+
+/* Class = "IBUINavigationItem"; title = "登录"; ObjectID = "3LI-59-UFy"; */
+"3LI-59-UFy.title" = "登录";
+
+/* Class = "IBUILabel"; text = "我已阅读并同意接受《鲜行户外旅行网用户协议》"; ObjectID = "3XD-Xs-CbK"; */
+"3XD-Xs-CbK.text" = "我已阅读并同意接受《鲜行户外旅行网用户协议》";
+
+/* Class = "IBUINavigationItem"; title = "设置"; ObjectID = "3bu-2F-C4s"; */
+"3bu-2F-C4s.title" = "设置";
+
+/* Class = "IBUINavigationItem"; title = "西祠账号登录"; ObjectID = "3cT-7m-Rpz"; */
+"3cT-7m-Rpz.title" = "西祠账号登录";
+
+/* Class = "IBUINavigationItem"; title = "个人资料"; ObjectID = "3pW-ti-KBe"; */
+"3pW-ti-KBe.title" = "个人资料";
+
+/* Class = "IBUINavigationItem"; title = "我的订单"; ObjectID = "3wx-gJ-VDi"; */
+"3wx-gJ-VDi.title" = "我的订单";
+
+/* Class = "IBUINavigationItem"; title = "注册"; ObjectID = "41f-s2-0JX"; */
+"41f-s2-0JX.title" = "注册";
+
+/* Class = "IBUILabel"; text = "身份证号:"; ObjectID = "4H0-5H-kwP"; */
+"4H0-5H-kwP.text" = "身份证号:";
+
+/* Class = "IBUIViewController"; title = "常用出行人添加与编辑"; ObjectID = "4Uh-Sr-Rpw"; */
+"4Uh-Sr-Rpw.title" = "常用出行人添加与编辑";
+
+/* Class = "IBUIButton"; normalTitle = "获取验证码"; ObjectID = "50h-z2-jIx"; */
+"50h-z2-jIx.normalTitle" = "获取验证码";
+
+/* Class = "IBUINavigationController"; title = "登录Nav"; ObjectID = "5SX-Mu-HwK"; */
+"5SX-Mu-HwK.title" = "登录Nav";
+
+/* Class = "IBUIButton"; normalTitle = "忘记密码?"; ObjectID = "6pe-OW-scA"; */
+"6pe-OW-scA.normalTitle" = "忘记密码?";
+
+/* Class = "IBUILabel"; text = "姓名:"; ObjectID = "7m2-V0-Mtx"; */
+"7m2-V0-Mtx.text" = "姓名:";
+
+/* Class = "IBUITabBarItem"; title = "出去玩"; ObjectID = "8fc-vT-8ou"; */
+"8fc-vT-8ou.title" = "出去玩";
+
+/* Class = "IBUIViewController"; title = "我的订阅"; ObjectID = "924-s8-rU4"; */
+"924-s8-rU4.title" = "我的订阅";
+
+/* Class = "IBUIViewController"; title = "忘记密码"; ObjectID = "E4m-yv-FMB"; */
+"E4m-yv-FMB.title" = "忘记密码";
+
+/* Class = "IBUIBarButtonItem"; title = "清除未读"; ObjectID = "EJk-t9-D8r"; */
+"EJk-t9-D8r.title" = "清除未读";
+
+/* Class = "IBUIViewController"; title = "设置"; ObjectID = "EWr-F7-ci2"; */
+"EWr-F7-ci2.title" = "设置";
+
+/* Class = "IBUIButton"; normalTitle = "登  录"; ObjectID = "FNP-IJ-fcQ"; */
+"FNP-IJ-fcQ.normalTitle" = "登  录";
+
+/* Class = "IBUINavigationItem"; title = "常用出行人"; ObjectID = "Fw3-LM-jr0"; */
+"Fw3-LM-jr0.title" = "常用出行人";
+
+/* Class = "IBUITextField"; placeholder = "设置新密码"; ObjectID = "GSj-rC-dVV"; */
+"GSj-rC-dVV.placeholder" = "设置新密码";
+
+/* Class = "IBUIViewController"; title = "城市选择"; ObjectID = "HCc-zo-pb2"; */
+"HCc-zo-pb2.title" = "城市选择";
+
+/* Class = "IBUITabBarController"; title = "MainTab"; ObjectID = "HIf-UJ-ewp"; */
+"HIf-UJ-ewp.title" = "MainTab";
+
+/* Class = "IBUINavigationController"; title = "我的Nav"; ObjectID = "IHj-qC-bwz"; */
+"IHj-qC-bwz.title" = "我的Nav";
+
+/* Class = "IBUILabel"; text = "性别:"; ObjectID = "IlN-Iy-PUf"; */
+"IlN-Iy-PUf.text" = "性别:";
+
+/* Class = "IBUITableViewController"; title = "我的"; ObjectID = "Ilp-FL-rV8"; */
+"Ilp-FL-rV8.title" = "我的";
+
+/* Class = "IBUITextField"; placeholder = "请输入手机号"; ObjectID = "JBv-6m-a8F"; */
+"JBv-6m-a8F.placeholder" = "请输入手机号";
+
+/* Class = "IBUIViewController"; title = "修改密码"; ObjectID = "JRS-ET-dLl"; */
+"JRS-ET-dLl.title" = "修改密码";
+
+/* Class = "IBUIViewController"; title = "我的订单"; ObjectID = "KOz-aH-ZCT"; */
+"KOz-aH-ZCT.title" = "我的订单";
+
+/* Class = "IBUITextField"; placeholder = "短信验证码"; ObjectID = "MoS-v1-nMp"; */
+"MoS-v1-nMp.placeholder" = "短信验证码";
+
+/* Class = "IBUITextField"; placeholder = "请输入密码"; ObjectID = "MvN-dd-YOb"; */
+"MvN-dd-YOb.placeholder" = "请输入密码";
+
+/* Class = "IBUILabel"; text = "修改密码"; ObjectID = "NWU-At-9jM"; */
+"NWU-At-9jM.text" = "修改密码";
+
+/* Class = "IBUINavigationItem"; title = "消息"; ObjectID = "QLZ-u5-i2b"; */
+"QLZ-u5-i2b.title" = "消息";
+
+/* Class = "IBUIButton"; normalTitle = "获取验证码"; ObjectID = "R5f-nh-lcf"; */
+"R5f-nh-lcf.normalTitle" = "获取验证码";
+
+/* Class = "IBUINavigationItem"; title = "新密码"; ObjectID = "RWJ-ET-jzN"; */
+"RWJ-ET-jzN.title" = "新密码";
+
+/* Class = "IBUIButton"; normalTitle = "注  册"; ObjectID = "RsC-Fo-jY4"; */
+"RsC-Fo-jY4.normalTitle" = "注  册";
+
+/* Class = "IBUINavigationController"; title = "出去玩Nav"; ObjectID = "S7u-7k-KaB"; */
+"S7u-7k-KaB.title" = "出去玩Nav";
+
+/* Class = "IBUINavigationItem"; title = "城市选择"; ObjectID = "STL-iz-i3s"; */
+"STL-iz-i3s.title" = "城市选择";
+
+/* Class = "IBUILabel"; text = "头像"; ObjectID = "V0d-U0-8YZ"; */
+"V0d-U0-8YZ.text" = "头像";
+
+/* Class = "IBUITextField"; placeholder = "请输入手机号"; ObjectID = "V7z-qP-E7g"; */
+"V7z-qP-E7g.placeholder" = "请输入手机号";
+
+/* Class = "IBUIButton"; normalTitle = "登  录"; ObjectID = "Woh-FJ-Tca"; */
+"Woh-FJ-Tca.normalTitle" = "登  录";
+
+/* Class = "IBUIBarButtonItem"; title = "提交"; ObjectID = "Xvk-4c-HMD"; */
+"Xvk-4c-HMD.title" = "提交";
+
+/* Class = "IBUILabel"; text = "手机号:"; ObjectID = "Y4C-8H-TSY"; */
+"Y4C-8H-TSY.text" = "手机号:";
+
+/* Class = "IBUIViewController"; title = "注册"; ObjectID = "YE0-sG-Osj"; */
+"YE0-sG-Osj.title" = "注册";
+
+/* Class = "IBUIViewController"; title = "消息"; ObjectID = "ZTU-1U-pjd"; */
+"ZTU-1U-pjd.title" = "消息";
+
+/* Class = "IBUINavigationItem"; title = "领队打分"; ObjectID = "ahF-W7-sFP"; */
+"ahF-W7-sFP.title" = "领队打分";
+
+/* Class = "IBUITextField"; placeholder = "重复密码"; ObjectID = "bJG-Ui-k1V"; */
+"bJG-Ui-k1V.placeholder" = "重复密码";
+
+/* Class = "IBUITextField"; placeholder = "昵称"; ObjectID = "bUz-Ho-geU"; */
+"bUz-Ho-geU.placeholder" = "昵称";
+
+/* Class = "IBUINavigationItem"; title = "忘记密码"; ObjectID = "bx6-RU-YLs"; */
+"bx6-RU-YLs.title" = "忘记密码";
+
+/* Class = "IBUINavigationItem"; title = "我的"; ObjectID = "bzf-du-HAe"; */
+"bzf-du-HAe.title" = "我的";
+
+/* Class = "IBUITextField"; placeholder = "请输入密码"; ObjectID = "eEj-Ag-MNW"; */
+"eEj-Ag-MNW.placeholder" = "请输入密码";
+
+/* Class = "IBUINavigationItem"; title = "修改密码"; ObjectID = "f0S-bT-pZn"; */
+"f0S-bT-pZn.title" = "修改密码";
+
+/* Class = "IBUIButton"; normalTitle = "注册新账号"; ObjectID = "gNE-l1-xs7"; */
+"gNE-l1-xs7.normalTitle" = "注册新账号";
+
+/* Class = "IBUIButton"; normalTitle = "提  交"; ObjectID = "gNg-88-nMK"; */
+"gNg-88-nMK.normalTitle" = "提  交";
+
+/* Class = "IBUIViewController"; title = "领队打分"; ObjectID = "gl4-Uz-TDL"; */
+"gl4-Uz-TDL.title" = "领队打分";
+
+/* Class = "IBUITextField"; placeholder = "新密码"; ObjectID = "ib7-nw-rjN"; */
+"ib7-nw-rjN.placeholder" = "新密码";
+
+/* Class = "IBUITextField"; placeholder = "手机号"; ObjectID = "jfl-fR-PQD"; */
+"jfl-fR-PQD.placeholder" = "手机号";
+
+/* Class = "IBUITextField"; placeholder = "手机号"; ObjectID = "onD-eP-QMV"; */
+"onD-eP-QMV.placeholder" = "手机号";
+
+/* Class = "IBUITextField"; placeholder = "设置密码"; ObjectID = "p21-gk-wnh"; */
+"p21-gk-wnh.placeholder" = "设置密码";
+
+/* Class = "IBUITextField"; placeholder = "短信验证码"; ObjectID = "qga-MA-Awi"; */
+"qga-MA-Awi.placeholder" = "短信验证码";
+
+/* Class = "IBUINavigationItem"; title = "我的订阅"; ObjectID = "qmt-5w-d6q"; */
+"qmt-5w-d6q.title" = "我的订阅";
+
+/* Class = "IBUIViewController"; title = "新密码"; ObjectID = "sYw-ea-tFz"; */
+"sYw-ea-tFz.title" = "新密码";
+
+/* Class = "IBUIBarButtonItem"; title = "下一步"; ObjectID = "smx-af-S96"; */
+"smx-af-S96.title" = "下一步";
+
+/* Class = "IBUIViewController"; title = "西祠账号"; ObjectID = "u2O-3q-Yv8"; */
+"u2O-3q-Yv8.title" = "西祠账号";
+
+/* Class = "IBUIButton"; normalTitle = "西祠账号登录"; ObjectID = "ubc-K3-ICH"; */
+"ubc-K3-ICH.normalTitle" = "西祠账号登录";
+
+/* Class = "IBUIViewController"; title = "登录"; ObjectID = "vXZ-lx-hvc"; */
+"vXZ-lx-hvc.title" = "登录";
+
+/* Class = "IBUINavigationItem"; title = "收藏活动"; ObjectID = "vhf-ZX-hna"; */
+"vhf-ZX-hna.title" = "收藏活动";
+
+/* Class = "IBUIViewController"; title = "收藏活动"; ObjectID = "xoo-oY-91T"; */
+"xoo-oY-91T.title" = "收藏活动";
+
+/* Class = "IBUITextField"; placeholder = "再次输入密码"; ObjectID = "zps-YU-b1Z"; */
+"zps-YU-b1Z.placeholder" = "再次输入密码";
