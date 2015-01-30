@@ -18,4 +18,54 @@
 }
 */
 
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self addSubview:self.tableView];
+    }
+    return self;
+}
+
+-(void)setListData:(NSArray *)listData
+{
+    _listData = listData;
+    [self.tableView reloadData];
+}
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        CGRect tableViewFrame = self.bounds;
+        _tableView = [[UITableView alloc] initWithFrame:tableViewFrame style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.separatorInset = UIEdgeInsetsZero;
+//        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    }
+    return _tableView;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.listData.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"selectlistCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    cell.textLabel.text = self.listData[indexPath.row];
+
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 @end

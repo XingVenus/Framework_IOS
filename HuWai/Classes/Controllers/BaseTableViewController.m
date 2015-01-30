@@ -59,12 +59,12 @@
     [super viewDidLoad];
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]){
 //        self.automaticallyAdjustsScrollViewInsets = NO;
-        //tableview分组样式时，表头与导航之间的距离上移20
+        //sdk7.0_later  tableview分组样式时，表头与导航之间的距离上移20
         if (self.tableView.style == UITableViewStyleGrouped) {
             self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
         }
     }
-
+    self.tableView.backgroundColor = RGBA(242, 242, 243, 1);
 //    self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

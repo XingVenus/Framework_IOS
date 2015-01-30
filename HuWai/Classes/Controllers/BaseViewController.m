@@ -24,7 +24,10 @@
     self.view.backgroundColor = RGBA(242, 242, 243, 1);
     self.showRequestHUD = YES;//默认显示
     if (self.navigationController.viewControllers.count>1) {
-        UIBarButtonItem *backbutton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil];
+        self.navigationItem.leftItemsSupplementBackButton = NO;
+//        UIBarButtonItem *backbutton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil];
+        UIBarButtonItem *backbutton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow-back"] style:UIBarButtonItemStylePlain target:self action:nil];
+        
         self.navigationItem.backBarButtonItem = backbutton;
     }
 //

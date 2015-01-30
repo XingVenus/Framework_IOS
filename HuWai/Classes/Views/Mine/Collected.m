@@ -7,6 +7,7 @@
 //
 
 #import "Collected.h"
+#import "ActivityCell.h"
 
 @interface Collected ()
 
@@ -16,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Do any additional setup after loading the view.
 }
 
@@ -34,4 +36,31 @@
 }
 */
 
+#pragma mark - table view implement
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return SCREEN_WIDTH/kHeghtRatio;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"activitycell";
+    ActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+        cell = [[ActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell configureCellWithItem:nil atIndexPath:indexPath];
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DLog(@"%ld",(long)indexPath.row);
+}
 @end

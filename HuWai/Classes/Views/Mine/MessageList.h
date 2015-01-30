@@ -10,4 +10,6 @@
 
 @interface MessageList : BaseTableViewController
 
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+
 @end

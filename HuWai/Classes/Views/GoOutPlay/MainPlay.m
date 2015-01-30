@@ -9,9 +9,14 @@
 #import "MainPlay.h"
 #import "ActivityCell.h"
 #import "UIButton+ButtonUtility.h"
+#import "ActivityDetail.h"
+#import "SelectListView.h"
+#import "NavView.h"
 @interface MainPlay ()
 {
-    UIView *navigationView;
+    NavView *navigationView;
+    SelectListView *listPopView;
+    UIView *backgroundPopView;
 }
 
 @end
@@ -20,31 +25,42 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBar.height = 74;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavBarWithNoAnimate) name:@"hideNavBarWithNoAnimate" object:nil];
+//    self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0);
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //////-------左边定位按钮
-    navigationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.navigationController.navigationBar.height)];
-    DLog(@"height is:%f",self.navigationController.navigationBar.height);
-    navigationView.hidden = YES;
-
-    [self.navigationController.navigationBar addSubview:navigationView];
-    
+    navigationView = [[NavView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 94 - [CommonFoundation getStateBarHeight])];
+    navigationView.backgroundColor = RGBA(247, 247, 248, 1);
+    [self.view addSubview:navigationView];
+    CGFloat navViewHeight = CGRectGetHeight(navigationView.bounds);
+    //定位按钮
     UIButton *locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    locationBtn.backgroundColor = [UIColor redColor];
     locationBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    locationBtn.frame = CGRectMake(15, 7, 100, 30);
+    locationBtn.frame = CGRectMake(15, navViewHeight - 67, 60, 30);//CGRectMake(15, 7, 100, 30)
     [locationBtn setImage:[UIImage imageNamed:@"place-i"] forState:UIControlStateNormal];
     [locationBtn setTitleColor:RGBA(54, 178, 214, 1) forState:UIControlStateNormal];
     [locationBtn setTitle:@"南京" forState:UIControlStateNormal];
     [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:5];
     [locationBtn addTarget:self action:@selector(selectCity:) forControlEvents:UIControlEventTouchUpInside];
-
     [navigationView addSubview:locationBtn];
+//    UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc] initWithCustomView:locationBtn];
+//    self.navigationItem.leftBarButtonItem = leftBtn;
+    //搜索按钮
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchBtn.frame = CGRectMake(SCREEN_WIDTH - 45, navViewHeight - 67, 30, 30);
+    [searchBtn setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
+    [navigationView addSubview:searchBtn];
+//    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
+//    self.navigationItem.rightBarButtonItem = rightBtn;
+//    [navigationView addSubview:locationBtn];
     /////-----title
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 100, 24)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 00, 100, 24)];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.center = CGPointMake(SCREEN_WIDTH/2, 22);
+    titleLabel.center = CGPointMake(SCREEN_WIDTH/2, 0);
+    titleLabel.top = navViewHeight - 65;
     titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = @"出去玩";
@@ -52,7 +68,8 @@
     /////------1
     UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn1.tag = 1001;
-    btn1.frame = CGRectMake(0, 40, SCREEN_WIDTH/3, 30);
+    [btn1 addTarget:self action:@selector(showSelectView:) forControlEvents:UIControlEventTouchUpInside];
+    btn1.frame = CGRectMake(0, navViewHeight - 35, SCREEN_WIDTH/3, 30);
     btn1.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [btn1 setTitle:@"目的地" forState:UIControlStateNormal];
     [btn1 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
@@ -64,7 +81,8 @@
     ////-----2
     UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn2.tag = 1002;
-    btn2.frame = CGRectMake(CGRectGetMaxX(btn1.frame), 40, SCREEN_WIDTH/3, 30);
+    [btn2 addTarget:self action:@selector(showSelectView:) forControlEvents:UIControlEventTouchUpInside];
+    btn2.frame = CGRectMake(CGRectGetMaxX(btn1.frame), navViewHeight - 35, SCREEN_WIDTH/3, 30);
     btn2.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [btn2 setTitle:@"行程" forState:UIControlStateNormal];
     [btn2 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
@@ -76,7 +94,9 @@
     /////--------3
     UIButton *btn3 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn3.tag = 1003;
-    btn3.frame = CGRectMake(CGRectGetMaxX(btn2.frame), 40, SCREEN_WIDTH/3, 30);
+    [btn3 addTarget:self action:@selector(showSelectView:) forControlEvents:UIControlEventTouchUpInside];
+    btn3.frame = CGRectMake(CGRectGetMaxX(btn2.frame), navViewHeight - 35, SCREEN_WIDTH/3, 30);
+
     btn3.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [btn3 setTitle:@"玩法" forState:UIControlStateNormal];
     [btn3 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
@@ -85,15 +105,27 @@
     [btn3 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
     [btn3 setContentEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
     [navigationView addSubview:btn3];
+
 //    self.navigationController.navigationBar.frame = CGRectMake(0., 20., 320., 180.);
     // Do any additional setup after loading the view.
+    //-----弹出层列表展示
+    if (!backgroundPopView) {
+        backgroundPopView = [[UIView alloc] initWithFrame:CGRectMake(0, 64 - [CommonFoundation getStateBarHeight] + 30, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 30)];
+        backgroundPopView.backgroundColor = [UIColor colorWithWhite:0.3 alpha:.6];
+        listPopView = [[SelectListView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, CGRectGetHeight(backgroundPopView.frame) - 100)];
+        listPopView.top -= listPopView.height;
+        [backgroundPopView addSubview:listPopView];
+        [self.view insertSubview:backgroundPopView belowSubview:navigationView];
+
+        backgroundPopView.hidden = YES;
+    }
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    navigationView.hidden = NO;
-//    self.navigationController.navigationBar.frame = CGRectMake(0., 20., 320., 180.);
+    [self setFullScreen:YES];
     if (![APPInfo shareInit].isLogin) {
         
 //        UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNav"];
@@ -102,19 +134,78 @@
     }
 }
 
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    navigationView.hidden = YES;
+    [self setFullScreen:NO];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark method implement
+
+- (void)setFullScreen:(BOOL)fullScreen
+{
+    // 状态条
+    //   [UIApplication sharedApplication].statusBarHidden = fullScreen;
+    // 导航条
+    
+    [self.navigationController setNavigationBarHidden:fullScreen animated:YES];
+    //    [self.navigationController setNavigationBarHidden:fullScreen];
+    // tabBar的隐藏通过在初始化方法中设置hidesBottomBarWhenPushed属性来实现
+}
+
+-(void)hideNavBarWithNoAnimate
+{
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
 -(void)selectCity:(UIButton *)sender
 {
     [self performSegueWithIdentifier:@"citylist" sender:self];
+}
+
+-(void)showSelectView:(UIButton *)sender
+{
+    NSInteger btnTag = sender.tag;
+    static UIButton *lastSelected;
+    
+    NSArray *listArray = @[@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff",@"5ffff",@"6ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff"];
+    if (btnTag == 1001) {
+        listPopView.listData = listArray;
+    }else if (btnTag == 1002){
+        
+    }else if (btnTag == 1003){
+        
+    }
+    if (sender.selected) {
+        //隐藏
+        lastSelected = nil;
+        [UIView animateWithDuration:0.3 animations:^{
+            listPopView.top -= listPopView.height;
+        } completion:^(BOOL finished) {
+            backgroundPopView.hidden = YES;
+        }];
+    }else{
+        //显示
+        if (lastSelected && ![lastSelected isEqual:sender]) {
+            listPopView.top -= listPopView.height;
+            backgroundPopView.hidden = YES;
+            lastSelected.selected = NO;
+        }
+        
+        lastSelected = sender;
+        backgroundPopView.hidden = NO;
+        [UIView animateWithDuration:0.3 animations:^{
+            listPopView.top = 0;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+    [sender setSelected:!sender.selected];
 }
 
 #pragma mark - Navigation
@@ -123,6 +214,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+//    NSIndexPath *selectedRowIndex=[self.tableView indexPathForSelectedRow];
+//    ActivityDetail *activityController = segue.destinationViewController;
     
 }
 
@@ -147,6 +240,13 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell configureCellWithItem:nil atIndexPath:indexPath];
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ActivityDetail *activitydetail = [self.storyboard instantiateViewControllerWithIdentifier:@"activityDetailBoard"];
+    activitydetail.Title = @"gggggggghhhhhhh";
+    [self.navigationController pushViewController:activitydetail animated:YES];
 }
 
 @end

@@ -170,6 +170,7 @@
 + (CGFloat)getAdapterHeight;
 + (CGFloat)getStateBarHeight;
 + (CGFloat)getAdapter64Height;
++ (CGFloat)getAdapterNavigationHeight;
 + (BOOL)isIOS7;
 //版本检测
 + (id)onCheckVersion;

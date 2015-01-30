@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SelectListView : UIView
+@interface SelectListView : UIView<UITableViewDataSource,UITableViewDelegate>
+- (id)initWithFrame:(CGRect)frame;
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSArray *listData;
 
 @end

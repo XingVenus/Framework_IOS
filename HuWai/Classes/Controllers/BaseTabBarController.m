@@ -8,7 +8,7 @@
 
 #import "BaseTabBarController.h"
 
-@interface BaseTabBarController ()
+@interface BaseTabBarController ()<UITabBarDelegate>
 
 @end
 
@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tabBarController.tabBar.delegate = self;
     //--------设置选中时的图片颜色tintColor-------
     if (floor(NSFoundationVersionNumber)>=7.0) {        
         [UITabBar appearance].tintColor = RGBA(46, 181, 220, 1);
@@ -44,6 +45,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    if (item.tag == 0) {
+        //消除全屏动画的影响
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideNavBarWithNoAnimate" object:nil];
+    }
+}
 /*
 #pragma mark - Navigation
 

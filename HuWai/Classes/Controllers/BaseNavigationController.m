@@ -21,6 +21,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+//    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+/*
+    [[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"2pxWidthLineImage"]];
+     */
     // Do any additional setup after loading the view.
 //    if (floor(NSFoundationVersionNumber) >= 7.0) {
 //        [[UINavigationBar appearance] setBarTintColor:RGBA(87, 196, 211, 1)];

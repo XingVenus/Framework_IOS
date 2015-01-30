@@ -321,6 +321,17 @@
     return adapterHeight;
 }
 
++ (CGFloat)getAdapterNavigationHeight
+{
+    CGFloat adapterHeight = 0;
+    if ([self isIOS7]) {
+        adapterHeight = 64;
+    }else{
+        adapterHeight = 44;
+    }
+    return adapterHeight;
+}
+
 + (BOOL)isIOS7 {
     return [[[UIDevice currentDevice] systemVersion] integerValue] >= 7.0;
 }
