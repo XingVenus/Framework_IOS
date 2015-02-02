@@ -22,18 +22,29 @@
 
 -(void)layoutSubviews
 {
-    //    [super layoutSubviews];
-//    self.contentView.frame = CGRectInset(self.bounds, 0, 5);
-    self.describeLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [self.describeLabel sizeToFit];
+    [super layoutSubviews];
     
+//    CGSize optimumSize = [self.describeLabel optimumSize];
+//    self.describeLabel.height = optimumSize.height;
+    [self.contentView addSubview:_describeLabel];
+
 }
 
 - (void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
 {
-    self.titleLabel.text = @"iPhone或者iPad开发中";
+    if (!_describeLabel) {
+        _describeLabel = [[RTLabel alloc] initWithFrame:CGRectMake(10, 50, SCREEN_WIDTH - 10 *2, 0)];
+//        _describeLabel.numberOfLines = 2;
+        _describeLabel.lineSpacing = 5;
+        _describeLabel.font = [UIFont systemFontOfSize:14.0];
+        _describeLabel.textColor = [UIColor darkGrayColor];
+        _describeLabel.height = 50;
+    }
+    
+    self.titleLabel.text = @"iPhone或者iPad开发中iPhone或者iPad开发中";
     self.dateLabel.text = @"2015-1-30 18:17";
-    self.describeLabel.text = @"[UIApplication sharedApplication].statusBarHidden=YES即可实现隐藏，可是状态条所占空间依然无法为程序所用，将UIView的frame的y值设置为-20也有点不合理。";
+    self.describeLabel.text = @"苹果联合创始人沃兹：认同电脑会取代人脑苹果联合创始人沃兹：认同电脑会取代人脑苹果联合创始人沃兹：认同电脑会取代人脑iPhone或者iPad开发中";
+    [self.describeLabel sizeToFit];
 }
 
 @end

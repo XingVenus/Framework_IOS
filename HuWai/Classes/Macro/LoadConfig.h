@@ -22,5 +22,6 @@
 //#import "Harpy.h"
 #import "HttpClient.h"
 #import "APPInfo.h"
+#import "RTLabel.h"
 
 #endif

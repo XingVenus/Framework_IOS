@@ -26,11 +26,11 @@
     // Drawing code
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
-    CGContextSetLineWidth(context, 0.3);
+    CGContextSetLineWidth(context, 0.5);
     
     CGPoint *point = (CGPoint *) malloc(sizeof(CGPoint) * 2);
-    point[0] = CGPointMake(0, self.bounds.size.height - 0.3);
-    point[1] = CGPointMake(self.bounds.size.width, self.bounds.size.height - 0.3);
+    point[0] = CGPointMake(0, self.bounds.size.height);
+    point[1] = CGPointMake(self.bounds.size.width, self.bounds.size.height);
     CGContextBeginPath(context);
     CGContextAddLines(context, point, 2);
     CGContextClosePath(context);

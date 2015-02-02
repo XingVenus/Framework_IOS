@@ -6,9 +6,18 @@
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
 
-#import "hasScoreCell.h"
+#import "HasScoreCell.h"
 
-@implementation hasScoreCell
+@implementation HasScoreCell
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        
+    }
+    return self;
+}
 
 - (void)awakeFromNib {
     // Initialization code

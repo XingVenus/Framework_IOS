@@ -7,6 +7,8 @@
 //
 
 #import "LeaderScore.h"
+#import "NotScoreCell.h"
+#import "HasScoreCell.h"
 
 @interface LeaderScore ()
 
@@ -16,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Do any additional setup after loading the view.
 }
 
@@ -33,5 +36,33 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 210;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier1 = @"notscorecell";
+    static NSString *cellIdentifier2 = @"hasscorecell";
+    NotScoreCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier1];
+        if (!cell) {
+            cell = [[NotScoreCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier1];
+        }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell configureCellWithItem:nil atIndexPath:indexPath];
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DLog(@"%ld",(long)indexPath.row);
+}
 
 @end

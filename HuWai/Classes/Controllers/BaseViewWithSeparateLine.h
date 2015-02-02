@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#define kLineWidth  0.5
 @interface BaseViewWithSeparateLine : UIView
+
+@property (nonatomic ,strong) NSArray *pathPointArray;
 
 @end

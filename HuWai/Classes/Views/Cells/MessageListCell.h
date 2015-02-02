@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+//#import "RTLabel.h"
 @interface MessageListCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *describeLabel;
+@property (nonatomic, strong) RTLabel *describeLabel;
 
 - (void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath;
 

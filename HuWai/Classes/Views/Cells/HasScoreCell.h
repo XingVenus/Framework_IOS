@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface hasScoreCell : UITableViewCell
+@interface HasScoreCell : UITableViewCell
+
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *subTitleLabel;
+@property (nonatomic, strong) UILabel *describeLabel;
+@property (nonatomic, strong) UILabel *scoreLabel;
 
 @end
