@@ -11,3 +11,7 @@
 @implementation SubscribeModel
 
 @end
+
+@implementation SubscribeInfo
+
+@end

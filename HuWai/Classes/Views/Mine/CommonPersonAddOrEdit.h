@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "CommonPersonModel.h"
 
 typedef NS_ENUM(NSInteger, PageShowType) {
     AddType,    //添加
@@ -21,4 +22,5 @@ typedef NS_ENUM(NSInteger, PageShowType) {
 @property (weak, nonatomic) IBOutlet UITextField *phoneNo;
 @property (weak, nonatomic) IBOutlet UIButton *gender;
 
+@property (nonatomic, strong) CommonPersonInfo  *info;
 @end

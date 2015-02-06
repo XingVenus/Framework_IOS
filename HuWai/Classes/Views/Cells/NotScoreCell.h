@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ScoreCellView.h"
+#import "BaseTableViewCell.h"
 #import "EDStarRating.h"
 
-@interface NotScoreCell : UITableViewCell
+@interface ScoreCellView : UIView
+
+@end
+
+@interface NotScoreCell : BaseTableViewCell
 
 @property (nonatomic, strong) ScoreCellView *scoreBackView;
 @property (nonatomic, strong) UILabel *titleLabel;
@@ -25,6 +29,7 @@
 @property (nonatomic, strong) EDStarRating  *starControl1;
 @property (nonatomic, strong) EDStarRating  *starControl2;
 
--(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath;
+
 
 @end
+

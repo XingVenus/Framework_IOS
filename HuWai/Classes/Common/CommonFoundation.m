@@ -79,15 +79,9 @@
     return [buf.description stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
-+(BOOL)isEmptyString:(NSString *)str
++(BOOL)isEmptyString:(NSString *)value
 {
-    if (str == nil) {
-        return YES;
-    }else if ([self trimString:str].length == 0){
-        return YES;
-    }else if (str == NULL){
-        return YES;
-    }else if([str isKindOfClass:[NSNull class]]){
+    if ((value == nil) || ([self trimString:value].length == 0) || (value == (NSString *)[NSNull null])) {
         return YES;
     }
     
@@ -297,13 +291,13 @@
     return [dateFormatter stringFromDate:confromTimesp];
 }
 
-+ (CGFloat)getAdapterHeight {
-    CGFloat adapterHeight = 0;
-    if (![self isIOS7]) {
-        adapterHeight = 44;
-    }
-    return adapterHeight;
-}
+//+ (CGFloat)getAdapterHeight {
+//    CGFloat adapterHeight = 0;
+//    if (![self isIOS7]) {
+//        adapterHeight = 44;
+//    }
+//    return adapterHeight;
+//}
 
 + (CGFloat)getStateBarHeight {
     CGFloat adapterHeight = 0;

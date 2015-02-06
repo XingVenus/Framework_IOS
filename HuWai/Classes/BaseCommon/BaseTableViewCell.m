@@ -10,6 +10,24 @@
 
 @implementation BaseTableViewCell
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        // Initialization code
+        [self baseSetup];
+    }
+    return self;
+}
+#pragma mark override this method for init tableviewcell
+- (void)baseSetup {
+    
+}
+#pragma mark override this method for data fill
+-(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
 - (void)awakeFromNib {
     // Initialization code
 }

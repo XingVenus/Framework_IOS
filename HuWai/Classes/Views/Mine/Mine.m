@@ -81,6 +81,10 @@
     if (section == 0) {
         
         UITableViewCell *cell1 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier1 forIndexPath:indexPath];
+        UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"head-img"]];
+        imageview.frame = cell1.bounds;
+        [cell1.contentView addSubview:imageview];
+        //登录与未登录
         return cell1;
     }else{
         

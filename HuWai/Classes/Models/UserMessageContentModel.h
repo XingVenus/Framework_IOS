@@ -10,4 +10,10 @@
 
 @interface UserMessageContentModel : RFJModel
 
+JProperty(NSString *mid, id);
+JProperty(NSString *from, from);
+JProperty(NSString *time, time);
+JProperty(NSString *title, title);
+JProperty(NSString *summary, summary);
+
 @end

@@ -11,3 +11,7 @@
 @implementation UserMessageModel
 
 @end
+
+@implementation MessageInfo
+
+@end

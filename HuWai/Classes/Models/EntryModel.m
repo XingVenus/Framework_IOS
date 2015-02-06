@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
 
-#import "BaseModel.h"
+#import "EntryModel.h"
 
-@implementation BaseModel
+@implementation EntryModel
 
 @end

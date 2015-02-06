@@ -22,5 +22,7 @@
 @property (nonatomic,getter = isLogin) BOOL  login;
 
 +(instancetype)shareInit;
+//更新用户信息到模型对象
+-(void)updateUserInfo:(NSDictionary *)userinfo;
 
 @end

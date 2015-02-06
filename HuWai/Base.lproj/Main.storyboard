@@ -869,11 +869,71 @@
                     <navigationItem key="navigationItem" title="设置" id="3bu-2F-C4s"/>
                     <connections>
                         <outlet property="tableView" destination="9A0-5l-NhX" id="LVt-aN-ddy"/>
+                        <segue destination="Igh-fG-YZW" kind="push" identifier="aboutus" id="sPX-si-M9y"/>
+                        <segue destination="wgr-3e-AFM" kind="push" identifier="agreement" id="aov-9T-lNh"/>
+                        <segue destination="3LF-hV-9ru" kind="push" identifier="feedback" id="9aa-6r-aq6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Izs-Ih-qtg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="977" y="2903"/>
+        </scene>
+        <!--意见反馈-->
+        <scene sceneID="Sfc-bT-coD">
+            <objects>
+                <viewController storyboardIdentifier="feedbackBoard" title="意见反馈" id="3LF-hV-9ru" customClass="Feedback" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aEz-6a-CR9"/>
+                        <viewControllerLayoutGuide type="bottom" id="EV6-sc-gn7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="E9o-kf-t48">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="意见反馈" id="oVg-Ea-IK6"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3BV-5M-kxa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1371" y="2514"/>
+        </scene>
+        <!--关于我们-->
+        <scene sceneID="rYl-LP-KR4">
+            <objects>
+                <viewController title="关于我们" id="Igh-fG-YZW" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="u9N-r9-4o2"/>
+                        <viewControllerLayoutGuide type="bottom" id="uUq-FC-F8a"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IoG-a5-jYX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="关于我们" id="OJQ-Cq-9so"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aXw-v2-fbU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1371" y="3135"/>
+        </scene>
+        <!--用户协议-->
+        <scene sceneID="Jcr-X1-CdM">
+            <objects>
+                <viewController storyboardIdentifier="agreementBoard" title="用户协议" id="wgr-3e-AFM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xbu-QQ-4CG"/>
+                        <viewControllerLayoutGuide type="bottom" id="fRs-lx-pJT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RHm-OH-1TM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="用户协议" id="9kQ-f2-slg"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r6d-1J-j9u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1371" y="3771"/>
         </scene>
         <!--我的订单-->
         <scene sceneID="a1k-1C-Je2">
@@ -1352,12 +1412,12 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="新密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ib7-nw-rjN">
                                 <rect key="frame" x="70" y="90" width="220" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="再次输入密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="zps-YU-b1Z">
                                 <rect key="frame" x="70" y="140" width="220" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1385,8 +1445,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="修改密码" id="f0S-bT-pZn">
-                        <barButtonItem key="rightBarButtonItem" title="提交" id="Xvk-4c-HMD"/>
+                        <barButtonItem key="rightBarButtonItem" title="提交" id="Xvk-4c-HMD">
+                            <connections>
+                                <action selector="submitPassword:" destination="JRS-ET-dLl" id="pr1-74-Bhj"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="firstPassword" destination="ib7-nw-rjN" id="zY6-cI-HWp"/>
+                        <outlet property="secondPassword" destination="zps-YU-b1Z" id="ZxR-OM-Veh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BQN-rC-sfO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

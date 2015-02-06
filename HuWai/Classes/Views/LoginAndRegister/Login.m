@@ -8,6 +8,7 @@
 
 #import "Login.h"
 #import "UIButton+ButtonUtility.h"
+#import "EntryModel.h"
 @interface Login ()
 @property (weak, nonatomic) IBOutlet UIButton *forgetPasswordButton;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
@@ -54,7 +55,7 @@
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    if (response.code.intValue == 20000) {
+    if (response.code == 20000) {
         
         if (tag == GettokenAction) {
             //获取用户登录令牌成功
@@ -64,14 +65,11 @@
         }else if (tag == UserEntryAction){
             APPInfo *infoObj = [APPInfo shareInit];
             infoObj.login = YES;
-            infoObj.create_time = response.data[@"create_time"];
-            infoObj.email = response.data[@"email"];
-            infoObj.role_id = response.data[@"role_id"];
-            infoObj.star = response.data[@"star"];
-            infoObj.status = response.data[@"status"];
-            infoObj.tel = response.data[@"tel"];
-            infoObj.uid = response.data[@"uid"];
-            infoObj.username = response.data[@"username"];
+            //赋值更新用户信息
+            [infoObj updateUserInfo:response.data];
+            //缓存用户登录账号
+            [CacheBox saveCache:CACHE_USER_PHONE value:[CommonFoundation trimString:self.phoneNumber.text]];
+            [CacheBox saveCache:CACHE_USER_PASSWORD value:[CommonFoundation trimString:self.password.text]];
         }
     }
     [self showMessageWithThreeSecondAtCenter:response.message];

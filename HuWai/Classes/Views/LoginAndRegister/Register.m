@@ -76,7 +76,7 @@
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    if (response.code.intValue == 20000) {
+    if (response.code == 20000) {
         if (tag == SendSmsAction) {
             _smsToken = [response.data objectForKey:@"smsToken"];
         }else if (tag == SmsTokenAction){

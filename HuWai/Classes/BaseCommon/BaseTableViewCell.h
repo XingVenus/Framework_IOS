@@ -10,4 +10,7 @@
 
 @interface BaseTableViewCell : UITableViewCell
 
+- (void)baseSetup;
+- (void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath;
+
 @end

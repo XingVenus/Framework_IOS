@@ -6,13 +6,17 @@
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseTableViewCell.h"
+@interface HasScoreCellView : UIView
 
-@interface HasScoreCell : UITableViewCell
+@end
 
+@interface HasScoreCell : BaseTableViewCell
+
+@property (nonatomic, strong) HasScoreCellView *hasScoreBackView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *subTitleLabel;
-@property (nonatomic, strong) UILabel *describeLabel;
+@property (nonatomic, strong) RTLabel *describeLabel;
 @property (nonatomic, strong) UILabel *scoreLabel;
 
 @end

@@ -8,7 +8,7 @@
 
 #import "Subscribe.h"
 #import "ActivityCell.h"
-
+#import "BlankView.h"
 @interface Subscribe ()
 
 @end
@@ -18,6 +18,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    BlankView *bview = [[BlankView alloc] initWithFrame:CGRectMake(0, 100 - [CommonFoundation getAdapter64Height], SCREEN_WIDTH, 200)];
+    bview.textLabel.text = @"您还未订阅任何领队";
+//    bview.hidden = YES;
+    bview.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:bview];
     // Do any additional setup after loading the view.
 }
 
@@ -28,7 +34,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

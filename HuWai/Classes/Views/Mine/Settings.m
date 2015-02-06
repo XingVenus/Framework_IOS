@@ -94,7 +94,7 @@
         {
             if (row == 0) {
                 //意见反馈
-                
+                [self performSegueWithIdentifier:@"feedback" sender:self];
             }else if (row == 1){
                 //版本更新
                 
@@ -105,10 +105,10 @@
         {
             if (row == 0) {
                 //关于我们
-                
+                [self performSegueWithIdentifier:@"aboutus" sender:self];
             }else if (row == 1){
                 //用户协议
-                
+                [self performSegueWithIdentifier:@"agreement" sender:self];
             }else if (row == 2){
                 //鼓励我们
                 

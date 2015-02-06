@@ -9,6 +9,9 @@
 #import "ModifyPassword.h"
 
 @interface ModifyPassword ()
+@property (weak, nonatomic) IBOutlet UITextField *firstPassword;
+@property (weak, nonatomic) IBOutlet UITextField *secondPassword;
+- (IBAction)submitPassword:(UIBarButtonItem *)sender;
 
 @end
 
@@ -34,4 +37,25 @@
 }
 */
 
+- (IBAction)submitPassword:(UIBarButtonItem *)sender {
+    NSString *message = nil;
+    if ([CommonFoundation isEmptyString:self.firstPassword.text] || [CommonFoundation isEmptyString:self.secondPassword.text]) {
+        message = @"密码信息不能为空";
+    }else if(![self.firstPassword.text isEqualToString:self.secondPassword.text]){
+        message = @"两次密码不一致,请重新输入";
+    }
+    [self showMessageWithThreeSecondAtCenter:message];
+    if (!message) {
+        //提交
+        [self postAction:ModifyPasswordAction params:@"new_password",[CommonFoundation trimString:self.secondPassword.text],nil];
+    }
+}
+
+-(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
+{
+    if (response.code == 20000) {
+        
+    }
+    [self showMessageWithThreeSecondAtCenter:response.message];
+}
 @end

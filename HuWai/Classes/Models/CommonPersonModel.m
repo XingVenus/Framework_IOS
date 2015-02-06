@@ -11,3 +11,7 @@
 @implementation CommonPersonModel
 
 @end
+
+@implementation CommonPersonInfo
+
+@end

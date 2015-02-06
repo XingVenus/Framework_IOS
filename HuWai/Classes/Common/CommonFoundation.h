@@ -83,7 +83,7 @@
  *  判断字符串为空 包括 nil @""  null NULL
  *
  */
-+(BOOL)isEmptyString:(NSString *)str;
++(BOOL)isEmptyString:(NSString *)value;
 
 /**   函数名称 :DataToUTF8String
  **   函数作用 :将data类型的数据,转成UTF8的数据
@@ -167,7 +167,7 @@
 +(NSString *)dateStringWithTimeStamp:(NSString *)timeStamp withFormate:(NSString *)FormateString;
 
 //add by venus
-+ (CGFloat)getAdapterHeight;
+//+ (CGFloat)getAdapterHeight;
 + (CGFloat)getStateBarHeight;
 + (CGFloat)getAdapter64Height;
 + (CGFloat)getAdapterNavigationHeight;

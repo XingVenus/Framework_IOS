@@ -22,8 +22,20 @@
 //#define HTTP_BASE_PATH      @"http://172.23.69.2:8080/localization/"
 
 //＝＝＝＝＝＝应用沙盒的缓存key定义
+#define CACHE_USER_PHONE    @"CACHE_USER_PHONE"
+#define CACHE_USER_PASSWORD @"CACHE_USER_PASSWORD"
+#define CACHE_TOKEN         @"CACHE_TOKEN"
+#define CACHE_USER_INFO     @"CACHE_USER_INFO"
 
-
+//----用户信息缓存字段
+#define USERNAME_CACHE      @"USERNAME_CACHE"
+#define EMAIL_CACHE         @"EMAIL_CACHE"
+#define CREATETIME_CACHE    @"CREATETIME_CACHE"
+#define TEL_CACHE           @"TEL_CACHE"
+#define UID_CACHE           @"UID_CACHE"
+#define STAR_CACHE          @"STAR_CACHE"
+#define ROLEID_CACHE        @"ROLEID_CACHE"
+#define STATUS_CACHE        @"STATUS_CACHE"
 //＝＝＝＝＝＝名称常量定义
 //密码加密密钥
 #define SECRET_KEY @"luobodi_haokelai"

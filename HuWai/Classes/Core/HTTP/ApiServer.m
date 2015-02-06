@@ -40,6 +40,21 @@
             uristring = Gettoken_Uri;
             break;
         }
+        case CommonPersonListAction:
+        {
+            uristring = CommonPersonList_Uri;
+            break;
+        }
+        case CommonPersonAddAction:
+        {
+            uristring = CommonPersonAdd_Uri;
+            break;
+        }
+        case ModifyPasswordAction:
+        {
+            uristring = ModifyPassword_Uri;
+            break;
+        }
         default:
             break;
     }

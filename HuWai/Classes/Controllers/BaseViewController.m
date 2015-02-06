@@ -80,19 +80,12 @@
             [md setObject:object forKey:key];
         }
         va_end(arguments);
-        
-        DLog(@"Post data:%@",md);
     }
     self.requestAction = action;
     self.requestMethod = RequestMethodGet;
-    //每次请求自动带上token值
-    if ([APPInfo shareInit].token) {
-        [md setObject:[APPInfo shareInit].token forKey:@"token"];
-    }
     
     [self executeRequest:[ApiServer uriStringFromAction:action] params:md];
 }
-
 
 #pragma mark - 数据请求post 一般用于参数传递 请求数据
 -(void)postAction:(HttpRequestAction)action params:(id)firstObject, ...
@@ -136,10 +129,6 @@
     self.requestAction = action;
 
     self.requestMethod = RequestMethodPost;
-    //每次请求自动带上token值
-    if ([APPInfo shareInit].token) {
-        [md setObject:[APPInfo shareInit].token forKey:@"token"];
-    }
     
     NSString *uriString = [ApiServer uriStringFromAction:action];
     [self executeRequest:uriString params:md];
@@ -177,11 +166,7 @@
     
     self.requestAction = action;
     self.requestMethod = RequestMethodPost;
-    //每次请求自动带上token值
-    if ([APPInfo shareInit].token) {
-        [md setObject:[APPInfo shareInit].token forKey:@"token"];
-    }
-    
+
     NSString *uriString = [ApiServer uriStringFromAction:action];
     NSRange rang = [uriString rangeOfString:@":"];
     if (appendValue) {
@@ -192,7 +177,7 @@
 }
 
 #pragma mark - 发起请求
--(void)executeRequest:(NSString *)uristring params:(NSDictionary *)param
+-(void)executeRequest:(NSString *)uristring params:(NSMutableDictionary *)param
 {
     if (_showRequestHUD) {
         if(self.hud == nil) {
@@ -202,12 +187,18 @@
         }
         [self.hud show:YES];
     }
+    //----每次请求自动带上token值
+    NSString *token = [CacheBox getCache:CACHE_TOKEN];
+    if (token) {
+        [param setObject:token forKey:@"token"];
+    }
     DLog(@"Post data:%@",param);
     [[HttpClient httpManager] executeRequest:uristring method:self.requestMethod params:param successBlockCallback:^(Response *response) {
         [self.hud hide:YES];
         //保存每次请求更新的token
-        if (response.token.description.length == 72) {
-            [APPInfo shareInit].token = response.token;
+        if (response.token) {
+            [CacheBox saveCache:CACHE_TOKEN value:response.token];
+//            [APPInfo shareInit].token = response.token;
         }
         DLog(@"Request url:%@\n Success Response string:%@",response.url,[response.contentText JSONValue]);
         [self onRequestFinished:self.requestAction response:response];

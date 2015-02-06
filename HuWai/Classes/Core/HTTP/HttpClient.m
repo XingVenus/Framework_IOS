@@ -86,23 +86,15 @@
     Response* response = [[Response alloc]init];
     response.afManager = _manager;
     if (responseObject) {
-        response.url = operation.request.URL.description;
+        
+        [response fillWithJsonDict:(NSDictionary *)responseObject];
+        response.url = [operation.request.URL absoluteString];
         response.contentText = operation.responseString;
-        response.status = [responseObject objectForKey:@"status"];
-        response.code = [responseObject objectForKey:@"code"];
-        response.message = [responseObject objectForKey:@"message"];
-        response.data = [responseObject objectForKey:@"data"];
-        response.token = [responseObject objectForKey:@"token"];
-        response.error = nil;
         
     }else{
-        response.url = operation.request.URL.description;
+        
+        response.url = [operation.request.URL absoluteString];
         response.contentText = operation.responseString;
-        response.status = nil;
-        response.code = nil;
-        response.message = nil;
-        response.data = nil;
-        response.token = nil;
         response.error = error;
     }
     

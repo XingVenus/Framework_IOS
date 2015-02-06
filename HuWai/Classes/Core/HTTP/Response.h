@@ -8,16 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import "AFHTTPRequestOperationManager.h"
+#import "RFJModel.h"
 
-@interface Response : NSObject
+@interface Response : RFJModel
+
+JProperty(BOOL status, status);
+JProperty(NSInteger code, code);
+JProperty(NSString *message, message);
+JProperty(NSString *token, token);
+JProperty(NSDictionary *data, data);
 
 @property (strong, nonatomic) AFHTTPRequestOperationManager* afManager;
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSString *contentText;//返回所有的内容
-@property (nonatomic, strong) NSString *status;
-@property (nonatomic, strong) NSNumber *code;
-@property (nonatomic, strong) NSString *message;
-@property (nonatomic, strong) NSString *token;
-@property (nonatomic, strong) id data;
+//@property (nonatomic, strong) id data;
 @property (strong, nonatomic) NSError *error;
 @end

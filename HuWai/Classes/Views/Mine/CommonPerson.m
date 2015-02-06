@@ -8,7 +8,7 @@
 
 #import "CommonPerson.h"
 #import "CommonPersonAddOrEdit.h"
-
+#import "CommonPersonModel.h"
 @interface CommonPerson ()
 
 @end
@@ -17,9 +17,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSArray *dataArray = @[@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd"];
-    [self.dataSource addObjectsFromArray:dataArray];
+    [self loadDataSource];
+//    NSArray *dataArray = @[@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd"];
+//    [self.dataSource addObjectsFromArray:dataArray];
     // Do any additional setup after loading the view.
+}
+
+-(void)loadDataSource
+{
+    [self postAppendUriAction:CommonPersonListAction withValue:[APPInfo shareInit].uid params:nil];
+}
+
+-(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
+{
+    if (response.code == 20000) {
+        if (tag == CommonPersonListAction) {
+            if (response.data) {
+                CommonPersonModel *model = [[CommonPersonModel alloc] initWithJsonDict:response.data];
+                self.dataSource = [model.data mutableCopy];
+                [self.tableView reloadData];
+            }
+        }
+    }
+    
+    [self showMessageWithThreeSecondAtCenter:response.message];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,7 +74,8 @@
         return cell1;
     }else{
         UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier2 forIndexPath:indexPath];
-        cell2.textLabel.text = self.dataSource[row];
+        CommonPersonInfo *info = self.dataSource[row];
+        cell2.textLabel.text = info.name;
         return cell2;
     }
 }
@@ -72,6 +94,7 @@
         addoreditController.pageType = AddType;
     }else{
         addoreditController.pageType = EditType;
+        addoreditController.info = (CommonPersonInfo *)self.dataSource[selectedRowIndex.row];
     }
     
 }

@@ -10,7 +10,7 @@
 #import "NotScoreCell.h"
 #import "HasScoreCell.h"
 
-@interface LeaderScore ()
+@interface LeaderScore ()<EDStarRatingProtocol>
 
 @end
 
@@ -39,30 +39,51 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 8;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 210;
+    if (indexPath.row > 3) {
+        return 130;
+    }
+    return 230;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier1 = @"notscorecell";
     static NSString *cellIdentifier2 = @"hasscorecell";
-    NotScoreCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier1];
+    if (indexPath.row>3) {
+        HasScoreCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier2];
+        if (!cell) {
+            cell = [[HasScoreCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        [cell configureCellWithItem:nil atIndexPath:indexPath];
+        return cell;
+    }else{
+        
+        NotScoreCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier1];
         if (!cell) {
             cell = [[NotScoreCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier1];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell configureCellWithItem:nil atIndexPath:indexPath];
-    return cell;
+        cell.starControl1.delegate = self;
+        cell.starControl2.delegate = self;
+        [cell configureCellWithItem:nil atIndexPath:indexPath];
+        return cell;
+    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DLog(@"%ld",(long)indexPath.row);
+}
+
+-(void)starsSelectionChanged:(EDStarRating*)control rating:(float)rating
+{
+    
 }
 
 @end

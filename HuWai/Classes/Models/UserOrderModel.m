@@ -11,3 +11,7 @@
 @implementation UserOrderModel
 
 @end
+
+@implementation OrderInfo
+
+@end

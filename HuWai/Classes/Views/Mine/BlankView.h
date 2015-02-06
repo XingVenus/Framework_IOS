@@ -10,4 +10,7 @@
 
 @interface BlankView : UIView
 
+@property (nonatomic, strong) UIImageView *expressionView;
+@property (nonatomic, strong) UILabel   *textLabel;
+
 @end
