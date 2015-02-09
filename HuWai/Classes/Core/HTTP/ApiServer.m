@@ -55,6 +55,11 @@
             uristring = ModifyPassword_Uri;
             break;
         }
+        case ActivityAction:
+        {
+            uristring = Activity_Uri;
+            break;
+        }
         default:
             break;
     }

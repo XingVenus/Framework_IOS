@@ -64,8 +64,8 @@
     [super layoutSubviews];
     
     CGFloat statusX = 0;
-    CGFloat statusY = 0;
-    CGFloat statusHeight = self.mj_height * 0.5;
+    CGFloat statusY = 10;
+    CGFloat statusHeight = 30;
     CGFloat statusWidth = self.mj_width;
     // 1.状态标签
     self.statusLabel.frame = CGRectMake(statusX, statusY, statusWidth, statusHeight);

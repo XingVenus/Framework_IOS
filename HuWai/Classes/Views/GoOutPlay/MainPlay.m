@@ -12,6 +12,9 @@
 #import "ActivityDetail.h"
 #import "SelectListView.h"
 #import "NavView.h"
+
+#import "MJRefresh.h"
+
 @interface MainPlay ()
 {
     NavView *navigationView;
@@ -25,6 +28,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //下拉、上拉注册
+    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
+    [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing) dateKey:@"mainplay"];
+    // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
+//    [self.tableView addFooterWithTarget:self action:@selector(footerLoading)];
+    [self.tableView addFooterWithCallback:^{
+        [self postAction:ActivityAction params:@"city",@"162",@"time",@"",@"play",@"",@"page",@"1",@"pagesize",@"20",nil];
+    }];
+    [self.tableView headerBeginRefreshing];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavBarWithNoAnimate) name:@"hideNavBarWithNoAnimate" object:nil];
 //    self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0);
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -126,14 +139,13 @@
 {
     [super viewWillAppear:animated];
     [self setFullScreen:YES];
-    if (![APPInfo shareInit].isLogin) {
-        
+//    if (![APPInfo shareInit].isLogin) {
+    
 //        UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNav"];
 //        [self presentViewController:loginNav animated:NO completion:nil];
         //[UIApplication sharedApplication].keyWindow.rootViewController
-    }
+//    }
 }
-
 
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -143,6 +155,30 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark 刷新数据
+-(void)headerRereshing
+{
+    [self postAction:ActivityAction params:@"city",@"162",@"time",@"",@"play",@"",@"page",@"1",@"pagesize",@"20",nil];
+}
+
+-(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
+{
+    if (self.tableView.headerRefreshing) {
+        [self.tableView headerEndRefreshing];
+    }else{
+        [self.tableView footerEndRefreshing];
+    }
+}
+-(void)onRequestFailed:(HttpRequestAction)tag response:(Response *)response
+{
+    if (self.tableView.headerRefreshing) {
+        [self.tableView headerEndRefreshing];
+    }else{
+        [self.tableView footerEndRefreshing];
+    }
+    
 }
 
 #pragma mark method implement
@@ -173,7 +209,7 @@
     NSInteger btnTag = sender.tag;
     static UIButton *lastSelected;
     
-    NSArray *listArray = @[@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff",@"5ffff",@"6ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff"];
+    NSArray *listArray = @[@"ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff"];
     if (btnTag == 1001) {
         listPopView.listData = listArray;
     }else if (btnTag == 1002){

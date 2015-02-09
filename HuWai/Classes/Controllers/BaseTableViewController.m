@@ -68,6 +68,8 @@
 //    self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    //去除多余的空白行
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 //    [self.tableView setNeedsLayout];
 //    [self.tableView setNeedsUpdateConstraints];
     // Uncomment the following line to preserve selection between presentations.

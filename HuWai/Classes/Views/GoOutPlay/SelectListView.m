@@ -40,7 +40,7 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorInset = UIEdgeInsetsZero;
-//        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     }
     return _tableView;
 }

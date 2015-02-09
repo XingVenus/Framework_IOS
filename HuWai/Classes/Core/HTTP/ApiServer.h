@@ -17,8 +17,8 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
     ResetpasswordAction,//重设密码
     CommonPersonListAction,//常用出行人列表
     CommonPersonAddAction, //常用出行人 新增
-    ModifyPasswordAction,           //修改密码
-    
+    ModifyPasswordAction,   //修改密码
+    ActivityAction,         //活动列表
 };
 
 #define UserRegister_Uri    @"/v1/register"
@@ -30,6 +30,9 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
 #define CommonPersonList_Uri    @"/v1/participants/list?uid=:string"
 #define CommonPersonAdd_Uri     @"/v1/participants/add"
 #define ModifyPassword_Uri      @"/v1/user/password"
+
+//活动
+#define Activity_Uri        @"/v1/activity/list"
 
 @interface ApiServer : NSObject
 
