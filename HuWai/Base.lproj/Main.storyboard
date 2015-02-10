@@ -36,6 +36,8 @@
                     <connections>
                         <outlet property="tableView" destination="82a-Hb-rn5" id="fqA-3e-Dd5"/>
                         <segue destination="HCc-zo-pb2" kind="push" identifier="citylist" id="P4g-za-ybD"/>
+                        <segue destination="Igp-5b-Snl" kind="push" identifier="search" id="HI0-hr-2fz"/>
+                        <segue destination="U85-3M-9v8" kind="push" identifier="activitydetail" id="P97-Mn-Li6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qNC-oI-VyB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -104,13 +106,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="D5v-TW-CZL">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="D5v-TW-CZL">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="D5v-TW-CZL" secondAttribute="trailing" id="Mid-4a-F6B"/>
+                            <constraint firstItem="D5v-TW-CZL" firstAttribute="leading" secondItem="5qr-mt-bb6" secondAttribute="leading" id="QQS-Zm-XbE"/>
+                            <constraint firstAttribute="bottom" secondItem="D5v-TW-CZL" secondAttribute="bottom" id="pll-fT-8zC"/>
+                            <constraint firstItem="D5v-TW-CZL" firstAttribute="top" secondItem="5qr-mt-bb6" secondAttribute="top" id="uXx-2Q-nIp"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="3IE-Vt-qst">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="nE4-Jc-FHK">
+                            <connections>
+                                <action selector="backToMain:" destination="Igp-5b-Snl" id="BFc-3k-JiS"/>
+                            </connections>
+                        </barButtonItem>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="搜索活动" minimumFontSize="17" clearButtonMode="whileEditing" id="hqc-YD-2s7">
+                            <rect key="frame" x="45" y="7" width="240" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                        </textField>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="searchField" destination="hqc-YD-2s7" id="dvb-08-oNv"/>
+                        <outlet property="tableView" destination="D5v-TW-CZL" id="iSS-hK-LX2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XpO-Te-4vG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1640,6 +1666,7 @@
     <resources>
         <image name="Confirm-lock" width="27" height="27"/>
         <image name="Login" width="317" height="56"/>
+        <image name="arrow-back" width="12" height="20"/>
         <image name="avatar" width="61" height="61"/>
         <image name="cellphone" width="27" height="27"/>
         <image name="close" width="13" height="13"/>

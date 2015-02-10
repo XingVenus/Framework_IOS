@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    DLog(@"%@",self.Title);
+    DLog(@"%@",self.detailTitle);
     // Do any additional setup after loading the view.
 }
 

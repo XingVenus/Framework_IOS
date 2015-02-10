@@ -37,7 +37,7 @@
         [self postAction:ActivityAction params:@"city",@"162",@"time",@"",@"play",@"",@"page",@"1",@"pagesize",@"20",nil];
     }];
     [self.tableView headerBeginRefreshing];
-    
+    //添加 隐藏导航条 通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavBarWithNoAnimate) name:@"hideNavBarWithNoAnimate" object:nil];
 //    self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0);
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -64,6 +64,7 @@
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(SCREEN_WIDTH - 45, navViewHeight - 67, 30, 30);
     [searchBtn setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
+    [searchBtn addTarget:self action:@selector(searchActivity:) forControlEvents:UIControlEventTouchUpInside];
     [navigationView addSubview:searchBtn];
 //    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
 //    self.navigationItem.rightBarButtonItem = rightBtn;
@@ -74,7 +75,7 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.center = CGPointMake(SCREEN_WIDTH/2, 0);
     titleLabel.top = navViewHeight - 65;
-    titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18.0];
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = @"出去玩";
     [navigationView addSubview:titleLabel];
@@ -204,6 +205,11 @@
     [self performSegueWithIdentifier:@"citylist" sender:self];
 }
 
+-(void)searchActivity:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:@"search" sender:self];
+}
+
 -(void)showSelectView:(UIButton *)sender
 {
     NSInteger btnTag = sender.tag;
@@ -251,8 +257,10 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 //    NSIndexPath *selectedRowIndex=[self.tableView indexPathForSelectedRow];
-//    ActivityDetail *activityController = segue.destinationViewController;
-    
+    if ([segue.identifier isEqualToString:@"activitydetail"]) {
+        ActivityDetail *activityController = segue.destinationViewController;
+        activityController.detailTitle = @"ok";
+    }
 }
 
 #pragma mark - tableview
@@ -280,9 +288,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ActivityDetail *activitydetail = [self.storyboard instantiateViewControllerWithIdentifier:@"activityDetailBoard"];
-    activitydetail.Title = @"gggggggghhhhhhh";
-    [self.navigationController pushViewController:activitydetail animated:YES];
+//    ActivityDetail *activitydetail = [self.storyboard instantiateViewControllerWithIdentifier:@"activityDetailBoard"];
+//    activitydetail.Title = @"gggggggghhhhhhh";
+//    [self.navigationController pushViewController:activitydetail animated:YES];
+    [self performSegueWithIdentifier:@"activitydetail" sender:self];
 }
 
 @end

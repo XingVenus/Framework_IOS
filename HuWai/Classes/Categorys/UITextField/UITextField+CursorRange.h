@@ -10,4 +10,8 @@
 
 @interface UITextField (CursorRange)
 
+//@property (nonatomic) NSRange selectedRange;
+- (NSRange) selectedRange;
+- (void) setSelectedRange:(NSRange) range;
+
 @end

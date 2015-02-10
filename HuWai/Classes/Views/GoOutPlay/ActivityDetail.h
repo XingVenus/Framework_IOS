@@ -10,6 +10,6 @@
 
 @interface ActivityDetail : BaseTableViewController
 
+@property (nonatomic, strong) NSString *detailTitle;
 
-@property (nonatomic, strong) NSString *Title;
 @end

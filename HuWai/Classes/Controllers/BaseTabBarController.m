@@ -18,7 +18,7 @@
     [super viewDidLoad];
     self.tabBarController.tabBar.delegate = self;
     //--------设置选中时的图片颜色tintColor-------
-    if (floor(NSFoundationVersionNumber)>=7.0) {        
+    if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) {
         [UITabBar appearance].tintColor = RGBA(46, 181, 220, 1);
     }
     //设置选中tab的文字的颜色,默认为tintcolor的颜色一致

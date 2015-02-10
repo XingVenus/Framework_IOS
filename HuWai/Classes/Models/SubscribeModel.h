@@ -8,8 +8,12 @@
 
 #import "RFJModel.h"
 #import "PaperModel.h"
+
+@protocol SubscribeInfo
+@end
+
 @interface SubscribeModel : RFJModel
-JProperty(NSArray *data, data);
+JProperty(NSArray<SubscribeInfo> *data, data);
 JProperty(PaperModel *paper, paper);
 @end
 

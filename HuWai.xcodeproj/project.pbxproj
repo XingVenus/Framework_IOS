@@ -63,6 +63,8 @@
 		04A539571A84B23B006BA09D /* UserMessageContentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A539561A84B23B006BA09D /* UserMessageContentModel.m */; };
 		04A5395A1A84B2B9006BA09D /* ActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A539591A84B2B9006BA09D /* ActivityModel.m */; };
 		04A5395D1A84B3B4006BA09D /* SubscribeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A5395C1A84B3B4006BA09D /* SubscribeModel.m */; };
+		04B09FA81A89EC260077394C /* UITextField+CursorRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B09FA71A89EC260077394C /* UITextField+CursorRange.m */; };
+		04B09FAB1A8A0F830077394C /* FavoriteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B09FAA1A8A0F830077394C /* FavoriteModel.m */; };
 		04C2B1F11A65163E004E8F73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2B1F01A65163E004E8F73 /* main.m */; };
 		04C2B1F41A65163E004E8F73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2B1F31A65163E004E8F73 /* AppDelegate.m */; };
 		04C2B1F71A65163E004E8F73 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2B1F61A65163E004E8F73 /* ViewController.m */; };
@@ -210,6 +212,10 @@
 		04A539591A84B2B9006BA09D /* ActivityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModel.m; sourceTree = "<group>"; };
 		04A5395B1A84B3B4006BA09D /* SubscribeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribeModel.h; sourceTree = "<group>"; };
 		04A5395C1A84B3B4006BA09D /* SubscribeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeModel.m; sourceTree = "<group>"; };
+		04B09FA61A89EC260077394C /* UITextField+CursorRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+CursorRange.h"; sourceTree = "<group>"; };
+		04B09FA71A89EC260077394C /* UITextField+CursorRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+CursorRange.m"; sourceTree = "<group>"; };
+		04B09FA91A8A0F830077394C /* FavoriteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteModel.h; sourceTree = "<group>"; };
+		04B09FAA1A8A0F830077394C /* FavoriteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteModel.m; sourceTree = "<group>"; };
 		04C2B1EB1A65163E004E8F73 /* HuWai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HuWai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C2B1EF1A65163E004E8F73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04C2B1F01A65163E004E8F73 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -367,6 +373,8 @@
 				04A539591A84B2B9006BA09D /* ActivityModel.m */,
 				04A5395B1A84B3B4006BA09D /* SubscribeModel.h */,
 				04A5395C1A84B3B4006BA09D /* SubscribeModel.m */,
+				04B09FA91A8A0F830077394C /* FavoriteModel.h */,
+				04B09FAA1A8A0F830077394C /* FavoriteModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -390,6 +398,7 @@
 		042B3F681A666C8B000E896D /* Categorys */ = {
 			isa = PBXGroup;
 			children = (
+				04B09FA51A89EBD50077394C /* UITextField */,
 				042B3F7B1A66792A000E896D /* UIView */,
 				042B3F691A666C8B000E896D /* NSString */,
 				042B3F6A1A666C8B000E896D /* UIButton */,
@@ -583,6 +592,15 @@
 				04A539411A8308DF006BA09D /* RFJModel.m */,
 			);
 			path = RFJModel;
+			sourceTree = "<group>";
+		};
+		04B09FA51A89EBD50077394C /* UITextField */ = {
+			isa = PBXGroup;
+			children = (
+				04B09FA61A89EC260077394C /* UITextField+CursorRange.h */,
+				04B09FA71A89EC260077394C /* UITextField+CursorRange.m */,
+			);
+			path = UITextField;
 			sourceTree = "<group>";
 		};
 		04C2B1E21A65163E004E8F73 = {
@@ -835,6 +853,7 @@
 				044C6B9D1A88AA94000BF100 /* MJRefreshConst.m in Sources */,
 				043F6AE71A762F5400EEA0B3 /* ModifyPassword.m in Sources */,
 				04C2B1F41A65163E004E8F73 /* AppDelegate.m in Sources */,
+				04B09FAB1A8A0F830077394C /* FavoriteModel.m in Sources */,
 				04605F3A1A6E4B52004EBB2D /* UIButton+ButtonUtility.m in Sources */,
 				048337DD1A807AA200E2F889 /* BaseTableViewCell.m in Sources */,
 				048337D91A7F799100E2F889 /* RTLabel.m in Sources */,
@@ -872,6 +891,7 @@
 				04A5395A1A84B2B9006BA09D /* ActivityModel.m in Sources */,
 				048E97EC1A722854003697D1 /* Profile.m in Sources */,
 				04A5394B1A84A931006BA09D /* BlankView.m in Sources */,
+				04B09FA81A89EC260077394C /* UITextField+CursorRange.m in Sources */,
 				0425F6901A6F7AA700913034 /* ForgetPassword.m in Sources */,
 				04CCA7C81A7B90EE0034A21D /* MessageListCell.m in Sources */,
 				044C6B9F1A88AA94000BF100 /* MJRefreshHeaderView.m in Sources */,

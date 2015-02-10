@@ -28,17 +28,20 @@
     [[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"2pxWidthLineImage"]];
      */
     // Do any additional setup after loading the view.
-//    if (floor(NSFoundationVersionNumber) >= 7.0) {
-//        [[UINavigationBar appearance] setBarTintColor:RGBA(87, 196, 211, 1)];
-//        [[UINavigationBar appearance] setTintColor:[UIColor grayColor]];
-//    } else {
-//        [[UINavigationBar appearance] setTintColor:RGBA(87, 196, 211, 1)];
+//    if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) {
+//        [[UINavigationBar appearance] setBarTintColor:RGBA(54, 178, 214, 1)];//整个背景
+//        [[UINavigationBar appearance] setTintColor:RGBA(46, 181, 220, 1)];//item字体颜色RGBA(54, 178, 214, 1)
+//    }
+//    else {
+//        [[UINavigationBar appearance] setTintColor:RGBA(46, 181, 220, 1)];
 //    }
 //
-//    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:18], NSFontAttributeName, nil]];
-    if (floor(NSFoundationVersionNumber)>=7.0) {
-        self.navigationBar.tintColor = [UIColor colorWithWhite:.2 alpha:1];
-    }
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:18], NSFontAttributeName, nil]];
+    //item字体颜色  在ios6中是背景色
+    [[UINavigationBar appearance] setTintColor:RGBA(46, 181, 220, 1)];
+//    if (NSFoundationVersionNumber>=NSFoundationVersionNumber_iOS_7_0) {
+//        self.navigationBar.tintColor = [UIColor colorWithWhite:.2 alpha:1];
+//    }
     
 }
 
