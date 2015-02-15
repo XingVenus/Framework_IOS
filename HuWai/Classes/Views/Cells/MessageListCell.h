@@ -11,7 +11,7 @@
 @interface MessageListCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (nonatomic, strong) RTLabel *describeLabel;
+@property (nonatomic, weak) IBOutlet RTLabel *describeLabel;
 
 - (void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath;
 

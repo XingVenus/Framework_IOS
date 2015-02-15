@@ -7,14 +7,14 @@
 //
 
 #import "RFJModel.h"
-#import "PaperModel.h"
+#import "PagerModel.h"
 
 @protocol FavoriteInfo
 @end
 
 @interface FavoriteModel : RFJModel
 JProperty(NSArray<FavoriteInfo> *data, data);
-JProperty(PaperModel *paper, paper);
+JProperty(PagerModel *pager, pager);
 
 @end
 

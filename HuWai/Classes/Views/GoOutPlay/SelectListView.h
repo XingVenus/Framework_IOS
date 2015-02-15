@@ -8,10 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, ListType) {
+    ListTypeDestination,
+    ListTypeTime,
+    ListTypePlay
+};
+
+@protocol SelectListViewDelegate <NSObject>
+
+@optional
+-(void)selectedValueForListType:(ListType)listType value:(NSString *)value;
+
+@end
+
 @interface SelectListView : UIView<UITableViewDataSource,UITableViewDelegate>
 - (id)initWithFrame:(CGRect)frame;
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *listData;
+@property (nonatomic, weak) id<SelectListViewDelegate> delegate;
+@property (nonatomic) ListType listType;
 
 @end

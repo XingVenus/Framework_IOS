@@ -60,6 +60,16 @@
             uristring = Activity_Uri;
             break;
         }
+        case HotcityAction:
+        {
+            uristring = Hotcity_Uri;
+            break;
+        }
+        case DestinationAction:
+        {
+            uristring = Destination_Uri;
+            break;
+        }
         default:
             break;
     }

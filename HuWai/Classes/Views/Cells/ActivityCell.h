@@ -7,16 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ActivityModel.h"
+#import "PAAImageView.h"
+
 #define kHeghtRatio     1.7
 
 @interface ActivityCell : UITableViewCell
 
 @property (strong, nonatomic) UIImageView *backImageView;
-@property (strong, nonatomic) UIImageView *avatarImageView;
+@property (strong, nonatomic) PAAImageView *avatarImageView;
 @property (strong, nonatomic) UILabel *nickNameLabel;
-@property (strong, nonatomic) UILabel *describeLabel;
+@property (strong, nonatomic) RTLabel *describeLabel;
 @property (strong, nonatomic) UILabel *grayBackLabel;
+@property (nonatomic, strong) UIButton *priceBtn;
 
-- (void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath;
+- (void)configureCellWithItem:(ActivityInfo *)item atIndexPath:(NSIndexPath *)indexPath;
 
 @end

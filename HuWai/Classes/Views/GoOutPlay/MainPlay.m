@@ -14,12 +14,16 @@
 #import "NavView.h"
 
 #import "MJRefresh.h"
+#import "ActivityModel.h"
 
 @interface MainPlay ()
 {
     NavView *navigationView;
     SelectListView *listPopView;
     UIView *backgroundPopView;
+    NSArray *destinationArray;
+    NSArray *timeArray;
+    NSArray *playArray;
 }
 
 @end
@@ -28,15 +32,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    timeArray = @[@"1日行程",@"2日行程",@"3日行程",@"4-7日行程",@"7日以上"];
+    playArray = @[@"徒步",@"摄影",@"登山",@"露营",@"越野",@"溯溪",@"攀冰",@"骑行",@"潜水",@"自驾",@"滑雪",@"漂流",@"其他"];
     //下拉、上拉注册
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing) dateKey:@"mainplay"];
     // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
-//    [self.tableView addFooterWithTarget:self action:@selector(footerLoading)];
     [self.tableView addFooterWithCallback:^{
-        [self postAction:ActivityAction params:@"city",@"162",@"time",@"",@"play",@"",@"page",@"1",@"pagesize",@"20",nil];
+        [self loadActionWithHUD:ActivityAction params:@"city",@"",@"time",@"",@"play",@"",@"page",@"1",@"pagesize",@"20",nil];
     }];
+    //进入页面刷新
     [self.tableView headerBeginRefreshing];
+    //获取目的地城市列表
+    [self loadAction:DestinationAction params:nil];
     //添加 隐藏导航条 通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavBarWithNoAnimate) name:@"hideNavBarWithNoAnimate" object:nil];
 //    self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0);
@@ -161,11 +169,30 @@
 #pragma mark 刷新数据
 -(void)headerRereshing
 {
-    [self postAction:ActivityAction params:@"city",@"162",@"time",@"",@"play",@"",@"page",@"1",@"pagesize",@"20",nil];
+    [self loadActionWithHUD:ActivityAction params:@"city",@"",@"time",@"",@"play",@"",@"page",@"1",@"pagesize",@"20",nil];
 }
-
+#pragma mark - data response block
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
+    if (response.code == 20000) {
+        if (tag == ActivityAction) {
+            ActivityModel *model = [[ActivityModel alloc] initWithJsonDict:response.data];
+            NSLog(@"%ld",(long)model.pager.total);
+            if (model.pager.total>0) {
+                //显示数据
+                if (self.tableView.headerRefreshing) {
+                    self.dataSource = [model.data mutableCopy];
+                }else if (self.tableView.footerRefreshing){
+                    [self.dataSource addObjectsFromArray:model.data];
+                }
+                
+                [self.tableView reloadData];
+            }
+        }else if (tag == DestinationAction){
+            destinationArray = [response.data copy];
+        }
+    }
+    
     if (self.tableView.headerRefreshing) {
         [self.tableView headerEndRefreshing];
     }else{
@@ -182,7 +209,7 @@
     
 }
 
-#pragma mark method implement
+#pragma mark - method implement
 
 - (void)setFullScreen:(BOOL)fullScreen
 {
@@ -215,13 +242,15 @@
     NSInteger btnTag = sender.tag;
     static UIButton *lastSelected;
     
-    NSArray *listArray = @[@"ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"ffff",@"3ffff",@"4ffff"];
     if (btnTag == 1001) {
-        listPopView.listData = listArray;
+        listPopView.listType = ListTypeDestination;
+        listPopView.listData = destinationArray;
     }else if (btnTag == 1002){
-        
+        listPopView.listType = ListTypeTime;
+        listPopView.listData = timeArray;
     }else if (btnTag == 1003){
-        
+        listPopView.listType = ListTypePlay;
+        listPopView.listData = playArray;
     }
     if (sender.selected) {
         //隐藏
@@ -266,7 +295,7 @@
 #pragma mark - tableview
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return self.dataSource.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -280,9 +309,14 @@
     ActivityCell *cell = (ActivityCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
         cell = [[ActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell configureCellWithItem:nil atIndexPath:indexPath];
+    NSInteger row = [indexPath row];
+    if (row < self.dataSource.count) {
+        ActivityInfo *infoModel = self.dataSource[row];
+        [cell configureCellWithItem:infoModel atIndexPath:indexPath];
+    }
+    
     return cell;
 }
 

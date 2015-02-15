@@ -10,4 +10,6 @@
 
 @interface ResetPassword : BaseViewController
 
+@property (nonatomic, strong) NSString *resetToken;
+@property (nonatomic, strong) NSString *phoneNumber;
 @end

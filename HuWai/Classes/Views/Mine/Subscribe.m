@@ -8,7 +8,7 @@
 
 #import "Subscribe.h"
 #import "ActivityCell.h"
-#import "BlankView.h"
+
 @interface Subscribe ()
 
 @end
@@ -19,11 +19,9 @@
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    BlankView *bview = [[BlankView alloc] initWithFrame:CGRectMake(0, 100 - [CommonFoundation getAdapter64Height], SCREEN_WIDTH, 200)];
-    bview.textLabel.text = @"您还未订阅任何领队";
-//    bview.hidden = YES;
-    bview.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:bview];
+    self.blankView.textTitle = @"您还未订阅任何领队";
+    self.blankView.imageIcon = [UIImage imageNamed:@"expression-wu"];
+    self.blankView.hidden = NO;
     // Do any additional setup after loading the view.
 }
 

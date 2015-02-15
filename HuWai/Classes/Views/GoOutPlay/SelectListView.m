@@ -59,13 +59,30 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    cell.textLabel.text = self.listData[indexPath.row];
-
+    NSInteger row = [indexPath row];
+    if (row < self.listData.count) {
+        if (self.listType == ListTypeDestination) {
+            NSDictionary *dic = self.listData[row];
+            cell.textLabel.text = dic[@"name"];
+        }else{
+            cell.textLabel.text = self.listData[row];
+        }
+    }
+    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSString *value;
+    if (self.listType == ListTypeDestination) {
+        NSDictionary *sDic = self.listData[indexPath.row];
+        value = sDic[@"id"];
+    }else{
+        value = self.listData[indexPath.row];
+    }
+    if (_delegate && [_delegate respondsToSelector:@selector(selectedValueForListType:value:)]) {
+        [_delegate selectedValueForListType:self.listType value:value];
+    }
 }
 @end

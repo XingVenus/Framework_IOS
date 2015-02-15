@@ -49,7 +49,7 @@
         [self.view makeToast:errorStr duration:2 position:CSToastPositionCenter];
         return;
     }
-    self.showRequestHUD = NO;
+//    self.showRequestHUD = NO;
     [self loadAction:GettokenAction params:nil];
 }
 
@@ -59,12 +59,14 @@
         
         if (tag == GettokenAction) {
             //获取用户登录令牌成功
-            self.showRequestHUD = YES;
+//            self.showRequestHUD = YES;
             [self postAction:UserEntryAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"password",[CommonFoundation trimString:self.password.text],@"loginToken",response.data[@"loginToken"],nil];
             return;
         }else if (tag == UserEntryAction){
             APPInfo *infoObj = [APPInfo shareInit];
-            infoObj.login = YES;
+//            infoObj.login = YES;
+            //保存token
+            [CacheBox saveCache:CACHE_TOKEN value:response.token];
             //赋值更新用户信息
             [infoObj updateUserInfo:response.data];
             //缓存用户登录账号

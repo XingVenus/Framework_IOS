@@ -10,6 +10,11 @@
 
 @interface ResetPassword ()
 
+@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UITextField *confirmField;
+
+- (IBAction)submitNewPassword:(id)sender;
+
 @end
 
 @implementation ResetPassword
@@ -34,4 +39,24 @@
 }
 */
 
+- (IBAction)submitNewPassword:(id)sender {
+    NSString *errorMessage;
+    if ([CommonFoundation isEmptyString:self.passwordField.text] || [CommonFoundation isEmptyString:self.confirmField.text]) {
+        errorMessage = @"密码不能为空";
+    }else if (![self.passwordField.text isEqualToString:self.confirmField.text]){
+        errorMessage = @"两次输入的密码不正确";
+    }
+    [self showMessageWithThreeSecondAtCenter:errorMessage];
+    if (_resetToken && _phoneNumber) {
+        [self postAction:ResetpasswordAction params:@"phone",_phoneNumber,@"password",[CommonFoundation trimString:self.confirmField.text],@"token",_resetToken,nil];
+    }
+}
+
+-(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
+{
+    if (response.code == 20000) {
+        
+    }
+    [self showMessageWithThreeSecondAtCenter:response.message];
+}
 @end

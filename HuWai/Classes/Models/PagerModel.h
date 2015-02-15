@@ -1,5 +1,5 @@
 //
-//  PaperModel.h
+//  PagerModel.h
 //  HuWai
 //
 //  Created by WmVenusMac on 15-2-6.
@@ -8,8 +8,8 @@
 
 #import "RFJModel.h"
 
-@interface PaperModel : RFJModel
-JProperty(NSString *total, total);
+@interface PagerModel : RFJModel
+JProperty(NSInteger total, total);
 JProperty(NSInteger page, page);
 JProperty(NSInteger pagesize, pagesize);
 JProperty(NSInteger pagemax, pagemax);

@@ -7,14 +7,14 @@
 //
 
 #import "RFJModel.h"
-#import "PaperModel.h"
+#import "PagerModel.h"
 
 @protocol MessageInfo
 @end
 
 @interface UserMessageModel : RFJModel
 JProperty(NSArray<MessageInfo> *data, data);
-JProperty(PaperModel *paper, paper);
+JProperty(PagerModel *pager, pager);
 @end
 
 

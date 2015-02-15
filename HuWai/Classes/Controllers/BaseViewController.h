@@ -9,22 +9,33 @@
 #import <UIKit/UIKit.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "ApiServer.h"
+#import "BlankView.h"
+
+//NSDictionary *argsTpMap(id firstObject,...);
+
 @interface BaseViewController : UIViewController
 
-@property (nonatomic, strong) NSString *promptMessage; //hud的消息提示
-@property (nonatomic,getter=isShowRequestHUD) BOOL showRequestHUD;  //是否显示请求提示hud框
+@property(strong, nonatomic) MBProgressHUD * hud;
+@property (nonatomic, strong) BlankView *blankView;
 
 -(void)showMessageWithThreeSecondAtCenter:(NSString *)message;
-
+//post action method
 -(void)postAction:(HttpRequestAction) action params:(id)firstObject, ...;
+-(void)postActionWithHUD:(HttpRequestAction) action params:(id)firstObject, ...;
+-(void)postActionWithHUD:(HttpRequestAction) action message:(NSString *)message params:(id)firstObject, ...;
+//post and append uri method
 -(void)postAppendUriAction:(HttpRequestAction)action withValue:(NSString *)appendValue params:(id)firstObject, ...;
+-(void)postAppendUriActionWithHUD:(HttpRequestAction)action withValue:(NSString *)appendValue params:(id)firstObject, ...;
+-(void)postAppendUriActionWithHUD:(HttpRequestAction)action withValue:(NSString *)appendValue message:(NSString *)message params:(id)firstObject, ...;
+//load action method
 -(void)loadAction:(HttpRequestAction) action params:(id)firstObject, ...;
+-(void)loadActionWithHUD:(HttpRequestAction) action params:(id)firstObject, ...;
+-(void)loadActionWithHUD:(HttpRequestAction) action message:(NSString *)message params:(id)firstObject, ...;
 //请求成功的返回
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response;
 //请求失败的返回
 -(void)onRequestFailed:(HttpRequestAction)tag response:(Response *)response;
-//-(NSDictionary*)argsToMap:(va_list)args firstObj:(id)firstObj;
-//@property(strong, nonatomic) UILabel *loadingLabel;
-@property(strong, nonatomic) MBProgressHUD * hud;
+
+-(NSMutableDictionary *)argsToMap:(va_list)args firstObj:(id)firstObj;
 
 @end

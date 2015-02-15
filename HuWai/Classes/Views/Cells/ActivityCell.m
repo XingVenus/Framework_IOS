@@ -17,6 +17,7 @@
         // Initialization code
         [self.contentView addSubview:self.backImageView];
 //        self.backgroundView = self.backImageView;
+        [self.contentView addSubview:self.priceBtn];
         [self.contentView addSubview:self.grayBackLabel];
         [self.contentView addSubview:self.avatarImageView];
         [self.contentView addSubview:self.nickNameLabel];
@@ -28,24 +29,38 @@
 -(UIImageView *)backImageView
 {
     if (!_backImageView) {
-        _backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-10*2, (SCREEN_WIDTH-20)/kHeghtRatio)];
+        _backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH-10*2, (SCREEN_WIDTH-20)/kHeghtRatio)];
     }
     return _backImageView;
+}
+
+-(UIButton *)priceBtn
+{
+    if (!_priceBtn) {
+        _priceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_priceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _priceBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
+        [_priceBtn setShowsTouchWhenHighlighted:NO];
+        [_priceBtn setAdjustsImageWhenHighlighted:NO];
+        [_priceBtn setBackgroundImage:[UIImage imageNamed:@"price-bg"] forState:UIControlStateNormal];
+        _priceBtn.frame = CGRectMake(SCREEN_WIDTH - 96, 30, 76, 25);
+    }
+    return _priceBtn;
 }
 
 -(UILabel *)grayBackLabel
 {
     if (!_grayBackLabel) {
-        _grayBackLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.backImageView.frame) - 60, SCREEN_WIDTH-10*2, 60)];
+        _grayBackLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.backImageView.frame) - 60, SCREEN_WIDTH-10*2, 60)];
         _grayBackLabel.backgroundColor = [UIColor colorWithWhite:0.3 alpha:.7];
     }
     return _grayBackLabel;
 }
 
--(UIImageView *)avatarImageView
+-(PAAImageView *)avatarImageView
 {
     if (!_avatarImageView) {
-        _avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.backImageView.frame) - 100 , 50, 50)];
+        _avatarImageView = [[PAAImageView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.backImageView.frame) - 100 , 50, 50) backgroundProgressColor:[UIColor whiteColor] progressColor:[UIColor whiteColor]];
     }
     return _avatarImageView;
 }
@@ -61,13 +76,12 @@
     return _nickNameLabel;
 }
 
--(UILabel *)describeLabel
+-(RTLabel *)describeLabel
 {
     if (!_describeLabel) {
-        _describeLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.grayBackLabel.frame) - 45, SCREEN_WIDTH - 25*2, 0)];
+        _describeLabel = [[RTLabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.grayBackLabel.frame) - 50, SCREEN_WIDTH - 25*2, 40)];
+        _describeLabel.lineSpacing = 8.0;
         _describeLabel.backgroundColor = [UIColor clearColor];
-        _describeLabel.numberOfLines = 2;
-        _describeLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _describeLabel.font = [UIFont boldSystemFontOfSize:14.0];
         _describeLabel.textColor = [UIColor whiteColor];
     }
@@ -87,18 +101,17 @@
 {
 //    [super layoutSubviews];
     self.contentView.frame = CGRectInset(self.bounds, 10, 5);
-
-    self.describeLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [self.describeLabel sizeToFit];
-
 }
 
--(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
+-(void)configureCellWithItem:(ActivityInfo *)item atIndexPath:(NSIndexPath *)indexPath
 {
-    self.backImageView.image = [UIImage imageNamed:@"activities-img"];
-    self.avatarImageView.image = [UIImage imageNamed:@"avatar"];
-    self.nickNameLabel.text = @"hhahahhahhah";
-    self.describeLabel.text = @"以习近平为总书记的党中央深改元年工作述评以习近平为总书记的党中央深改元年工作述评以习近平为总书记的党中央深改元年工作述评";
+    [self.backImageView sd_setImageWithURL:[NSURL URLWithString:item.image] placeholderImage:nil];
+    self.avatarImageView.placeHolderImage = [UIImage imageNamed:@"avatar"];
+    [self.avatarImageView setImageURL:[NSURL URLWithString:item.avatar]];
+    self.nickNameLabel.text = item.username;
+    self.describeLabel.text = item.title;
+    [self.priceBtn setTitle:[item.price stringByAppendingString:@"元"] forState:UIControlStateNormal];
+
 }
 
 @end

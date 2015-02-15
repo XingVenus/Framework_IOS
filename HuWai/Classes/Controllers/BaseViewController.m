@@ -6,89 +6,13 @@
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
 
+
+
 #import "BaseViewController.h"
 #import "NSString+JSON.h"
 
-@interface BaseViewController ()
-
-@property (nonatomic) HttpRequestAction requestAction;
-@property (nonatomic) HttpRequestMethod requestMethod;
-
-@end
-
-@implementation BaseViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    
-    
-    self.view.backgroundColor = RGBA(242, 242, 243, 1);
-    self.showRequestHUD = YES;//默认显示
-    if (self.navigationController.viewControllers.count>0) {
-//        self.navigationItem.leftItemsSupplementBackButton = YES;
-        UIBarButtonItem *backbutton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
-//        UIBarButtonItem *backbutton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow-back"] style:UIBarButtonItemStylePlain target:self action:nil];
-        
-        self.navigationItem.backBarButtonItem = backbutton;
-    }
-//
-//    self.navigationController.navigationItem.backBarButtonItem.title = @"fff";
-//    self.navigationController.navigationItem.leftBarButtonItem.title = @"ff";
-    // Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - 消息提示
--(void)showMessageWithThreeSecondAtCenter:(NSString *)message
-{
-    if (![CommonFoundation isEmptyString:message]) {
-        [self.view makeToast:message duration:3.0 position:CSToastPositionCenter];
-    }
-}
-
-#pragma mark - 加载 一般用于get请求
--(void)loadAction:(HttpRequestAction)action params:(id)firstObject, ...
-{
-    va_list arguments;
-    
-    NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
-    id param;
-    id object;
-    NSString *key = firstObject;
-    BOOL isFrist = true;
-    if(key != nil) {
-        va_start(arguments, firstObject);
-        
-        while((param = va_arg(arguments, id))) {
-            if(param == nil)
-                break;
-            if(isFrist) {
-                object = param;
-                isFrist = false;
-            } else {
-                key = param;
-                object = va_arg(arguments, id);
-                if(key == nil) {
-                    break;
-                }
-            }
-            [md setObject:object forKey:key];
-        }
-        va_end(arguments);
-    }
-    self.requestAction = action;
-    self.requestMethod = RequestMethodGet;
-    
-    [self executeRequest:[ApiServer uriStringFromAction:action] params:md];
-}
-
-#pragma mark - 数据请求post 一般用于参数传递 请求数据
--(void)postAction:(HttpRequestAction)action params:(id)firstObject, ...
+/*
+NSDictionary *argsTpMap(id firstObject,...)
 {
     NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
     @try {
@@ -98,12 +22,13 @@
         id object;
         NSString *key = firstObject;
         BOOL isFrist = true;
-        if(key != nil) {
+        if(key) {
             va_start(arguments, firstObject);
             
             while((param = va_arg(arguments, id))) {
                 if(param == nil)
                     break;
+
                 if(isFrist) {
                     object = param;
                     isFrist = false;
@@ -121,91 +46,258 @@
     }
     @catch (NSException *exception) {
         DLog(@"%s\n%@", __FUNCTION__, exception);
-        return;
     }
     @finally {
+        return md;
+    }
+}
+*/
+
+@interface BaseViewController ()
+
+@property (nonatomic) HttpRequestAction requestAction;
+
+@end
+
+@implementation BaseViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = RGBA(242, 242, 243, 1);
+    //去掉返回按钮的文字显示
+    if (self.navigationController.viewControllers.count>0) {
+//        self.navigationItem.leftItemsSupplementBackButton = YES;
+        UIBarButtonItem *backbutton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+//        UIBarButtonItem *backbutton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow-back"] style:UIBarButtonItemStylePlain target:self action:nil];
         
+        self.navigationItem.backBarButtonItem = backbutton;
+    }
+
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - 消息提示
+-(void)showMessageWithThreeSecondAtCenter:(NSString *)message
+{
+    if (![CommonFoundation isEmptyString:message]) {
+        [self.view makeToast:message duration:3.0 position:CSToastPositionCenter];
+    }
+}
+
+#pragma mark - 加载 一般用于get请求
+-(NSMutableDictionary *)argsToMap:(va_list)args firstObj:(id)firstObj
+{
+    NSMutableDictionary *paramDic = [[NSMutableDictionary alloc]init];
+    if (firstObj) {
+        id value;
+        NSString *key;
+        value = va_arg(args, id);
+        [paramDic setValue:value forKey:firstObj];
+        while (1) {
+            key = va_arg(args, NSString *);
+            if (key) {
+                value = va_arg(args, id);
+                [paramDic setValue:value forKey:key];
+            }else{
+                break;
+            }
+        }
+    }
+    return paramDic;
+}
+#pragma mark - load data
+
+-(void)loadAction:(HttpRequestAction)action params:(id)firstObject, ...
+{
+    NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
+    if(firstObject) {
+        va_list arguments;
+        va_start(arguments, firstObject);
+        md = [self argsToMap:arguments firstObj:firstObject];
+        va_end(arguments);
     }
     self.requestAction = action;
-
-    self.requestMethod = RequestMethodPost;
     
-    NSString *uriString = [ApiServer uriStringFromAction:action];
-    [self executeRequest:uriString params:md];
+    [self executeRequestWithUri:[ApiServer uriStringFromAction:action] method:RequestMethodGet withHUD:NO message:nil params:md];
 }
-#pragma mark uri中需要做替换时使用
--(void)postAppendUriAction:(HttpRequestAction)action withValue:(NSString *)appendValue params:(id)firstObject, ...
+
+-(void)loadActionWithHUD:(HttpRequestAction)action params:(id)firstObject, ...
 {
-    va_list arguments;
-    
     NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
-    id param;
-    id object;
-    NSString *key = firstObject;
-    BOOL isFrist = true;
-    if(key != nil) {
+    if(firstObject) {
+        va_list arguments;
         va_start(arguments, firstObject);
-        
-        while((param = va_arg(arguments, id))) {
-            if(param == nil)
-                break;
-            if(isFrist) {
-                object = param;
-                isFrist = false;
-            } else {
-                key = param;
-                object = va_arg(arguments, id);
-                if(key == nil) {
-                    break;
-                }
-            }
-            [md setObject:object forKey:key];
-        }
+        md = [self argsToMap:arguments firstObj:firstObject];
+        va_end(arguments);
+    }
+    self.requestAction = action;
+    
+    [self executeRequestWithUri:[ApiServer uriStringFromAction:action] method:RequestMethodGet withHUD:YES message:nil params:md];
+}
+
+-(void)loadActionWithHUD:(HttpRequestAction)action message:(NSString *)message params:(id)firstObject, ...
+{
+    NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
+    if(firstObject) {
+        va_list arguments;
+        va_start(arguments, firstObject);
+        md = [self argsToMap:arguments firstObj:firstObject];
+        va_end(arguments);
+    }
+    self.requestAction = action;
+    
+    [self executeRequestWithUri:[ApiServer uriStringFromAction:action] method:RequestMethodGet withHUD:YES message:message params:md];
+}
+
+#pragma mark - post method 数据请求post 一般用于参数传递 请求数据
+-(void)postAction:(HttpRequestAction)action params:(id)firstObject, ...
+{
+    NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
+    if(firstObject) {
+        va_list arguments;
+        va_start(arguments, firstObject);
+        md = [self argsToMap:arguments firstObj:firstObject];
         va_end(arguments);
     }
     
     self.requestAction = action;
-    self.requestMethod = RequestMethodPost;
-
+    
     NSString *uriString = [ApiServer uriStringFromAction:action];
-    NSRange rang = [uriString rangeOfString:@":"];
-    if (appendValue) {
-        uriString = [[uriString substringWithRange:NSMakeRange(0, rang.location)] stringByAppendingString:appendValue];
-        [self executeRequest:uriString params:md];
+    [self executeRequestWithUri:uriString method:RequestMethodPost withHUD:NO message:nil params:md];
+}
+
+-(void)postActionWithHUD:(HttpRequestAction)action params:(id)firstObject, ...
+{
+    NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
+    if(firstObject) {
+        va_list arguments;
+        va_start(arguments, firstObject);
+        md = [self argsToMap:arguments firstObj:firstObject];
+        va_end(arguments);
     }
     
+    self.requestAction = action;
+    
+    NSString *uriString = [ApiServer uriStringFromAction:action];
+    [self executeRequestWithUri:uriString method:RequestMethodPost withHUD:YES message:nil params:md];
+}
+
+-(void)postActionWithHUD:(HttpRequestAction)action message:(NSString *)message params:(id)firstObject, ...
+{
+    NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
+    if(firstObject) {
+        va_list arguments;
+        va_start(arguments, firstObject);
+        md = [self argsToMap:arguments firstObj:firstObject];
+        va_end(arguments);
+    }
+    
+    self.requestAction = action;
+    
+    NSString *uriString = [ApiServer uriStringFromAction:action];
+    [self executeRequestWithUri:uriString method:RequestMethodPost withHUD:YES message:message params:md];
+}
+#pragma mark - post uri with need to replace string 需要做替换时使用
+-(void)postAppendUriAction:(HttpRequestAction)action withValue:(NSString *)appendValue params:(id)firstObject, ...
+{
+    NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
+    if(firstObject) {
+        va_list arguments;
+        va_start(arguments, firstObject);
+        md = [self argsToMap:arguments firstObj:firstObject];
+        va_end(arguments);
+    }
+    
+    self.requestAction = action;
+
+    NSString *uriString = [self replaceAppendUri:action value:appendValue];
+    [self executeRequestWithUri:uriString method:RequestMethodPost withHUD:NO message:nil params:md];
+}
+
+-(void)postAppendUriActionWithHUD:(HttpRequestAction)action withValue:(NSString *)appendValue params:(id)firstObject, ...{
+    NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
+    if(firstObject) {
+        va_list arguments;
+        va_start(arguments, firstObject);
+        md = [self argsToMap:arguments firstObj:firstObject];
+        va_end(arguments);
+    }
+    self.requestAction = action;
+    
+    NSString *uriString = [self replaceAppendUri:action value:appendValue];
+    [self executeRequestWithUri:uriString method:RequestMethodPost withHUD:YES message:nil params:md];
+}
+
+-(void)postAppendUriActionWithHUD:(HttpRequestAction)action withValue:(NSString *)appendValue message:(NSString *)message params:(id)firstObject, ...
+{
+    NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
+    if(firstObject) {
+        va_list arguments;
+        va_start(arguments, firstObject);
+        md = [self argsToMap:arguments firstObj:firstObject];
+        va_end(arguments);
+    }
+    
+    self.requestAction = action;
+    
+    NSString *uriString = [self replaceAppendUri:action value:appendValue];
+    [self executeRequestWithUri:uriString method:RequestMethodPost withHUD:YES message:message params:md];
+}
+
+-(NSString *)replaceAppendUri:(HttpRequestAction)action value:(NSString *)value
+{
+    NSString *uriString = [ApiServer uriStringFromAction:action];
+    NSRange rang = [uriString rangeOfString:@":"];
+    if ((rang.location != NSNotFound) && value) {
+        uriString = [[uriString substringWithRange:NSMakeRange(0, rang.location)] stringByAppendingString:value];
+    }
+    return uriString;
 }
 
 #pragma mark - 发起请求
--(void)executeRequest:(NSString *)uristring params:(NSMutableDictionary *)param
+-(void)executeRequestWithUri:(NSString *)uristring method:(HttpRequestMethod)method withHUD:(BOOL)hud message:(NSString *)message params:(NSMutableDictionary *)params
 {
-    if (_showRequestHUD) {
+    if (hud) {
         if(self.hud == nil) {
             self.hud = [[MBProgressHUD alloc] init];
-            self.hud.labelText = self.promptMessage ? self.promptMessage : @"正在加载";
+            if (message) {
+                self.hud.labelText = message;
+            }
             [self.view addSubview:self.hud];
         }
         [self.hud show:YES];
     }
+    //组织参数
     //----每次请求自动带上token值
     NSString *token = [CacheBox getCache:CACHE_TOKEN];
     if (token) {
-        [param setObject:token forKey:@"token"];
+        [params setObject:token forKey:@"token"];
     }
-    DLog(@"Post data:%@",param);
-    [[HttpClient httpManager] executeRequest:uristring method:self.requestMethod params:param successBlockCallback:^(Response *response) {
+#ifdef DEBUG
+    if (method == RequestMethodPost) {
+        DLog(@"Post data:%@",params);
+    }
+#endif
+    
+    __block HttpRequestAction weakAction = self.requestAction;
+    [[HttpClient httpManager] executeRequest:uristring method:method params:params successBlockCallback:^(Response *response) {
         [self.hud hide:YES];
-        //保存每次请求更新的token
-        if (response.token) {
-            [CacheBox saveCache:CACHE_TOKEN value:response.token];
-//            [APPInfo shareInit].token = response.token;
-        }
+//        //保存每次请求更新的token
+//        if (response.token) {
+//            [CacheBox saveCache:CACHE_TOKEN value:response.token];
+////            [APPInfo shareInit].token = response.token;
+//        }
         DLog(@"Request url:%@\n Success Response string:%@",response.url,[response.contentText JSONValue]);
-        [self onRequestFinished:self.requestAction response:response];
+        [self onRequestFinished:weakAction response:response];
     } failBlockCallBack:^(Response *response) {
         [self.hud hide:YES];
         DLog(@"Request url:%@\n Fail Response string:%@\n Error:%@",response.url,response.contentText,response.error);
-        [self onRequestFailed:self.requestAction response:response];
+        [self onRequestFailed:weakAction response:response];
     }];
 }
 
@@ -218,6 +310,18 @@
 #pragma mark 请求失败调用返回
 -(void)onRequestFailed:(HttpRequestAction)tag response:(Response *)response
 {
-    
+    [self showMessageWithThreeSecondAtCenter:response.error.localizedDescription];
+}
+
+#pragma mark - set method this view for none data response
+-(UIView *)blankView
+{
+    if (!_blankView) {
+        _blankView = [[BlankView alloc] initWithFrame:CGRectMake(0, 100 - [CommonFoundation getAdapter64Height], SCREEN_WIDTH, 200)];
+        _blankView.backgroundColor = [UIColor clearColor];
+        _blankView.hidden = YES;
+        [self.view addSubview:_blankView];
+    }
+    return _blankView;
 }
 @end

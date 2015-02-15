@@ -15,11 +15,13 @@
 //应用在itunes的信息地址,用于版本检测
 #define APP_ITUNES_URL     @"http://itunes.apple.com/lookup?id=956085496" //http://itunes.apple.com/lookup?id=你的应用程序的ID
 
-#define REQUEST_BASE_URL    @"http://api.huwai.com"
+#define REQUEST_BASE_URL    @"http://api.huwai.ixici.info"//@"http://api.huwai.com"
 //#define HTTP_BASE_PATH      @"http://api.huwai.com/"
 //
 //#define REQUEST_BASE_URL    @"http://172.23.69.2:8080/localization/shopLocation"
 //#define HTTP_BASE_PATH      @"http://172.23.69.2:8080/localization/"
+
+#define LOAD_PROMPT_MESSAGE  @"正在加载"
 
 //＝＝＝＝＝＝应用沙盒的缓存key定义
 #define CACHE_USER_PHONE    @"CACHE_USER_PHONE"
