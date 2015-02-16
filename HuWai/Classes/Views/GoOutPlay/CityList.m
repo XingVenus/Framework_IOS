@@ -22,18 +22,53 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _location = [[LocationHelper alloc] init];
+    //判断热门城市列表，存在并相同则不请求，否则请求数据
+    
     [self loadAction:HotcityAction params:nil];
+    //定位风火轮
+    _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //定位当前城市
+    
+    __weak UIActivityIndicatorView *weakindicator = _activityIndicator;
+    __weak UITableView *weaktableview = self.tableView;
+    [weakindicator startAnimating];
+    [_location getCurrentGeolocationsCompled:^(NSArray *placemarks, NSError *error) {
+        [weakindicator stopAnimating];
+        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+        UITableViewCell *blockcell = [weaktableview cellForRowAtIndexPath:indexpath];
+        //返回位置信息的实现
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (placemarks) {
+                CLPlacemark *placemark = [placemarks lastObject];
+                if (placemark) {
+                    NSDictionary *addressDictionary = placemark.addressDictionary;
+                    blockcell.textLabel.text = addressDictionary[@"City"];
+                }
+            }else{
+                blockcell.textLabel.text = @"定位失败";
+            }
+            [self.tableView reloadData];
+            // 更新界面  - 在这里很耗内存，待检查原因
+//            [weaktableview beginUpdates];
+//            [weaktableview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
+//            [weaktableview endUpdates];
+        });
+    }];
+}
+#pragma mark - request delegate
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
     if (response.code == 20000) {
-//        NSLog(@"%@",response.data);
-        [response.data enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            NSDictionary *dic = @{@"cid":key,@"cityname":obj};
-            [self.dataSource addObject:dic];
-        }];
+        HotCityModel *hotModel = [[HotCityModel alloc] initWithJsonDict:response.data];
+        self.dataSource = [hotModel.data mutableCopy];
+        //此处需写入缓存
+        
         [self.tableView reloadData];
     }
     [self showMessageWithThreeSecondAtCenter:response.message];
@@ -87,30 +122,12 @@
     
     NSInteger row = [indexPath row];
     NSInteger section = [indexPath section];
-    if (section == 0) {
+    if (section == 0 && row == 0) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identity2];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity2];
         }
-        _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         cell.accessoryView = _activityIndicator;
-        __weak UITableViewCell *weakcell = cell;
-        __weak UIActivityIndicatorView *weakindicator = _activityIndicator;
-        __weak UITableView *weaktableview = tableView;
-        [_location getCurrentGeolocationsCompled:^(NSArray *placemarks, NSError *error) {
-            [weakindicator stopAnimating];
-            //返回位置信息的实现
-            if (placemarks) {
-                CLPlacemark *placemark = [placemarks lastObject];
-                if (placemark) {
-                    NSDictionary *addressDictionary = placemark.addressDictionary;
-                    weakcell.textLabel.text = addressDictionary[@"City"];
-                }
-            }else{
-                weakcell.textLabel.text = @"定位失败";
-            }
-            [weaktableview reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }];
         return cell;
     }else{
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identity];
@@ -118,8 +135,8 @@
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
             }
-            NSDictionary *dic = self.dataSource[row];
-            cell.textLabel.text = dic[@"cityname"];
+            HotCityInfo *dic = self.dataSource[row];
+            cell.textLabel.text = dic.name;
         }
         return cell;
     }
@@ -129,7 +146,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [super tableView:tableView didSelectRowAtIndexPath:indexPath];
-    if ((indexPath.section == 0) &&(indexPath.row == 0)) {
+    NSInteger row = [indexPath row];
+    if ((indexPath.section == 0) &&(row == 0)) {
         [_activityIndicator startAnimating];
         UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
         selectedCell.textLabel.text = @"正在定位...";
@@ -150,6 +168,12 @@
                 weakcell.textLabel.text = @"定位失败";
             }
         }];
+    }else{
+        HotCityInfo *dic = self.dataSource[row];
+        if (_delegate && [_delegate respondsToSelector:@selector(didSelectedHotCity:)]) {
+            [_delegate didSelectedHotCity:dic];
+        }
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 @end

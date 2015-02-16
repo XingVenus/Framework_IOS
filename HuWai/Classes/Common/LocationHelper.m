@@ -94,16 +94,19 @@
      ^(NSArray* placemarks, NSError* error) {
          if (self.didGetGeolocationsCompledBlock && placemarks.count>0) {
              self.didGetGeolocationsCompledBlock(placemarks,nil);
+         }else if (error){
+             self.didGetGeolocationsCompledBlock(nil,error);
          }
      }];
     [manager stopUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    [manager stopUpdatingLocation];
+    
     if (self.didGetGeolocationsCompledBlock) {
         self.didGetGeolocationsCompledBlock(nil,error);
     }
+    [manager stopUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status

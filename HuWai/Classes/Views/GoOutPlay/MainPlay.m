@@ -13,17 +13,34 @@
 #import "SelectListView.h"
 #import "NavView.h"
 
+#import "CityList.h"
 #import "MJRefresh.h"
 #import "ActivityModel.h"
+#import "DestinationCityModel.h"
+#import "LocationHelper.h"
 
-@interface MainPlay ()
+#define PageSize    20
+
+@interface MainPlay ()<CityListDelegate, SelectListViewDelegate>
 {
     NavView *navigationView;
     SelectListView *listPopView;
+    
+    LocationHelper *_locationHelper;
     UIView *backgroundPopView;
     NSArray *destinationArray;
     NSArray *timeArray;
     NSArray *playArray;
+    
+    UIButton *locationBtn;
+    UIButton *lastSelected;//记录当前选中的按钮
+    
+    //数据帅选字段
+    NSString *_fromCity; //出发城市
+    NSString *_destCity; //目的地
+    NSString *_time;     //行程时间
+    NSString *_play;     //玩法
+    NSInteger _currentPage; //当前页
 }
 
 @end
@@ -32,17 +49,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    WEAKSELF;
     timeArray = @[@"1日行程",@"2日行程",@"3日行程",@"4-7日行程",@"7日以上"];
     playArray = @[@"徒步",@"摄影",@"登山",@"露营",@"越野",@"溯溪",@"攀冰",@"骑行",@"潜水",@"自驾",@"滑雪",@"漂流",@"其他"];
+    _currentPage = 1;
     //下拉、上拉注册
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing) dateKey:@"mainplay"];
     // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
     [self.tableView addFooterWithCallback:^{
-        [self loadActionWithHUD:ActivityAction params:@"city",@"",@"time",@"",@"play",@"",@"page",@"1",@"pagesize",@"20",nil];
+        [weakSelf headerRereshing];
     }];
-    //进入页面刷新
-    [self.tableView headerBeginRefreshing];
+
     //获取目的地城市列表
     [self loadAction:DestinationAction params:nil];
     //添加 隐藏导航条 通知
@@ -57,26 +75,23 @@
     [self.view addSubview:navigationView];
     CGFloat navViewHeight = CGRectGetHeight(navigationView.bounds);
     //定位按钮
-    UIButton *locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     locationBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    locationBtn.frame = CGRectMake(15, navViewHeight - 67, 60, 30);//CGRectMake(15, 7, 100, 30)
+    locationBtn.frame = CGRectMake(15, navViewHeight - 67, 100, 30);//CGRectMake(15, 7, 100, 30)
     [locationBtn setImage:[UIImage imageNamed:@"place-i"] forState:UIControlStateNormal];
     [locationBtn setTitleColor:RGBA(54, 178, 214, 1) forState:UIControlStateNormal];
-    [locationBtn setTitle:@"南京" forState:UIControlStateNormal];
-    [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:5];
-    [locationBtn addTarget:self action:@selector(selectCity:) forControlEvents:UIControlEventTouchUpInside];
+    locationBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
+
+    [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:4];
+    [locationBtn addTarget:self action:@selector(selectDestCity:) forControlEvents:UIControlEventTouchUpInside];
     [navigationView addSubview:locationBtn];
-//    UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc] initWithCustomView:locationBtn];
-//    self.navigationItem.leftBarButtonItem = leftBtn;
     //搜索按钮
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(SCREEN_WIDTH - 45, navViewHeight - 67, 30, 30);
     [searchBtn setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchActivity:) forControlEvents:UIControlEventTouchUpInside];
     [navigationView addSubview:searchBtn];
-//    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
-//    self.navigationItem.rightBarButtonItem = rightBtn;
-//    [navigationView addSubview:locationBtn];
+
     /////-----title
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 00, 100, 24)];
     titleLabel.backgroundColor = [UIColor clearColor];
@@ -111,7 +126,7 @@
     [btn2 setImage:[UIImage imageNamed:@"down"] forState:UIControlStateNormal];
     [btn2 setImage:[UIImage imageNamed:@"up"] forState:UIControlStateSelected];
     [btn2 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
-    [btn2 setContentEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
+    [btn2 setContentEdgeInsets:UIEdgeInsetsMake(0, 45, 0, 0)];
     [navigationView addSubview:btn2];
     /////--------3
     UIButton *btn3 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -127,6 +142,23 @@
     [btn3 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
     [btn3 setContentEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
     [navigationView addSubview:btn3];
+    [btn3 setContentEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
+    //定位
+    _locationHelper = [[LocationHelper alloc] init];
+    [_locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks, NSError *error) {
+        if (placemarks) {
+            CLPlacemark *placemark = [placemarks lastObject];
+            if (placemark) {
+                NSDictionary *addressDictionary = placemark.addressDictionary;
+                [locationBtn setTitle:addressDictionary[@"City"] forState:UIControlStateNormal];
+                _fromCity = addressDictionary[@"City"];
+                [self.tableView headerBeginRefreshing];
+            }
+        }else{
+            //显示上次缓存的城市
+            [locationBtn setTitle:@"暂无" forState:UIControlStateNormal];
+        }
+    }];
 
 //    self.navigationController.navigationBar.frame = CGRectMake(0., 20., 320., 180.);
     // Do any additional setup after loading the view.
@@ -136,6 +168,7 @@
         backgroundPopView.backgroundColor = [UIColor colorWithWhite:0.3 alpha:.6];
         listPopView = [[SelectListView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, CGRectGetHeight(backgroundPopView.frame) - 100)];
         listPopView.top -= listPopView.height;
+        listPopView.delegate = self;
         [backgroundPopView addSubview:listPopView];
         [self.view insertSubview:backgroundPopView belowSubview:navigationView];
 
@@ -169,7 +202,7 @@
 #pragma mark 刷新数据
 -(void)headerRereshing
 {
-    [self loadActionWithHUD:ActivityAction params:@"city",@"",@"time",@"",@"play",@"",@"page",@"1",@"pagesize",@"20",nil];
+    [self loadActionWithHUD:ActivityAction params:@"from",_fromCity,@"city",_destCity,@"time",_time,@"play",_play,@"page",[NSNumber numberWithInteger:_currentPage],@"pagesize",[NSNumber numberWithInteger:PageSize],nil];
 }
 #pragma mark - data response block
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
@@ -177,19 +210,17 @@
     if (response.code == 20000) {
         if (tag == ActivityAction) {
             ActivityModel *model = [[ActivityModel alloc] initWithJsonDict:response.data];
-            NSLog(@"%ld",(long)model.pager.total);
-            if (model.pager.total>0) {
-                //显示数据
-                if (self.tableView.headerRefreshing) {
-                    self.dataSource = [model.data mutableCopy];
-                }else if (self.tableView.footerRefreshing){
-                    [self.dataSource addObjectsFromArray:model.data];
-                }
-                
-                [self.tableView reloadData];
+            //显示数据
+            if (self.tableView.headerRefreshing) {
+                self.dataSource = [model.data mutableCopy];
+            }else if (self.tableView.footerRefreshing){
+                [self.dataSource addObjectsFromArray:model.data];
             }
+            
+            [self.tableView reloadData];
         }else if (tag == DestinationAction){
-            destinationArray = [response.data copy];
+            DestinationCityModel *desModel = [[DestinationCityModel alloc] initWithJsonDict:response.data];
+            destinationArray = [desModel.data copy];
         }
     }
     
@@ -227,7 +258,7 @@
     [self.navigationController setNavigationBarHidden:YES];
 }
 
--(void)selectCity:(UIButton *)sender
+-(void)selectDestCity:(UIButton *)sender
 {
     [self performSegueWithIdentifier:@"citylist" sender:self];
 }
@@ -240,7 +271,6 @@
 -(void)showSelectView:(UIButton *)sender
 {
     NSInteger btnTag = sender.tag;
-    static UIButton *lastSelected;
     
     if (btnTag == 1001) {
         listPopView.listType = ListTypeDestination;
@@ -279,6 +309,52 @@
     [sender setSelected:!sender.selected];
 }
 
+#pragma mark - hotcity delegate
+-(void)didSelectedHotCity:(HotCityInfo *)hotcity
+{
+    _fromCity = hotcity.cid;
+    [locationBtn setTitle:hotcity.name forState:UIControlStateNormal];
+    [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:4];
+    [self.tableView headerBeginRefreshing];
+}
+
+#pragma mark SelectListView delegate
+-(void)selectedValueForListType:(ListType)listType Value:(NSString *)value
+{
+    //隐藏
+    if (listType == ListTypeTime) {
+        _time = value;
+    }else if (listType == ListTypePlay){
+        _play = value;
+    }
+    [self refreshBtnToSelectedValue:value];
+}
+#pragma mark 目的城市选择
+-(void)selectedDestCity:(DestCityInfo *)destCity
+{
+    _destCity = destCity.cid;
+    NSString *name = destCity.name;
+    if (destCity.name.length>5) {
+        name = [destCity.name substringWithRange:NSMakeRange(0, 5)];
+    }
+
+    [self refreshBtnToSelectedValue:name];
+}
+
+-(void)refreshBtnToSelectedValue:(NSString *)value
+{
+    [lastSelected setTitle:value forState:UIControlStateNormal];
+    [lastSelected setSelected:NO];
+    [lastSelected setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
+    lastSelected = nil;
+    [UIView animateWithDuration:0.3 animations:^{
+        listPopView.top -= listPopView.height;
+    } completion:^(BOOL finished) {
+        backgroundPopView.hidden = YES;
+    }];
+    //数据过滤
+    [self.tableView headerBeginRefreshing];
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -289,6 +365,9 @@
     if ([segue.identifier isEqualToString:@"activitydetail"]) {
         ActivityDetail *activityController = segue.destinationViewController;
         activityController.detailTitle = @"ok";
+    }else if([segue.identifier isEqualToString:@"citylist"]){
+        CityList *clist = segue.destinationViewController;
+        clist.delegate = self;
     }
 }
 

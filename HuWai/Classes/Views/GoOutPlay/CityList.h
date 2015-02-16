@@ -7,7 +7,17 @@
 //
 
 #import "BaseTableViewController.h"
+#import "HotCityModel.h"
+
+@protocol CityListDelegate <NSObject>
+
+@optional
+-(void)didSelectedHotCity:(HotCityInfo *)hotcity;
+
+@end
 
 @interface CityList : BaseTableViewController
+
+@property (nonatomic, weak) id<CityListDelegate> delegate;
 
 @end

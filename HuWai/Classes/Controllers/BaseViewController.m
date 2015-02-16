@@ -97,15 +97,16 @@ NSDictionary *argsTpMap(id firstObject,...)
         id value;
         NSString *key;
         value = va_arg(args, id);
+        if (!value) {
+            value = @"";
+        }
         [paramDic setValue:value forKey:firstObj];
-        while (1) {
-            key = va_arg(args, NSString *);
-            if (key) {
-                value = va_arg(args, id);
-                [paramDic setValue:value forKey:key];
-            }else{
-                break;
+        while ((key = va_arg(args, NSString *))) {
+            value = va_arg(args, id);
+            if (!value) {
+                value = @"";
             }
+            [paramDic setValue:value forKey:key];
         }
     }
     return paramDic;

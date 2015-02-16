@@ -48,7 +48,7 @@
     }
     [self showMessageWithThreeSecondAtCenter:errorMessage];
     if (_resetToken && _phoneNumber) {
-        [self postAction:ResetpasswordAction params:@"phone",_phoneNumber,@"password",[CommonFoundation trimString:self.confirmField.text],@"token",_resetToken,nil];
+        [self postActionWithHUD:ResetpasswordAction params:@"phone",_phoneNumber,@"password",[CommonFoundation trimString:self.confirmField.text],@"verify_token",_resetToken,nil];
     }
 }
 

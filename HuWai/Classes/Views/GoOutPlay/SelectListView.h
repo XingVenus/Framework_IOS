@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DestinationCityModel.h"
 
 typedef NS_ENUM(NSInteger, ListType) {
     ListTypeDestination,
@@ -17,7 +18,9 @@ typedef NS_ENUM(NSInteger, ListType) {
 @protocol SelectListViewDelegate <NSObject>
 
 @optional
--(void)selectedValueForListType:(ListType)listType value:(NSString *)value;
+
+-(void)selectedValueForListType:(ListType)listType Value:(NSString *)value;
+-(void)selectedDestCity:(DestCityInfo *)destCity;
 
 @end
 

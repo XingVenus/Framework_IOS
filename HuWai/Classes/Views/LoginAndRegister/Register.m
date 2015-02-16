@@ -50,7 +50,7 @@
         return;
     }
     
-    [self postAction:SendSmsAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"type",@"regist",nil];
+    [self postActionWithHUD:SendSmsAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"type",@"regist",nil];
 }
 #pragma mark 发起注册
 - (IBAction)registerAction:(id)sender {
@@ -81,7 +81,7 @@
             _smsToken = [response.data objectForKey:@"smsToken"];
         }else if (tag == SmsTokenAction){
             //发送注册请求
-            [self postAction:UserRegisterAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"password",[CommonFoundation trimString:self.password.text],@"username",[CommonFoundation trimString:self.nickName.text],@"token",response.data[@"token"],nil];
+            [self postActionWithHUD:UserRegisterAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"password",[CommonFoundation trimString:self.password.text],@"username",[CommonFoundation trimString:self.nickName.text],@"token",response.data[@"token"],nil];
         }else if (tag == UserRegisterAction){
             //返回用户信息
         }

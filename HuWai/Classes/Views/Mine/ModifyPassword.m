@@ -47,7 +47,7 @@
     [self showMessageWithThreeSecondAtCenter:message];
     if (!message) {
         //提交
-        [self postAction:ModifyPasswordAction params:@"new_password",[CommonFoundation trimString:self.secondPassword.text],nil];
+        [self postActionWithHUD:ModifyPasswordAction params:@"new_password",[CommonFoundation trimString:self.secondPassword.text],nil];
     }
 }
 

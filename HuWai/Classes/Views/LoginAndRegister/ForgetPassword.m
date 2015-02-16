@@ -48,15 +48,15 @@
 
 
 - (IBAction)getTextCodeAction:(id)sender {
-    if ([CommonFoundation checkPhoneNo:self.phoneNumber.text]) {
+    if (![CommonFoundation checkPhoneNo:self.phoneNumber.text]) {
         [self showMessageWithThreeSecondAtCenter:@"手机号码格式不正确"];
         return;
     }
-    [self postAction:SendSmsAction params:@"post",[CommonFoundation trimString:self.phoneNumber.text],@"type",@"lostpasswd",nil];
+    [self postActionWithHUD:SendSmsAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"type",@"lostpasswd",nil];
 }
 
 - (IBAction)toResetPassword:(id)sender {
-    [self postAppendUriAction:SmsTokenAction withValue:_smsToken params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"code",[CommonFoundation trimString:self.textCode.text],@"type",@"lostpasswd",nil];
+    [self postAppendUriActionWithHUD:SmsTokenAction withValue:_smsToken params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"code",[CommonFoundation trimString:self.textCode.text],@"type",@"lostpasswd",nil];
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response

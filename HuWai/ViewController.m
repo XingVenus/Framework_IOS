@@ -16,7 +16,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self postAction:SendSmsAction params:@"13962122591",@"phone",@"regist",@"type",nil];
     // Do any additional setup after loading the view, typically from a nib.
 }
 

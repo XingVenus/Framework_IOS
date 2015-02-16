@@ -53,7 +53,7 @@
             [self showMessageWithThreeSecondAtCenter:@"请填写完整信息"];
             return;
         }
-        [self postAction:CommonPersonAddAction params:@"name",self.peopleName.text,@"gender",genderStr,@"identity",self.identityNo.text,@"phone",self.phoneNo.text,nil];
+        [self postActionWithHUD:CommonPersonAddAction params:@"name",self.peopleName.text,@"gender",genderStr,@"identity",self.identityNo.text,@"phone",self.phoneNo.text,nil];
     }
 }
 

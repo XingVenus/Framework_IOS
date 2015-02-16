@@ -70,6 +70,11 @@
             uristring = Destination_Uri;
             break;
         }
+        case ResetpasswordAction:
+        {
+            uristring = Resetpassword_Uri;
+            break;
+        }
         default:
             break;
     }

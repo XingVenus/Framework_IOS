@@ -62,8 +62,8 @@
     NSInteger row = [indexPath row];
     if (row < self.listData.count) {
         if (self.listType == ListTypeDestination) {
-            NSDictionary *dic = self.listData[row];
-            cell.textLabel.text = dic[@"name"];
+            DestCityInfo *dic = self.listData[row];
+            cell.textLabel.text = dic.name;
         }else{
             cell.textLabel.text = self.listData[row];
         }
@@ -74,15 +74,17 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *value;
     if (self.listType == ListTypeDestination) {
-        NSDictionary *sDic = self.listData[indexPath.row];
-        value = sDic[@"id"];
+        DestCityInfo *destDic = self.listData[indexPath.row];
+        if (_delegate && [_delegate respondsToSelector:@selector(selectedDestCity:)]) {
+            [_delegate selectedDestCity:destDic];
+        }
     }else{
-        value = self.listData[indexPath.row];
+        NSString *value = self.listData[indexPath.row];
+        if (_delegate && [_delegate respondsToSelector:@selector(selectedValueForListType:Value:)]) {
+            [_delegate selectedValueForListType:self.listType Value:value];
+        }
     }
-    if (_delegate && [_delegate respondsToSelector:@selector(selectedValueForListType:value:)]) {
-        [_delegate selectedValueForListType:self.listType value:value];
-    }
+    
 }
 @end

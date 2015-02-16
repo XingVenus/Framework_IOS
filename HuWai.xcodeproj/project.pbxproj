@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040C6A0A1A917F7900A484FF /* HotCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 040C6A091A917F7900A484FF /* HotCityModel.m */; };
 		0425F68D1A6F6CA100913034 /* Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 0425F68C1A6F6CA100913034 /* Register.m */; };
 		0425F6901A6F7AA700913034 /* ForgetPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = 0425F68F1A6F7AA700913034 /* ForgetPassword.m */; };
 		0425F6931A7094B000913034 /* Mine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0425F6921A7094B000913034 /* Mine.m */; };
@@ -57,6 +58,7 @@
 		048E97FB1A723313003697D1 /* ResetPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = 048E97FA1A723313003697D1 /* ResetPassword.m */; };
 		048E97FE1A723B04003697D1 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048E97FD1A723B04003697D1 /* BaseTableViewController.m */; };
 		048FAB221A90A00F001C9570 /* PAAImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048FAB211A90A00F001C9570 /* PAAImageView.m */; };
+		048FAB251A90B2A1001C9570 /* DestinationCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 048FAB241A90B2A1001C9570 /* DestinationCityModel.m */; };
 		04A539421A8308DF006BA09D /* RFJModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A539411A8308DF006BA09D /* RFJModel.m */; };
 		04A539451A8309D1006BA09D /* EntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A539441A8309D1006BA09D /* EntryModel.m */; };
 		04A539481A846845006BA09D /* CommonPersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A539471A846845006BA09D /* CommonPersonModel.m */; };
@@ -99,6 +101,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040C6A081A917F7900A484FF /* HotCityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotCityModel.h; sourceTree = "<group>"; };
+		040C6A091A917F7900A484FF /* HotCityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotCityModel.m; sourceTree = "<group>"; };
 		0425F68B1A6F6CA100913034 /* Register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Register.h; sourceTree = "<group>"; };
 		0425F68C1A6F6CA100913034 /* Register.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Register.m; sourceTree = "<group>"; };
 		0425F68E1A6F7AA700913034 /* ForgetPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPassword.h; sourceTree = "<group>"; };
@@ -202,6 +206,8 @@
 		048E97FD1A723B04003697D1 /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		048FAB201A90A00F001C9570 /* PAAImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAAImageView.h; sourceTree = "<group>"; };
 		048FAB211A90A00F001C9570 /* PAAImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAAImageView.m; sourceTree = "<group>"; };
+		048FAB231A90B2A1001C9570 /* DestinationCityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DestinationCityModel.h; sourceTree = "<group>"; };
+		048FAB241A90B2A1001C9570 /* DestinationCityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DestinationCityModel.m; sourceTree = "<group>"; };
 		04A539401A8308DF006BA09D /* RFJModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFJModel.h; sourceTree = "<group>"; };
 		04A539411A8308DF006BA09D /* RFJModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFJModel.m; sourceTree = "<group>"; };
 		04A539431A8309D1006BA09D /* EntryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryModel.h; sourceTree = "<group>"; };
@@ -382,6 +388,10 @@
 				04A5395C1A84B3B4006BA09D /* SubscribeModel.m */,
 				04B09FA91A8A0F830077394C /* FavoriteModel.h */,
 				04B09FAA1A8A0F830077394C /* FavoriteModel.m */,
+				048FAB231A90B2A1001C9570 /* DestinationCityModel.h */,
+				048FAB241A90B2A1001C9570 /* DestinationCityModel.m */,
+				040C6A081A917F7900A484FF /* HotCityModel.h */,
+				040C6A091A917F7900A484FF /* HotCityModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -888,6 +898,7 @@
 				048337C41A7F49D100E2F889 /* NotScoreCell.m in Sources */,
 				048E97F21A722F79003697D1 /* CommonPersonAddOrEdit.m in Sources */,
 				042B68261A67C32D009CA824 /* Response.m in Sources */,
+				048FAB251A90B2A1001C9570 /* DestinationCityModel.m in Sources */,
 				043F5C591A691B7E0009D939 /* BaseNavigationController.m in Sources */,
 				042B3F7E1A66792A000E896D /* UIView+SimplifyExtend.m in Sources */,
 				043F6AEA1A76487700EEA0B3 /* MessageList.m in Sources */,
@@ -902,6 +913,7 @@
 				042719281A6CFDE0001645AA /* Login.m in Sources */,
 				043F6AE41A762CF900EEA0B3 /* AvatarObject.m in Sources */,
 				04A539541A84B079006BA09D /* PagerModel.m in Sources */,
+				040C6A0A1A917F7900A484FF /* HotCityModel.m in Sources */,
 				04C2B1F11A65163E004E8F73 /* main.m in Sources */,
 				048337C71A7F49FB00E2F889 /* HasScoreCell.m in Sources */,
 				0427192F1A6D01FB001645AA /* MainPlay.m in Sources */,

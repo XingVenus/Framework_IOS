@@ -43,7 +43,7 @@
         [_priceBtn setShowsTouchWhenHighlighted:NO];
         [_priceBtn setAdjustsImageWhenHighlighted:NO];
         [_priceBtn setBackgroundImage:[UIImage imageNamed:@"price-bg"] forState:UIControlStateNormal];
-        _priceBtn.frame = CGRectMake(SCREEN_WIDTH - 96, 30, 76, 25);
+        _priceBtn.frame = CGRectMake(SCREEN_WIDTH - 93, 30, 76, 25);
     }
     return _priceBtn;
 }
