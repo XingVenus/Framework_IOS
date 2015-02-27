@@ -21,23 +21,33 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
     ActivityAction,         //活动列表
     HotcityAction,      //获取城市列表 热门城市
     DestinationAction,     // 目的地城市
+    ActivityDetailAction,   //活动详情
+    AddFavoriteAction,      //添加收藏
+    CancelFavoriteAction,    //取消收藏
+    FavoriteListAction,     //收藏列表
+    RssListAction,          //订阅列表
 };
 
+//我的
 #define UserRegister_Uri    @"/v1/register"
 #define UserEntry_Uri       @"/v1/login/entry"
 #define SendSms_Uri         @"/v1/notification/sms"
 #define SmsToken_Uri        @"/v1/notification/sms/:smsToken"
 #define Gettoken_Uri        @"/v1/login/gettoken"
 #define Resetpassword_Uri   @"/v1/login/resetpassword"
-#define CommonPersonList_Uri    @"/v1/participants/list?uid=:string"
+#define CommonPersonList_Uri    @"/v1/participants/list"
 #define CommonPersonAdd_Uri     @"/v1/participants/add"
 #define ModifyPassword_Uri      @"/v1/user/password"
-
+#define FavoriteList_Uri    @"/v1/favorite/list"
+#define RssList_Uri         @"/v1/rss/list"
 
 //活动
 #define Activity_Uri        @"/v1/activity/list"
 #define Hotcity_Uri         @"/v1/region/hotcity"
 #define Destination_Uri     @"/v1/region/destination"
+#define ActivityDetail_Uri  @"/v1/activity/view?id=:id"
+#define AddFavorite_Uri     @"/v1/favorite/add"
+#define CancelFavorite_Uri  @"/v1/favorite/cancel"
 
 @interface ApiServer : NSObject
 

@@ -18,7 +18,7 @@ JProperty(PagerModel *pager, pager);
 @end
 
 @interface ActivityInfo : RFJModel
-JProperty(NSInteger aid, id);
+JProperty(NSString *aid, id);
 JProperty(NSString *title, title);
 JProperty(NSString *image, image);
 JProperty(NSString *price, price);

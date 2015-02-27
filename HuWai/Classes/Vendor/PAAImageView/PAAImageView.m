@@ -283,13 +283,13 @@ NSString * const paa_identifier = @"paa.imagecache.tg";
     else
         return;
     
-    [imageData writeToFile:[self.cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%u.%@", URL.hash, fileExtension]] atomically:YES];
+    [imageData writeToFile:[self.cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%lu.%@", (unsigned long)URL.hash, fileExtension]] atomically:YES];
 }
 
 - (UIImage *)getImageForURL:(NSURL *)URL
 {
     NSString *fileExtension = [URL pathExtension];//[[URL componentsSeparatedByString:@"."] lastObject];
-    NSString *path = [self.cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%u.%@", URL.hash, fileExtension]];
+    NSString *path = [self.cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%lu.%@", (unsigned long)URL.hash, fileExtension]];
     if([self.fileManager fileExistsAtPath:path])
     {
         return [UIImage imageWithContentsOfFile:path];

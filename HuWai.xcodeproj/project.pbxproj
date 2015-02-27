@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0408F6CD1A9EEF6000C04961 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0408F6CC1A9EEF6000C04961 /* HMSegmentedControl.m */; };
 		040C6A0A1A917F7900A484FF /* HotCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 040C6A091A917F7900A484FF /* HotCityModel.m */; };
+		0420D1551A9DB6D400F22C3E /* KVNMaskedPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0420D1521A9DB6D400F22C3E /* KVNMaskedPageControl.m */; };
+		0420D1561A9DB6D400F22C3E /* MaskedPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0420D1541A9DB6D400F22C3E /* MaskedPageView.m */; };
 		0425F68D1A6F6CA100913034 /* Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 0425F68C1A6F6CA100913034 /* Register.m */; };
 		0425F6901A6F7AA700913034 /* ForgetPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = 0425F68F1A6F7AA700913034 /* ForgetPassword.m */; };
 		0425F6931A7094B000913034 /* Mine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0425F6921A7094B000913034 /* Mine.m */; };
@@ -42,6 +45,7 @@
 		0451FAD21A8B230300529EEC /* BlankView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451FAD11A8B230300529EEC /* BlankView.m */; };
 		0451FAE31A8B520700529EEC /* LocationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451FAE21A8B520700529EEC /* LocationHelper.m */; };
 		0451FAE51A8B521900529EEC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0451FAE41A8B521900529EEC /* CoreLocation.framework */; };
+		045CC0301A9DCF4600839DCE /* ActivityDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045CC02F1A9DCF4600839DCE /* ActivityDetailModel.m */; };
 		04605F3A1A6E4B52004EBB2D /* UIButton+ButtonUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 04605F391A6E4B52004EBB2D /* UIButton+ButtonUtility.m */; };
 		048337C11A7F465D00E2F889 /* EDStarRating.m in Sources */ = {isa = PBXBuildFile; fileRef = 048337C01A7F465D00E2F889 /* EDStarRating.m */; };
 		048337C41A7F49D100E2F889 /* NotScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 048337C31A7F49D100E2F889 /* NotScoreCell.m */; };
@@ -69,7 +73,6 @@
 		04A5395A1A84B2B9006BA09D /* ActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A539591A84B2B9006BA09D /* ActivityModel.m */; };
 		04A5395D1A84B3B4006BA09D /* SubscribeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A5395C1A84B3B4006BA09D /* SubscribeModel.m */; };
 		04B09FA81A89EC260077394C /* UITextField+CursorRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B09FA71A89EC260077394C /* UITextField+CursorRange.m */; };
-		04B09FAB1A8A0F830077394C /* FavoriteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B09FAA1A8A0F830077394C /* FavoriteModel.m */; };
 		04C2B1F11A65163E004E8F73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2B1F01A65163E004E8F73 /* main.m */; };
 		04C2B1F41A65163E004E8F73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2B1F31A65163E004E8F73 /* AppDelegate.m */; };
 		04C2B1F71A65163E004E8F73 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2B1F61A65163E004E8F73 /* ViewController.m */; };
@@ -101,8 +104,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0408F6CB1A9EEF6000C04961 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
+		0408F6CC1A9EEF6000C04961 /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		040C6A081A917F7900A484FF /* HotCityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotCityModel.h; sourceTree = "<group>"; };
 		040C6A091A917F7900A484FF /* HotCityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotCityModel.m; sourceTree = "<group>"; };
+		0420D1511A9DB6D400F22C3E /* KVNMaskedPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVNMaskedPageControl.h; sourceTree = "<group>"; };
+		0420D1521A9DB6D400F22C3E /* KVNMaskedPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVNMaskedPageControl.m; sourceTree = "<group>"; };
+		0420D1531A9DB6D400F22C3E /* MaskedPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaskedPageView.h; sourceTree = "<group>"; };
+		0420D1541A9DB6D400F22C3E /* MaskedPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaskedPageView.m; sourceTree = "<group>"; };
 		0425F68B1A6F6CA100913034 /* Register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Register.h; sourceTree = "<group>"; };
 		0425F68C1A6F6CA100913034 /* Register.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Register.m; sourceTree = "<group>"; };
 		0425F68E1A6F7AA700913034 /* ForgetPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPassword.h; sourceTree = "<group>"; };
@@ -174,6 +183,8 @@
 		0451FAE11A8B520700529EEC /* LocationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationHelper.h; sourceTree = "<group>"; };
 		0451FAE21A8B520700529EEC /* LocationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationHelper.m; sourceTree = "<group>"; };
 		0451FAE41A8B521900529EEC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		045CC02E1A9DCF4600839DCE /* ActivityDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailModel.h; sourceTree = "<group>"; };
+		045CC02F1A9DCF4600839DCE /* ActivityDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailModel.m; sourceTree = "<group>"; };
 		04605F381A6E4B52004EBB2D /* UIButton+ButtonUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ButtonUtility.h"; sourceTree = "<group>"; };
 		04605F391A6E4B52004EBB2D /* UIButton+ButtonUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ButtonUtility.m"; sourceTree = "<group>"; };
 		048337BF1A7F465D00E2F889 /* EDStarRating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDStarRating.h; sourceTree = "<group>"; };
@@ -228,8 +239,6 @@
 		04A5395C1A84B3B4006BA09D /* SubscribeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeModel.m; sourceTree = "<group>"; };
 		04B09FA61A89EC260077394C /* UITextField+CursorRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+CursorRange.h"; sourceTree = "<group>"; };
 		04B09FA71A89EC260077394C /* UITextField+CursorRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+CursorRange.m"; sourceTree = "<group>"; };
-		04B09FA91A8A0F830077394C /* FavoriteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteModel.h; sourceTree = "<group>"; };
-		04B09FAA1A8A0F830077394C /* FavoriteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteModel.m; sourceTree = "<group>"; };
 		04C2B1EB1A65163E004E8F73 /* HuWai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HuWai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C2B1EF1A65163E004E8F73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04C2B1F01A65163E004E8F73 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -289,6 +298,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0408F6CA1A9EEF6000C04961 /* HMSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				0408F6CB1A9EEF6000C04961 /* HMSegmentedControl.h */,
+				0408F6CC1A9EEF6000C04961 /* HMSegmentedControl.m */,
+			);
+			path = HMSegmentedControl;
+			sourceTree = "<group>";
+		};
+		0420D1501A9DB6D400F22C3E /* MaskedPageControl */ = {
+			isa = PBXGroup;
+			children = (
+				0420D1511A9DB6D400F22C3E /* KVNMaskedPageControl.h */,
+				0420D1521A9DB6D400F22C3E /* KVNMaskedPageControl.m */,
+				0420D1531A9DB6D400F22C3E /* MaskedPageView.h */,
+				0420D1541A9DB6D400F22C3E /* MaskedPageView.m */,
+			);
+			path = MaskedPageControl;
+			sourceTree = "<group>";
+		};
 		042719221A6CFD16001645AA /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,12 +415,12 @@
 				04A539591A84B2B9006BA09D /* ActivityModel.m */,
 				04A5395B1A84B3B4006BA09D /* SubscribeModel.h */,
 				04A5395C1A84B3B4006BA09D /* SubscribeModel.m */,
-				04B09FA91A8A0F830077394C /* FavoriteModel.h */,
-				04B09FAA1A8A0F830077394C /* FavoriteModel.m */,
 				048FAB231A90B2A1001C9570 /* DestinationCityModel.h */,
 				048FAB241A90B2A1001C9570 /* DestinationCityModel.m */,
 				040C6A081A917F7900A484FF /* HotCityModel.h */,
 				040C6A091A917F7900A484FF /* HotCityModel.m */,
+				045CC02E1A9DCF4600839DCE /* ActivityDetailModel.h */,
+				045CC02F1A9DCF4600839DCE /* ActivityDetailModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -571,6 +600,8 @@
 		04605F1B1A6E2C70004EBB2D /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				0408F6CA1A9EEF6000C04961 /* HMSegmentedControl */,
+				0420D1501A9DB6D400F22C3E /* MaskedPageControl */,
 				048FAB1F1A90A00F001C9570 /* PAAImageView */,
 				044C6B8A1A88AA94000BF100 /* MJRefresh */,
 				04A5393F1A8308DF006BA09D /* RFJModel */,
@@ -886,7 +917,6 @@
 				044C6B9D1A88AA94000BF100 /* MJRefreshConst.m in Sources */,
 				043F6AE71A762F5400EEA0B3 /* ModifyPassword.m in Sources */,
 				04C2B1F41A65163E004E8F73 /* AppDelegate.m in Sources */,
-				04B09FAB1A8A0F830077394C /* FavoriteModel.m in Sources */,
 				04605F3A1A6E4B52004EBB2D /* UIButton+ButtonUtility.m in Sources */,
 				048337DD1A807AA200E2F889 /* BaseTableViewCell.m in Sources */,
 				048337D91A7F799100E2F889 /* RTLabel.m in Sources */,
@@ -898,6 +928,7 @@
 				048337C41A7F49D100E2F889 /* NotScoreCell.m in Sources */,
 				048E97F21A722F79003697D1 /* CommonPersonAddOrEdit.m in Sources */,
 				042B68261A67C32D009CA824 /* Response.m in Sources */,
+				045CC0301A9DCF4600839DCE /* ActivityDetailModel.m in Sources */,
 				048FAB251A90B2A1001C9570 /* DestinationCityModel.m in Sources */,
 				043F5C591A691B7E0009D939 /* BaseNavigationController.m in Sources */,
 				042B3F7E1A66792A000E896D /* UIView+SimplifyExtend.m in Sources */,
@@ -930,6 +961,7 @@
 				0425F6901A6F7AA700913034 /* ForgetPassword.m in Sources */,
 				04CCA7C81A7B90EE0034A21D /* MessageListCell.m in Sources */,
 				044C6B9F1A88AA94000BF100 /* MJRefreshHeaderView.m in Sources */,
+				0420D1551A9DB6D400F22C3E /* KVNMaskedPageControl.m in Sources */,
 				048337C11A7F465D00E2F889 /* EDStarRating.m in Sources */,
 				04A539421A8308DF006BA09D /* RFJModel.m in Sources */,
 				048E97F81A72322A003697D1 /* Subscribe.m in Sources */,
@@ -938,7 +970,9 @@
 				042B3F731A666C8B000E896D /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */,
 				04A5394E1A84AB27006BA09D /* UserMessageModel.m in Sources */,
 				043F5C561A691B0D0009D939 /* NSString+RectSize.m in Sources */,
+				0420D1561A9DB6D400F22C3E /* MaskedPageView.m in Sources */,
 				04EA26A91A7780BD00CCB35E /* LeaderScore.m in Sources */,
+				0408F6CD1A9EEF6000C04961 /* HMSegmentedControl.m in Sources */,
 				04A539571A84B23B006BA09D /* UserMessageContentModel.m in Sources */,
 				0451FAE31A8B520700529EEC /* LocationHelper.m in Sources */,
 				048337CA1A7F50BA00E2F889 /* BaseViewWithSeparateLine.m in Sources */,

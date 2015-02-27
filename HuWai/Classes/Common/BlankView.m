@@ -38,7 +38,7 @@
         _btn.titleLabel.font = [UIFont systemFontOfSize:14.0];
         [_btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         _btn.frame = self.bounds;
-        [_btn setShowsTouchWhenHighlighted:YES];
+        [_btn setAdjustsImageWhenHighlighted:NO];
     }
     [self addSubview:_btn];
 }

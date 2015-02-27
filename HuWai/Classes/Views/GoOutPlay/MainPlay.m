@@ -361,10 +361,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-//    NSIndexPath *selectedRowIndex=[self.tableView indexPathForSelectedRow];
+    NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
     if ([segue.identifier isEqualToString:@"activitydetail"]) {
         ActivityDetail *activityController = segue.destinationViewController;
-        activityController.detailTitle = @"ok";
+        ActivityInfo *infoModel = self.dataSource[selectedRowIndex.row];
+        activityController.activityId = infoModel.aid;
+        activityController.detailTitle = @"活动详情";
     }else if([segue.identifier isEqualToString:@"citylist"]){
         CityList *clist = segue.destinationViewController;
         clist.delegate = self;
@@ -401,9 +403,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    ActivityDetail *activitydetail = [self.storyboard instantiateViewControllerWithIdentifier:@"activityDetailBoard"];
-//    activitydetail.Title = @"gggggggghhhhhhh";
-//    [self.navigationController pushViewController:activitydetail animated:YES];
     [self performSegueWithIdentifier:@"activitydetail" sender:self];
 }
 

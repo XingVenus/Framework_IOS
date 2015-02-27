@@ -75,6 +75,31 @@
             uristring = Resetpassword_Uri;
             break;
         }
+        case ActivityDetailAction:
+        {
+            uristring = ActivityDetail_Uri;
+            break;
+        }
+        case AddFavoriteAction:
+        {
+            uristring = AddFavorite_Uri;
+            break;
+        }
+        case CancelFavoriteAction:
+        {
+            uristring = CancelFavorite_Uri;
+            break;
+        }
+        case FavoriteListAction:
+        {
+            uristring = FavoriteList_Uri;
+            break;
+        }
+        case RssListAction:
+        {
+            uristring = RssList_Uri;
+            break;
+        }
         default:
             break;
     }

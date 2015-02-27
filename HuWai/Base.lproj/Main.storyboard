@@ -55,13 +55,72 @@
                     <view key="view" contentMode="scaleToFill" id="Eq0-cu-D1F">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="y8m-Hi-hLt">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="500"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i5Q-Jg-RBY">
+                                <rect key="frame" x="0.0" y="508" width="320" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kfz-AQ-TY2">
+                                        <rect key="frame" x="175" y="8" width="127" height="44"/>
+                                        <color key="backgroundColor" red="0.99215686274509807" green="0.59999999999999998" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="127" id="DJy-Py-7f3"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <state key="normal" title="我要报名">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZV-x4-c2V">
+                                        <rect key="frame" x="8" y="10" width="159" height="40"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ZZV-x4-c2V" firstAttribute="top" secondItem="i5Q-Jg-RBY" secondAttribute="top" constant="10" id="5we-46-oBo"/>
+                                    <constraint firstAttribute="trailing" secondItem="kfz-AQ-TY2" secondAttribute="trailing" constant="18" id="6iW-UA-t5V"/>
+                                    <constraint firstAttribute="height" constant="60" id="6yI-X6-Qpx"/>
+                                    <constraint firstItem="kfz-AQ-TY2" firstAttribute="top" secondItem="i5Q-Jg-RBY" secondAttribute="topMargin" id="coW-TD-7qZ"/>
+                                    <constraint firstItem="kfz-AQ-TY2" firstAttribute="bottom" secondItem="i5Q-Jg-RBY" secondAttribute="bottomMargin" id="lpn-4S-mag"/>
+                                    <constraint firstItem="kfz-AQ-TY2" firstAttribute="leading" secondItem="ZZV-x4-c2V" secondAttribute="trailing" constant="8" symbolic="YES" id="lwt-dy-fNM"/>
+                                    <constraint firstItem="ZZV-x4-c2V" firstAttribute="centerY" secondItem="kfz-AQ-TY2" secondAttribute="centerY" id="qvV-AC-N9K"/>
+                                    <constraint firstItem="ZZV-x4-c2V" firstAttribute="leading" secondItem="i5Q-Jg-RBY" secondAttribute="leadingMargin" id="yZK-d2-Zbe"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="i5Q-Jg-RBY" firstAttribute="bottom" secondItem="nFU-LR-wue" secondAttribute="top" id="7Xo-eh-0Ti"/>
+                            <constraint firstItem="i5Q-Jg-RBY" firstAttribute="top" secondItem="y8m-Hi-hLt" secondAttribute="bottom" constant="8" symbolic="YES" id="DDy-AQ-7jI"/>
+                            <constraint firstItem="y8m-Hi-hLt" firstAttribute="leading" secondItem="i5Q-Jg-RBY" secondAttribute="leading" id="FiT-M2-XlH"/>
+                            <constraint firstItem="y8m-Hi-hLt" firstAttribute="leading" secondItem="Eq0-cu-D1F" secondAttribute="leading" id="HcZ-vQ-hZD"/>
+                            <constraint firstItem="y8m-Hi-hLt" firstAttribute="top" secondItem="Eq0-cu-D1F" secondAttribute="top" id="R7R-VO-WFW"/>
+                            <constraint firstItem="i5Q-Jg-RBY" firstAttribute="trailing" secondItem="y8m-Hi-hLt" secondAttribute="trailing" id="WPo-zE-cnp"/>
+                            <constraint firstAttribute="trailing" secondItem="y8m-Hi-hLt" secondAttribute="trailing" id="xPX-du-qhB"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="活动详情" id="QCP-21-ONG"/>
+                    <navigationItem key="navigationItem" title="活动详情" id="tFc-JG-o25">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="cfB-xb-jQH">
+                            <connections>
+                                <action selector="popToLastView:" destination="U85-3M-9v8" id="xME-YP-TkC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="y8m-Hi-hLt" id="oCG-MM-gwI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kfl-sv-MJs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="858" y="-2100"/>
+            <point key="canvasLocation" x="869" y="-2128"/>
         </scene>
         <!--城市选择-->
         <scene sceneID="z15-dn-E5z">
@@ -1533,6 +1592,7 @@
                     <navigationItem key="navigationItem" title="收藏活动" id="vhf-ZX-hna"/>
                     <connections>
                         <outlet property="tableView" destination="GTP-dT-At8" id="QTd-rO-RCd"/>
+                        <segue destination="U85-3M-9v8" kind="push" identifier="favoriteActivityDetail" id="zQ5-Ym-Vzg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y4I-qv-qaj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1678,6 +1738,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="zQ5-Ym-Vzg"/>
         <segue reference="28T-xj-yOn"/>
     </inferredMetricsTieBreakers>
 </document>

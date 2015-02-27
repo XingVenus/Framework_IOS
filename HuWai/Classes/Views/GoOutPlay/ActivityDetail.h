@@ -7,9 +7,18 @@
 //
 
 #import "BaseTableViewController.h"
+@class ActivityDetailModel;
+@class TitleAndPriceView;
+
 
 @interface ActivityDetail : BaseTableViewController
 
 @property (nonatomic, strong) NSString *detailTitle;
+@property (nonatomic, strong) NSString *activityId;
 
+@end
+
+@interface TitleAndPriceView : UIView
+
+-(void)setDataInViews:(ActivityDetailModel *)model;
 @end

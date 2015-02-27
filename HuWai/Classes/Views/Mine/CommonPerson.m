@@ -25,7 +25,8 @@
 
 -(void)loadDataSource
 {
-    [self postAppendUriAction:CommonPersonListAction withValue:[APPInfo shareInit].uid params:nil];
+//    [self postAppendUriAction:CommonPersonListAction withValue:[APPInfo shareInit].uid params:nil];
+    [self postActionWithHUD:CommonPersonListAction params:nil];
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response

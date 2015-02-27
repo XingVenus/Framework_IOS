@@ -18,7 +18,7 @@
 #define REQUEST_BASE_URL    @"http://api.huwai.ixici.info"//@"http://api.huwai.com"
 //#define HTTP_BASE_PATH      @"http://api.huwai.com/"
 //
-//#define REQUEST_BASE_URL    @"http://172.23.69.2:8080/localization/shopLocation"
+//#define REQUEST_BASE_URL    @"http://api.huwai.com"
 //#define HTTP_BASE_PATH      @"http://172.23.69.2:8080/localization/"
 
 #define LOAD_PROMPT_MESSAGE  @"正在加载"

@@ -37,5 +37,5 @@
 -(void)onRequestFailed:(HttpRequestAction)tag response:(Response *)response;
 
 -(NSMutableDictionary *)argsToMap:(va_list)args firstObj:(id)firstObj;
-
+-(IBAction)popToLastView:(id)sender;
 @end

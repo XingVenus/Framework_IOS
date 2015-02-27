@@ -81,6 +81,11 @@ NSDictionary *argsTpMap(id firstObject,...)
     // Dispose of any resources that can be recreated.
 }
 
+-(void)popToLastView:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - 消息提示
 -(void)showMessageWithThreeSecondAtCenter:(NSString *)message
 {

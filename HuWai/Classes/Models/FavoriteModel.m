@@ -11,3 +11,7 @@
 @implementation FavoriteModel
 
 @end
+
+@implementation FavoriteInfo
+
+@end

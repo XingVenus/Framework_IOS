@@ -25,5 +25,6 @@ JProperty(NSString *title, title);
 JProperty(NSString *image, image);
 JProperty(NSString *avatar, avatar);
 JProperty(NSString *username, username);
+JProperty(NSString *price, price);
 
 @end
