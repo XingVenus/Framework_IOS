@@ -26,6 +26,9 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
     CancelFavoriteAction,    //取消收藏
     FavoriteListAction,     //收藏列表
     RssListAction,          //订阅列表
+    OrderPersonCheckAction, //检查订单联系人、紧急联系人
+    ActivitySurplusAction,  //活动内容 剩余名额
+    OrderCreateAction,      //创建订单
 };
 
 //我的
@@ -40,14 +43,17 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
 #define ModifyPassword_Uri      @"/v1/user/password"
 #define FavoriteList_Uri    @"/v1/favorite/list"
 #define RssList_Uri         @"/v1/rss/list"
+#define OrderPersonCheck_Uri        @"/v1/order/check"
+#define OrderCreate_Uri     @"/v1/order/create"   //创建订单
 
 //活动
 #define Activity_Uri        @"/v1/activity/list"
 #define Hotcity_Uri         @"/v1/region/hotcity"
 #define Destination_Uri     @"/v1/region/destination"
-#define ActivityDetail_Uri  @"/v1/activity/view?id=:id"
+#define ActivityDetail_Uri  @"/v1/activity/view"  //get
 #define AddFavorite_Uri     @"/v1/favorite/add"
 #define CancelFavorite_Uri  @"/v1/favorite/cancel"
+#define ActivitySurplus_Uri @"/v1/activity/surplus" //get
 
 @interface ApiServer : NSObject
 

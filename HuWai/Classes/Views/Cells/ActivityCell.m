@@ -7,23 +7,18 @@
 //
 
 #import "ActivityCell.h"
+#import "ActivityModel.h"
 
 @implementation ActivityCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+-(void)baseSetup
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-        [self.contentView addSubview:self.backImageView];
-//        self.backgroundView = self.backImageView;
-        [self.contentView addSubview:self.priceBtn];
-        [self.contentView addSubview:self.grayBackLabel];
-        [self.contentView addSubview:self.avatarImageView];
-        [self.contentView addSubview:self.nickNameLabel];
-        [self.contentView addSubview:self.describeLabel];
-    }
-    return self;
+    [self.contentView addSubview:self.backImageView];
+    [self.contentView addSubview:self.priceBtn];
+    [self.contentView addSubview:self.grayBackLabel];
+    [self.contentView addSubview:self.avatarImageView];
+    [self.contentView addSubview:self.nickNameLabel];
+    [self.contentView addSubview:self.describeLabel];
 }
 
 -(UIImageView *)backImageView
@@ -103,14 +98,15 @@
     self.contentView.frame = CGRectInset(self.bounds, 10, 5);
 }
 
--(void)configureCellWithItem:(ActivityInfo *)item atIndexPath:(NSIndexPath *)indexPath
+-(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
 {
-    [self.backImageView sd_setImageWithURL:[NSURL URLWithString:item.image] placeholderImage:nil];
+    ActivityInfo *data = (ActivityInfo *)item;
+    [self.backImageView sd_setImageWithURL:[NSURL URLWithString:data.image] placeholderImage:nil];
     self.avatarImageView.placeHolderImage = [UIImage imageNamed:@"avatar"];
-    [self.avatarImageView setImageURL:[NSURL URLWithString:item.avatar]];
-    self.nickNameLabel.text = item.username;
-    self.describeLabel.text = item.title;
-    [self.priceBtn setTitle:[item.price stringByAppendingString:@"元"] forState:UIControlStateNormal];
+    [self.avatarImageView setImageURL:[NSURL URLWithString:data.avatar]];
+    self.nickNameLabel.text = data.username;
+    self.describeLabel.text = data.title;
+    [self.priceBtn setTitle:[data.price stringByAppendingString:@"元"] forState:UIControlStateNormal];
 
 }
 

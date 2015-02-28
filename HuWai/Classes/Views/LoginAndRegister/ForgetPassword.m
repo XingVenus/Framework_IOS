@@ -61,14 +61,13 @@
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    if (response.code == 20000) {
-        if (tag == SendSmsAction) {
-            _smsToken = [response.data objectForKey:@"smsToken"];
-        }else if (tag == SmsTokenAction){
-            _token = [response.data objectForKey:@"token"];
-            [self performSegueWithIdentifier:@"resetpassword" sender:self];
-        }
+
+    if (tag == SendSmsAction) {
+        _smsToken = [response.data objectForKey:@"smsToken"];
+    }else if (tag == SmsTokenAction){
+        _token = [response.data objectForKey:@"token"];
+        [self performSegueWithIdentifier:@"resetpassword" sender:self];
     }
-    [self showMessageWithThreeSecondAtCenter:response.message];
+
 }
 @end

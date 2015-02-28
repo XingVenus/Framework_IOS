@@ -53,9 +53,6 @@
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    if (response.code == 20000) {
-        
-    }
-    [self showMessageWithThreeSecondAtCenter:response.message];
+    
 }
 @end

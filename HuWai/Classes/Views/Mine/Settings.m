@@ -38,7 +38,7 @@
 -(void)loginOrOutAction:(UIButton *)sender
 {
     if (!_loginOrOutBtn.selected) {
-        UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNav"];
+        UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
         [self presentViewController:loginNav animated:YES completion:nil];
     }
 }

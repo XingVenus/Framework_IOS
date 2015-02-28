@@ -7,10 +7,16 @@
 //
 
 #import "CommonPersonAddOrEdit.h"
+#import "CommonPersonModel.h"
 
 @interface CommonPersonAddOrEdit ()<UIActionSheetDelegate>
 {
+    CommonPersonInfo *_info;
+    
     NSString *genderStr;
+    NSString *pName;
+    NSString *idNo;
+    NSString *phone;
 }
 
 @end
@@ -28,11 +34,14 @@
         self.title = @"编辑";
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(submitData:)];
         self.navigationItem.rightBarButtonItem = rightItem;
-        if (_info) {
+        if (self.pid) {
+            NSArray *person = [[DatabaseUtil shareDatabase] selectFromTable:COMMON_PERSON_TABLE conditions:@{@"id":self.pid,@"ownerid":[APPInfo shareInit].uid}];
+            _info = [[CommonPersonInfo alloc] initWithJsonDict:person[0]];
             self.peopleName.text = _info.name;
-            [self.gender setTitle:_info.gender forState:UIControlStateNormal];
+            [self.gender setTitle:[self genderToString:[_info.gender intValue]] forState:UIControlStateNormal];
             self.identityNo.text = _info.identity;
             self.phoneNo.text = _info.phone;
+            genderStr = _info.gender;
         }
     }
     
@@ -47,28 +56,38 @@
 
 -(void)submitData:(UIBarButtonItem *)sender
 {
-    DLog(@"%@",sender.title);
+    pName = [CommonFoundation trimString:self.peopleName.text];
+    idNo = [CommonFoundation trimString:self.identityNo.text];
+    phone = [CommonFoundation trimString:self.phoneNo.text];
+    if ([CommonFoundation isEmptyString:pName] || [CommonFoundation isEmptyString:idNo] || [CommonFoundation isEmptyString:phone] || !genderStr) {
+        [self showMessageWithThreeSecondAtCenter:@"请填写完整信息"];
+        return;
+    }
+    
     if (self.pageType == AddType) {
-        if ([CommonFoundation isEmptyString:self.peopleName.text] || [CommonFoundation isEmptyString:self.identityNo.text] || [CommonFoundation isEmptyString:self.phoneNo.text] || !genderStr) {
-            [self showMessageWithThreeSecondAtCenter:@"请填写完整信息"];
-            return;
-        }
-        [self postActionWithHUD:CommonPersonAddAction params:@"name",self.peopleName.text,@"gender",genderStr,@"identity",self.identityNo.text,@"phone",self.phoneNo.text,nil];
+        //添加
+        [self postActionWithHUD:CommonPersonAddAction params:@"name",pName,@"gender",genderStr,@"identity",idNo,@"phone",phone,nil];
+    }else{
+        //编辑常用联系人
+        [self postActionWithHUD:CommonPersonAddAction params:@"id",_info.pid,@"name",pName,@"gender",genderStr,@"identity",idNo,@"phone",phone,nil];
     }
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    if (response.code == 20000) {
-        
+    NSString *successID = response.data[@"id"];
+    if (self.pageType == AddType) {
+        [[DatabaseUtil shareDatabase] insertTableName:COMMON_PERSON_TABLE keyArray:@[@"id",@"name",@"gender",@"identity",@"phone",@"ownerid"] valueArrary:@[successID,pName,genderStr,idNo,phone,[APPInfo shareInit].uid]];
+    }else{
+        [[DatabaseUtil shareDatabase] updateToTableName:COMMON_PERSON_TABLE kValues:@{@"name":pName,@"gender":genderStr,@"identity":idNo,@"phone":phone} condition:@{@"id":successID,@"ownerid":[APPInfo shareInit].uid}];
     }
-    [self showMessageWithThreeSecondAtCenter:response.message];
+    
 }
 
 -(void)changeGender:(UIButton *)sender
 {
     [self dismissKeyBoard];
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择性别" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"男",@"女", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择性别" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"女",@"男", nil];
     [sheet showInView:[UIApplication sharedApplication].keyWindow];
 }
 
@@ -81,13 +100,12 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    genderStr = self.gender.titleLabel.text;
-    if (buttonIndex == 0) {
-        genderStr = @"男";
-    }else if (buttonIndex == 1){
-        genderStr = @"女";
+    NSString *sexString = [self genderToString:buttonIndex];
+    if (sexString) {
+        genderStr = [NSString stringWithInteger:buttonIndex];
+        [self.gender setTitle:sexString forState:UIControlStateNormal];
     }
-    [self.gender setTitle:genderStr forState:UIControlStateNormal];
+    
 }
 
 #pragma mark - Navigation

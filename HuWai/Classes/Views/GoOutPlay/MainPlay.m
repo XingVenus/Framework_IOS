@@ -207,22 +207,22 @@
 #pragma mark - data response block
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    if (response.code == 20000) {
-        if (tag == ActivityAction) {
-            ActivityModel *model = [[ActivityModel alloc] initWithJsonDict:response.data];
-            //显示数据
-            if (self.tableView.headerRefreshing) {
-                self.dataSource = [model.data mutableCopy];
-            }else if (self.tableView.footerRefreshing){
-                [self.dataSource addObjectsFromArray:model.data];
-            }
-            
-            [self.tableView reloadData];
-        }else if (tag == DestinationAction){
-            DestinationCityModel *desModel = [[DestinationCityModel alloc] initWithJsonDict:response.data];
-            destinationArray = [desModel.data copy];
+
+    if (tag == ActivityAction) {
+        ActivityModel *model = [[ActivityModel alloc] initWithJsonDict:response.data];
+        //显示数据
+        if (self.tableView.headerRefreshing) {
+            self.dataSource = [model.data mutableCopy];
+        }else if (self.tableView.footerRefreshing){
+            [self.dataSource addObjectsFromArray:model.data];
         }
+        
+        [self.tableView reloadData];
+    }else if (tag == DestinationAction){
+        DestinationCityModel *desModel = [[DestinationCityModel alloc] initWithJsonDict:response.data];
+        destinationArray = [desModel.data copy];
     }
+
     
     if (self.tableView.headerRefreshing) {
         [self.tableView headerEndRefreshing];

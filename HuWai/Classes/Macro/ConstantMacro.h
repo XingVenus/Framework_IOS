@@ -42,8 +42,9 @@
 //密码加密密钥
 #define SECRET_KEY @"luobodi_haokelai"
 //数据库名称
-#define DATABASE_NAME   @"photoPrint.sqlite"
-
+#define DATABASE_NAME   @"huwai.sqlite"
+//---数据库表名称
+#define COMMON_PERSON_TABLE   @"commonperson"
 
 //＝＝＝＝＝＝通知常量的定义
 

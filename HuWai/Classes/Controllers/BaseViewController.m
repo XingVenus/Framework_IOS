@@ -80,12 +80,16 @@ NSDictionary *argsTpMap(id firstObject,...)
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark - custom method
 -(void)popToLastView:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)dismissNavigationView:(id)sender
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 #pragma mark - 消息提示
 -(void)showMessageWithThreeSecondAtCenter:(NSString *)message
 {
@@ -299,12 +303,30 @@ NSDictionary *argsTpMap(id firstObject,...)
 ////            [APPInfo shareInit].token = response.token;
 //        }
         DLog(@"Request url:%@\n Success Response string:%@",response.url,[response.contentText JSONValue]);
-        [self onRequestFinished:weakAction response:response];
+        [self requestWithResponse:weakAction response:response];
     } failBlockCallBack:^(Response *response) {
         [self.hud hide:YES];
         DLog(@"Request url:%@\n Fail Response string:%@\n Error:%@",response.url,response.contentText,response.error);
-        [self onRequestFailed:weakAction response:response];
+        [self requestWithResponse:weakAction response:response];
     }];
+}
+
+#pragma mark 请求返回调用
+-(void)requestWithResponse:(HttpRequestAction)actionType response:(Response *)response
+{
+    if (response.code == 20000) {
+        [self onRequestFinished:actionType response:response];
+    }else if (response.error){
+        [self onRequestFailed:actionType response:response];
+        [self showMessageWithThreeSecondAtCenter:response.error.localizedDescription];
+        return;
+    }else if (response.code == 50002){
+        UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
+        //        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:loginNav animated:YES completion:nil];
+        [self.navigationController presentViewController:loginNav animated:YES completion:nil];
+        return;
+    }
+    [self showMessageWithThreeSecondAtCenter:response.message];
 }
 
 #pragma mark - This method needs to be redefined
@@ -316,7 +338,7 @@ NSDictionary *argsTpMap(id firstObject,...)
 #pragma mark 请求失败调用返回
 -(void)onRequestFailed:(HttpRequestAction)tag response:(Response *)response
 {
-    [self showMessageWithThreeSecondAtCenter:response.error.localizedDescription];
+    
 }
 
 #pragma mark - set method this view for none data response
@@ -329,5 +351,16 @@ NSDictionary *argsTpMap(id firstObject,...)
         [self.view addSubview:_blankView];
     }
     return _blankView;
+}
+
+#pragma mark - custom method
+-(NSString *)genderToString:(NSInteger)gender
+{
+    if (gender == 0) {
+        return @"女";
+    }else if(gender == 1){
+        return @"男";
+    }
+    return nil;
 }
 @end

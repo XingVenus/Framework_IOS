@@ -100,6 +100,21 @@
             uristring = RssList_Uri;
             break;
         }
+        case OrderPersonCheckAction:
+        {
+            uristring = OrderPersonCheck_Uri;
+            break;
+        }
+        case ActivitySurplusAction:
+        {
+            uristring = ActivitySurplus_Uri;
+            break;
+        }
+        case OrderCreateAction:
+        {
+            uristring = OrderCreate_Uri;
+            break;
+        }
         default:
             break;
     }

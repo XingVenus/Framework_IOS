@@ -33,7 +33,7 @@
         NSString *star = [CacheBox getCache:STAR_CACHE];
         NSString *roleid = [CacheBox getCache:ROLEID_CACHE];
         NSString *status = [CacheBox getCache:STATUS_CACHE];
-//        NSDictionary *userinfo = @{};
+
         NSDictionary *userinfo = @{@"username":username?username:@"",@"email":email?email:@"",@"create_time":createtime?createtime:@"",@"tel":tel?tel:@"",@"uid":uid?uid:@"",@"star":star?star:@"",@"role_id":roleid?roleid:@"",@"status":status?status:@""};
         if (userinfo) {
             [self updateUserInfo:userinfo];

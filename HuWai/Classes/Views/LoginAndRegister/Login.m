@@ -55,26 +55,24 @@
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    if (response.code == 20000) {
         
-        if (tag == GettokenAction) {
-            //获取用户登录令牌成功
-            [self postActionWithHUD:UserEntryAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"password",[CommonFoundation trimString:self.password.text],@"loginToken",response.data[@"loginToken"],nil];
-            return;
-        }else if (tag == UserEntryAction){
-            APPInfo *infoObj = [APPInfo shareInit];
+    if (tag == GettokenAction) {
+        //获取用户登录令牌成功
+        [self postActionWithHUD:UserEntryAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"password",[CommonFoundation trimString:self.password.text],@"loginToken",response.data[@"loginToken"],nil];
+        return;
+    }else if (tag == UserEntryAction){
+        APPInfo *infoObj = [APPInfo shareInit];
 //            infoObj.login = YES;
-            //保存token
-            [CacheBox saveCache:CACHE_TOKEN value:response.token];
-            //赋值更新用户信息
-            [infoObj updateUserInfo:response.data];
-            //缓存用户登录账号
-            [CacheBox saveCache:CACHE_USER_PHONE value:[CommonFoundation trimString:self.phoneNumber.text]];
-            [CacheBox saveCache:CACHE_USER_PASSWORD value:[CommonFoundation trimString:self.password.text]];
-            [self dismissLoginVC];
-        }
+        //保存token
+        [CacheBox saveCache:CACHE_TOKEN value:response.token];
+        //赋值更新用户信息
+        [infoObj updateUserInfo:response.data];
+        //缓存用户登录账号
+        [CacheBox saveCache:CACHE_USER_PHONE value:[CommonFoundation trimString:self.phoneNumber.text]];
+        [CacheBox saveCache:CACHE_USER_PASSWORD value:[CommonFoundation trimString:self.password.text]];
+        [self dismissLoginVC];
     }
-    [self showMessageWithThreeSecondAtCenter:response.message];
+
 }
 #pragma mark - Navigation
 

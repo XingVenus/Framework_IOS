@@ -54,14 +54,14 @@
 #pragma mark - request data response
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    if (response.code == 20000) {
-        if (tag == FavoriteListAction) {
-            ActivityModel *aModel = [[ActivityModel alloc] initWithJsonDict:response.data];
-            [self.dataSource addObjectsFromArray:aModel.data];
-            [self.tableView footerEndRefreshing];
-            [self.tableView reloadData];
-        }
+
+    if (tag == FavoriteListAction) {
+        ActivityModel *aModel = [[ActivityModel alloc] initWithJsonDict:response.data];
+        [self.dataSource addObjectsFromArray:aModel.data];
+        [self.tableView footerEndRefreshing];
+        [self.tableView reloadData];
     }
+
 }
 
 #pragma mark - table view implement

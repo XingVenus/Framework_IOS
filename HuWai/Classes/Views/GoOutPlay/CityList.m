@@ -64,14 +64,13 @@
 #pragma mark - request delegate
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    if (response.code == 20000) {
-        HotCityModel *hotModel = [[HotCityModel alloc] initWithJsonDict:response.data];
-        self.dataSource = [hotModel.data mutableCopy];
-        //此处需写入缓存
-        
-        [self.tableView reloadData];
-    }
-    [self showMessageWithThreeSecondAtCenter:response.message];
+
+    HotCityModel *hotModel = [[HotCityModel alloc] initWithJsonDict:response.data];
+    self.dataSource = [hotModel.data mutableCopy];
+    //此处需写入缓存
+    
+    [self.tableView reloadData];
+
 }
 
 - (void)didReceiveMemoryWarning {

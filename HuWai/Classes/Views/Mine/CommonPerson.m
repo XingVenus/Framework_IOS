@@ -17,31 +17,48 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadDataSource];
 //    NSArray *dataArray = @[@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd"];
 //    [self.dataSource addObjectsFromArray:dataArray];
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadDataSource];
+}
 -(void)loadDataSource
 {
 //    [self postAppendUriAction:CommonPersonListAction withValue:[APPInfo shareInit].uid params:nil];
-    [self postActionWithHUD:CommonPersonListAction params:nil];
+    NSArray *dataArray = [[DatabaseUtil shareDatabase] selectFromTable:COMMON_PERSON_TABLE conditions:@{@"ownerid":[APPInfo shareInit].uid}];
+    if (dataArray.count>0) {
+        CommonPersonModel *model = [[CommonPersonModel alloc] initWithJsonDict:@{@"data":dataArray}];
+        self.dataSource = [model.data mutableCopy];
+        [self.tableView reloadData];
+    }else{
+        [self postActionWithHUD:CommonPersonListAction params:nil];
+    }
+    
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    if (response.code == 20000) {
-        if (tag == CommonPersonListAction) {
-            if (response.data) {
-                CommonPersonModel *model = [[CommonPersonModel alloc] initWithJsonDict:response.data];
-                self.dataSource = [model.data mutableCopy];
-                [self.tableView reloadData];
-            }
+
+    if (tag == CommonPersonListAction) {
+        if (response.data) {
+            CommonPersonModel *model = [[CommonPersonModel alloc] initWithJsonDict:response.data];
+            self.dataSource = [model.data mutableCopy];
+            [self.tableView reloadData];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                // 耗时的操作
+                for (CommonPersonInfo *pInfo in model.data) {
+                    [[DatabaseUtil shareDatabase] insertTableName:COMMON_PERSON_TABLE keyArray:@[@"id",@"name",@"gender",@"identity",@"phone",@"ownerid"] valueArrary:@[pInfo.pid,pInfo.name,pInfo.gender,pInfo.identity,pInfo.phone,[APPInfo shareInit].uid]];
+                }
+                
+            });
         }
     }
-    
-    [self showMessageWithThreeSecondAtCenter:response.message];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,6 +66,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - tableview method
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
@@ -77,6 +95,7 @@
         UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier2 forIndexPath:indexPath];
         CommonPersonInfo *info = self.dataSource[row];
         cell2.textLabel.text = info.name;
+        cell2.detailTextLabel.text = info.phone;
         return cell2;
     }
 }
@@ -95,7 +114,8 @@
         addoreditController.pageType = AddType;
     }else{
         addoreditController.pageType = EditType;
-        addoreditController.info = (CommonPersonInfo *)self.dataSource[selectedRowIndex.row];
+        CommonPersonInfo *item = (CommonPersonInfo *)self.dataSource[selectedRowIndex.row];
+        addoreditController.pid = item.pid;
     }
     
 }

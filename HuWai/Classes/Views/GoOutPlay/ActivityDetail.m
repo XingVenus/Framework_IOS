@@ -10,6 +10,7 @@
 #import "ActivityDetailModel.h"
 #import "MaskedPageView.h"
 #import "HMSegmentedControl.h"
+#import "Enroll.h"
 
 @interface ActivityDetail ()
 {
@@ -41,7 +42,7 @@
     headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, CGRectGetHeight(self.maskPageView.frame)+70+30);
     self.tableView.tableHeaderView = headerView;
     
-    [self postAppendUriActionWithHUD:ActivityDetailAction withValue:self.activityId message:@"正在加载..." params:nil];
+    [self loadActionWithHUD:ActivityDetailAction message:@"正在加载..." params:@"id",self.activityId,nil];
     //收藏按钮
     favoriteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     favoriteBtn.frame = CGRectMake(0, 0, 30, 35);
@@ -61,18 +62,17 @@
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    if (response.code == 20000) {
-        if (tag == ActivityDetailAction) {
-            ActivityDetailModel *detailModel = [[ActivityDetailModel alloc] initWithJsonDict:response.data];
-            //数据填充
-            [self fillDataHeaderView:detailModel];
-        }else if (tag == AddFavoriteAction){
-            [favoriteBtn setSelected:YES];
-        }else if (tag == CancelFavoriteAction){
-            [favoriteBtn setSelected:NO];
-        }
+
+    if (tag == ActivityDetailAction) {
+        ActivityDetailModel *detailModel = [[ActivityDetailModel alloc] initWithJsonDict:response.data];
+        //数据填充
+        [self fillDataHeaderView:detailModel];
+    }else if (tag == AddFavoriteAction){
+        [favoriteBtn setSelected:YES];
+    }else if (tag == CancelFavoriteAction){
+        [favoriteBtn setSelected:NO];
     }
-    [self showMessageWithThreeSecondAtCenter:response.message];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,7 +87,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-   
+    if ([segue.identifier isEqualToString:@"enroll"]) {
+        UINavigationController *enrollNavController = segue.destinationViewController;
+        Enroll *enrollView = (Enroll *)enrollNavController.topViewController;
+        enrollView.activityID = self.activityId;
+    }
 }
 #pragma mark - custom methon implement
 -(void)favoriteAction:(UIButton *)sender
@@ -131,7 +135,7 @@
         _segmentControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
         WEAKSELF;
         [_segmentControl setIndexChangeBlock:^(NSInteger index) {
-            DLog(@"selected index is:%d",index);
+            DLog(@"selected index is:%d",(int)index);
             [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationLeft];
         }];
     }

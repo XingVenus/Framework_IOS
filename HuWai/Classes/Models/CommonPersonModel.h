@@ -16,7 +16,7 @@ JProperty(NSArray<CommonPersonInfo> *data, data);
 @end
 
 @interface CommonPersonInfo : RFJModel
-JProperty(NSInteger pid, id);
+JProperty(NSString *pid, id);
 JProperty(NSString *name, name);
 JProperty(NSString *gender, gender);
 JProperty(NSString *identity, identity);

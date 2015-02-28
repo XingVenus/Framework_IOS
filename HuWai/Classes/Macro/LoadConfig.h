@@ -15,6 +15,7 @@
 #import "CacheBox.h"
 #import "CommonFoundation.h"
 #import "UIView+SimplifyExtend.h"
+#import "DatabaseUtil.h"
 //#import "SandboxFile.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
