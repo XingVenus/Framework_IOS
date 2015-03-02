@@ -49,7 +49,6 @@
 //＝＝＝＝＝＝通知常量的定义
 
 
-
 //＝＝＝＝＝＝xmpp配置
 #define XMPP_SERVER     @"112.21.190.46"
 #define XMPP_PORT       5322

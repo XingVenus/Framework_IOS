@@ -21,4 +21,5 @@ JProperty(NSString *name, name);
 JProperty(NSString *gender, gender);
 JProperty(NSString *identity, identity);
 JProperty(NSString *phone, phone);
+@property (nonatomic) BOOL isSelected;
 @end

@@ -13,7 +13,7 @@
 
 @interface ActivityDetailModel : RFJModel
 
-JProperty(NSString *adID, id);
+JProperty(NSString *aid, id);
 JProperty(NSString *title, title);
 JProperty(NSString *price, price);
 JProperty(NSArray *flash, flash);

@@ -115,6 +115,21 @@
             uristring = OrderCreate_Uri;
             break;
         }
+        case OrderCancelAction:
+        {
+            uristring = OrderCancel_Uri;
+            break;
+        }
+        case OrderDetailAction:
+        {
+            uristring = OrderDetail_Uri;
+            break;
+        }
+        case OrderMyAction:
+        {
+            uristring = OrderMy_Uri;
+            break;
+        }
         default:
             break;
     }

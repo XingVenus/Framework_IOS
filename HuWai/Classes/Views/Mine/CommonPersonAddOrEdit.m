@@ -8,6 +8,7 @@
 
 #import "CommonPersonAddOrEdit.h"
 #import "CommonPersonModel.h"
+#import "EnrollMembers.h"
 
 @interface CommonPersonAddOrEdit ()<UIActionSheetDelegate>
 {
@@ -78,6 +79,9 @@
     NSString *successID = response.data[@"id"];
     if (self.pageType == AddType) {
         [[DatabaseUtil shareDatabase] insertTableName:COMMON_PERSON_TABLE keyArray:@[@"id",@"name",@"gender",@"identity",@"phone",@"ownerid"] valueArrary:@[successID,pName,genderStr,idNo,phone,[APPInfo shareInit].uid]];
+        if (self.isFromEnroll) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:EnrollMembersAddNewNotification object:successID];
+        }
     }else{
         [[DatabaseUtil shareDatabase] updateToTableName:COMMON_PERSON_TABLE kValues:@{@"name":pName,@"gender":genderStr,@"identity":idNo,@"phone":phone} condition:@{@"id":successID,@"ownerid":[APPInfo shareInit].uid}];
     }

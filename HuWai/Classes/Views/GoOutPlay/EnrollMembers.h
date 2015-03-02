@@ -8,6 +8,8 @@
 
 #import "BaseTableViewController.h"
 
+extern NSString *const EnrollMembersAddNewNotification;
+
 @interface EnrollMembers : BaseTableViewController
 
 @property (nonatomic, strong) NSString *activityID;

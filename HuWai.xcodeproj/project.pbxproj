@@ -15,6 +15,9 @@
 		0408F6DC1AA07CDC00C04961 /* huwai.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 0408F6DB1AA07CDC00C04961 /* huwai.sqlite */; };
 		0408F6DF1AA158E400C04961 /* EnrollMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0408F6DE1AA158E400C04961 /* EnrollMemberCell.m */; };
 		040C6A0A1A917F7900A484FF /* HotCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 040C6A091A917F7900A484FF /* HotCityModel.m */; };
+		041CC4BE1AA4407A0079088C /* ConfirmToPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 041CC4BD1AA4407A0079088C /* ConfirmToPayment.m */; };
+		041CC4C11AA44BF40079088C /* OrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 041CC4C01AA44BF40079088C /* OrderDetailModel.m */; };
+		041CC4C71AA46D310079088C /* OrderContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 041CC4C61AA46D310079088C /* OrderContactCell.m */; };
 		0420D1551A9DB6D400F22C3E /* KVNMaskedPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0420D1521A9DB6D400F22C3E /* KVNMaskedPageControl.m */; };
 		0420D1561A9DB6D400F22C3E /* MaskedPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0420D1541A9DB6D400F22C3E /* MaskedPageView.m */; };
 		0425F68D1A6F6CA100913034 /* Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 0425F68C1A6F6CA100913034 /* Register.m */; };
@@ -125,6 +128,12 @@
 		0408F6DE1AA158E400C04961 /* EnrollMemberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnrollMemberCell.m; sourceTree = "<group>"; };
 		040C6A081A917F7900A484FF /* HotCityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotCityModel.h; sourceTree = "<group>"; };
 		040C6A091A917F7900A484FF /* HotCityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotCityModel.m; sourceTree = "<group>"; };
+		041CC4BC1AA4407A0079088C /* ConfirmToPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmToPayment.h; sourceTree = "<group>"; };
+		041CC4BD1AA4407A0079088C /* ConfirmToPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmToPayment.m; sourceTree = "<group>"; };
+		041CC4BF1AA44BF40079088C /* OrderDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailModel.h; sourceTree = "<group>"; };
+		041CC4C01AA44BF40079088C /* OrderDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailModel.m; sourceTree = "<group>"; };
+		041CC4C51AA46D310079088C /* OrderContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderContactCell.h; sourceTree = "<group>"; };
+		041CC4C61AA46D310079088C /* OrderContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderContactCell.m; sourceTree = "<group>"; };
 		0420D1511A9DB6D400F22C3E /* KVNMaskedPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVNMaskedPageControl.h; sourceTree = "<group>"; };
 		0420D1521A9DB6D400F22C3E /* KVNMaskedPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVNMaskedPageControl.m; sourceTree = "<group>"; };
 		0420D1531A9DB6D400F22C3E /* MaskedPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaskedPageView.h; sourceTree = "<group>"; };
@@ -376,6 +385,8 @@
 				0408F6CF1AA05D1600C04961 /* Enroll.m */,
 				0408F6D11AA063F300C04961 /* EnrollMembers.h */,
 				0408F6D21AA063F300C04961 /* EnrollMembers.m */,
+				041CC4BC1AA4407A0079088C /* ConfirmToPayment.h */,
+				041CC4BD1AA4407A0079088C /* ConfirmToPayment.m */,
 			);
 			path = GoOutPlay;
 			sourceTree = "<group>";
@@ -453,6 +464,8 @@
 				040C6A091A917F7900A484FF /* HotCityModel.m */,
 				045CC02E1A9DCF4600839DCE /* ActivityDetailModel.h */,
 				045CC02F1A9DCF4600839DCE /* ActivityDetailModel.m */,
+				041CC4BF1AA44BF40079088C /* OrderDetailModel.h */,
+				041CC4C01AA44BF40079088C /* OrderDetailModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -776,6 +789,8 @@
 				048337C61A7F49FB00E2F889 /* HasScoreCell.m */,
 				0408F6DD1AA158E400C04961 /* EnrollMemberCell.h */,
 				0408F6DE1AA158E400C04961 /* EnrollMemberCell.m */,
+				041CC4C51AA46D310079088C /* OrderContactCell.h */,
+				041CC4C61AA46D310079088C /* OrderContactCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -949,6 +964,7 @@
 				0408F6D01AA05D1600C04961 /* Enroll.m in Sources */,
 				044C6BA11A88AA94000BF100 /* UIScrollView+MJRefresh.m in Sources */,
 				044C6BA51A88BEA8000BF100 /* Search.m in Sources */,
+				041CC4BE1AA4407A0079088C /* ConfirmToPayment.m in Sources */,
 				04C2B1F71A65163E004E8F73 /* ViewController.m in Sources */,
 				043F6AED1A76491E00EEA0B3 /* Settings.m in Sources */,
 				043F5C461A68AEEF0009D939 /* BaseViewController.m in Sources */,
@@ -997,6 +1013,7 @@
 				04EA26AD1A7794C900CCB35E /* ActivityCell.m in Sources */,
 				04EA26A61A77804600CCB35E /* MyOrder.m in Sources */,
 				04A5395A1A84B2B9006BA09D /* ActivityModel.m in Sources */,
+				041CC4C71AA46D310079088C /* OrderContactCell.m in Sources */,
 				048E97EC1A722854003697D1 /* Profile.m in Sources */,
 				04B09FA81A89EC260077394C /* UITextField+CursorRange.m in Sources */,
 				0425F6901A6F7AA700913034 /* ForgetPassword.m in Sources */,
@@ -1004,6 +1021,7 @@
 				044C6B9F1A88AA94000BF100 /* MJRefreshHeaderView.m in Sources */,
 				0420D1551A9DB6D400F22C3E /* KVNMaskedPageControl.m in Sources */,
 				048337C11A7F465D00E2F889 /* EDStarRating.m in Sources */,
+				041CC4C11AA44BF40079088C /* OrderDetailModel.m in Sources */,
 				04A539421A8308DF006BA09D /* RFJModel.m in Sources */,
 				048E97F81A72322A003697D1 /* Subscribe.m in Sources */,
 				048E97EF1A722DBA003697D1 /* CommonPerson.m in Sources */,

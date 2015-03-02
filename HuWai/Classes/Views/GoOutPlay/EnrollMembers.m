@@ -10,14 +10,21 @@
 #import "UIButton+ButtonUtility.h"
 #import "CommonPersonAddOrEdit.h"
 #import "EnrollMemberCell.h"
+#import "CommonPersonModel.h"
+#import "ConfirmToPayment.h"
 
-#define WarnText @"本活动当前还剩余%@个报名名额"
+static NSString *WarnText = @"本活动当前还剩余%@个报名名额";
+
+NSString *const EnrollMembersAddNewNotification = @"EnrollMembersAddNewNotification";
 
 @interface EnrollMembers ()
 {
     UIButton *headerBtn;
+    
+    NSString *orderID;
 }
 
+- (IBAction)submitOrderAction:(id)sender;
 @end
 
 @implementation EnrollMembers
@@ -25,6 +32,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadAction:ActivitySurplusAction params:@"id",self.activityID,nil];
+    
+    //获取联系人数据
+    NSArray *dataArray = [[DatabaseUtil shareDatabase] selectFromTable:COMMON_PERSON_TABLE conditions:@{@"ownerid":[APPInfo shareInit].uid}];
+    if (dataArray.count>0) {
+        CommonPersonModel *model = [[CommonPersonModel alloc] initWithJsonDict:@{@"data":dataArray}];
+        self.dataSource = [model.data mutableCopy];
+        [self.tableView reloadData];
+    }else{
+        [self postActionWithHUD:CommonPersonListAction params:nil];
+    }
+    //添加新出行人通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewMember:) name:EnrollMembersAddNewNotification object:nil];
+    //----------
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
     headerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     headerBtn.frame = CGRectMake(20, 5, SCREEN_WIDTH - 40, 40);
@@ -48,15 +68,32 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)dealloc
+{
+    //移除通知
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EnrollMembersAddNewNotification object:nil];
+}
 #pragma mark request response
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    NSString *surplus = response.data[@"surplus"];
-    [headerBtn setTitle:[NSString stringWithFormat:WarnText,surplus] forState:UIControlStateNormal];
+    if (tag == ActivitySurplusAction) {
+        NSString *surplus = response.data[@"surplus"];
+        [headerBtn setTitle:[NSString stringWithFormat:WarnText,surplus] forState:UIControlStateNormal];
+    }else if(tag == OrderCreateAction){
+        orderID = response.data[@"order_id"];
+        [self performSegueWithIdentifier:@"confirmtopayment" sender:self];
+    }
 }
 
 #pragma mark - custom method 
@@ -64,15 +101,28 @@
 {
     CommonPersonAddOrEdit *cp = [self.storyboard instantiateViewControllerWithIdentifier:@"CommonPersonAddOrEditBoard"];
     cp.pageType = AddType;
+    cp.isFromEnroll = YES;
     [self.navigationController pushViewController:cp animated:YES];
 }
 
+-(void)addNewMember:(NSNotification *)notice
+{
+    NSString *pid = [notice object];
+    NSArray *newOne = [[DatabaseUtil shareDatabase] selectFromTable:COMMON_PERSON_TABLE conditions:@{@"id":pid,@"ownerid":[APPInfo shareInit].uid}];
+    CommonPersonInfo *infoObj = [[CommonPersonInfo alloc] initWithJsonDict:newOne[0]];
+    [self.dataSource addObject:infoObj];
+    [self.tableView reloadData];
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"confirmtopayment"]) {
+        ConfirmToPayment *confirmController = segue.destinationViewController;
+        confirmController.order_id = orderID;
+    }
 }
 
 #pragma mark - tableview method 
@@ -87,7 +137,7 @@
     if (section == 0) {
         return 1;
     }
-    return 10;
+    return self.dataSource.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -109,7 +159,8 @@
     }else{
         EnrollMemberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"enrollMemeberCell" forIndexPath:indexPath];
         [cell.checkBtn addTarget:self action:@selector(selectedItem:) forControlEvents:UIControlEventTouchUpInside];
-        [cell configureCellWithItem:nil atIndexPath:indexPath];
+        CommonPersonInfo *info = self.dataSource[row];
+        [cell configureCellWithItem:info atIndexPath:indexPath];
         return cell;
     }
 }
@@ -119,11 +170,32 @@
     NSInteger tag = btn.tag;
     if (btn.selected) {
         [btn setSelected:NO];
-        //数据删除
-        
     }else{
         [btn setSelected:YES];
-        //数据添加
     }
+    
+    //设置按钮选中状态-(数据添加或删除)
+    [self.dataSource enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if (idx == tag) {
+            ((CommonPersonInfo *)obj).isSelected = btn.selected;
+        }
+    }];
+}
+#pragma mark 提交订单
+- (IBAction)submitOrderAction:(id)sender {
+    __block NSMutableArray *memberIDs = [NSMutableArray arrayWithCapacity:1];
+    NSString *memberIDString = @"";
+    [self.dataSource enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CommonPersonInfo *info = (CommonPersonInfo *)obj;
+        if (info.isSelected) {
+            [memberIDs addObject:info.pid];
+        }
+    }];
+    if (memberIDs) {
+        memberIDString = [memberIDs componentsJoinedByString:@","];
+    }
+    
+    [self postActionWithHUD:OrderCreateAction message:@"提交订单" params:@"id",self.activityID,@"realname",self.realname,@"phone",self.phone,@"o_realname",self.o_realname,@"o_phone",self.o_phone,@"message",@"",@"joins",memberIDString ,nil];
+    
 }
 @end

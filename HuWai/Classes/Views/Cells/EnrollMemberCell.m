@@ -7,6 +7,7 @@
 //
 
 #import "EnrollMemberCell.h"
+#import "CommonPersonModel.h"
 
 @implementation EnrollMemberCell
 
@@ -20,10 +21,21 @@
 
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
 {
+    CommonPersonInfo *data = (CommonPersonInfo *)item;
     self.checkBtn.tag = indexPath.row;
-    self.nameLabel.text = @"老张";
-    self.sexLabel.text = @"男";
-    self.IDCardNo.text = @"320637287654567890";
+    [self.checkBtn setSelected:data.isSelected];
+    self.nameLabel.text = data.name;
+    self.sexLabel.text = [self genderToString:[data.gender intValue]];
+    self.IDCardNo.text = data.identity;
 }
 
+-(NSString *)genderToString:(NSInteger)gender
+{
+    if (gender == 0) {
+        return @"女";
+    }else if(gender == 1){
+        return @"男";
+    }
+    return nil;
+}
 @end
