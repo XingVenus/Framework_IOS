@@ -49,6 +49,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [NSThread sleepForTimeInterval:3.0];
+
     WEAKSELF;
     timeArray = @[@"1日行程",@"2日行程",@"3日行程",@"4-7日行程",@"7日以上"];
     playArray = @[@"徒步",@"摄影",@"登山",@"露营",@"越野",@"溯溪",@"攀冰",@"骑行",@"潜水",@"自驾",@"滑雪",@"漂流",@"其他"];
@@ -152,6 +154,7 @@
                 NSDictionary *addressDictionary = placemark.addressDictionary;
                 [locationBtn setTitle:addressDictionary[@"City"] forState:UIControlStateNormal];
                 _fromCity = addressDictionary[@"City"];
+                ///待定解决
                 [self.tableView headerBeginRefreshing];
             }
         }else{

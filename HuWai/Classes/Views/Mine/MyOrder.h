@@ -6,8 +6,17 @@
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BaseTableViewController.h"
 
-@interface MyOrder : BaseViewController
+typedef NS_ENUM(NSInteger, OrderStatusType)
+{
+    OrderStatusWating,
+    OrderStatusCompleted,
+    OrderStatusCanceled,
+    OrderStatusRefunded
+};
 
+@interface MyOrder : BaseTableViewController
+
+@property (nonatomic) __block OrderStatusType statusType;
 @end

@@ -9,5 +9,9 @@
 #import "BaseTableViewCell.h"
 
 @interface OrderContactCell : BaseTableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *personNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *personPhoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *emergencyNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *emergencyPhoneLabel;
 
 @end

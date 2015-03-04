@@ -141,6 +141,7 @@
     }
     return _segmentControl;
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 45;

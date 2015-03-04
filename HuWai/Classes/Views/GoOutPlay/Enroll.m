@@ -60,7 +60,7 @@
         return;
     }
     
-    [self postAction:OrderPersonCheckAction params:@"realname",orderPerson,@"phone",orderPersonPhone,@"o_realname",emergencyPerson,@"o_phone",emergencyPersonPhone,nil];
+    [self postActionWithHUD:OrderPersonCheckAction params:@"realname",orderPerson,@"phone",orderPersonPhone,@"o_realname",emergencyPerson,@"o_phone",emergencyPersonPhone,nil];
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
