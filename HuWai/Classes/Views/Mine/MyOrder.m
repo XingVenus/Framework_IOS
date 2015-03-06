@@ -12,16 +12,16 @@
 #import "MJRefresh.h"
 #import "UserOrderModel.h"
 #import "ConfirmToPayment.h"
+#import "BaseNavigationController.h"
 
 //static const NSString *kWaiting = @"waiting";
 //static const NSString *kCompleted = @"completed";
 //static const NSString *kCanceled = @"canceled";
 //static const NSString *kRefunded = @"refunded";
 
-@interface MyOrder ()
+@interface MyOrder ()<UIAlertViewDelegate>
 {
     NSArray *statusArray;
-    __block NSInteger currentPage;
 }
 
 @property (nonatomic, strong) HMSegmentedControl *segmentControl;
@@ -33,7 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     WEAKSELF;
-    currentPage = 1;
+    self.statusType = OrderStatusWating;
     statusArray = @[@"waiting",@"completed",@"canceled",@"refunded"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -46,14 +46,16 @@
     }
     //请求数据
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
-    [self.tableView addHeaderWithTarget:self action:@selector(refreshData) dateKey:@"myorderlist"];
+    [self.tableView addHeaderWithCallback:^{
+        weakSelf.currentPage = 1;
+        [self loadDataSource];
+    } dateKey:@"myorderlist"];
     // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
     [self.tableView addFooterWithCallback:^{
-        currentPage = currentPage+1;
-        [self loadActionWithHUD:OrderMyAction params:@"type",statusArray[OrderStatusWating],@"page",[NSString stringWithInteger:currentPage],@"pagesize",@"10",nil];
+        weakSelf.currentPage = weakSelf.currentPage+1;
+        [weakSelf loadDataSource];
     }];
-    
-    [self loadActionWithHUD:OrderMyAction params:@"type",statusArray[OrderStatusWating],@"page",@"1",@"pagesize",@"10",nil];
+    [self loadDataSource];
     // Do any additional setup after loading the view.
 }
 
@@ -61,11 +63,27 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)loadDataSource
+{
+    [self loadActionWithHUD:OrderMyAction params:@"type",statusArray[self.statusType],@"page",[NSString stringWithInteger:self.currentPage],@"pagesize",@"10",nil];
+}
 #pragma mark - custom method 
 #pragma mark 取消支付
 -(void)cancelOrderAction:(UIButton *)sender
 {
-    
+    UIAlertView *cancelAlert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定取消订单" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [cancelAlert show];
+    OrderInfo *info = self.dataSource[sender.tag];
+    objc_setAssociatedObject(self, &OrderCancelAssociatedKey, info, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        OrderInfo *orderinfo = objc_getAssociatedObject(self, &OrderCancelAssociatedKey);
+        [self postActionWithHUD:OrderCancelAction params:@"order_id",orderinfo.order_id,nil];
+    }
 }
 #pragma mark 去支付
 -(void)paymentAction:(UIButton *)sender
@@ -73,12 +91,8 @@
     OrderInfo *info = self.dataSource[sender.tag];
     ConfirmToPayment *payController = [self.storyboard instantiateViewControllerWithIdentifier:@"confirmToPaymentBoard"];
     payController.order_id = info.order_id;
-    [self.navigationController pushViewController:payController animated:YES];
-}
-
--(void)refreshData
-{
-    [self loadActionWithHUD:OrderMyAction params:@"type",statusArray[self.statusType],@"page",@"1",@"pagesize",@"10",nil];
+    BaseNavigationController *payNav = [[BaseNavigationController alloc] initWithRootViewController:payController];
+    [self presentViewController:payNav animated:YES completion:nil];
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
@@ -86,17 +100,19 @@
     if (tag == OrderMyAction) {
         UserOrderModel *orderModel = [[UserOrderModel alloc] initWithJsonDict:response.data];
         if (self.tableView.headerRefreshing) {
-            currentPage = 1;
+             self.currentPage = 1;
             self.dataSource = [NSMutableArray arrayWithArray:orderModel.data];
             [self.tableView headerEndRefreshing];
         }else if(self.tableView.isFooterRefreshing){
             [self.dataSource addObjectsFromArray:orderModel.data];
             [self.tableView footerEndRefreshing];
         }else{
-            currentPage = 1;
+            self.currentPage = 1;
             self.dataSource = [NSMutableArray arrayWithArray:orderModel.data];
         }
         [self.tableView reloadData];
+    }else if (tag == OrderCancelAction){
+        [self loadDataSource];
     }
 }
 
@@ -117,8 +133,9 @@
         WEAKSELF;
         [_segmentControl setIndexChangeBlock:^(NSInteger index) {
             DLog(@"selected index is:%d",(int)index);
+            weakSelf.currentPage = 1;
             weakSelf.statusType = index;
-            [weakSelf refreshData];
+            [weakSelf loadDataSource];
         }];
     }
     return _segmentControl;
@@ -153,7 +170,6 @@
         }
         return 105.0;
     }
-
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

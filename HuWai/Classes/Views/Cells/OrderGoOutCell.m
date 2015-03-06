@@ -1,15 +1,15 @@
 //
-//  OrderContactCell.m
+//  OrderGoOutCell.m
 //  HuWai
 //
-//  Created by WmVenusMac on 15-3-2.
+//  Created by WmVenusMac on 15-3-5.
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
 
-#import "OrderContactCell.h"
+#import "OrderGoOutCell.h"
 #import "OrderDetailModel.h"
 
-@implementation OrderContactCell
+@implementation OrderGoOutCell
 
 
 // Only override drawRect: if you perform custom drawing.
@@ -39,18 +39,37 @@
 
 -(void)layoutSubviews
 {
+//    [super layoutSubviews];
     self.contentView.frame = CGRectInset(self.bounds, 0, 5);
-//    [self.contentView setNeedsUpdateConstraints];
-//    [self.contentView updateConstraints];
     [self setNeedsDisplay];
 }
 
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
 {
-    ContactsInfo *data = (ContactsInfo *)item;
-    self.personNameLabel.text = data.realname;
-    self.personPhoneLabel.text = data.tel;
-    self.emergencyNameLabel.text = data.o_realname;
-    self.emergencyPhoneLabel.text = data.o_tel;
+    NSArray *persons = (NSArray *)item;
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 100, 45)];
+    titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
+    titleLabel.text = @"出行人";
+    [self.contentView addSubview:titleLabel];
+    if (persons.count>0) {
+        for (int i=0; i<persons.count; i++) {
+            CommonPersonInfo *info = persons[i];
+            CALayer *sepLineLayer = [CALayer layer];
+            sepLineLayer.frame = CGRectMake(0, 45+i*45, SCREEN_WIDTH, 0.5);
+            sepLineLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 45+i*45, 80, 45)];
+            nameLabel.textColor = [UIColor darkGrayColor];
+            UILabel *phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(180, 45+i*45, 130, 45)];
+            phoneLabel.textColor = [UIColor darkGrayColor];
+            phoneLabel.textAlignment = NSTextAlignmentRight;
+            
+            nameLabel.text = info.name;
+            phoneLabel.text = info.phone;
+            [self.contentView.layer addSublayer:sepLineLayer];
+            [self.contentView addSubview:nameLabel];
+            [self.contentView addSubview:phoneLabel];
+        }
+    }
+    [self.contentView setNeedsDisplay];
 }
 @end

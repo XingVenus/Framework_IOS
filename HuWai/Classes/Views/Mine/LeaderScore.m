@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadDataSource];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Do any additional setup after loading the view.
 }
@@ -27,6 +28,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)loadDataSource
+{
+    [self loadActionWithHUD:ScoreListAction params:@"type",@"0",@"page",[NSString stringWithInteger:self.currentPage],@"pagesize",@"10",nil];
+}
+
+-(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
+{
+    if (tag == ScoreListAction) {
+        
+    }
+}
 /*
 #pragma mark - Navigation
 

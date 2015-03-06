@@ -24,7 +24,6 @@
         self.backgroundView.backgroundColor = RGBA(242, 242, 242, 1);
     }
     self.contentView.backgroundColor = [UIColor whiteColor];
-    
     CALayer *topLayer = [CALayer layer];
     topLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
     topLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
@@ -33,7 +32,7 @@
     bottomLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
     [self.contentView.layer addSublayer:topLayer];
     [self.contentView.layer addSublayer:bottomLayer];
-
+    
 }
 
 -(void)layoutSubviews
@@ -43,24 +42,44 @@
 
     //    [self.contentView setNeedsUpdateConstraints];
     //    [self.contentView updateConstraints];
+    [self setNeedsDisplay];
 }
 
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
 {
-    OrderDetailModel *data = (OrderDetailModel *)item;
-    self.activityLabel.text = data.activity_info.title;
-    self.activityPriceLabel.text = data.activity_info.price;
-    self.aNumLabel.text = data.order_info.num;
-    self.totalPriceLabel.text = [NSString stringWithFormat:@"合计:%@元",data.order_info.money];
-    if (data.order_info.insurance) {
-        self.insuranceLabel.text = data.order_info.insurance;
-        self.insurancePriceLabel.text = data.order_info.insurance_price;
-        self.inNumLabel.text = data.order_info.insurance_num;
-    }else{
-        self.insuranceLabel.hidden = YES;
-        self.insurancePriceLabel.hidden = YES;
-        self.inNumLabel.hidden = YES;
-        self.lineLabel.hidden  = YES;
+    if (item) {
+        
+        OrderDetailModel *data = (OrderDetailModel *)item;
+        self.activityLabel.text = data.activity_info.title;
+        self.activityPriceLabel.text = data.activity_info.price;
+        self.aNumLabel.text = [NSString stringWithFormat:@"x %@",data.order_info.num];
+        //    self.totalPriceLabel.text = [NSString stringWithFormat:@"合计:%@元",data.order_info.money];
+        if (data.order_info.insurance) {
+            self.insuranceLabel.text = data.order_info.insurance;
+            self.insurancePriceLabel.text = data.order_info.insurance_price;
+            self.inNumLabel.text = [NSString stringWithFormat:@"x %@",data.order_info.insurance_num];
+        }else{
+            self.insuranceLabel.hidden = YES;
+            self.insurancePriceLabel.hidden = YES;
+            self.inNumLabel.hidden = YES;
+            self.lineLabel.hidden  = YES;
+        }
+        if (data.order_info.money) {
+            NSString *text = [NSString stringWithFormat:@"合计:%@元",data.order_info.money];
+            [self.totalPriceLabel setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+                NSRange boldRange = [[mutableAttributedString string] rangeOfString:data.order_info.money options:NSRegularExpressionSearch];
+                
+                // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+                UIFont *boldSystemFont = [UIFont boldSystemFontOfSize:20];
+                CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+                if (font) {
+                    [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:boldRange];
+                    [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(__bridge id)[[UIColor orangeColor] CGColor] range:boldRange];
+                    CFRelease(font);
+                }
+                return mutableAttributedString;
+            }];
+        }
     }
 }
 /*

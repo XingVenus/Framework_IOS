@@ -18,6 +18,7 @@
     }
     return self;
 }
+
 #pragma mark override this method for init tableviewcell
 - (void)baseSetup {
     

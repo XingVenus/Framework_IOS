@@ -11,11 +11,15 @@
 
 #import "OrderInfoCell.h"
 #import "OrderContactCell.h"
+#import "OrderGoOutCell.h"
+#import "PayTypeCell.h"
 
 @interface ConfirmToPayment ()
 {
     OrderDetailModel *orderDetailModel;
 }
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *confirmTotalMoneyLabel;
+- (IBAction)confirmPayAction:(id)sender;
 
 @end
 
@@ -40,6 +44,20 @@
         if (orderDetailModel.joins_info) {
             self.dataSource = [NSMutableArray arrayWithArray:orderDetailModel.joins_info];
         }
+        NSString *text = [NSString stringWithFormat:@"合计:%@元",orderDetailModel.order_info.money];
+        [self.confirmTotalMoneyLabel setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+            NSRange boldRange = [[mutableAttributedString string] rangeOfString:orderDetailModel.order_info.money options:NSRegularExpressionSearch];
+            
+            // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+            UIFont *boldSystemFont = [UIFont boldSystemFontOfSize:20];
+            CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+            if (font) {
+                [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:boldRange];
+                [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(__bridge id)[[UIColor orangeColor] CGColor] range:boldRange];
+                CFRelease(font);
+            }
+            return mutableAttributedString;
+        }];
         [self.tableView reloadData];
     }
 }
@@ -54,25 +72,34 @@
 */
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        if (orderDetailModel.order_info.insurance) {
-            return 210;
+    if (orderDetailModel) {
+        if (indexPath.section == 0) {
+            if (orderDetailModel.order_info.insurance) {
+                return 210;
+            }
+            return 150;
+        }else if(indexPath.section == 1){
+            return 90;
+        }else if(indexPath.section == 2){
+            if (orderDetailModel.joins_info) {
+                return 45+10+45*self.dataSource.count;
+            }
+            return 0;
+        }else if (indexPath.section == 3){
+            return 95.0;
         }
-        return 150;
-    }else if(indexPath.section == 1){
-        return 90;
-    }else{
-        return 44;
     }
+    return 0;
     
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ((section == 0) || (section == 1)|| (section == 2)) {
-        return 1;
-    }
-    return self.dataSource.count;
+//    if ((section == 0) || (section == 1)|| (section == 2)) {
+//        return 1;
+//    }
+//    return self.dataSource.count;
+    return 1;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -87,7 +114,9 @@
     if (section == 0) {
         OrderInfoCell *infocell = [tableView dequeueReusableCellWithIdentifier:@"orderinfocell" forIndexPath:indexPath];
         infocell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [infocell configureCellWithItem:orderDetailModel atIndexPath:indexPath];
+        if (orderDetailModel) {
+            [infocell configureCellWithItem:orderDetailModel atIndexPath:indexPath];
+        }
         return infocell;
     }else if (section == 1){
         OrderContactCell *contactcell = [tableView dequeueReusableCellWithIdentifier:@"ordercontactcell" forIndexPath:indexPath];
@@ -95,17 +124,20 @@
         [contactcell configureCellWithItem:orderDetailModel.contacts_info atIndexPath:indexPath];
         return contactcell;
     }else if(section == 2){
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.textLabel.text = @"出行人";
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:16.0];
+        OrderGoOutCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orderegooutcell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell configureCellWithItem:self.dataSource atIndexPath:indexPath];
         return cell;
+    }else if (section == 3){
+        PayTypeCell *typecell = [tableView dequeueReusableCellWithIdentifier:@"paytypecell" forIndexPath:indexPath];
+        typecell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return typecell;
     }else{
-        CommonPersonInfo *personInfo = self.dataSource[indexPath.row];
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-        cell.textLabel.text = personInfo.name;
-        cell.detailTextLabel.text = personInfo.phone;
-        return cell;
+        return nil;
     }
-
+}
+- (IBAction)confirmPayAction:(id)sender
+{
+    [self showMessageWithThreeSecondAtCenter:@"暂不支持付款"];
 }
 @end

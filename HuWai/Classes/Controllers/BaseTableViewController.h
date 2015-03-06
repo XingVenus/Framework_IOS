@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "MJRefresh.h"
+typedef void(^DidChangeLocationCityBlock)();
 
 @interface BaseTableViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource>
 /**
@@ -25,6 +27,10 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
 /**
+ *  当前页码
+ */
+@property (nonatomic, assign) NSInteger currentPage;
+/**
  *  去除iOS7新的功能api，tableView的分割线变成iOS6正常的样式
  */
 - (void)configuraTableViewNormalSeparatorInset;
@@ -41,4 +47,6 @@
  */
 - (void)loadDataSource;
 
+//custom method for this app
+- (void)alertChangeLocationCity:(NSString *)cityName didChangeCityBlock:(DidChangeLocationCityBlock)changeBlock;
 @end

@@ -8,13 +8,17 @@
 
 #import "BaseTableViewController.h"
 
-@interface BaseTableViewController ()
+
+
+@interface BaseTableViewController ()<UIAlertViewDelegate>
 /**
  *  判断tableView是否支持iOS7的api方法
  *
  *  @return 返回预想结果
  */
 - (BOOL)validateSeparatorInset;
+
+@property (nonatomic, copy) DidChangeLocationCityBlock didChangeLocationCityBlock;
 @end
 
 @implementation BaseTableViewController
@@ -57,6 +61,9 @@
 #pragma mark
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //初始化当前页码为1
+    self.currentPage = 1;
+    
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]){
 //        self.automaticallyAdjustsScrollViewInsets = NO;
         //sdk7.0_later  tableview分组样式时，表头与导航之间的距离上移20
@@ -158,5 +165,24 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+#pragma mark - location city change alert view
+-(void)alertChangeLocationCity:(NSString *)cityName didChangeCityBlock:(DidChangeLocationCityBlock)changeBlock
+{
+    NSString *cacheCity = [CacheBox getCache:LOCATION_CITY_NAME];
+    if (![cacheCity isEqualToString:cityName]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"友情提示" message:[NSString stringWithFormat:@"系统定位你在\"%@\",是否切换",cityName] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"切换", nil];
+        [alert show];
+        self.didChangeLocationCityBlock = changeBlock;
+    }
+    
+}
+#pragma mark alert delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        if (self.didChangeLocationCityBlock) {
+            self.didChangeLocationCityBlock();
+        }
+    }
+}
 @end

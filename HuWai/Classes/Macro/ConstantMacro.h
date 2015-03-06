@@ -24,6 +24,10 @@
 #define LOAD_PROMPT_MESSAGE  @"正在加载"
 
 //＝＝＝＝＝＝应用沙盒的缓存key定义
+
+//----定位城市
+#define LOCATION_CITY_NAME   @"LOCATION_CITY_NAME"
+//----用户属性字段
 #define CACHE_USER_PHONE    @"CACHE_USER_PHONE"
 #define CACHE_USER_PASSWORD @"CACHE_USER_PASSWORD"
 #define CACHE_TOKEN         @"CACHE_TOKEN"
@@ -55,5 +59,6 @@
 #define XMPP_PASSWORD   @"123456"
 
 
-
+//========== associative reference keys
+static const NSString * OrderCancelAssociatedKey         = @"OrderCancelAssociatedKey";
 #endif

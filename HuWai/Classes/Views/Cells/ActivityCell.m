@@ -25,6 +25,8 @@
 {
     if (!_backImageView) {
         _backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH-10*2, (SCREEN_WIDTH-20)/kHeghtRatio)];
+        _backImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _backImageView.clipsToBounds = YES;
     }
     return _backImageView;
 }

@@ -172,6 +172,7 @@
         if (_delegate && [_delegate respondsToSelector:@selector(didSelectedHotCity:)]) {
             [_delegate didSelectedHotCity:dic];
         }
+        [CacheBox saveCache:LOCATION_CITY_NAME value:dic.name];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }

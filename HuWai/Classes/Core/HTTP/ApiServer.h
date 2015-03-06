@@ -32,6 +32,8 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
     OrderCancelAction,      //取消订单
     OrderDetailAction,      //订单详情
     OrderMyAction,          //我的订单
+    ScoreListAction,        //已（待）打分列表
+    ScoreNewAction,         //领队打分 评分
 };
 
 //我的
@@ -51,7 +53,8 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
 #define OrderCancel_Uri     @"/v1/order/cancel"   //取消订单
 #define OrderDetail_Uri     @"/v1/order/detail"     //订单详情 get
 #define OrderMy_Uri         @"/v1/order/my"         //我的订单 get
-
+#define ScoreList_Uri       @"/v1/score/list"   //领队打分 已（待）打分列表 get
+#define ScoreNew_Uri        @"/v1/score/new"    //领队打分 评分
 //活动
 #define Activity_Uri        @"/v1/activity/list"
 #define Hotcity_Uri         @"/v1/region/hotcity"

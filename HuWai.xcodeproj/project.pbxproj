@@ -35,6 +35,9 @@
 		042B3F7A1A667920000E896D /* NSString+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B3F791A667920000E896D /* NSString+JSON.m */; };
 		042B3F7E1A66792A000E896D /* UIView+SimplifyExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B3F7D1A66792A000E896D /* UIView+SimplifyExtend.m */; };
 		042B68261A67C32D009CA824 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B68251A67C32D009CA824 /* Response.m */; };
+		0431D5EE1AA7E93C00221AA3 /* OrderGoOutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5ED1AA7E93C00221AA3 /* OrderGoOutCell.m */; };
+		0431D5F21AA8349900221AA3 /* PayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5F11AA8349900221AA3 /* PayTypeCell.m */; };
+		0431D5F61AA984FA00221AA3 /* LeaderDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5F51AA984FA00221AA3 /* LeaderDetailCell.m */; };
 		043F5C461A68AEEF0009D939 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F5C451A68AEEF0009D939 /* BaseViewController.m */; };
 		043F5C4C1A68E9160009D939 /* CacheBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F5C4B1A68E9160009D939 /* CacheBox.m */; };
 		043F5C501A68EA4A0009D939 /* CommonFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F5C4F1A68EA4A0009D939 /* CommonFoundation.m */; };
@@ -173,6 +176,12 @@
 		042B3F7D1A66792A000E896D /* UIView+SimplifyExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SimplifyExtend.m"; sourceTree = "<group>"; };
 		042B68241A67C32D009CA824 /* Response.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
 		042B68251A67C32D009CA824 /* Response.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Response.m; sourceTree = "<group>"; };
+		0431D5EC1AA7E93C00221AA3 /* OrderGoOutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderGoOutCell.h; sourceTree = "<group>"; };
+		0431D5ED1AA7E93C00221AA3 /* OrderGoOutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderGoOutCell.m; sourceTree = "<group>"; };
+		0431D5F01AA8349900221AA3 /* PayTypeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayTypeCell.h; sourceTree = "<group>"; };
+		0431D5F11AA8349900221AA3 /* PayTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayTypeCell.m; sourceTree = "<group>"; };
+		0431D5F41AA984FA00221AA3 /* LeaderDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderDetailCell.h; sourceTree = "<group>"; };
+		0431D5F51AA984FA00221AA3 /* LeaderDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderDetailCell.m; sourceTree = "<group>"; };
 		043F5C441A68AEEF0009D939 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		043F5C451A68AEEF0009D939 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		043F5C471A68AF9C0009D939 /* HuwaiHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuwaiHeader.pch; sourceTree = "<group>"; };
@@ -588,6 +597,30 @@
 			path = UIView;
 			sourceTree = "<group>";
 		};
+		0431D5EF1AA8346200221AA3 /* ConfirmPaymentCell */ = {
+			isa = PBXGroup;
+			children = (
+				041CC4C51AA46D310079088C /* OrderContactCell.h */,
+				041CC4C61AA46D310079088C /* OrderContactCell.m */,
+				041CC4CC1AA583FE0079088C /* OrderInfoCell.h */,
+				041CC4CD1AA583FE0079088C /* OrderInfoCell.m */,
+				0431D5EC1AA7E93C00221AA3 /* OrderGoOutCell.h */,
+				0431D5ED1AA7E93C00221AA3 /* OrderGoOutCell.m */,
+				0431D5F01AA8349900221AA3 /* PayTypeCell.h */,
+				0431D5F11AA8349900221AA3 /* PayTypeCell.m */,
+			);
+			name = ConfirmPaymentCell;
+			sourceTree = "<group>";
+		};
+		0431D5F31AA984D500221AA3 /* ActivityDetailCell */ = {
+			isa = PBXGroup;
+			children = (
+				0431D5F41AA984FA00221AA3 /* LeaderDetailCell.h */,
+				0431D5F51AA984FA00221AA3 /* LeaderDetailCell.m */,
+			);
+			name = ActivityDetailCell;
+			sourceTree = "<group>";
+		};
 		043F5C431A68AEBC0009D939 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -795,6 +828,8 @@
 		04EA26AA1A77949600CCB35E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				0431D5F31AA984D500221AA3 /* ActivityDetailCell */,
+				0431D5EF1AA8346200221AA3 /* ConfirmPaymentCell */,
 				04EA26AB1A7794C900CCB35E /* ActivityCell.h */,
 				04EA26AC1A7794C900CCB35E /* ActivityCell.m */,
 				04CCA7C61A7B90EE0034A21D /* MessageListCell.h */,
@@ -805,10 +840,6 @@
 				048337C61A7F49FB00E2F889 /* HasScoreCell.m */,
 				0408F6DD1AA158E400C04961 /* EnrollMemberCell.h */,
 				0408F6DE1AA158E400C04961 /* EnrollMemberCell.m */,
-				041CC4C51AA46D310079088C /* OrderContactCell.h */,
-				041CC4C61AA46D310079088C /* OrderContactCell.m */,
-				041CC4CC1AA583FE0079088C /* OrderInfoCell.h */,
-				041CC4CD1AA583FE0079088C /* OrderInfoCell.m */,
 				041CC4CF1AA5AB520079088C /* MyOrderCell.h */,
 				041CC4D01AA5AB520079088C /* MyOrderCell.m */,
 			);
@@ -984,6 +1015,7 @@
 				044C6BA11A88AA94000BF100 /* UIScrollView+MJRefresh.m in Sources */,
 				044C6BA51A88BEA8000BF100 /* Search.m in Sources */,
 				041CC4BE1AA4407A0079088C /* ConfirmToPayment.m in Sources */,
+				0431D5EE1AA7E93C00221AA3 /* OrderGoOutCell.m in Sources */,
 				04C2B1F71A65163E004E8F73 /* ViewController.m in Sources */,
 				043F6AED1A76491E00EEA0B3 /* Settings.m in Sources */,
 				043F5C461A68AEEF0009D939 /* BaseViewController.m in Sources */,
@@ -1057,6 +1089,8 @@
 				0408F6CD1A9EEF6000C04961 /* HMSegmentedControl.m in Sources */,
 				04A539571A84B23B006BA09D /* UserMessageContentModel.m in Sources */,
 				0451FAE31A8B520700529EEC /* LocationHelper.m in Sources */,
+				0431D5F61AA984FA00221AA3 /* LeaderDetailCell.m in Sources */,
+				0431D5F21AA8349900221AA3 /* PayTypeCell.m in Sources */,
 				048337CA1A7F50BA00E2F889 /* BaseViewWithSeparateLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

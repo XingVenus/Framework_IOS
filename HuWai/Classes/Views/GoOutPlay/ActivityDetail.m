@@ -12,6 +12,19 @@
 #import "HMSegmentedControl.h"
 #import "Enroll.h"
 
+#import "LeaderDetailCell.h"
+
+
+static inline NSRegularExpression * NumbersRegularExpression() {
+    static NSRegularExpression *_regularExpression = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _regularExpression = [[NSRegularExpression alloc] initWithPattern:@"\\d+" options:NSRegularExpressionCaseInsensitive error:nil];
+    });
+    
+    return _regularExpression;
+}
+
 @interface ActivityDetail ()
 {
     TitleAndPriceView *titleAndPrice;
@@ -21,7 +34,7 @@
 
 @property (nonatomic, strong) MaskedPageView *maskPageView;
 //@property (nonatomic, strong) RTLabel *titleLabel;//标题label
-@property (nonatomic, strong) RTLabel *overdueLabel;//倒计时label
+@property (nonatomic, weak) IBOutlet TTTAttributedLabel *overdueLabel;//倒计时label
 
 @property (nonatomic, strong) HMSegmentedControl *segmentControl;
 
@@ -31,6 +44,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //图片列表
     UIView *headerView = [[UIView alloc] init];
     self.maskPageView = [[MaskedPageView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, SCREEN_WIDTH/1.7)];
@@ -67,6 +81,7 @@
         ActivityDetailModel *detailModel = [[ActivityDetailModel alloc] initWithJsonDict:response.data];
         //数据填充
         [self fillDataHeaderView:detailModel];
+        
     }else if (tag == AddFavoriteAction){
         [favoriteBtn setSelected:YES];
     }else if (tag == CancelFavoriteAction){
@@ -117,6 +132,87 @@
     [self.maskPageView fillDataWithImagesArray:data.flash];
     //标题价格数据
     [titleAndPrice setDataInViews:data];
+    //活动倒计时显示
+    int starttime = [data.starttime intValue];
+    int endtime = [data.endtime intValue];
+    int dateline = [data.dateline intValue];
+    if (dateline>=starttime && dateline<=endtime) {
+        int secs = endtime - dateline;
+        [self countDown:secs];
+    }else{
+        [self setActivityOverdueText:@"活动已经结束,请关注下次活动"];
+    }
+
+}
+
+#pragma mark -
+#pragma mark 倒计时
+-(void)countDown:(int)secs{
+    WEAKSELF;
+    __block int timeout = secs; //倒计时时间
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+    dispatch_source_set_event_handler(_timer, ^{
+        if(timeout<=0){ //倒计时结束，关闭
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //设置界面的按钮显示 根据自己需求设置
+                [weakSelf setActivityOverdueText:@"活动已经结束,请关注下次活动"];
+            });
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //设置界面的显示 根据自己需求设置
+                [weakSelf changeOverduelabelText:timeout];
+            });
+            timeout--;
+        }
+    });
+    dispatch_resume(_timer);
+}
+
+#pragma mark 设置倒计时文字
+-(void)changeOverduelabelText:(int)secs
+{
+    int hours = (int)secs / 3600; //总共的小时
+    int minutes = (int)secs / 60 % 60; //分钟
+    int seconds = (int)secs % 60; //秒
+    
+    NSString *overString = [NSString stringWithFormat:@"距离报名结束还有\n%i小时%.2d分%.2d秒",hours,minutes,seconds];
+    [self.overdueLabel setText:overString afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange stringRange = NSMakeRange(0, [mutableAttributedString length]);
+        NSRegularExpression *regexp = NumbersRegularExpression();
+        
+        [regexp enumerateMatchesInString:[mutableAttributedString string] options:0 range:stringRange usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+            // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+            UIFont *boldSystemFont = [UIFont boldSystemFontOfSize:18];
+            CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+            if (font) {
+                [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:result.range];
+                [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(__bridge id)[[UIColor orangeColor] CGColor] range:result.range];
+                CFRelease(font);
+            }
+        }];
+        
+        return mutableAttributedString;
+    }];
+}
+#pragma mark 设置过期文字显示
+-(void)setActivityOverdueText:(NSString *)string
+{
+//    self.overdueLabel.text = string;
+    [self.overdueLabel setText:string afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange resultRange = [[mutableAttributedString string] rangeOfString:string options:NSRegularExpressionSearch];
+        
+        UIFont *boldSystemFont = [UIFont boldSystemFontOfSize:16];
+        CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+        if (font) {
+            [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:resultRange];
+            [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(__bridge id)[[UIColor grayColor] CGColor] range:resultRange];
+            CFRelease(font);
+        }
+        return mutableAttributedString;
+    }];
     
 }
 #pragma mark - tableview method
@@ -136,7 +232,7 @@
         WEAKSELF;
         [_segmentControl setIndexChangeBlock:^(NSInteger index) {
             DLog(@"selected index is:%d",(int)index);
-            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationLeft];
+//            [weakSelf.tableView reloadSections:<#(NSIndexSet *)#> withRowAnimation:UITableViewRowAnimationAutomatic];
         }];
     }
     return _segmentControl;
@@ -159,7 +255,12 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 400.0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -174,8 +275,8 @@
 @end
 
 @interface TitleAndPriceView()
-@property (nonatomic, strong) RTLabel *titleLabel;
-@property (nonatomic, strong) RTLabel *priceLabel;
+@property (nonatomic, strong) TTTAttributedLabel *titleLabel;
+@property (nonatomic, strong) TTTAttributedLabel *priceLabel;
 @end
 
 @implementation TitleAndPriceView
@@ -207,24 +308,24 @@
     [self.layer addSublayer:bottomLayer];
 }
 
--(RTLabel *)titleLabel
+-(TTTAttributedLabel *)titleLabel
 {
     if (!_titleLabel) {
-        _titleLabel = [[RTLabel alloc] initWithFrame:CGRectMake(15, 10, SCREEN_WIDTH - 100 - 15*2, 44)];
-        _titleLabel.lineSpacing = 8.0;
-        _titleLabel.lineBreakMode = RTTextLineBreakModeWordWrapping;
+        _titleLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(15, 10, SCREEN_WIDTH - 100 - 15*2, 44)];
+        _titleLabel.lineSpacing = 5.0;
+        _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _titleLabel.numberOfLines = 0;
         _titleLabel.centerY = self.height/2;
     }
     return _titleLabel;
 }
 
--(RTLabel *)priceLabel
+-(TTTAttributedLabel *)priceLabel
 {
     if (!_priceLabel) {
-        _priceLabel = [[RTLabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 90, 0, 80, 30)];
+        _priceLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 90 - 10, 0, 90, 30)];
         _priceLabel.centerY = self.height/2;
-        
-        _priceLabel.textAlignment = RTTextAlignmentRight;
+        _priceLabel.textAlignment = NSTextAlignmentRight;
     }
     return _priceLabel;
 }

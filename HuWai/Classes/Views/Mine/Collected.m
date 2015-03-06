@@ -9,7 +9,6 @@
 #import "Collected.h"
 #import "ActivityCell.h"
 #import "ActivityModel.h"
-#import "MJRefresh.h"
 #import "ActivityDetail.h"
 
 @interface Collected ()
@@ -25,7 +24,8 @@
     [self loadActionWithHUD:FavoriteListAction params:nil];
     
     [self.tableView addFooterWithCallback:^{
-        [weakSelf loadActionWithHUD:FavoriteListAction params:nil];
+        self.currentPage = self.currentPage + 1;
+        [weakSelf loadActionWithHUD:FavoriteListAction params:@"page",[NSString stringWithInteger:self.currentPage],nil];
     }];
     // Do any additional setup after loading the view.
 }
@@ -57,8 +57,13 @@
 
     if (tag == FavoriteListAction) {
         ActivityModel *aModel = [[ActivityModel alloc] initWithJsonDict:response.data];
-        [self.dataSource addObjectsFromArray:aModel.data];
-        [self.tableView footerEndRefreshing];
+        if (self.tableView.isFooterRefreshing) {
+            [self.dataSource addObjectsFromArray:aModel.data];
+            [self.tableView footerEndRefreshing];
+        }else{
+            self.dataSource = [NSMutableArray arrayWithArray:aModel.data];
+        }
+        
         [self.tableView reloadData];
     }
 

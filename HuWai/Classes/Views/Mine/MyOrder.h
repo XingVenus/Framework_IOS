@@ -10,7 +10,7 @@
 
 typedef NS_ENUM(NSInteger, OrderStatusType)
 {
-    OrderStatusWating,
+    OrderStatusWating = 0,
     OrderStatusCompleted,
     OrderStatusCanceled,
     OrderStatusRefunded
@@ -18,5 +18,5 @@ typedef NS_ENUM(NSInteger, OrderStatusType)
 
 @interface MyOrder : BaseTableViewController
 
-@property (nonatomic) __block OrderStatusType statusType;
+@property (nonatomic, assign) OrderStatusType statusType;
 @end

@@ -342,6 +342,9 @@ NSDictionary *argsTpMap(id firstObject,...)
 }
 
 #pragma mark - set method this view for none data response
+/**
+ *  默认空白页面
+ */
 -(UIView *)blankView
 {
     if (!_blankView) {

@@ -40,7 +40,7 @@
     NSString *_destCity; //目的地
     NSString *_time;     //行程时间
     NSString *_play;     //玩法
-    NSInteger _currentPage; //当前页
+//    NSInteger _currentPage; //当前页
 }
 
 @end
@@ -50,21 +50,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [NSThread sleepForTimeInterval:3.0];
-
+//    if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
+//        self.automaticallyAdjustsScrollViewInsets = NO;
+//    }
     WEAKSELF;
     timeArray = @[@"1日行程",@"2日行程",@"3日行程",@"4-7日行程",@"7日以上"];
     playArray = @[@"徒步",@"摄影",@"登山",@"露营",@"越野",@"溯溪",@"攀冰",@"骑行",@"潜水",@"自驾",@"滑雪",@"漂流",@"其他"];
-    _currentPage = 1;
     //下拉、上拉注册
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
-    [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing) dateKey:@"mainplay"];
+    [self.tableView addHeaderWithCallback:^{
+        self.currentPage = 1;
+        [weakSelf loadDataSource];
+    } dateKey:@"mainplay"];
     // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
     [self.tableView addFooterWithCallback:^{
-        [weakSelf headerRereshing];
+        self.currentPage = self.currentPage + 1;
+        [weakSelf loadDataSource];
     }];
-
+    
     //获取目的地城市列表
     [self loadAction:DestinationAction params:nil];
+    //初始化获取活动列表
+    [self loadDataSource];
     //添加 隐藏导航条 通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavBarWithNoAnimate) name:@"hideNavBarWithNoAnimate" object:nil];
 //    self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0);
@@ -83,7 +90,7 @@
     [locationBtn setImage:[UIImage imageNamed:@"place-i"] forState:UIControlStateNormal];
     [locationBtn setTitleColor:RGBA(54, 178, 214, 1) forState:UIControlStateNormal];
     locationBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
-
+    [locationBtn setTitle:[CacheBox getCache:LOCATION_CITY_NAME] forState:UIControlStateNormal];
     [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:4];
     [locationBtn addTarget:self action:@selector(selectDestCity:) forControlEvents:UIControlEventTouchUpInside];
     [navigationView addSubview:locationBtn];
@@ -152,14 +159,19 @@
             CLPlacemark *placemark = [placemarks lastObject];
             if (placemark) {
                 NSDictionary *addressDictionary = placemark.addressDictionary;
-                [locationBtn setTitle:addressDictionary[@"City"] forState:UIControlStateNormal];
                 _fromCity = addressDictionary[@"City"];
+                
+                [self alertChangeLocationCity:_fromCity didChangeCityBlock:^{
+                    [CacheBox saveCache:LOCATION_CITY_NAME value:_fromCity];
+                    [locationBtn setTitle:_fromCity forState:UIControlStateNormal];
+                    [self.tableView headerBeginRefreshing];
+                }];
                 ///待定解决
-                [self.tableView headerBeginRefreshing];
+//                [self.tableView headerBeginRefreshing];
             }
         }else{
             //显示上次缓存的城市
-            [locationBtn setTitle:@"暂无" forState:UIControlStateNormal];
+            [locationBtn setTitle:[CacheBox getCache:LOCATION_CITY_NAME] forState:UIControlStateNormal];
         }
     }];
 
@@ -203,9 +215,9 @@
 }
 
 #pragma mark 刷新数据
--(void)headerRereshing
+-(void)loadDataSource
 {
-    [self loadActionWithHUD:ActivityAction params:@"from",_fromCity,@"city",_destCity,@"time",_time,@"play",_play,@"page",[NSNumber numberWithInteger:_currentPage],@"pagesize",[NSNumber numberWithInteger:PageSize],nil];
+    [self loadActionWithHUD:ActivityAction params:@"from",[CacheBox getCache:LOCATION_CITY_NAME],@"city",_destCity,@"time",_time,@"play",_play,@"page",[NSNumber numberWithInteger:self.currentPage],@"pagesize",[NSNumber numberWithInteger:PageSize],nil];
 }
 #pragma mark - data response block
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
@@ -215,11 +227,13 @@
         ActivityModel *model = [[ActivityModel alloc] initWithJsonDict:response.data];
         //显示数据
         if (self.tableView.headerRefreshing) {
+            self.currentPage = 1;
             self.dataSource = [model.data mutableCopy];
-        }else if (self.tableView.footerRefreshing){
+        }else if (self.tableView.footerRefreshing && model.data){
             [self.dataSource addObjectsFromArray:model.data];
+        }else{
+            self.dataSource = [NSMutableArray arrayWithArray:model.data];
         }
-        
         [self.tableView reloadData];
     }else if (tag == DestinationAction){
         DestinationCityModel *desModel = [[DestinationCityModel alloc] initWithJsonDict:response.data];

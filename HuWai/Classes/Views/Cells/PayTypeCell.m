@@ -1,15 +1,14 @@
 //
-//  OrderContactCell.m
+//  PayTypeCell.m
 //  HuWai
 //
-//  Created by WmVenusMac on 15-3-2.
+//  Created by WmVenusMac on 15-3-5.
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
 
-#import "OrderContactCell.h"
-#import "OrderDetailModel.h"
+#import "PayTypeCell.h"
 
-@implementation OrderContactCell
+@implementation PayTypeCell
 
 
 // Only override drawRect: if you perform custom drawing.
@@ -40,17 +39,7 @@
 -(void)layoutSubviews
 {
     self.contentView.frame = CGRectInset(self.bounds, 0, 5);
-//    [self.contentView setNeedsUpdateConstraints];
-//    [self.contentView updateConstraints];
     [self setNeedsDisplay];
 }
 
--(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
-{
-    ContactsInfo *data = (ContactsInfo *)item;
-    self.personNameLabel.text = data.realname;
-    self.personPhoneLabel.text = data.tel;
-    self.emergencyNameLabel.text = data.o_realname;
-    self.emergencyPhoneLabel.text = data.o_tel;
-}
 @end

@@ -130,6 +130,16 @@
             uristring = OrderMy_Uri;
             break;
         }
+        case ScoreListAction:
+        {
+            uristring = ScoreList_Uri;
+            break;
+        }
+        case ScoreNewAction:
+        {
+            uristring = ScoreNew_Uri;
+            break;
+        }
         default:
             break;
     }
