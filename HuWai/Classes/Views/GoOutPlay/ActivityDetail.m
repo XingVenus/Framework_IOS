@@ -30,6 +30,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     TitleAndPriceView *titleAndPrice;
     UIButton *favoriteBtn;
     UIButton *shareBtn;
+    ActivityDetailModel *detailModel;
 }
 
 @property (nonatomic, strong) MaskedPageView *maskPageView;
@@ -78,7 +79,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 {
 
     if (tag == ActivityDetailAction) {
-        ActivityDetailModel *detailModel = [[ActivityDetailModel alloc] initWithJsonDict:response.data];
+        detailModel = [[ActivityDetailModel alloc] initWithJsonDict:response.data];
         //数据填充
         [self fillDataHeaderView:detailModel];
         
@@ -232,7 +233,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         WEAKSELF;
         [_segmentControl setIndexChangeBlock:^(NSInteger index) {
             DLog(@"selected index is:%d",(int)index);
-//            [weakSelf.tableView reloadSections:<#(NSIndexSet *)#> withRowAnimation:UITableViewRowAnimationAutomatic];
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         }];
     }
     return _segmentControl;
@@ -265,12 +266,21 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identity = @"detailCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identity];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
+//    NSInteger section = [indexPath section];
+    if (_segmentControl.selectedSegmentIndex == 1) {
+        LeaderDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"leaderdetailcell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell configureCellWithItem:detailModel.leader atIndexPath:indexPath];
+        return cell;
+    }else{
+        
+        static NSString *identity = @"detailCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identity];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
+        }
+        return cell;
     }
-    return cell;
 }
 @end
 

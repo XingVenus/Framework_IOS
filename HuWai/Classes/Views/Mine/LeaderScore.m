@@ -9,6 +9,7 @@
 #import "LeaderScore.h"
 #import "NotScoreCell.h"
 #import "HasScoreCell.h"
+#import "ScoreListModel.h"
 
 @interface LeaderScore ()<EDStarRatingProtocol>
 
@@ -36,7 +37,8 @@
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
     if (tag == ScoreListAction) {
-        
+        ScoreListModel *listmodel = [[ScoreListModel alloc] initWithJsonDict:response.data];
+        self.dataSource = [NSMutableArray arrayWithArray:listmodel.data];
     }
 }
 /*
@@ -51,7 +53,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 8;
+    return self.dataSource.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -7,9 +7,10 @@
 //
 
 #import "BaseTableViewCell.h"
+#import "PAAImageView.h"
 
 @interface LeaderDetailCell : BaseTableViewCell
-@property (weak, nonatomic) IBOutlet UIView *avatarView;
+@property (weak, nonatomic) IBOutlet PAAImageView *avatarView;
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *nameLabel;
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *infoLabel;
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *gradeLabel;

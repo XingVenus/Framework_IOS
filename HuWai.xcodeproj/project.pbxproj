@@ -38,6 +38,9 @@
 		0431D5EE1AA7E93C00221AA3 /* OrderGoOutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5ED1AA7E93C00221AA3 /* OrderGoOutCell.m */; };
 		0431D5F21AA8349900221AA3 /* PayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5F11AA8349900221AA3 /* PayTypeCell.m */; };
 		0431D5F61AA984FA00221AA3 /* LeaderDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5F51AA984FA00221AA3 /* LeaderDetailCell.m */; };
+		0431D5FE1AA9989100221AA3 /* SegmentControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5FD1AA9989100221AA3 /* SegmentControllerViewController.m */; };
+		0431D6031AA99CDD00221AA3 /* THSegmentedPager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D6011AA99CDD00221AA3 /* THSegmentedPager.m */; };
+		0431D6061AA9B50400221AA3 /* ScoreListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D6051AA9B50400221AA3 /* ScoreListModel.m */; };
 		043F5C461A68AEEF0009D939 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F5C451A68AEEF0009D939 /* BaseViewController.m */; };
 		043F5C4C1A68E9160009D939 /* CacheBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F5C4B1A68E9160009D939 /* CacheBox.m */; };
 		043F5C501A68EA4A0009D939 /* CommonFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 043F5C4F1A68EA4A0009D939 /* CommonFoundation.m */; };
@@ -182,6 +185,13 @@
 		0431D5F11AA8349900221AA3 /* PayTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayTypeCell.m; sourceTree = "<group>"; };
 		0431D5F41AA984FA00221AA3 /* LeaderDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderDetailCell.h; sourceTree = "<group>"; };
 		0431D5F51AA984FA00221AA3 /* LeaderDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderDetailCell.m; sourceTree = "<group>"; };
+		0431D5FC1AA9989100221AA3 /* SegmentControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentControllerViewController.h; sourceTree = "<group>"; };
+		0431D5FD1AA9989100221AA3 /* SegmentControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentControllerViewController.m; sourceTree = "<group>"; };
+		0431D6001AA99CDD00221AA3 /* THSegmentedPager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THSegmentedPager.h; sourceTree = "<group>"; };
+		0431D6011AA99CDD00221AA3 /* THSegmentedPager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THSegmentedPager.m; sourceTree = "<group>"; };
+		0431D6021AA99CDD00221AA3 /* THSegmentedPageViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THSegmentedPageViewControllerDelegate.h; sourceTree = "<group>"; };
+		0431D6041AA9B50400221AA3 /* ScoreListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreListModel.h; sourceTree = "<group>"; };
+		0431D6051AA9B50400221AA3 /* ScoreListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreListModel.m; sourceTree = "<group>"; };
 		043F5C441A68AEEF0009D939 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		043F5C451A68AEEF0009D939 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		043F5C471A68AF9C0009D939 /* HuwaiHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuwaiHeader.pch; sourceTree = "<group>"; };
@@ -412,6 +422,8 @@
 				0408F6D21AA063F300C04961 /* EnrollMembers.m */,
 				041CC4BC1AA4407A0079088C /* ConfirmToPayment.h */,
 				041CC4BD1AA4407A0079088C /* ConfirmToPayment.m */,
+				0431D5FC1AA9989100221AA3 /* SegmentControllerViewController.h */,
+				0431D5FD1AA9989100221AA3 /* SegmentControllerViewController.m */,
 			);
 			path = GoOutPlay;
 			sourceTree = "<group>";
@@ -491,6 +503,8 @@
 				045CC02F1A9DCF4600839DCE /* ActivityDetailModel.m */,
 				041CC4BF1AA44BF40079088C /* OrderDetailModel.h */,
 				041CC4C01AA44BF40079088C /* OrderDetailModel.m */,
+				0431D6041AA9B50400221AA3 /* ScoreListModel.h */,
+				0431D6051AA9B50400221AA3 /* ScoreListModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -621,6 +635,16 @@
 			name = ActivityDetailCell;
 			sourceTree = "<group>";
 		};
+		0431D5FF1AA99CDD00221AA3 /* THSegmentedPager */ = {
+			isa = PBXGroup;
+			children = (
+				0431D6001AA99CDD00221AA3 /* THSegmentedPager.h */,
+				0431D6011AA99CDD00221AA3 /* THSegmentedPager.m */,
+				0431D6021AA99CDD00221AA3 /* THSegmentedPageViewControllerDelegate.h */,
+			);
+			path = THSegmentedPager;
+			sourceTree = "<group>";
+		};
 		043F5C431A68AEBC0009D939 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -695,6 +719,7 @@
 		04605F1B1A6E2C70004EBB2D /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				0431D5FF1AA99CDD00221AA3 /* THSegmentedPager */,
 				041CC4C81AA57F5D0079088C /* TTTAttributedLabel */,
 				0408F6CA1A9EEF6000C04961 /* HMSegmentedControl */,
 				0420D1501A9DB6D400F22C3E /* MaskedPageControl */,
@@ -1039,12 +1064,15 @@
 				042B68261A67C32D009CA824 /* Response.m in Sources */,
 				045CC0301A9DCF4600839DCE /* ActivityDetailModel.m in Sources */,
 				048FAB251A90B2A1001C9570 /* DestinationCityModel.m in Sources */,
+				0431D6061AA9B50400221AA3 /* ScoreListModel.m in Sources */,
 				043F5C591A691B7E0009D939 /* BaseNavigationController.m in Sources */,
+				0431D5FE1AA9989100221AA3 /* SegmentControllerViewController.m in Sources */,
 				041CC4D11AA5AB520079088C /* MyOrderCell.m in Sources */,
 				042B3F7E1A66792A000E896D /* UIView+SimplifyExtend.m in Sources */,
 				043F6AEA1A76487700EEA0B3 /* MessageList.m in Sources */,
 				044C6BA01A88AA94000BF100 /* UIScrollView+MJExtension.m in Sources */,
 				04FBF4601A79EC7F004A0A74 /* CityList.m in Sources */,
+				0431D6031AA99CDD00221AA3 /* THSegmentedPager.m in Sources */,
 				044C6BA21A88AA94000BF100 /* UIView+MJExtension.m in Sources */,
 				048E97E91A71DCFA003697D1 /* ApiServer.m in Sources */,
 				042719211A6CF1C1001645AA /* BaseTabBarController.m in Sources */,
