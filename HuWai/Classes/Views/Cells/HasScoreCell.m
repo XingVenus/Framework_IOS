@@ -7,18 +7,27 @@
 //
 
 #import "HasScoreCell.h"
+#import "ScoreListModel.h"
 
 @implementation HasScoreCell
 
+-(void)drawRect:(CGRect)rect
+{
+    CALayer *secondLayer = [CALayer layer];
+    secondLayer.frame = CGRectMake(0, 40, SCREEN_WIDTH, 0.5);
+    secondLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.contentView.layer addSublayer:secondLayer];
+}
+
 -(void)baseSetup
 {
-    self.backgroundColor = RGBA(242, 242, 243, 1);
-    self.contentView.backgroundColor = RGBA(242, 242, 243, 1);
-    [self.contentView addSubview:self.hasScoreBackView];
-    [self.hasScoreBackView addSubview:self.titleLabel];
-    [self.hasScoreBackView addSubview:self.subTitleLabel];
-    [self.hasScoreBackView addSubview:self.describeLabel];
-    [self.hasScoreBackView addSubview:self.scoreLabel];
+//    self.backgroundColor = RGBA(242, 242, 243, 1);
+//    self.contentView.backgroundColor = RGBA(242, 242, 243, 1);
+//    [self.contentView addSubview:self.hasScoreBackView];
+    [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.subTitleLabel];
+    [self.contentView addSubview:self.describeLabel];
+    [self.contentView addSubview:self.scoreLabel];
 }
 
 - (void)awakeFromNib {
@@ -35,16 +44,17 @@
 {
     [super layoutSubviews];
     self.contentView.frame = CGRectInset(self.bounds, 0, 5);
+    [self setLayerLineAndBackground];
 }
 
--(HasScoreCellView *)hasScoreBackView
-{
-    if (!_hasScoreBackView) {
-        _hasScoreBackView = [[HasScoreCellView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120)];
-        _hasScoreBackView.backgroundColor = [UIColor whiteColor];
-    }
-    return _hasScoreBackView;
-}
+//-(HasScoreCellView *)hasScoreBackView
+//{
+//    if (!_hasScoreBackView) {
+//        _hasScoreBackView = [[HasScoreCellView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120)];
+//        _hasScoreBackView.backgroundColor = [UIColor whiteColor];
+//    }
+//    return _hasScoreBackView;
+//}
 
 -(UILabel *)titleLabel
 {
@@ -52,7 +62,7 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 21)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
-        
+        _titleLabel.text = @"已打分";
     }
     return _titleLabel;
 }
@@ -70,12 +80,13 @@
     return _subTitleLabel;
 }
 
--(RTLabel *)describeLabel
+-(TTTAttributedLabel *)describeLabel
 {
     if (!_describeLabel) {
-        _describeLabel = [[RTLabel alloc] initWithFrame:CGRectMake(15, 60, SCREEN_WIDTH - 100, 50)];
+        _describeLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(15, 50, SCREEN_WIDTH - 100, 50)];
         _describeLabel.backgroundColor = [UIColor clearColor];
-        _describeLabel.lineSpacing = 8;
+        _describeLabel.lineSpacing = 6;
+        _describeLabel.numberOfLines = 0;
         _describeLabel.font = [UIFont systemFontOfSize:14.0];
         _describeLabel.textColor = [UIColor darkGrayColor];
     }
@@ -85,18 +96,18 @@
 -(UILabel *)scoreLabel
 {
     if (!_scoreLabel) {
-        _scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, CGRectGetMinY(self.describeLabel.frame)+5, 60, 30)];
-        
+        _scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, 0, 60, 30)];
+        _scoreLabel.centerY = CGRectGetMidY(self.describeLabel.frame);
     }
     return _scoreLabel;
 }
 
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
 {
-    self.titleLabel.text = @"已打分";
-    self.subTitleLabel.text = @"adfasdfadf";
-    self.describeLabel.text = @"要在应用启动器中快速找到某个应用，请在搜索框中输入该应用的名称。借助搜索框，您也可在Chrome网上应用店中查找更多应用，还可执行常规的Google搜索操作。";
-    self.scoreLabel.text = @"4.88分";
+    ScoreInfo *data = (ScoreInfo *)item;
+    self.subTitleLabel.text = [NSString stringWithFormat:@"领队:%@",data.leader];
+    self.describeLabel.text = data.title;
+    self.scoreLabel.text = data.score;
 }
 
 @end

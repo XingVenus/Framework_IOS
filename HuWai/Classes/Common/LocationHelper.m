@@ -84,7 +84,7 @@
  }
  
  */
-
+#pragma mark 定位成功
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations
 {
@@ -100,7 +100,7 @@
      }];
     [manager stopUpdatingLocation];
 }
-
+#pragma mark 定位失败
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     
     if (self.didGetGeolocationsCompledBlock) {

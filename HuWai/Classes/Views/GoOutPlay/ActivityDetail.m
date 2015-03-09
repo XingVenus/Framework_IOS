@@ -38,6 +38,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 @property (nonatomic, weak) IBOutlet TTTAttributedLabel *overdueLabel;//倒计时label
 
 @property (nonatomic, strong) HMSegmentedControl *segmentControl;
+@property (weak, nonatomic) IBOutlet UIButton *signupBtn;
 
 @end
 
@@ -74,10 +75,9 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     self.navigationItem.rightBarButtonItems = @[r2,r1];
     // Do any additional setup after loading the view.
 }
-
+#pragma mark - request response data
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-
     if (tag == ActivityDetailAction) {
         detailModel = [[ActivityDetailModel alloc] initWithJsonDict:response.data];
         //数据填充
@@ -142,6 +142,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         [self countDown:secs];
     }else{
         [self setActivityOverdueText:@"活动已经结束,请关注下次活动"];
+        [self.signupBtn setEnabled:NO];
     }
 
 }

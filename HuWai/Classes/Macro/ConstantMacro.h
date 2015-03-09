@@ -26,7 +26,9 @@
 //＝＝＝＝＝＝应用沙盒的缓存key定义
 
 //----定位城市
-#define LOCATION_CITY_NAME   @"LOCATION_CITY_NAME"
+#define LOCATION_CITY_NAME   @"LOCATION_CITY_NAME"  //选择的定位城市
+#define LOCATE_DEVICE_GPS       @"LOCATE_DEVICE_GPS"
+
 //----用户属性字段
 #define CACHE_USER_PHONE    @"CACHE_USER_PHONE"
 #define CACHE_USER_PASSWORD @"CACHE_USER_PASSWORD"

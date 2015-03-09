@@ -7,9 +7,14 @@
 //
 
 #import "Search.h"
+#import "ActivityModel.h"
+#import "SearchResultList.h"
+
 @interface Search ()<UITextFieldDelegate>
+{
+    ActivityModel *dataModel;
+}
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
-- (IBAction)backToMain:(id)sender;
 
 @end
 
@@ -46,18 +51,28 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    SearchResultList *resultController = (SearchResultList *)segue.destinationViewController;
+    resultController.title = [CommonFoundation trimString:self.searchField.text];
+    resultController.dataList = dataModel.data;
 }
-*/
+
 -(void)searchAction
 {
     DLog(@"%@",@"searchAction");
+    NSString *keyword = [CommonFoundation trimString:self.searchField.text];
+    if (![CommonFoundation isEmptyString:keyword]) {
+        NSString *fromcity = [CacheBox getCache:LOCATION_CITY_NAME];
+        [self loadActionWithHUD:ActivityAction params:@"from",fromcity,@"keyword",keyword,nil];
+    }else{
+        [self showMessageWithThreeSecondAtCenter:@"请输入搜索内容"];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -72,9 +87,24 @@
     
 }
 
-- (IBAction)backToMain:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+-(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
+{
+    if (tag == ActivityAction) {
+        dataModel = [[ActivityModel alloc] initWithJsonDict:response.data];
+        if (dataModel.data.count>0) {
+            [self performSegueWithIdentifier:@"searchresultlist" sender:self];
+        }else{
+            [self showMessageWithThreeSecondAtCenter:@"亲，没有找到相关出行内容"];
+        }
+        
+//        if (self.tableView.headerRefreshing) {
+//            self.currentPage = 1;
+//            self.dataSource = [model.data mutableCopy];
+//        }else if (self.tableView.footerRefreshing && model.data){
+//            [self.dataSource addObjectsFromArray:model.data];
+//        }else{
+//            self.dataSource = [NSMutableArray arrayWithArray:model.data];
+//        }
+    }
 }
-
-
 @end

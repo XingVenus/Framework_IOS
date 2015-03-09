@@ -7,22 +7,36 @@
 //
 
 #import "NotScoreCell.h"
+#import "ScoreListModel.h"
 
 @implementation NotScoreCell
 
 -(void)baseSetup
 {
-    self.backgroundColor = RGBA(242, 242, 243, 1);
-    self.contentView.backgroundColor = RGBA(242, 242, 243, 1);
+    
+    self.contentView.layer.shouldRasterize = YES;
+    self.contentView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    
+    if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
+        self.backgroundColor = RGBA(242, 242, 242, 1);
+    }else{
+        self.backgroundView = [[UIView alloc] initWithFrame:self.bounds];
+        self.backgroundView.backgroundColor = RGBA(242, 242, 242, 1);
+    }
+    self.contentView.backgroundColor = [UIColor whiteColor];
+    
+    
+//    self.backgroundColor = RGBA(242, 242, 243, 1);
+//    self.contentView.backgroundColor = RGBA(242, 242, 243, 1);
     [self.contentView addSubview:self.scoreBackView];
-    [self.scoreBackView addSubview:self.describeLabel];
-    [self.scoreBackView addSubview:self.titleLabel];
-    [self.scoreBackView addSubview:self.subTitleLabel];
-    [self.scoreBackView addSubview:self.selectLabel1];
-    [self.scoreBackView addSubview:self.selectLabel2];
-    [self.scoreBackView addSubview:self.starControl1];
-    [self.scoreBackView addSubview:self.starControl2];
-    [self.scoreBackView addSubview:self.scoreButton];
+    [self.contentView addSubview:self.describeLabel];
+    [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.subTitleLabel];
+    [self.contentView addSubview:self.selectLabel1];
+    [self.contentView addSubview:self.selectLabel2];
+    [self.contentView addSubview:self.starControl1];
+    [self.contentView addSubview:self.starControl2];
+    [self.contentView addSubview:self.scoreButton];
 }
 
 //- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -49,16 +63,32 @@
 {
     [super layoutSubviews];
     self.contentView.frame = CGRectInset(self.bounds, 0, 5);
+    //打分按钮位置
+    self.scoreButton.top = CGRectGetHeight(self.bounds) - 50 - 10;
+    //添加分割线
+    CALayer *topLayer = [CALayer layer];
+    topLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
+    topLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+    CALayer *bottomLayer = [CALayer layer];
+    bottomLayer.frame = CGRectMake(0, self.contentView.bounds.size.height, SCREEN_WIDTH, 0.5);
+    bottomLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.contentView.layer addSublayer:topLayer];
+    [self.contentView.layer addSublayer:bottomLayer];
+    
+    CALayer *secondline = [CALayer layer];
+    secondline.frame = CGRectMake(0, 40, SCREEN_WIDTH, 0.5);
+    secondline.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.contentView.layer addSublayer:secondline];
 }
 
--(ScoreCellView *)scoreBackView
-{
-    if (!_scoreBackView) {
-        _scoreBackView = [[ScoreCellView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 220)];
-        _scoreBackView.backgroundColor = [UIColor whiteColor];
-    }
-    return _scoreBackView;
-}
+//-(ScoreCellView *)scoreBackView
+//{
+//    if (!_scoreBackView) {
+//        _scoreBackView = [[ScoreCellView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 220)];
+//        _scoreBackView.backgroundColor = [UIColor whiteColor];
+//    }
+//    return _scoreBackView;
+//}
 
 -(UILabel *)titleLabel
 {
@@ -66,7 +96,7 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 21)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
-        
+        _titleLabel.text = @"待打分";
     }
     return _titleLabel;
 }
@@ -84,12 +114,13 @@
     return _subTitleLabel;
 }
 
--(RTLabel *)describeLabel
+-(TTTAttributedLabel *)describeLabel
 {
     if (!_describeLabel) {
-        _describeLabel = [[RTLabel alloc] initWithFrame:CGRectMake(15, 55, SCREEN_WIDTH - 15*2, 45)];
+        _describeLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(15, 50, SCREEN_WIDTH - 15*2, 45)];
         _describeLabel.backgroundColor = [UIColor clearColor];
         _describeLabel.lineSpacing = 5;
+        _describeLabel.numberOfLines = 0;
         _describeLabel.font = [UIFont systemFontOfSize:14.0];
         _describeLabel.textColor = [UIColor darkGrayColor];
     }
@@ -99,7 +130,7 @@
 -(UILabel *)selectLabel1
 {
     if (!_selectLabel1) {
-        _selectLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.describeLabel.frame) + 5, 120, 21)];
+        _selectLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.describeLabel.frame) + 10, 120, 21)];
         _selectLabel1.backgroundColor = [UIColor clearColor];
         _selectLabel1.font = [UIFont systemFontOfSize:14.0];
         _selectLabel1.textColor = [UIColor darkGrayColor];
@@ -111,7 +142,7 @@
 -(UILabel *)selectLabel2
 {
     if (!_selectLabel2) {
-        _selectLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.describeLabel.frame) + 35, 120, 21)];
+        _selectLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.describeLabel.frame) + 40, 120, 21)];
         _selectLabel2.backgroundColor = [UIColor clearColor];
         _selectLabel2.font = [UIFont systemFontOfSize:14.0];
         _selectLabel2.textColor = [UIColor darkGrayColor];
@@ -159,7 +190,7 @@
 -(UIButton *)scoreButton
 {
     if (!_scoreButton) {
-        _scoreButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 125, CGRectGetHeight(self.scoreBackView.frame) - 50, 110, 40)];
+        _scoreButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 125, 0, 110, 40)];
         [_scoreButton setTitle:@"提交打分" forState:UIControlStateNormal];
         [_scoreButton setBackgroundImage:[UIImage imageNamed:@"Submit-score-mutual"] forState:UIControlStateNormal];
         [_scoreButton setBackgroundImage:[UIImage imageNamed:@"Submit-score"] forState:UIControlStateHighlighted];
@@ -171,10 +202,12 @@
 
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
 {
-    self.titleLabel.text = @"待打分";
-    self.subTitleLabel.text = @"领队:sdffffff";
-    self.describeLabel.text = @"李克强出席中法建交50周年纪念活动闭幕式李克强出席中法建交50周年纪念活动闭幕式李克强出席中法建交50周年纪念活动闭幕式";
-    
+    ScoreInfo *data = (ScoreInfo *)item;
+    self.scoreButton.tag = indexPath.row;
+    self.subTitleLabel.text = [NSString stringWithFormat:@"领队:%@",data.leader];
+    self.describeLabel.text = data.title;
+    self.starControl1.rating = data.accuracyRate;
+    self.starControl2.rating = data.satisfiedRate;
 }
 
 @end

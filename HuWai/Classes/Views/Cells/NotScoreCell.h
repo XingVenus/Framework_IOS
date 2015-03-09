@@ -19,7 +19,7 @@
 @property (nonatomic, strong) ScoreCellView *scoreBackView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *subTitleLabel;
-@property (nonatomic, strong) RTLabel *describeLabel;
+@property (nonatomic, strong) TTTAttributedLabel *describeLabel;
 
 @property (nonatomic, strong) UILabel *selectLabel1;
 @property (nonatomic, strong) UILabel *selectLabel2;

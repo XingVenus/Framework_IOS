@@ -76,9 +76,9 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uF7-wd-UFg" customClass="TTTAttributedLabel">
-                                                    <rect key="frame" x="77" y="15" width="111" height="27"/>
+                                                    <rect key="frame" x="77" y="15" width="150" height="27"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="111" id="eK0-3L-Sit"/>
+                                                        <constraint firstAttribute="width" constant="150" id="eK0-3L-Sit"/>
                                                         <constraint firstAttribute="height" constant="27" id="ybw-cZ-6xe"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -86,7 +86,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VMf-6x-jiK" customClass="TTTAttributedLabel">
-                                                    <rect key="frame" x="77" y="42" width="148" height="41"/>
+                                                    <rect key="frame" x="77" y="42" width="150" height="41"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -170,7 +170,7 @@
                                                 <constraint firstItem="jhU-e5-Isz" firstAttribute="top" secondItem="HO9-W5-PQr" secondAttribute="topMargin" constant="12" id="ACU-9w-Rxf"/>
                                                 <constraint firstItem="uF7-wd-UFg" firstAttribute="top" secondItem="HO9-W5-PQr" secondAttribute="topMargin" constant="7" id="Bmk-QV-1t4"/>
                                                 <constraint firstItem="vL1-YE-rkn" firstAttribute="bottom" secondItem="wlc-0x-ij1" secondAttribute="bottom" id="CjO-OH-k2b"/>
-                                                <constraint firstItem="iFt-Fv-xgm" firstAttribute="leading" secondItem="VMf-6x-jiK" secondAttribute="trailing" constant="6" id="D6H-JY-cnS"/>
+                                                <constraint firstItem="iFt-Fv-xgm" firstAttribute="leading" secondItem="VMf-6x-jiK" secondAttribute="trailing" constant="4" id="D6H-JY-cnS"/>
                                                 <constraint firstItem="eu3-EU-x8a" firstAttribute="top" secondItem="cr1-2l-bqB" secondAttribute="bottom" constant="15" id="GEk-jn-M6g"/>
                                                 <constraint firstItem="uF7-wd-UFg" firstAttribute="leading" secondItem="VMf-6x-jiK" secondAttribute="leading" id="Hc9-Ml-xKK"/>
                                                 <constraint firstItem="mvw-DZ-k3b" firstAttribute="leading" secondItem="vL1-YE-rkn" secondAttribute="leading" id="I1C-ZM-w45"/>
@@ -272,6 +272,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="overdueLabel" destination="ZZV-x4-c2V" id="Asi-bh-0tF"/>
+                        <outlet property="signupBtn" destination="kfz-AQ-TY2" id="EQP-hQ-Yfw"/>
                         <outlet property="tableView" destination="y8m-Hi-hLt" id="oCG-MM-gwI"/>
                     </connections>
                 </viewController>
@@ -1030,7 +1031,7 @@
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" image="arrow-back" id="nE4-Jc-FHK">
                             <connections>
-                                <action selector="backToMain:" destination="Igp-5b-Snl" id="BFc-3k-JiS"/>
+                                <action selector="popToLastView:" destination="Igp-5b-Snl" id="bx5-NK-3D0"/>
                             </connections>
                         </barButtonItem>
                         <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="搜索活动" minimumFontSize="17" clearButtonMode="whileEditing" id="hqc-YD-2s7">
@@ -1043,11 +1044,53 @@
                     <connections>
                         <outlet property="searchField" destination="hqc-YD-2s7" id="dvb-08-oNv"/>
                         <outlet property="tableView" destination="D5v-TW-CZL" id="iSS-hK-LX2"/>
+                        <segue destination="5Zy-t2-IM0" kind="push" identifier="searchresultlist" id="Vqe-HI-c9V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XpO-Te-4vG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="858" y="-3500"/>
+        </scene>
+        <!--搜索结果-->
+        <scene sceneID="dvZ-Ok-PoK">
+            <objects>
+                <viewController storyboardIdentifier="searchResultListBoard" title="搜索结果" id="5Zy-t2-IM0" customClass="SearchResultList" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AoG-wz-JA3"/>
+                        <viewControllerLayoutGuide type="bottom" id="h9I-or-cxJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5t5-Td-GG1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KuB-Fx-8yI">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="KuB-Fx-8yI" firstAttribute="leading" secondItem="5t5-Td-GG1" secondAttribute="leading" id="W0d-LG-kRr"/>
+                            <constraint firstItem="KuB-Fx-8yI" firstAttribute="top" secondItem="5t5-Td-GG1" secondAttribute="top" id="hgo-K5-vEg"/>
+                            <constraint firstAttribute="bottom" secondItem="KuB-Fx-8yI" secondAttribute="bottom" id="n8o-5i-9gU"/>
+                            <constraint firstAttribute="trailing" secondItem="KuB-Fx-8yI" secondAttribute="trailing" id="qMD-Ne-KfI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="RP9-v8-KjW">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="ldz-rB-Qph">
+                            <connections>
+                                <action selector="popToLastView:" destination="5Zy-t2-IM0" id="Q4o-sm-8mn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="KuB-Fx-8yI" id="dop-eQ-Mvl"/>
+                        <segue destination="U85-3M-9v8" kind="push" identifier="searchReultToDetail" id="CF8-Q4-CdS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bfm-Mf-TnU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1277" y="-3500"/>
         </scene>
         <!--MainTab-->
         <scene sceneID="RyB-cJ-0po">
@@ -2657,7 +2700,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="P97-Mn-Li6"/>
+        <segue reference="CF8-Q4-CdS"/>
         <segue reference="28T-xj-yOn"/>
     </inferredMetricsTieBreakers>
 </document>

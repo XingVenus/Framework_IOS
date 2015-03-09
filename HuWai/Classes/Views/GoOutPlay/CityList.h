@@ -12,12 +12,13 @@
 @protocol CityListDelegate <NSObject>
 
 @optional
--(void)didSelectedHotCity:(HotCityInfo *)hotcity;
+-(void)didSelectedHotCity:(NSString *)hotcityID cityName:(NSString *)hotcityName;
 
 @end
 
 @interface CityList : BaseTableViewController
 
 @property (nonatomic, weak) id<CityListDelegate> delegate;
+@property (nonatomic, strong) NSString *gpsCity;
 
 @end

@@ -41,6 +41,8 @@
     NSString *_time;     //行程时间
     NSString *_play;     //玩法
 //    NSInteger _currentPage; //当前页
+    
+    NSString *successGPScity;
 }
 
 @end
@@ -159,11 +161,13 @@
             CLPlacemark *placemark = [placemarks lastObject];
             if (placemark) {
                 NSDictionary *addressDictionary = placemark.addressDictionary;
-                _fromCity = addressDictionary[@"City"];
-                
-                [self alertChangeLocationCity:_fromCity didChangeCityBlock:^{
-                    [CacheBox saveCache:LOCATION_CITY_NAME value:_fromCity];
-                    [locationBtn setTitle:_fromCity forState:UIControlStateNormal];
+//                _fromCity = addressDictionary[@"City"];
+                successGPScity = addressDictionary[@"City"];
+                [self alertChangeLocationCity:successGPScity didChangeCityBlock:^{
+                    [CacheBox saveCache:LOCATION_CITY_NAME value:successGPScity];
+                    //GPS定位的当前城市
+                    [CacheBox saveCache:LOCATE_DEVICE_GPS value:successGPScity];
+                    [locationBtn setTitle:successGPScity forState:UIControlStateNormal];
                     [self.tableView headerBeginRefreshing];
                 }];
                 ///待定解决
@@ -327,10 +331,14 @@
 }
 
 #pragma mark - hotcity delegate
--(void)didSelectedHotCity:(HotCityInfo *)hotcity
+-(void)didSelectedHotCity:(NSString *)hotcityID cityName:(NSString *)hotcityName
 {
-    _fromCity = hotcity.cid;
-    [locationBtn setTitle:hotcity.name forState:UIControlStateNormal];
+    if (hotcityID) {
+        _fromCity = hotcityID;
+    }else{
+        _fromCity = hotcityName;
+    }
+    [locationBtn setTitle:hotcityName forState:UIControlStateNormal];
     [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:4];
     [self.tableView headerBeginRefreshing];
 }
@@ -386,6 +394,7 @@
         activityController.detailTitle = @"活动详情";
     }else if([segue.identifier isEqualToString:@"citylist"]){
         CityList *clist = segue.destinationViewController;
+        clist.gpsCity = successGPScity;
         clist.delegate = self;
     }
 }

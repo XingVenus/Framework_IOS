@@ -39,6 +39,7 @@
     if (tag == ScoreListAction) {
         ScoreListModel *listmodel = [[ScoreListModel alloc] initWithJsonDict:response.data];
         self.dataSource = [NSMutableArray arrayWithArray:listmodel.data];
+        [self.tableView reloadData];
     }
 }
 /*
@@ -58,23 +59,29 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row > 3) {
-        return 130;
+    if (self.dataSource.count>0) {
+        ScoreInfo *score = self.dataSource[indexPath.row];
+        if ([score.status intValue] == 1) {
+            return 130;
+        }
+        return 230;
     }
-    return 230;
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier1 = @"notscorecell";
     static NSString *cellIdentifier2 = @"hasscorecell";
-    if (indexPath.row>3) {
+    NSInteger row = [indexPath row];
+    ScoreInfo *score = self.dataSource[row];
+    if ([score.status intValue] == 1) {
         HasScoreCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier2];
         if (!cell) {
             cell = [[HasScoreCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        [cell configureCellWithItem:nil atIndexPath:indexPath];
+        [cell configureCellWithItem:score atIndexPath:indexPath];
         return cell;
     }else{
         
@@ -82,22 +89,52 @@
         if (!cell) {
             cell = [[NotScoreCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier1];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.scoreButton addTarget:self action:@selector(submitScore:) forControlEvents:UIControlEventTouchUpInside];
         }
-        cell.starControl1.delegate = self;
-        cell.starControl2.delegate = self;
-        [cell configureCellWithItem:nil atIndexPath:indexPath];
+
+        cell.starControl1.returnBlock = ^(float rating )
+        {
+            [self.dataSource enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                if (row == idx) {
+                    ScoreInfo *data = (ScoreInfo *)obj;
+                    data.accuracyRate = rating;
+                }
+            }];
+        };
+        cell.starControl2.returnBlock = ^(float rating )
+        {
+            [self.dataSource enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                if (row == idx) {
+                    ScoreInfo *data = (ScoreInfo *)obj;
+                    data.satisfiedRate = rating;
+                }
+            }];
+        };
+        [cell configureCellWithItem:score atIndexPath:indexPath];
         return cell;
     }
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    DLog(@"%ld",(long)indexPath.row);
+//}
+-(void)submitScore:(UIButton *)sender
 {
-    DLog(@"%ld",(long)indexPath.row);
+    ScoreInfo *data = (ScoreInfo *)self.dataSource[sender.tag];
+    NotScoreCell *cell = (NotScoreCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+    CGFloat rate1 = cell.starControl1.rating;
+    CGFloat rate2 = cell.starControl2.rating;
+    if (rate1>0 && rate2>0) {
+        [self postActionWithHUD:ScoreNewAction params:@"id",data.sid,@"description",[NSNumber numberWithFloat:rate1],@"server",[NSNumber numberWithFloat:rate2],nil];
+    }else{
+        [self showMessageWithThreeSecondAtCenter:@"亲，请打分"];
+    }
 }
 
--(void)starsSelectionChanged:(EDStarRating*)control rating:(float)rating
-{
-    
-}
+//-(void)starsSelectionChanged:(EDStarRating*)control rating:(float)rating
+//{
+//    
+//}
 
 @end

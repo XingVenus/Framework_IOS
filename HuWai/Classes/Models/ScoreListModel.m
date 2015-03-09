@@ -11,3 +11,7 @@
 @implementation ScoreListModel
 
 @end
+
+@implementation ScoreInfo
+
+@end

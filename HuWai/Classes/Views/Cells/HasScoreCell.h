@@ -16,7 +16,7 @@
 @property (nonatomic, strong) HasScoreCellView *hasScoreBackView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *subTitleLabel;
-@property (nonatomic, strong) RTLabel *describeLabel;
+@property (nonatomic, strong) TTTAttributedLabel *describeLabel;
 @property (nonatomic, strong) UILabel *scoreLabel;
 
 @end

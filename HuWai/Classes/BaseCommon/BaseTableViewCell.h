@@ -12,5 +12,5 @@
 
 - (void)baseSetup;
 - (void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath;
-
+-(void)setLayerLineAndBackground;
 @end
