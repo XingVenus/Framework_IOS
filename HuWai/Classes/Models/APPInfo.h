@@ -19,7 +19,10 @@
 @property (nonatomic, strong) NSString *role_id;
 @property (nonatomic, strong) NSString *status;
 @property (nonatomic, strong) NSString *token; //鉴别用户的token，每次数据请求需要发送
-@property (nonatomic,getter = isLogin) BOOL  login;
+//@property (nonatomic,getter = isLogin) BOOL  login; //用于表示用户本次打开应用
+@property (nonatomic, assign, getter = isUpdatedCommonPerson) BOOL updatedCommonPerson; //用于标记本次打开应用更新常用联系人数据
+
+@property (nonatomic, strong) NSString *GPSCity; //用户当前定位的城市
 
 +(instancetype)shareInit;
 //更新用户信息到模型对象

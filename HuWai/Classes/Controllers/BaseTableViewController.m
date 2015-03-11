@@ -11,6 +11,9 @@
 
 
 @interface BaseTableViewController ()<UIAlertViewDelegate>
+{
+    UIAlertView *alert;
+}
 /**
  *  判断tableView是否支持iOS7的api方法
  *
@@ -170,7 +173,10 @@
 {
     NSString *cacheCity = [CacheBox getCache:LOCATION_CITY_NAME];
     if (![cacheCity isEqualToString:cityName]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"友情提示" message:[NSString stringWithFormat:@"系统定位你在\"%@\",是否切换",cityName] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"切换", nil];
+        if (!alert) {
+            alert = [[UIAlertView alloc] initWithTitle:@"友情提示" message:[NSString stringWithFormat:@"系统定位你在\"%@\",是否切换",cityName] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"切换", nil];
+        }
+        
         [alert show];
         self.didChangeLocationCityBlock = changeBlock;
     }

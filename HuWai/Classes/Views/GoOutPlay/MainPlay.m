@@ -18,7 +18,7 @@
 #import "ActivityModel.h"
 #import "DestinationCityModel.h"
 #import "LocationHelper.h"
-
+#import "LaunchView.h"
 #define PageSize    20
 
 @interface MainPlay ()<CityListDelegate, SelectListViewDelegate>
@@ -42,7 +42,7 @@
     NSString *_play;     //玩法
 //    NSInteger _currentPage; //当前页
     
-    NSString *successGPScity;
+    LaunchView *launchview;
 }
 
 @end
@@ -51,7 +51,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [NSThread sleepForTimeInterval:3.0];
+    //引导页面
+    NSString *lastBuildversion = [CacheBox getCache:LAUNCH_BUILD_VERSION];
+    if (![lastBuildversion isEqualToString:APP_BUILD_VERSION]) {
+        launchview = [[LaunchView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        launchview.isSkipBtn = YES;
+        [launchview fillDataWithImagesArray:@[@"launch1",@"launch2",@"launch3",@"launch4"]];
+        [CacheBox saveCache:LAUNCH_BUILD_VERSION value:APP_BUILD_VERSION];
+    }
+    [[UIApplication sharedApplication].keyWindow addSubview:launchview];
+    //---------
+    
+    [NSThread sleepForTimeInterval:2.0];
 //    if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
 //        self.automaticallyAdjustsScrollViewInsets = NO;
 //    }
@@ -157,21 +168,18 @@
     //定位
     _locationHelper = [[LocationHelper alloc] init];
     [_locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks, NSError *error) {
-        if (placemarks) {
+        if (placemarks.count>0) {
             CLPlacemark *placemark = [placemarks lastObject];
             if (placemark) {
                 NSDictionary *addressDictionary = placemark.addressDictionary;
-//                _fromCity = addressDictionary[@"City"];
-                successGPScity = addressDictionary[@"City"];
-                [self alertChangeLocationCity:successGPScity didChangeCityBlock:^{
-                    [CacheBox saveCache:LOCATION_CITY_NAME value:successGPScity];
-                    //GPS定位的当前城市
-                    [CacheBox saveCache:LOCATE_DEVICE_GPS value:successGPScity];
-                    [locationBtn setTitle:successGPScity forState:UIControlStateNormal];
+                NSString  *City = addressDictionary[@"City"];
+                [APPInfo shareInit].GPSCity = addressDictionary[@"City"];
+                [self alertChangeLocationCity:City didChangeCityBlock:^{
+                    [CacheBox saveCache:LOCATION_CITY_NAME value:City];
+                    [locationBtn setTitle:City forState:UIControlStateNormal];
                     [self.tableView headerBeginRefreshing];
                 }];
-                ///待定解决
-//                [self.tableView headerBeginRefreshing];
+
             }
         }else{
             //显示上次缓存的城市
@@ -394,7 +402,6 @@
         activityController.detailTitle = @"活动详情";
     }else if([segue.identifier isEqualToString:@"citylist"]){
         CityList *clist = segue.destinationViewController;
-        clist.gpsCity = successGPScity;
         clist.delegate = self;
     }
 }

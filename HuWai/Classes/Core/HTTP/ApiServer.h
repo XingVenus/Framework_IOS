@@ -34,6 +34,8 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
     OrderMyAction,          //我的订单
     ScoreListAction,        //已（待）打分列表
     ScoreNewAction,         //领队打分 评分
+    RssAddAction,           //添加订阅
+    RssCancelAction,        //取消订阅
 };
 
 //我的
@@ -43,7 +45,7 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
 #define SmsToken_Uri        @"/v1/notification/sms/:smsToken"
 #define Gettoken_Uri        @"/v1/login/gettoken"
 #define Resetpassword_Uri   @"/v1/login/resetpassword"
-#define CommonPersonList_Uri    @"/v1/participants/list"
+#define CommonPersonList_Uri    @"/v1/participants/list" //常用出行人列表 get
 #define CommonPersonAdd_Uri     @"/v1/participants/add"
 #define ModifyPassword_Uri      @"/v1/user/password"
 #define FavoriteList_Uri    @"/v1/favorite/list"
@@ -63,6 +65,8 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
 #define AddFavorite_Uri     @"/v1/favorite/add"
 #define CancelFavorite_Uri  @"/v1/favorite/cancel"
 #define ActivitySurplus_Uri @"/v1/activity/surplus" //get
+#define RssAdd_Uri          @"/v1/rss/add"      //添加订阅
+#define RssCancel_Uri       @"/v1/rss/cancel"   //取消订阅
 
 @interface ApiServer : NSObject
 

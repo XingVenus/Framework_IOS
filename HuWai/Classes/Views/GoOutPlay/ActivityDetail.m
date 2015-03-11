@@ -13,7 +13,7 @@
 #import "Enroll.h"
 
 #import "LeaderDetailCell.h"
-
+#import "ActivityDetailCell.h"
 
 static inline NSRegularExpression * NumbersRegularExpression() {
     static NSRegularExpression *_regularExpression = nil;
@@ -31,6 +31,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     UIButton *favoriteBtn;
     UIButton *shareBtn;
     ActivityDetailModel *detailModel;
+
 }
 
 @property (nonatomic, strong) MaskedPageView *maskPageView;
@@ -82,11 +83,13 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         detailModel = [[ActivityDetailModel alloc] initWithJsonDict:response.data];
         //数据填充
         [self fillDataHeaderView:detailModel];
-        
+        [self.tableView reloadData];
     }else if (tag == AddFavoriteAction){
         [favoriteBtn setSelected:YES];
     }else if (tag == CancelFavoriteAction){
         [favoriteBtn setSelected:NO];
+    }else if (tag == RssAddAction){
+        
     }
 
 }
@@ -217,8 +220,12 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     }];
     
 }
-#pragma mark - tableview method
 
+-(void)subscribeAction:(UIButton *)sender
+{
+    [self postActionWithHUD:RssAddAction params:@"id",detailModel.aid,nil];
+}
+#pragma mark 切换标签segment
 -(HMSegmentedControl *)segmentControl
 {
     if (!_segmentControl) {
@@ -234,12 +241,14 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         WEAKSELF;
         [_segmentControl setIndexChangeBlock:^(NSInteger index) {
             DLog(@"selected index is:%d",(int)index);
-            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            //            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [weakSelf.tableView reloadData];
         }];
     }
     return _segmentControl;
 }
 
+#pragma mark - tableview method
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 45;
@@ -257,7 +266,10 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    if (detailModel) {
+        return 1;
+    }
+    return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -268,9 +280,18 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    NSInteger section = [indexPath section];
-    if (_segmentControl.selectedSegmentIndex == 1) {
+    if (_segmentControl.selectedSegmentIndex == 0) {
+        ActivityDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"activitydetailcell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell configureCellWithItem:detailModel.detail atIndexPath:indexPath];
+        return cell;
+    }else if (_segmentControl.selectedSegmentIndex == 1) {
         LeaderDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"leaderdetailcell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell.subscribeActivityBtn addTarget:self action:@selector(subscribeAction:) forControlEvents:UIControlEventTouchUpInside];
+        if (detailModel.isRss) {
+            [cell.subscribeActivityBtn setTitle:@"取消订阅" forState:UIControlStateNormal];
+        }
         [cell configureCellWithItem:detailModel.leader atIndexPath:indexPath];
         return cell;
     }else{

@@ -7,7 +7,6 @@
 //
 
 #import "MaskedPageView.h"
-#import "UIView+SimplifyExtend.h"
 #import <objc/runtime.h>
 
 const NSString *DELETE_STRING = @"deleteimagestring";

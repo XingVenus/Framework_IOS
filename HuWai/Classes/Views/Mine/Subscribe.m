@@ -95,16 +95,23 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DLog(@"%ld",(long)indexPath.row);
+    [self performSegueWithIdentifier:@"subscribeActivityDetail" sender:self];
 }
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
+    if ([segue.identifier isEqualToString:@"subscribeActivityDetail"]) {
+        ActivityDetail *activityController = segue.destinationViewController;
+        ActivityInfo *infoModel = self.dataSource[selectedRowIndex.row];
+        activityController.activityId = infoModel.aid;
+        activityController.detailTitle = @"活动详情";
+    }
 }
-*/
+
 
 @end

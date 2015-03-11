@@ -27,18 +27,18 @@
     [super viewWillAppear:animated];
     [self loadDataSource];
 }
+
 -(void)loadDataSource
 {
-//    [self postAppendUriAction:CommonPersonListAction withValue:[APPInfo shareInit].uid params:nil];
     NSArray *dataArray = [[DatabaseUtil shareDatabase] selectFromTable:COMMON_PERSON_TABLE conditions:@{@"ownerid":[APPInfo shareInit].uid}];
+    //直接从数据库获取
     if (dataArray.count>0) {
         CommonPersonModel *model = [[CommonPersonModel alloc] initWithJsonDict:@{@"data":dataArray}];
         self.dataSource = [model.data mutableCopy];
-        [self.tableView reloadData];
-    }else{
-        [self postActionWithHUD:CommonPersonListAction params:nil];
     }
-    
+    if (![APPInfo shareInit].updatedCommonPerson) {
+        [self loadActionWithHUD:CommonPersonListAction params:nil];
+    }
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
@@ -46,15 +46,19 @@
 
     if (tag == CommonPersonListAction) {
         if (response.data) {
+            [APPInfo shareInit].updatedCommonPerson = YES; //本次标记为已经更新
             CommonPersonModel *model = [[CommonPersonModel alloc] initWithJsonDict:response.data];
             self.dataSource = [model.data mutableCopy];
             [self.tableView reloadData];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                // 耗时的操作
+                // 耗时的操作--插入数据库
                 for (CommonPersonInfo *pInfo in model.data) {
-                    [[DatabaseUtil shareDatabase] insertTableName:COMMON_PERSON_TABLE keyArray:@[@"id",@"name",@"gender",@"identity",@"phone",@"ownerid"] valueArrary:@[pInfo.pid,pInfo.name,pInfo.gender,pInfo.identity,pInfo.phone,[APPInfo shareInit].uid]];
+                    NSArray *result = [[DatabaseUtil shareDatabase] selectFromTable:COMMON_PERSON_TABLE conditions:@{@"id":pInfo.pid}];
+                    if (result.count == 0) {
+                        [[DatabaseUtil shareDatabase] insertTableName:COMMON_PERSON_TABLE keyArray:@[@"id",@"name",@"gender",@"identity",@"phone",@"ownerid"] valueArrary:@[pInfo.pid,pInfo.name,pInfo.gender,pInfo.identity,pInfo.phone,[APPInfo shareInit].uid]];
+                    }
+                    
                 }
-                
             });
         }
     }
@@ -70,6 +74,11 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50.0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -100,6 +109,26 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+#pragma UITableViewDelegate
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+// 删除
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [self.dataSource removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+    
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

@@ -88,7 +88,7 @@
 -(UILabel *)leaderLabel
 {
     if (!_leaderLabel) {
-        _leaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 8, 120, 21)];
+        _leaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 8, 160, 21)];
         _leaderLabel.backgroundColor = [UIColor clearColor];
         _leaderLabel.textAlignment = NSTextAlignmentLeft;
         _leaderLabel.font = [UIFont systemFontOfSize:15.0];

@@ -39,10 +39,9 @@
 {
 //    self.totalPriceLabel.top = self.height - 7 - 31 - 10;
     self.contentView.frame = CGRectInset(self.bounds, 0, 5);
-
-    //    [self.contentView setNeedsUpdateConstraints];
-    //    [self.contentView updateConstraints];
-    [self setNeedsDisplay];
+    [self.contentView setNeedsUpdateConstraints];
+    [self.contentView updateConstraints];
+//    [self setNeedsDisplay];
 }
 
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath

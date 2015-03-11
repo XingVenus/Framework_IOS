@@ -22,6 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.gpsCity = [APPInfo shareInit].GPSCity;
     _location = [[LocationHelper alloc] init];
     //判断热门城市列表，存在并相同则不请求，否则请求数据
     
@@ -204,7 +205,7 @@
                         if (placemark) {
                             
                             NSDictionary *addressDictionary = placemark.addressDictionary;
-                            self.gpsCity = addressDictionary[@"City"];
+                            [APPInfo shareInit].GPSCity = addressDictionary[@"City"];
                             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                         }
                     }else{

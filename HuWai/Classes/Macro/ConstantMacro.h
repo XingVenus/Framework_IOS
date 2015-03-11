@@ -23,11 +23,10 @@
 
 #define LOAD_PROMPT_MESSAGE  @"正在加载"
 
-//＝＝＝＝＝＝应用沙盒的缓存key定义
+//==================应用沙盒的缓存key定义==============
 
 //----定位城市
 #define LOCATION_CITY_NAME   @"LOCATION_CITY_NAME"  //选择的定位城市
-#define LOCATE_DEVICE_GPS       @"LOCATE_DEVICE_GPS"
 
 //----用户属性字段
 #define CACHE_USER_PHONE    @"CACHE_USER_PHONE"
@@ -44,23 +43,26 @@
 #define STAR_CACHE          @"STAR_CACHE"
 #define ROLEID_CACHE        @"ROLEID_CACHE"
 #define STATUS_CACHE        @"STATUS_CACHE"
-//＝＝＝＝＝＝名称常量定义
+//------名称常量定义
 //密码加密密钥
 #define SECRET_KEY @"luobodi_haokelai"
 //数据库名称
 #define DATABASE_NAME   @"huwai.sqlite"
 //---数据库表名称
 #define COMMON_PERSON_TABLE   @"commonperson"
+//----用于引导页面的应用build版本
+#define LAUNCH_BUILD_VERSION    @"LAUNCH_BUILD_VERSION"
 
-//＝＝＝＝＝＝通知常量的定义
+
+//======================通知常量的定义==================
 
 
-//＝＝＝＝＝＝xmpp配置
+//=======================xmpp配置=================
 #define XMPP_SERVER     @"112.21.190.46"
 #define XMPP_PORT       5322
 #define XMPP_PASSWORD   @"123456"
 
 
-//========== associative reference keys
+//================= associative reference keys=============
 static const NSString * OrderCancelAssociatedKey         = @"OrderCancelAssociatedKey";
 #endif

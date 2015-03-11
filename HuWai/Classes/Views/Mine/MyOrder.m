@@ -13,6 +13,7 @@
 #import "UserOrderModel.h"
 #import "ConfirmToPayment.h"
 #import "BaseNavigationController.h"
+#import "ActivityDetail.h"
 
 //static const NSString *kWaiting = @"waiting";
 //static const NSString *kCompleted = @"completed";
@@ -228,5 +229,13 @@
         }
         
     }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    OrderInfo *info = self.dataSource[indexPath.row];
+    ActivityDetail *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"activityDetailBoard"];
+    detail.activityId = info.goods_id;
+    [self.navigationController pushViewController:detail animated:YES];
 }
 @end

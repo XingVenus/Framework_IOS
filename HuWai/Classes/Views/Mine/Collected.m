@@ -57,14 +57,21 @@
 
     if (tag == FavoriteListAction) {
         ActivityModel *aModel = [[ActivityModel alloc] initWithJsonDict:response.data];
-        if (self.tableView.isFooterRefreshing) {
-            [self.dataSource addObjectsFromArray:aModel.data];
-            [self.tableView footerEndRefreshing];
+        if (aModel.data) {
+            if (self.tableView.isFooterRefreshing) {
+                [self.dataSource addObjectsFromArray:aModel.data];
+                [self.tableView footerEndRefreshing];
+            }else{
+                self.dataSource = [NSMutableArray arrayWithArray:aModel.data];
+            }
+            [self.tableView reloadData];
         }else{
-            self.dataSource = [NSMutableArray arrayWithArray:aModel.data];
+            if (self.currentPage == 1) {
+                self.blankView.textTitle = @"您还未收藏任何活动";
+                self.blankView.imageIcon = [UIImage imageNamed:@"expression-wu"];
+                self.blankView.hidden = NO;
+            }
         }
-        
-        [self.tableView reloadData];
     }
 
 }

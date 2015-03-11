@@ -35,13 +35,15 @@ NSString *const EnrollMembersAddNewNotification = @"EnrollMembersAddNewNotificat
     
     //获取联系人数据
     NSArray *dataArray = [[DatabaseUtil shareDatabase] selectFromTable:COMMON_PERSON_TABLE conditions:@{@"ownerid":[APPInfo shareInit].uid}];
+    //----直接从数据库获取
     if (dataArray.count>0) {
         CommonPersonModel *model = [[CommonPersonModel alloc] initWithJsonDict:@{@"data":dataArray}];
         self.dataSource = [model.data mutableCopy];
-        [self.tableView reloadData];
-    }else{
-        [self postActionWithHUD:CommonPersonListAction params:nil];
     }
+    if (![APPInfo shareInit].updatedCommonPerson) {
+        [self loadActionWithHUD:CommonPersonListAction params:nil];
+    }
+    
     //添加新出行人通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewMember:) name:EnrollMembersAddNewNotification object:nil];
     //----------
@@ -93,6 +95,22 @@ NSString *const EnrollMembersAddNewNotification = @"EnrollMembersAddNewNotificat
     }else if(tag == OrderCreateAction){
         orderID = response.data[@"order_id"];
         [self performSegueWithIdentifier:@"confirmtopayment" sender:self];
+    }else if (tag == CommonPersonListAction){
+        if (response.data) {
+            [APPInfo shareInit].updatedCommonPerson = YES; //本次标记为已经更新
+            CommonPersonModel *model = [[CommonPersonModel alloc] initWithJsonDict:response.data];
+            self.dataSource = [model.data mutableCopy];
+            [self.tableView reloadData];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                // 耗时的操作--插入数据库
+                for (CommonPersonInfo *pInfo in model.data) {
+                    NSArray *result = [[DatabaseUtil shareDatabase] selectFromTable:COMMON_PERSON_TABLE conditions:@{@"id":pInfo.pid}];
+                    if (result.count == 0) {
+                        [[DatabaseUtil shareDatabase] insertTableName:COMMON_PERSON_TABLE keyArray:@[@"id",@"name",@"gender",@"identity",@"phone",@"ownerid"] valueArrary:@[pInfo.pid,pInfo.name,pInfo.gender,pInfo.identity,pInfo.phone,[APPInfo shareInit].uid]];
+                    }
+                }
+            });
+        }
     }
 }
 

@@ -131,11 +131,11 @@
         [self alertErrorMessage:@"网络不给力"];
         return;
     }
-    [self alertErrorMessage:@"服务器故障，请稍后再试。"];
+    [self alertErrorMessage:@"数据请求失败，请稍后再试。"];
 }
 
 -(void)alertErrorMessage:(NSString *)message
 {
-    [[[UIAlertView alloc]initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil]show];
+    [[[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil]show];
 }
 @end

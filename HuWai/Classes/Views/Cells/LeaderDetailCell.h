@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *leaderStartLabel;
 @property (weak, nonatomic) IBOutlet UILabel *leaderNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *leaderGradeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *subcribeActivityBtn;
+@property (weak, nonatomic) IBOutlet UIButton *subscribeActivityBtn;
 
 
 @end

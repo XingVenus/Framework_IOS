@@ -140,6 +140,16 @@
             uristring = ScoreNew_Uri;
             break;
         }
+        case RssAddAction:
+        {
+            uristring = RssAdd_Uri;
+            break;
+        }
+        case RssCancelAction:
+        {
+            uristring = RssCancel_Uri;
+            break;
+        }
         default:
             break;
     }
