@@ -8,6 +8,7 @@
 
 #import "ActivityDetail.h"
 #import "ActivityDetailModel.h"
+#import "FAQModel.h"
 #import "MaskedPageView.h"
 #import "HMSegmentedControl.h"
 #import "Enroll.h"
@@ -31,7 +32,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     UIButton *favoriteBtn;
     UIButton *shareBtn;
     ActivityDetailModel *detailModel;
-
+    FAQModel *faqModel; //问答数据模型
 }
 
 @property (nonatomic, strong) MaskedPageView *maskPageView;
@@ -60,6 +61,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     self.tableView.tableHeaderView = headerView;
     
     [self loadActionWithHUD:ActivityDetailAction message:@"正在加载..." params:@"id",self.activityId,nil];
+    
     //收藏按钮
     favoriteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     favoriteBtn.frame = CGRectMake(0, 0, 30, 35);
@@ -75,7 +77,14 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     UIBarButtonItem *r2 = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
     self.navigationItem.rightBarButtonItems = @[r2,r1];
     // Do any additional setup after loading the view.
+    [self loadFAQList];
 }
+
+-(void)loadFAQList
+{
+    [self loadAction:ActivityFAQAction params:@"id",self.activityId,nil];
+}
+
 #pragma mark - request response data
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
@@ -88,6 +97,9 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         [favoriteBtn setSelected:YES];
     }else if (tag == CancelFavoriteAction){
         [favoriteBtn setSelected:NO];
+    }else if (tag == ActivityFAQAction){
+        self.hideShowMessage = YES;
+        faqModel = [[FAQModel alloc] initWithJsonDict:response.data];
     }else if (tag == RssAddAction){
         
     }

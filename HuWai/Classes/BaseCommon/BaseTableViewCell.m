@@ -37,14 +37,20 @@
     }
     self.contentView.backgroundColor = [UIColor whiteColor];
     
-    CALayer *topLayer = [CALayer layer];
-    topLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
-    topLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    CALayer *bottomLayer = [CALayer layer];
-    bottomLayer.frame = CGRectMake(0, self.contentView.bounds.size.height, SCREEN_WIDTH, 0.5);
-    bottomLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [self.contentView.layer addSublayer:topLayer];
-    [self.contentView.layer addSublayer:bottomLayer];
+    if (!_topLayer) {
+        _topLayer = [CALayer layer];
+        _topLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+        [self.contentView.layer addSublayer:_topLayer];
+    }
+    _topLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
+    if (!_bottomLayer) {
+        _bottomLayer = [CALayer layer];
+        _bottomLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+        [self.contentView.layer addSublayer:_bottomLayer];
+    }
+    _bottomLayer.frame = CGRectMake(0, self.contentView.bounds.size.height, SCREEN_WIDTH, 0.5);
+    
+    
 }
 #pragma mark override this method for data fill
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath

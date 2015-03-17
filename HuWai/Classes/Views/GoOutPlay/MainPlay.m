@@ -51,6 +51,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRegistration:) name:UserRegistrationNotification object:nil];
     //引导页面
     NSString *lastBuildversion = [CacheBox getCache:LAUNCH_BUILD_VERSION];
     if (![lastBuildversion isEqualToString:APP_BUILD_VERSION]) {
@@ -58,17 +59,20 @@
         launchview.isSkipBtn = YES;
         [launchview fillDataWithImagesArray:@[@"launch1",@"launch2",@"launch3",@"launch4"]];
         [CacheBox saveCache:LAUNCH_BUILD_VERSION value:APP_BUILD_VERSION];
+        [[UIApplication sharedApplication].keyWindow addSubview:launchview];
     }
-    [[UIApplication sharedApplication].keyWindow addSubview:launchview];
     //---------
-    
     [NSThread sleepForTimeInterval:2.0];
 //    if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
 //        self.automaticallyAdjustsScrollViewInsets = NO;
 //    }
+    if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
+//        self.automaticallyAdjustsScrollViewInsets = NO;
+//        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     WEAKSELF;
-    timeArray = @[@"1日行程",@"2日行程",@"3日行程",@"4-7日行程",@"7日以上"];
-    playArray = @[@"徒步",@"摄影",@"登山",@"露营",@"越野",@"溯溪",@"攀冰",@"骑行",@"潜水",@"自驾",@"滑雪",@"漂流",@"其他"];
+    timeArray = @[@"全部",@"1日行程",@"2日行程",@"3日行程",@"4-7日行程",@"7日以上"];
+    playArray = @[@"全部",@"徒步",@"摄影",@"登山",@"露营",@"越野",@"溯溪",@"攀冰",@"骑行",@"潜水",@"自驾",@"滑雪",@"漂流",@"其他"];
     //下拉、上拉注册
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     [self.tableView addHeaderWithCallback:^{
@@ -86,15 +90,17 @@
     //初始化获取活动列表
     [self loadDataSource];
     //添加 隐藏导航条 通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavBarWithNoAnimate) name:@"hideNavBarWithNoAnimate" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavBarWithNoAnimate) name:@"hideNavBarWithNoAnimate" object:nil];
 //    self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0);
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //////-------左边定位按钮
+    /*
     navigationView = [[NavView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 94 - [CommonFoundation getStateBarHeight])];
     navigationView.backgroundColor = RGBA(247, 247, 248, 1);
     [self.view addSubview:navigationView];
+     */
     CGFloat navViewHeight = CGRectGetHeight(navigationView.bounds);
     //定位按钮
     locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -106,13 +112,13 @@
     [locationBtn setTitle:[CacheBox getCache:LOCATION_CITY_NAME] forState:UIControlStateNormal];
     [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:4];
     [locationBtn addTarget:self action:@selector(selectDestCity:) forControlEvents:UIControlEventTouchUpInside];
-    [navigationView addSubview:locationBtn];
+//    [navigationView addSubview:locationBtn];
     //搜索按钮
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(SCREEN_WIDTH - 45, navViewHeight - 67, 30, 30);
     [searchBtn setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchActivity:) forControlEvents:UIControlEventTouchUpInside];
-    [navigationView addSubview:searchBtn];
+//    [navigationView addSubview:searchBtn];
 
     /////-----title
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 00, 100, 24)];
@@ -123,7 +129,7 @@
     titleLabel.font = [UIFont boldSystemFontOfSize:18.0];
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = @"出去玩";
-    [navigationView addSubview:titleLabel];
+//    [navigationView addSubview:titleLabel];
     /////------1
     UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn1.tag = 1001;
@@ -136,7 +142,7 @@
     [btn1 setImage:[UIImage imageNamed:@"up"] forState:UIControlStateSelected];
     [btn1 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
     [btn1 setContentEdgeInsets:UIEdgeInsetsMake(0, 50, 0, 0)];
-    [navigationView addSubview:btn1];
+//    [navigationView addSubview:btn1];
     ////-----2
     UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn2.tag = 1002;
@@ -149,7 +155,7 @@
     [btn2 setImage:[UIImage imageNamed:@"up"] forState:UIControlStateSelected];
     [btn2 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
     [btn2 setContentEdgeInsets:UIEdgeInsetsMake(0, 45, 0, 0)];
-    [navigationView addSubview:btn2];
+//    [navigationView addSubview:btn2];
     /////--------3
     UIButton *btn3 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn3.tag = 1003;
@@ -163,7 +169,7 @@
     [btn3 setImage:[UIImage imageNamed:@"up"] forState:UIControlStateSelected];
     [btn3 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
     [btn3 setContentEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
-    [navigationView addSubview:btn3];
+//    [navigationView addSubview:btn3];
     [btn3 setContentEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
     //定位
     _locationHelper = [[LocationHelper alloc] init];
@@ -177,7 +183,9 @@
                 [self alertChangeLocationCity:City didChangeCityBlock:^{
                     [CacheBox saveCache:LOCATION_CITY_NAME value:City];
                     [locationBtn setTitle:City forState:UIControlStateNormal];
-                    [self.tableView headerBeginRefreshing];
+//                    [self.tableView headerBeginRefreshing];
+                    self.currentPage = 1;
+                    [self loadDataSource];
                 }];
 
             }
@@ -197,17 +205,17 @@
         listPopView.top -= listPopView.height;
         listPopView.delegate = self;
         [backgroundPopView addSubview:listPopView];
-        [self.view insertSubview:backgroundPopView belowSubview:navigationView];
-
+//        [self.view insertSubview:backgroundPopView belowSubview:navigationView];
+        [self.view addSubview:backgroundPopView];
         backgroundPopView.hidden = YES;
     }
     
 }
-
+/*
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setFullScreen:YES];
+//    [self setFullScreen:YES];
 //    if (![APPInfo shareInit].isLogin) {
     
 //        UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNav"];
@@ -225,7 +233,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+*/
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UserRegistrationNotification object:nil];
+}
 #pragma mark 刷新数据
 -(void)loadDataSource
 {
@@ -250,6 +262,8 @@
     }else if (tag == DestinationAction){
         DestinationCityModel *desModel = [[DestinationCityModel alloc] initWithJsonDict:response.data];
         destinationArray = [desModel.data copy];
+    }else if (tag == AppRegistrationAction){
+        self.hideShowMessage = YES;
     }
 
     
@@ -271,6 +285,15 @@
 
 #pragma mark - method implement
 
+-(void)userRegistration:(NSNotification *)notification
+{
+    NSDictionary *dic = notification.userInfo;
+    NSString *clientId = dic[@"clientId"];
+    NSString *devicetoken = dic[@"devicetoken"];
+    [self postAction:AppRegistrationAction params:@"app",@"ios",@"cid",clientId,@"devicetoken",devicetoken,nil];
+}
+
+/*
 - (void)setFullScreen:(BOOL)fullScreen
 {
     // 状态条
@@ -281,11 +304,11 @@
     //    [self.navigationController setNavigationBarHidden:fullScreen];
     // tabBar的隐藏通过在初始化方法中设置hidesBottomBarWhenPushed属性来实现
 }
-
--(void)hideNavBarWithNoAnimate
-{
-    [self.navigationController setNavigationBarHidden:YES];
-}
+*/
+//-(void)hideNavBarWithNoAnimate
+//{
+//    [self.navigationController setNavigationBarHidden:YES];
+//}
 
 -(void)selectDestCity:(UIButton *)sender
 {
@@ -339,6 +362,7 @@
 }
 
 #pragma mark - hotcity delegate
+#pragma mark 定位城市更改
 -(void)didSelectedHotCity:(NSString *)hotcityID cityName:(NSString *)hotcityName
 {
     if (hotcityID) {
@@ -348,7 +372,9 @@
     }
     [locationBtn setTitle:hotcityName forState:UIControlStateNormal];
     [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:4];
-    [self.tableView headerBeginRefreshing];
+//    [self.tableView headerBeginRefreshing];
+    self.currentPage = 1;
+    [self loadDataSource];
 }
 
 #pragma mark SelectListView delegate
@@ -386,7 +412,9 @@
         backgroundPopView.hidden = YES;
     }];
     //数据过滤
-    [self.tableView headerBeginRefreshing];
+//    [self.tableView headerBeginRefreshing];
+    self.currentPage = 1;
+    [self loadDataSource];
 }
 #pragma mark - Navigation
 
@@ -414,7 +442,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return SCREEN_WIDTH/kHeghtRatio;
+    return SCREEN_WIDTH/kHeghtRatio + 10;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

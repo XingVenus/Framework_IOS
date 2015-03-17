@@ -35,12 +35,22 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSString *token = [CacheBox getCache:CACHE_TOKEN];
+    if (token) {
+        [_loginOrOutBtn setSelected:YES];
+    }
+}
+
 -(void)loginOrOutAction:(UIButton *)sender
 {
-    if (!_loginOrOutBtn.selected) {
-        UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
-        [self presentViewController:loginNav animated:YES completion:nil];
+    if (_loginOrOutBtn.selected) {
+        [CacheBox removeObjectValue:CACHE_TOKEN];
     }
+    UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
+    [self presentViewController:loginNav animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

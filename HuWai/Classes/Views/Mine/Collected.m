@@ -70,6 +70,8 @@
                 self.blankView.textTitle = @"您还未收藏任何活动";
                 self.blankView.imageIcon = [UIImage imageNamed:@"expression-wu"];
                 self.blankView.hidden = NO;
+            }else{
+                [self.tableView footerEndRefreshing];
             }
         }
     }
@@ -84,7 +86,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return SCREEN_WIDTH/kHeghtRatio;
+    return SCREEN_WIDTH/kHeghtRatio+10;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

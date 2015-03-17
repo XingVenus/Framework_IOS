@@ -8,6 +8,9 @@
 
 #import "MessageList.h"
 #import "MessageListCell.h"
+#import "UserMessageModel.h"
+#import "NSString+RectSize.h"
+
 @interface MessageList ()
 
 @end
@@ -18,6 +21,13 @@
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Do any additional setup after loading the view.
+    WEAKSELF;
+    [self.tableView addFooterWithCallback:^{
+        weakSelf.currentPage = weakSelf.currentPage + 1;
+        [weakSelf loadDataSource];
+    }];
+    
+    [self loadDataSource];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -25,6 +35,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)loadDataSource
+{
+    [self loadAction:MessageListAction params:@"page",[NSNumber numberWithInteger:self.currentPage],@"pagesize",@"10",nil];
+}
+
+-(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
+{
+    if (tag == MessageListAction) {
+        UserMessageModel *mModel = [[UserMessageModel alloc] initWithJsonDict:response.data];
+        if (self.tableView.isFooterRefreshing) {
+            [self.dataSource addObjectsFromArray:mModel.data];
+            [self.tableView footerEndRefreshing];
+        }else{
+            self.dataSource = [mModel.data mutableCopy];
+        }
+        [self.tableView reloadData];
+    }
+}
 /*
 #pragma mark - Navigation
 
@@ -34,21 +62,28 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+#pragma mark tableview delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return self.dataSource.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MessageInfo *info = self.dataSource[indexPath.row];
+    CGSize rect = [info.message stringRectSizeWithfontSize:14.0 andWidth:SCREEN_WIDTH - 8*2 withLineSpacing:5];
+    
+    return rect.height + 35 + 8 + 10;//上面的距离、下边的距离 以及多的10像素距离
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"messagelistcell";
     MessageListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-//    if (!cell) {
-//        cell = [[MessageListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-//    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell configureCellWithItem:nil atIndexPath:indexPath];
+    
+    MessageInfo *info = self.dataSource[indexPath.row];
+    [cell configureCellWithItem:info atIndexPath:indexPath];
     return cell;
 }
 

@@ -10,6 +10,9 @@
 #import "CommonPersonAddOrEdit.h"
 #import "CommonPersonModel.h"
 @interface CommonPerson ()
+{
+    CommonPersonInfo *deleteInfo;
+}
 
 @end
 
@@ -61,6 +64,9 @@
                 }
             });
         }
+    }else if (tag == CommonPersonDeleteAction){
+        DLog(@"%@",deleteInfo);
+        [[DatabaseUtil shareDatabase] deleteFromTableName:COMMON_PERSON_TABLE conditionString:[NSString stringWithFormat:@"id = %@ and ownerid = %@",deleteInfo.pid,[APPInfo shareInit].uid]];
     }
 
 }
@@ -124,8 +130,11 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
+        deleteInfo = self.dataSource[indexPath.row];
         [self.dataSource removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        //网络请求删除
+        [self postActionWithHUD:CommonPersonDeleteAction params:@"id",deleteInfo.pid,nil];
     }
     
 }

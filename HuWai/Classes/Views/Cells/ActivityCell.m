@@ -13,20 +13,38 @@
 
 -(void)baseSetup
 {
+    
     [self.contentView addSubview:self.backImageView];
+    [self.contentView.layer insertSublayer:self.backLayer below:self.backImageView.layer];
     [self.contentView addSubview:self.priceBtn];
-    [self.contentView addSubview:self.grayBackLabel];
-    [self.contentView addSubview:self.avatarImageView];
-    [self.contentView addSubview:self.nickNameLabel];
-    [self.contentView addSubview:self.describeLabel];
+    [self.backImageView addSubview:self.grayBackLabel];
+    [self.backImageView addSubview:self.avatarImageView];
+    [self.backImageView addSubview:self.nickNameLabel];
+    [self.backImageView addSubview:self.describeLabel];
+}
+
+-(CALayer *)backLayer
+{
+    if (!_backLayer) {
+        _backLayer = [CALayer layer];
+        _backLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH-10*2, SCREEN_WIDTH/kHeghtRatio);
+        _backLayer.backgroundColor = [UIColor whiteColor].CGColor;
+        _backLayer.shadowOffset = CGSizeMake(0, 5);
+        _backLayer.cornerRadius = 5.0;
+        _backLayer.shadowRadius = 5.0;
+        _backLayer.shadowColor = [UIColor grayColor].CGColor;
+        _backLayer.shadowOpacity = 1.0;
+    }
+    return _backLayer;
 }
 
 -(UIImageView *)backImageView
 {
     if (!_backImageView) {
-        _backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH-10*2, (SCREEN_WIDTH-20)/kHeghtRatio)];
+        _backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-10*2, SCREEN_WIDTH/kHeghtRatio)];
         _backImageView.contentMode = UIViewContentModeScaleAspectFill;
         _backImageView.clipsToBounds = YES;
+        _backImageView.layer.cornerRadius = 5.0;
     }
     return _backImageView;
 }
@@ -73,10 +91,10 @@
     return _nickNameLabel;
 }
 
--(RTLabel *)describeLabel
+-(TTTAttributedLabel *)describeLabel
 {
     if (!_describeLabel) {
-        _describeLabel = [[RTLabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.grayBackLabel.frame) - 50, SCREEN_WIDTH - 25*2, 40)];
+        _describeLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.grayBackLabel.frame) - 50, SCREEN_WIDTH - 25*2, 40)];
         _describeLabel.lineSpacing = 8.0;
         _describeLabel.backgroundColor = [UIColor clearColor];
         _describeLabel.font = [UIFont boldSystemFontOfSize:14.0];
@@ -96,13 +114,18 @@
 
 -(void)layoutSubviews
 {
-//    [super layoutSubviews];
+    [super layoutSubviews];
     self.contentView.frame = CGRectInset(self.bounds, 10, 5);
+    self.contentView.layer.cornerRadius = 5.0;
+
+    [self setNeedsDisplay];
+    [self.contentView setNeedsDisplay];
 }
 
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
 {
     ActivityInfo *data = (ActivityInfo *)item;
+
     [self.backImageView sd_setImageWithURL:[NSURL URLWithString:data.image] placeholderImage:nil];
     self.avatarImageView.placeHolderImage = [UIImage imageNamed:@"avatar"];
     [self.avatarImageView setImageURL:[NSURL URLWithString:data.avatar]];

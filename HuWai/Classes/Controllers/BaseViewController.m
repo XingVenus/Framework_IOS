@@ -325,8 +325,15 @@ NSDictionary *argsTpMap(id firstObject,...)
         //        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:loginNav animated:YES completion:nil];
         [self.navigationController presentViewController:loginNav animated:YES completion:nil];
         return;
+    }else if ((response.code == 40000) ||(response.code == 40001)){
+        DLog(@"%@",response);
+        return;
     }
-    [self showMessageWithThreeSecondAtCenter:response.message];
+    
+    if (!self.hideShowMessage) {
+        [self showMessageWithThreeSecondAtCenter:response.message];
+        self.hideShowMessage = NO;
+    }
 }
 
 #pragma mark - This method needs to be redefined

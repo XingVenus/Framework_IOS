@@ -50,18 +50,23 @@
 #define DATABASE_NAME   @"huwai.sqlite"
 //---数据库表名称
 #define COMMON_PERSON_TABLE   @"commonperson"
+#define APP_MESSAGE_TABLE     @"appmessage"
+
 //----用于引导页面的应用build版本
 #define LAUNCH_BUILD_VERSION    @"LAUNCH_BUILD_VERSION"
 
 
 //======================通知常量的定义==================
-
+static NSString *UserRegistrationNotification = @"user_registration_notification";//用户通知注册
 
 //=======================xmpp配置=================
 #define XMPP_SERVER     @"112.21.190.46"
 #define XMPP_PORT       5322
 #define XMPP_PASSWORD   @"123456"
-
+//====================推送设置====================
+#define kAppId           @"TmaCawd4p492jdPo9uuES7"
+#define kAppKey          @"qBGelJkHcJAhzPgbbYA076"
+#define kAppSecret       @"thrXL7FrFO7T1f5sIR7rH6"
 
 //================= associative reference keys=============
 static const NSString * OrderCancelAssociatedKey         = @"OrderCancelAssociatedKey";

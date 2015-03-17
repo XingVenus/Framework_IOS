@@ -46,7 +46,7 @@
 #pragma mark - tableview delegate implement
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return SCREEN_WIDTH/kHeghtRatio;
+    return SCREEN_WIDTH/kHeghtRatio+10;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

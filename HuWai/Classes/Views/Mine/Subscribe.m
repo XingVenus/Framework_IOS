@@ -23,7 +23,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self loadDataSource];
     [self.tableView addFooterWithCallback:^{
-        weakSelf.currentPage = self.currentPage + 1;
+        weakSelf.currentPage = weakSelf.currentPage + 1;
         [weakSelf loadDataSource];
     }];
     // Do any additional setup after loading the view.
@@ -74,7 +74,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return SCREEN_WIDTH/kHeghtRatio;
+    return SCREEN_WIDTH/kHeghtRatio+10;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

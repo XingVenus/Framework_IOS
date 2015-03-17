@@ -17,11 +17,13 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
     ResetpasswordAction,//重设密码
     CommonPersonListAction,//常用出行人列表
     CommonPersonAddAction, //常用出行人 新增
+    CommonPersonDeleteAction,  //常用出行人 删除
     ModifyPasswordAction,   //修改密码
     ActivityAction,         //活动列表
     HotcityAction,      //获取城市列表 热门城市
     DestinationAction,     // 目的地城市
     ActivityDetailAction,   //活动详情
+    ActivityFAQAction,      //活动内容 问答列表
     AddFavoriteAction,      //添加收藏
     CancelFavoriteAction,    //取消收藏
     FavoriteListAction,     //收藏列表
@@ -36,9 +38,16 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
     ScoreNewAction,         //领队打分 评分
     RssAddAction,           //添加订阅
     RssCancelAction,        //取消订阅
+    ActivityAskAction,      //活动内容 提问
+    ActivityReplyAction,    //活动内容 回复
+    AppRegistrationAction,  //客户端消息组件注册
+    MessageListAction,      //我的消息 列表
 };
 
+
+#define AppRegistration_Uri @"/v1/app/registration" //客户端消息组件注册
 //我的
+#define MessageList_Uri     @"/v1/message/list"     //我的消息 列表 get
 #define UserRegister_Uri    @"/v1/register"
 #define UserEntry_Uri       @"/v1/login/entry"
 #define SendSms_Uri         @"/v1/notification/sms"
@@ -47,8 +56,11 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
 #define Resetpassword_Uri   @"/v1/login/resetpassword"
 #define CommonPersonList_Uri    @"/v1/participants/list" //常用出行人列表 get
 #define CommonPersonAdd_Uri     @"/v1/participants/add"
+#define CommonPersonDelete_Uri  @"/v1/participants/delete"
 #define ModifyPassword_Uri      @"/v1/user/password"
-#define FavoriteList_Uri    @"/v1/favorite/list"
+#define FavoriteList_Uri    @"/v1/favorite/list"  //活动内容 问答列表 get
+#define ActivityAsk_Uri     @"/v1/activity/ask" //活动内容 提问
+#define ActivityReply_Uri   @"/v1/activity/reply"   //活动内容 回复
 #define RssList_Uri         @"/v1/rss/list"
 #define OrderPersonCheck_Uri        @"/v1/order/check"
 #define OrderCreate_Uri     @"/v1/order/create"   //创建订单
@@ -62,6 +74,7 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
 #define Hotcity_Uri         @"/v1/region/hotcity"
 #define Destination_Uri     @"/v1/region/destination"
 #define ActivityDetail_Uri  @"/v1/activity/view"  //get
+#define ActivityFAQ_Uri     @"/v1/activity/faq"     //get
 #define AddFavorite_Uri     @"/v1/favorite/add"
 #define CancelFavorite_Uri  @"/v1/favorite/cancel"
 #define ActivitySurplus_Uri @"/v1/activity/surplus" //get

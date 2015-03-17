@@ -14,16 +14,14 @@
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-    [self setLayerLineAndBackground];
-}
 
 -(void)layoutSubviews
 {
     self.contentView.frame = CGRectInset(self.bounds, 0, 5);
 //    [self.contentView setNeedsUpdateConstraints];
 //    [self.contentView updateConstraints];
+    [self setLayerLineAndBackground];
+
     [self setNeedsDisplay];
 }
 

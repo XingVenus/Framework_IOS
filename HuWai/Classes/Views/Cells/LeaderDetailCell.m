@@ -42,6 +42,7 @@ static NSString *LeaderGrade = @"共收到%@位小伙伴给Ta打了分";
     }
     self.nameLabel.text = namestring;
     NSString *infoString = [NSString stringWithFormat:@"%@ | %@ | %@\n认证信息:%@",data.gender,data.age,data.fromCity,data.validationMessage];
+    self.infoLabel.lineSpacing = 6;
     self.infoLabel.text = infoString;
     NSString *gradeStr = [NSString stringWithFormat:@"%@分",data.score];
     self.gradeLabel.text = gradeStr;

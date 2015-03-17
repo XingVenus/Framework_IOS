@@ -7,11 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GexinSdk.h"
+typedef enum {
+    SdkStatusStoped,
+    SdkStatusStarting,
+    SdkStatusStarted
+} SdkStatus;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,GexinSdkDelegate>
+{
+    @private
+    NSString *_deviceToken;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 
+@property (strong, nonatomic) GexinSdk *gexinPusher;
+@property (assign, nonatomic) SdkStatus sdkStatus;
 
 @end
 

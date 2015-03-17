@@ -12,8 +12,7 @@
 @interface MessageListCell : BaseTableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (nonatomic, weak) IBOutlet RTLabel *describeLabel;
+@property (nonatomic, weak) IBOutlet TTTAttributedLabel *describeLabel;
 
-//- (void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath;
 
 @end

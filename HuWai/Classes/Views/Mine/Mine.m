@@ -7,6 +7,7 @@
 //
 
 #import "Mine.h"
+#import "PAAImageView.h"
 
 @interface Mine ()
 {
@@ -84,6 +85,24 @@
         UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"head-img"]];
         imageview.frame = cell1.bounds;
         [cell1.contentView addSubview:imageview];
+        if ([CacheBox getCache:CACHE_TOKEN]) {
+            //显示头像以及名称
+            PAAImageView *avatar = [[PAAImageView alloc] initWithFrame:CGRectMake(20, 0, 55, 55) backgroundProgressColor:[UIColor whiteColor] progressColor:[UIColor grayColor]];
+            avatar.centerY = cell1.height/2;
+            avatar.placeHolderImage = [UIImage imageNamed:@"avatar"];
+//            [avatar setImageURL:[CacheBox getCache:CACHE_TOKEN]];
+            [cell1 addSubview:avatar];
+            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 0, 120, 30)];
+            nameLabel.textColor = [UIColor whiteColor];
+            nameLabel.font = [UIFont boldSystemFontOfSize:15.0];
+            nameLabel.backgroundColor = [UIColor clearColor];
+            nameLabel.centerY = cell1.height/2;
+            nameLabel.text = [CacheBox getCache:USERNAME_CACHE];
+            [cell1 addSubview:nameLabel];
+        }else{
+            //提示语以及登录按钮
+            
+        }
         //登录与未登录
         return cell1;
     }else{

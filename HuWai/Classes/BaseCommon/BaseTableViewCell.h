@@ -10,6 +10,10 @@
 
 @interface BaseTableViewCell : UITableViewCell
 
+
+@property (nonatomic, strong) CALayer *topLayer;
+@property (nonatomic, strong) CALayer *bottomLayer;
+
 - (void)baseSetup;
 - (void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath;
 -(void)setLayerLineAndBackground;

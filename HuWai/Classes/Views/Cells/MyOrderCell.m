@@ -10,6 +10,10 @@
 #import "UserOrderModel.h"
 
 @implementation MyOrderCell
+{
+    CALayer *_thirdLayer;
+    CALayer *_fourthLayer;
+}
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withInsurance:(BOOL)insurance isWating:(BOOL)iswating
 {
@@ -35,10 +39,12 @@
             [self.contentView addSubview:self.insuranceLabel];
             [self.contentView addSubview:self.insurancePriceLabel];
             [self.contentView addSubview:self.inNumLabel];
-            CALayer *thirdLayer = [CALayer layer];
-            thirdLayer.frame = CGRectMake(0, 155, SCREEN_WIDTH, 0.5);
-            thirdLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-            [self.contentView.layer addSublayer:thirdLayer];
+            if (!_fourthLayer) {
+                _fourthLayer = [CALayer layer];
+                _fourthLayer.frame = CGRectMake(0, 155, SCREEN_WIDTH, 0.5);
+                _fourthLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+                [self.contentView.layer addSublayer:_fourthLayer];
+            }
         }
         if (iswating) {
             [self.contentView addSubview:self.cancelBtn];
@@ -53,35 +59,24 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    
-    CALayer *topLayer = [CALayer layer];
-    topLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
-    topLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    CALayer *bottomLayer = [CALayer layer];
-    bottomLayer.frame = CGRectMake(0, self.contentView.bounds.size.height, SCREEN_WIDTH, 0.5);
-    bottomLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [self.contentView.layer addSublayer:topLayer];
-    [self.contentView.layer addSublayer:bottomLayer];
-    
-    CALayer *secondLayer = [CALayer layer];
-    secondLayer.frame = CGRectMake(0, 37, SCREEN_WIDTH, 0.5);
-    secondLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [self.contentView.layer addSublayer:secondLayer];
-    
-    CALayer *thirdLayer = [CALayer layer];
-    thirdLayer.frame = CGRectMake(0, 95, SCREEN_WIDTH, 0.5);
-    thirdLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [self.contentView.layer addSublayer:thirdLayer];
+
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-//    NSLog(@"%f",self.height);
-    
+
     self.paymentBtn.top = self.height - 7 - 31 - 10;
     self.cancelBtn.top = self.height - 7 - 31 - 10;
     self.contentView.frame = CGRectInset(self.bounds, 0, 5);
+    
+    [self setLayerLineAndBackground];
+    if (!_thirdLayer) {
+        _thirdLayer = [CALayer layer];
+        _thirdLayer.frame = CGRectMake(0, 95, SCREEN_WIDTH, 0.5);
+        _thirdLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+        [self.contentView.layer addSublayer:_thirdLayer];
+    }
     
 }
 #pragma mark 活动信息部分
@@ -206,11 +201,11 @@
     self.leaderLabel.text = [NSString stringWithFormat:@"领队:%@",data.leader_username];
     self.activityLabel.text = data.title;
     self.activityPriceLabel.text = data.price;
-    self.aNumLabel.text = data.num;
+    self.aNumLabel.text = [NSString stringWithFormat:@"x %@",data.num];
     if (data.insurance) {
         self.insuranceLabel.text = data.insurance;
         self.insurancePriceLabel.text = data.insurance_price;
-        self.inNumLabel.text = data.insurance_num;
+        self.inNumLabel.text = [NSString stringWithFormat:@"x %@",data.insurance_num];
     }
     
 }

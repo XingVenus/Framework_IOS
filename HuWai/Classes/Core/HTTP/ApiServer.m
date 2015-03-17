@@ -150,6 +150,36 @@
             uristring = RssCancel_Uri;
             break;
         }
+        case CommonPersonDeleteAction:
+        {
+            uristring = CommonPersonDelete_Uri;
+            break;
+        }
+        case ActivityFAQAction:
+        {
+            uristring = ActivityFAQ_Uri;
+            break;
+        }
+        case ActivityAskAction:
+        {
+            uristring = ActivityAsk_Uri;
+            break;
+        }
+        case ActivityReplyAction:
+        {
+            uristring = ActivityReply_Uri;
+            break;
+        }
+        case AppRegistrationAction:
+        {
+            uristring = AppRegistration_Uri;
+            break;
+        }
+        case MessageListAction:
+        {
+            uristring = MessageList_Uri;
+            break;
+        }
         default:
             break;
     }

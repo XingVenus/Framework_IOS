@@ -10,6 +10,10 @@
 #import "UIButton+ButtonUtility.h"
 #import "EntryModel.h"
 @interface Login ()
+{
+    NSString *_phoneStr;
+    NSString *_pwdStr;
+}
 @property (weak, nonatomic) IBOutlet UIButton *forgetPasswordButton;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumber;
@@ -28,6 +32,7 @@
     [self.registerButton underSingleLineWithTitle];
     
     [self.loginButton addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.phoneNumber.text = [CacheBox getCache:CACHE_USER_PHONE]?[CacheBox getCache:CACHE_USER_PHONE]:@"";
     // Do any additional setup after loading the view.
 }
 
@@ -40,17 +45,19 @@
 -(void)loginAction:(UIButton *)sender
 {
     NSString *errorStr = nil;
-    if ([CommonFoundation isEmptyString:self.phoneNumber.text]) {
+    _phoneStr = [CommonFoundation trimString:self.phoneNumber.text];
+    _pwdStr = [CommonFoundation trimString:self.password.text];
+    if ([CommonFoundation isEmptyString:_phoneStr]) {
         errorStr = @"请输入手机号码";
-    }else if ([CommonFoundation isEmptyString:self.password.text]){
+    }else if ([CommonFoundation isEmptyString:_pwdStr]){
         errorStr = @"密码不能为空";
     }
     if (errorStr) {
-        [self.view makeToast:errorStr duration:2 position:CSToastPositionCenter];
-        return;
+        [self showMessageWithThreeSecondAtCenter:errorStr];
     }
 
-    [self loadAction:GettokenAction params:nil];
+//    [self loadAction:GettokenAction params:nil];
+    [self postActionWithHUD:UserEntryAction params:@"phone",_phoneStr,@"password",_pwdStr,nil];
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
@@ -58,8 +65,8 @@
         
     if (tag == GettokenAction) {
         //获取用户登录令牌成功
-        [self postActionWithHUD:UserEntryAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"password",[CommonFoundation trimString:self.password.text],@"loginToken",response.data[@"loginToken"],nil];
-        return;
+//        [self postActionWithHUD:UserEntryAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"password",[CommonFoundation trimString:self.password.text],@"loginToken",response.data[@"loginToken"],nil];
+//        return;
     }else if (tag == UserEntryAction){
         APPInfo *infoObj = [APPInfo shareInit];
 //            infoObj.login = YES;
@@ -68,8 +75,9 @@
         //赋值更新用户信息
         [infoObj updateUserInfo:response.data];
         //缓存用户登录账号
-        [CacheBox saveCache:CACHE_USER_PHONE value:[CommonFoundation trimString:self.phoneNumber.text]];
-        [CacheBox saveCache:CACHE_USER_PASSWORD value:[CommonFoundation trimString:self.password.text]];
+        [CacheBox saveCache:CACHE_USER_PHONE value:_phoneStr];
+        [CacheBox saveCache:CACHE_USER_PASSWORD value:_pwdStr];
+        
         [self dismissLoginVC];
     }
 

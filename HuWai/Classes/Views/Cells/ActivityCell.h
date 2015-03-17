@@ -18,8 +18,10 @@
 @property (strong, nonatomic) UIImageView *backImageView;
 @property (strong, nonatomic) PAAImageView *avatarImageView;
 @property (strong, nonatomic) UILabel *nickNameLabel;
-@property (strong, nonatomic) RTLabel *describeLabel;
+@property (strong, nonatomic) TTTAttributedLabel *describeLabel;
 @property (strong, nonatomic) UILabel *grayBackLabel;
 @property (nonatomic, strong) UIButton *priceBtn;
+
+@property (nonatomic, strong) CALayer *backLayer;
 
 @end

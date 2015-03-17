@@ -21,13 +21,12 @@
 
 -(void)baseSetup
 {
-//    self.backgroundColor = RGBA(242, 242, 243, 1);
-//    self.contentView.backgroundColor = RGBA(242, 242, 243, 1);
 //    [self.contentView addSubview:self.hasScoreBackView];
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.subTitleLabel];
     [self.contentView addSubview:self.describeLabel];
     [self.contentView addSubview:self.scoreLabel];
+    
 }
 
 - (void)awakeFromNib {

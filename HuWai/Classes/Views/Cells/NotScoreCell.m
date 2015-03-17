@@ -14,20 +14,6 @@
 -(void)baseSetup
 {
     
-    self.contentView.layer.shouldRasterize = YES;
-    self.contentView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-    
-    if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
-        self.backgroundColor = RGBA(242, 242, 242, 1);
-    }else{
-        self.backgroundView = [[UIView alloc] initWithFrame:self.bounds];
-        self.backgroundView.backgroundColor = RGBA(242, 242, 242, 1);
-    }
-    self.contentView.backgroundColor = [UIColor whiteColor];
-    
-    
-//    self.backgroundColor = RGBA(242, 242, 243, 1);
-//    self.contentView.backgroundColor = RGBA(242, 242, 243, 1);
     [self.contentView addSubview:self.scoreBackView];
     [self.contentView addSubview:self.describeLabel];
     [self.contentView addSubview:self.titleLabel];
@@ -65,15 +51,8 @@
     self.contentView.frame = CGRectInset(self.bounds, 0, 5);
     //打分按钮位置
     self.scoreButton.top = CGRectGetHeight(self.bounds) - 50 - 10;
-    //添加分割线
-    CALayer *topLayer = [CALayer layer];
-    topLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
-    topLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    CALayer *bottomLayer = [CALayer layer];
-    bottomLayer.frame = CGRectMake(0, self.contentView.bounds.size.height, SCREEN_WIDTH, 0.5);
-    bottomLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [self.contentView.layer addSublayer:topLayer];
-    [self.contentView.layer addSublayer:bottomLayer];
+    
+    [self setLayerLineAndBackground];
     
     CALayer *secondline = [CALayer layer];
     secondline.frame = CGRectMake(0, 40, SCREEN_WIDTH, 0.5);

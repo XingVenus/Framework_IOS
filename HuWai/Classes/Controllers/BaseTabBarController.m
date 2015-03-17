@@ -20,7 +20,10 @@
     //--------设置选中时的图片颜色tintColor-------
     if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) {
         [UITabBar appearance].tintColor = RGBA(46, 181, 220, 1);
+        [UITabBar appearance].barTintColor = [UIColor whiteColor];
     }
+    
+//    self.tabBarController.tabBar.backgroundColor = [UIColor greenColor];
     //设置选中tab的文字的颜色,默认为tintcolor的颜色一致
 //    [[UITabBarItem appearance] setTitleTextAttributes:@{UITextAttributeTextColor : RGBA(46, 181, 220, 1)} forState:UIControlStateSelected];
     // Do any additional setup after loading the view.
@@ -47,10 +50,10 @@
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    if (item.tag == 0) {
-        //消除全屏动画的影响
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideNavBarWithNoAnimate" object:nil];
-    }
+//    if (item.tag == 0) {
+//        //消除全屏动画的影响
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideNavBarWithNoAnimate" object:nil];
+//    }
 }
 /*
 #pragma mark - Navigation
