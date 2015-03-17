@@ -66,15 +66,16 @@
     [super viewDidLoad];
     //初始化当前页码为1
     self.currentPage = 1;
-    
+    self.pageSize = 10;
+    self.maxPage = 1;
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]){
 //        self.automaticallyAdjustsScrollViewInsets = NO;
         //sdk7.0_later  tableview分组样式时，表头与导航之间的距离上移20
         if (self.tableView.style == UITableViewStyleGrouped) {
-            self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+            //self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
         }
     }
-    self.tableView.backgroundColor = RGBA(242, 242, 243, 1);
+    self.tableView.backgroundColor = APP_BACKGROUND_COLOR;//RGBA(242, 242, 243, 1);
 //    self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -99,6 +100,16 @@
     self.tableView.delegate = nil;
     self.tableView.dataSource = nil;
     self.tableView = nil;
+}
+
+-(BOOL)checkIsLastPage
+{
+    if (self.currentPage>=self.maxPage) {
+        [self showMessageWithThreeSecondAtCenter:NO_MORE_DATA_MESSAGE];
+        [self.tableView footerEndRefreshing];
+        return YES;
+    }
+    return NO;
 }
 #pragma mark - Table view data source
 

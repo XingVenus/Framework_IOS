@@ -19,8 +19,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    WEAKSELF;
     [self loadDataSource];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView addFooterWithCallback:^{
+        if (![self checkIsLastPage]) {
+            weakSelf.currentPage ++;
+            [weakSelf loadDataSource];
+        }
+    }];
     // Do any additional setup after loading the view.
 }
 
@@ -31,15 +38,23 @@
 
 -(void)loadDataSource
 {
-    [self loadActionWithHUD:ScoreListAction params:@"type",@"0",@"page",[NSString stringWithInteger:self.currentPage],@"pagesize",@"10",nil];
+    [self loadActionWithHUD:ScoreListAction params:@"page",[NSNumber numberWithInteger:self.currentPage],@"pagesize",[NSNumber numberWithInteger:self.pageSize],nil];
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
     if (tag == ScoreListAction) {
         ScoreListModel *listmodel = [[ScoreListModel alloc] initWithJsonDict:response.data];
-        self.dataSource = [NSMutableArray arrayWithArray:listmodel.data];
+        if (self.tableView.isFooterRefreshing) {
+            [self.dataSource addObjectsFromArray:listmodel.data];
+            [self.tableView footerEndRefreshing];
+        }else{
+            self.dataSource = [NSMutableArray arrayWithArray:listmodel.data];
+        }
+        self.maxPage = listmodel.pager.pagemax;
         [self.tableView reloadData];
+    }else if (tag == ScoreNewAction){
+        [self loadActionWithHUD:ScoreListAction params:@"page",@1,@"pagesize",[NSNumber numberWithInteger:self.pageSize*self.currentPage],nil];
     }
 }
 /*
@@ -62,7 +77,7 @@
     if (self.dataSource.count>0) {
         ScoreInfo *score = self.dataSource[indexPath.row];
         if ([score.status intValue] == 1) {
-            return 130;
+            return 120;
         }
         return 230;
     }

@@ -122,14 +122,16 @@
 {
     if (!_segmentControl) {
         _segmentControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"待付款",@"已付款",@"已取消",@"已退款"]];
+        _segmentControl.font = [UIFont systemFontOfSize:15.0];
         _segmentControl.showBorderLine = YES;
-        _segmentControl.frame = CGRectMake(0, 0, SCREEN_WIDTH, 45);
+        _segmentControl.borderLineColor = APP_DIVIDELINE_COLOR;
+        _segmentControl.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
         _segmentControl.backgroundColor = [UIColor whiteColor];
-        _segmentControl.textColor = [UIColor blackColor];
-        _segmentControl.selectionIndicatorColor = [UIColor colorWithRed:46/255.0 green:181/255.0 blue:220/255.0 alpha:1];
+        _segmentControl.textColor = [UIColor darkGrayColor];
+        _segmentControl.selectionIndicatorColor = [UIColor orangeColor];//[UIColor colorWithRed:46/255.0 green:181/255.0 blue:220/255.0 alpha:1];
         _segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-        _segmentControl.selectedTextColor = [UIColor blackColor];
-        _segmentControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
+        _segmentControl.selectedTextColor = [UIColor orangeColor];
+        _segmentControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
         
         WEAKSELF;
         [_segmentControl setIndexChangeBlock:^(NSInteger index) {

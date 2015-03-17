@@ -31,6 +31,14 @@ typedef void(^DidChangeLocationCityBlock)();
  */
 @property (nonatomic, assign) NSInteger currentPage;
 /**
+ *  最大页数
+ */
+@property (nonatomic, assign) NSInteger maxPage;
+/**
+ *  每页的数量
+ */
+@property (nonatomic, assign) NSInteger pageSize;
+/**
  *  去除iOS7新的功能api，tableView的分割线变成iOS6正常的样式
  */
 - (void)configuraTableViewNormalSeparatorInset;
@@ -49,4 +57,6 @@ typedef void(^DidChangeLocationCityBlock)();
 
 //custom method for this app
 - (void)alertChangeLocationCity:(NSString *)cityName didChangeCityBlock:(DidChangeLocationCityBlock)changeBlock;
+
+- (BOOL)checkIsLastPage;
 @end

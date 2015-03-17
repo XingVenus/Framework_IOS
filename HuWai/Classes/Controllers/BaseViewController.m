@@ -63,7 +63,7 @@ NSDictionary *argsTpMap(id firstObject,...)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = RGBA(242, 242, 243, 1);
+    self.view.backgroundColor = APP_BACKGROUND_COLOR;//RGBA(242, 242, 243, 1);
     //去掉返回按钮的文字显示
     if (self.navigationController.viewControllers.count>0) {
 //        self.navigationItem.leftItemsSupplementBackButton = YES;

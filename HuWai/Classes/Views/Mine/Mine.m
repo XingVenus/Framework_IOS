@@ -21,22 +21,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _arrayCells = [NSMutableArray arrayWithCapacity:1];
-    NSDictionary *listDic = @{@"icon":@"subscribe",@"title":@"我的订阅"};
-    [_arrayCells addObject:listDic];
-    listDic = @{@"icon":@"form",@"title":@"我的订单"};
-    [_arrayCells addObject:listDic];
-    listDic = @{@"icon":@"grade",@"title":@"领队打分"};
-    [_arrayCells addObject:listDic];
-    listDic = @{@"icon":@"collect",@"title":@"收藏的活动"};
-    [_arrayCells addObject:listDic];
-    listDic = @{@"icon":@"contacts",@"title":@"常用出行人"};
-    [_arrayCells addObject:listDic];
-    listDic = @{@"icon":@"mynews",@"title":@"消息"};
-    [_arrayCells addObject:listDic];
-    listDic = @{@"icon":@"setup",@"title":@"系统设置"};
-    [_arrayCells addObject:listDic];
+    NSDictionary *listDic = @{@"icon":@"form",@"title":@"我的订单"};
+    [_arrayCells addObject:@[listDic]];
+    NSDictionary *dic1 = @{@"icon":@"subscribe",@"title":@"我的订阅"};
+    NSDictionary *dic2 = @{@"icon":@"grade",@"title":@"领队打分"};
+    NSDictionary *dic3 = @{@"icon":@"collect",@"title":@"收藏的活动"};
+    NSDictionary *dic4 = @{@"icon":@"contacts",@"title":@"常用出行人"};
+    [_arrayCells addObject:@[dic1,dic2,dic3,dic4]];
+    NSDictionary *dic5 = @{@"icon":@"mynews",@"title":@"消息"};
+    NSDictionary *dic6 = @{@"icon":@"setup",@"title":@"系统设置"};
+    [_arrayCells addObject:@[dic5,dic6]];
     
-    self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+    [self initHeaderView];
+//    self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
 //    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -50,120 +47,106 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)initHeaderView
+{
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120)];
+    backView.backgroundColor = APP_BACKGROUND_COLOR;
+    UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"head-img"]];
+    imageview.frame = CGRectMake(0, 10, SCREEN_WIDTH, 100);
+    [backView addSubview:imageview];
+    if ([CacheBox getCache:CACHE_TOKEN]) {
+        //显示头像以及名称
+        PAAImageView *avatar = [[PAAImageView alloc] initWithFrame:CGRectMake(20, 0, 55, 55) backgroundProgressColor:[UIColor whiteColor] progressColor:[UIColor grayColor]];
+        avatar.centerY = backView.height/2;
+        avatar.placeHolderImage = [UIImage imageNamed:@"avatar"];
+        //            [avatar setImageURL:[CacheBox getCache:CACHE_TOKEN]];
+        [backView addSubview:avatar];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 0, 120, 30)];
+        nameLabel.textColor = [UIColor whiteColor];
+        nameLabel.font = [UIFont boldSystemFontOfSize:15.0];
+        nameLabel.backgroundColor = [UIColor clearColor];
+        nameLabel.centerY = backView.height/2;
+        nameLabel.text = [CacheBox getCache:USERNAME_CACHE];
+        
+        UIImageView *arrowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow-r-g"]];
+        arrowImage.frame = CGRectMake(SCREEN_WIDTH - 40, 0, 12, 20);
+        arrowImage.centerY = backView.height/2;
+        [backView addSubview:arrowImage];
+        [backView addSubview:nameLabel];
+    }else{
+        //提示语以及登录按钮
+        
+    }
+    self.tableView.tableHeaderView = backView;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
     // Return the number of sections.
-    return 2;
+    return _arrayCells.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 1;
-    }
-    // Return the number of rows in the section.
-    return _arrayCells.count;
+    return [_arrayCells[section] count];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        return 100.0;
-    }
-    
     return 50.0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier1 = @"avatarcell";
+//    static NSString *CellIdentifier1 = @"avatarcell";
     static NSString *CellIdentifier2 = @"minecells";
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-    if (section == 0) {
-        
-        UITableViewCell *cell1 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier1 forIndexPath:indexPath];
-        UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"head-img"]];
-        imageview.frame = cell1.bounds;
-        [cell1.contentView addSubview:imageview];
-        if ([CacheBox getCache:CACHE_TOKEN]) {
-            //显示头像以及名称
-            PAAImageView *avatar = [[PAAImageView alloc] initWithFrame:CGRectMake(20, 0, 55, 55) backgroundProgressColor:[UIColor whiteColor] progressColor:[UIColor grayColor]];
-            avatar.centerY = cell1.height/2;
-            avatar.placeHolderImage = [UIImage imageNamed:@"avatar"];
-//            [avatar setImageURL:[CacheBox getCache:CACHE_TOKEN]];
-            [cell1 addSubview:avatar];
-            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 0, 120, 30)];
-            nameLabel.textColor = [UIColor whiteColor];
-            nameLabel.font = [UIFont boldSystemFontOfSize:15.0];
-            nameLabel.backgroundColor = [UIColor clearColor];
-            nameLabel.centerY = cell1.height/2;
-            nameLabel.text = [CacheBox getCache:USERNAME_CACHE];
-            [cell1 addSubview:nameLabel];
-        }else{
-            //提示语以及登录按钮
-            
-        }
-        //登录与未登录
-        return cell1;
-    }else{
-        
-        UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier2 forIndexPath:indexPath];
-        NSDictionary *dic = _arrayCells[row];
-        cell2.imageView.image = [UIImage imageNamed:dic[@"icon"]];
-        cell2.textLabel.text = dic[@"title"];
-        return cell2;
-    }
     
+    NSArray *array = _arrayCells[section];
+    NSDictionary *dic = array[row];
+    UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier2 forIndexPath:indexPath];
+    cell2.imageView.image = [UIImage imageNamed:dic[@"icon"]];
+    cell2.textLabel.text = dic[@"title"];
+        return cell2;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger section  = indexPath.section;
+    NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-    if (section == 0) {
-        [self performSegueWithIdentifier:@"profile" sender:self];
-    }else if (section == 1){
-        switch (row) {
-            case 0:
-            {
-                [self performSegueWithIdentifier:@"subscribe" sender:self];
-            }
-                break;
-            case 1:
-            {
+
+    switch (section) {
+        case 0:
+            if (row == 0) {
                 [self performSegueWithIdentifier:@"myorder" sender:self];
                 break;
             }
-            case 2:
-            {
+            break;
+        case 1:
+            if (row == 0) {
+                [self performSegueWithIdentifier:@"subscribe" sender:self];
+            }else if(row == 1){
                 [self performSegueWithIdentifier:@"leaderscore" sender:self];
-                break;
-            }
-            case 3:
-            {
+            }else if (row == 2){
                 [self performSegueWithIdentifier:@"collected" sender:self];
-                break;
-            }
-            case 4:
-            {
+            }else if (row == 3){
                 [self performSegueWithIdentifier:@"commonperson" sender:self];
-                break;
             }
-            case 5:
-            {
+            break;
+        case 2:
+            if (row == 0) {
                 [self performSegueWithIdentifier:@"messagelist" sender:self];
-                break;
-            }
-            case 6:
-            {
+            }else if (row == 1){
                 [self performSegueWithIdentifier:@"settings" sender:self];
                 break;
             }
-            default:
-                break;
-        }
+            break;
+            
+        default:
+            break;
     }
+
 }
 
 

@@ -37,7 +37,7 @@
         [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     }
 //
-    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:18], NSFontAttributeName, nil]];
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont systemFontOfSize:18], NSFontAttributeName, nil]];
     //item字体颜色  在ios6中是背景色
 //    [[UINavigationBar appearance] setTintColor:RGBA(46, 181, 220, 1)];
 //    if (NSFoundationVersionNumber>=NSFoundationVersionNumber_iOS_7_0) {

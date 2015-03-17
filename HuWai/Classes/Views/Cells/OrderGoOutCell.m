@@ -16,31 +16,13 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    self.contentView.layer.shouldRasterize = YES;
-    self.contentView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-    
-    if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
-        self.backgroundColor = RGBA(242, 242, 242, 1);
-    }else{
-        self.backgroundView = [[UIView alloc] initWithFrame:self.bounds];
-        self.backgroundView.backgroundColor = RGBA(242, 242, 242, 1);
-    }
-    self.contentView.backgroundColor = [UIColor whiteColor];
-    
-    CALayer *topLayer = [CALayer layer];
-    topLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
-    topLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    CALayer *bottomLayer = [CALayer layer];
-    bottomLayer.frame = CGRectMake(0, self.contentView.bounds.size.height, SCREEN_WIDTH, 0.5);
-    bottomLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [self.contentView.layer addSublayer:topLayer];
-    [self.contentView.layer addSublayer:bottomLayer];
 }
 
 -(void)layoutSubviews
 {
 //    [super layoutSubviews];
     self.contentView.frame = CGRectInset(self.bounds, 0, 5);
+    [self setLayerLineAndBackground];
     [self setNeedsDisplay];
 }
 
@@ -56,7 +38,7 @@
             CommonPersonInfo *info = persons[i];
             CALayer *sepLineLayer = [CALayer layer];
             sepLineLayer.frame = CGRectMake(0, 45+i*45, SCREEN_WIDTH, 0.5);
-            sepLineLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+            sepLineLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
             UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 45+i*45, 80, 45)];
             nameLabel.textColor = [UIColor darkGrayColor];
             UILabel *phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(180, 45+i*45, 130, 45)];

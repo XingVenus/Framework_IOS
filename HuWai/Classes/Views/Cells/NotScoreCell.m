@@ -14,7 +14,7 @@
 -(void)baseSetup
 {
     
-    [self.contentView addSubview:self.scoreBackView];
+//    [self.contentView addSubview:self.scoreBackView];
     [self.contentView addSubview:self.describeLabel];
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.subTitleLabel];
@@ -56,7 +56,7 @@
     
     CALayer *secondline = [CALayer layer];
     secondline.frame = CGRectMake(0, 40, SCREEN_WIDTH, 0.5);
-    secondline.backgroundColor = [UIColor lightGrayColor].CGColor;
+    secondline.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;//[UIColor lightGrayColor].CGColor;
     [self.contentView.layer addSublayer:secondline];
 }
 

@@ -15,7 +15,7 @@
 {
     CALayer *secondLayer = [CALayer layer];
     secondLayer.frame = CGRectMake(0, 40, SCREEN_WIDTH, 0.5);
-    secondLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+    secondLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
     [self.contentView.layer addSublayer:secondLayer];
 }
 

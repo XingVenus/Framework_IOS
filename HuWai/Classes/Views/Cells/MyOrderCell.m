@@ -11,6 +11,7 @@
 
 @implementation MyOrderCell
 {
+    CALayer *_secondLayer;
     CALayer *_thirdLayer;
     CALayer *_fourthLayer;
 }
@@ -19,16 +20,6 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.contentView.layer.shouldRasterize = YES;
-        self.contentView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-        
-        if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
-            self.backgroundColor = RGBA(242, 242, 242, 1);
-        }else{
-            self.backgroundView = [[UIView alloc] initWithFrame:self.bounds];
-            self.backgroundView.backgroundColor = RGBA(242, 242, 242, 1);
-        }
-        self.contentView.backgroundColor = [UIColor whiteColor];
         
         [self.contentView addSubview:self.leaderLabel];
         [self.contentView addSubview:self.activityLabel];
@@ -42,7 +33,7 @@
             if (!_fourthLayer) {
                 _fourthLayer = [CALayer layer];
                 _fourthLayer.frame = CGRectMake(0, 155, SCREEN_WIDTH, 0.5);
-                _fourthLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+                _fourthLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
                 [self.contentView.layer addSublayer:_fourthLayer];
             }
         }
@@ -71,10 +62,18 @@
     self.contentView.frame = CGRectInset(self.bounds, 0, 5);
     
     [self setLayerLineAndBackground];
+    
+    if (!_secondLayer) {
+        _secondLayer = [CALayer layer];
+        _secondLayer.frame = CGRectMake(0, 37, SCREEN_WIDTH, 0.5);
+        _secondLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
+        [self.contentView.layer addSublayer:_secondLayer];
+    }
+
     if (!_thirdLayer) {
         _thirdLayer = [CALayer layer];
         _thirdLayer.frame = CGRectMake(0, 95, SCREEN_WIDTH, 0.5);
-        _thirdLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+        _thirdLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
         [self.contentView.layer addSublayer:_thirdLayer];
     }
     
@@ -86,7 +85,7 @@
         _leaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 8, 160, 21)];
         _leaderLabel.backgroundColor = [UIColor clearColor];
         _leaderLabel.textAlignment = NSTextAlignmentLeft;
-        _leaderLabel.font = [UIFont systemFontOfSize:15.0];
+        _leaderLabel.font = [UIFont systemFontOfSize:14.0];
         _leaderLabel.textColor = [UIColor darkGrayColor];
     }
     return _leaderLabel;
@@ -99,7 +98,7 @@
         _activityLabel.numberOfLines = 0;
         _activityLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _activityLabel.textColor = [UIColor darkGrayColor];
-        _activityLabel.font = [UIFont systemFontOfSize:15.0];
+        _activityLabel.font = [UIFont systemFontOfSize:14.0];
         _activityLabel.lineSpacing = 2;
         _activityLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentCenter;
     }
@@ -137,7 +136,7 @@
         _insuranceLabel.numberOfLines = 0;
         _insuranceLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _insuranceLabel.textColor = [UIColor darkGrayColor];
-        _insuranceLabel.font = [UIFont systemFontOfSize:15.0];
+        _insuranceLabel.font = [UIFont systemFontOfSize:14.0];
         _insuranceLabel.lineSpacing = 2;
         _insuranceLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentCenter;
     }

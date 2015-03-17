@@ -7,11 +7,13 @@
 //
 
 #import "RFJModel.h"
+#import "PagerModel.h"
 @protocol ScoreInfo
 @end
 
 @interface ScoreListModel : RFJModel
 JProperty(NSArray<ScoreInfo> *data, data);
+JProperty(PagerModel *pager, pager);
 @end
 
 @interface ScoreInfo : RFJModel

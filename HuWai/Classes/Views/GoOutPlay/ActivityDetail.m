@@ -242,10 +242,12 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 {
     if (!_segmentControl) {
         _segmentControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"详情",@"领队",@"问答",@"声明"]];
+        _segmentControl.font = [UIFont systemFontOfSize:15.0];
         _segmentControl.showBorderLine = YES;
+        _segmentControl.borderLineColor = APP_DIVIDELINE_COLOR;
         _segmentControl.frame = CGRectMake(0, 0, SCREEN_WIDTH, 45);
         _segmentControl.backgroundColor = [UIColor whiteColor];
-        _segmentControl.textColor = [UIColor blackColor];
+        _segmentControl.textColor = [UIColor darkGrayColor];
         _segmentControl.selectionIndicatorColor = [UIColor colorWithRed:46/255.0 green:181/255.0 blue:220/255.0 alpha:1];
         _segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
         _segmentControl.selectedTextColor = [UIColor colorWithRed:46/255.0 green:181/255.0 blue:220/255.0 alpha:1];
@@ -339,15 +341,15 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 {
     CALayer *verticalDividerLayer = [CALayer layer];
     verticalDividerLayer.frame = CGRectMake(SCREEN_WIDTH - 100, 10, 1, 50);
-    verticalDividerLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+    verticalDividerLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
     [self.layer addSublayer:verticalDividerLayer];
     
     CALayer *topLayer = [CALayer layer];
     topLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
-    topLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+    topLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
     CALayer *bottomLayer = [CALayer layer];
     bottomLayer.frame = CGRectMake(0, self.bounds.size.height, SCREEN_WIDTH, 0.5);
-    bottomLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+    bottomLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
     [self.layer addSublayer:topLayer];
     [self.layer addSublayer:bottomLayer];
 }

@@ -9,12 +9,13 @@
 #import "Search.h"
 #import "ActivityModel.h"
 #import "SearchResultList.h"
+#import "BaseNavigationController.h"
 
 @interface Search ()<UITextFieldDelegate>
 {
     ActivityModel *dataModel;
 }
-@property (weak, nonatomic) IBOutlet UITextField *searchField;
+@property (strong, nonatomic) UITextField *searchField;
 
 @end
 
@@ -22,7 +23,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _searchField.width = SCREEN_WIDTH - 60;
+    self.searchField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 70, 30)];
+    self.navigationItem.titleView = self.searchField;
+    self.searchField.background = [UIImage imageNamed:@"search-bg"];
+    self.searchField.returnKeyType = UIReturnKeySearch;
     _searchField.delegate = self;
     UIImageView *searchImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search-icon"]];
     searchImage.contentMode = UIViewContentModeScaleAspectFit;
@@ -35,15 +39,20 @@
     // Do any additional setup after loading the view.
     
     //搜索按钮
-    UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchButton.frame = CGRectMake(0, 0, 50, 30);
-    [searchButton setBackgroundImage:[UIImage imageNamed:@"search-mutual"] forState:UIControlStateNormal];
-    [searchButton setBackgroundImage:[UIImage imageNamed:@"search-lighted"] forState:UIControlStateHighlighted];
-    [searchButton setTitle:@"搜索" forState:UIControlStateNormal];
-    searchButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
-    [searchButton addTarget:self action:@selector(searchAction) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = searchItem;
+    UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancelButton.frame = CGRectMake(0, 0, 40 , 40);
+
+    [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+    cancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
+    [cancelButton addTarget:self action:@selector(dismissNavigationView:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+    
+    UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc]
+                                   initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                   target:nil
+                                   action:nil];
+    fixedSpace.width = -10;
+    self.navigationItem.rightBarButtonItems = @[fixedSpace,cancelItem];
 }
 
 - (void)didReceiveMemoryWarning {

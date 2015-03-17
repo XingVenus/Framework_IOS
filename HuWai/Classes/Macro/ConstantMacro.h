@@ -22,6 +22,7 @@
 //#define HTTP_BASE_PATH      @"http://172.23.69.2:8080/localization/"
 
 #define LOAD_PROMPT_MESSAGE  @"正在加载"
+#define NO_MORE_DATA_MESSAGE    @"没有更多数据了"
 
 //==================应用沙盒的缓存key定义==============
 
@@ -52,7 +53,7 @@
 #define COMMON_PERSON_TABLE   @"commonperson"
 #define APP_MESSAGE_TABLE     @"appmessage"
 
-//----用于引导页面的应用build版本
+//----用于引导页面显示判断的应用build版本
 #define LAUNCH_BUILD_VERSION    @"LAUNCH_BUILD_VERSION"
 
 
@@ -67,6 +68,11 @@ static NSString *UserRegistrationNotification = @"user_registration_notification
 #define kAppId           @"TmaCawd4p492jdPo9uuES7"
 #define kAppKey          @"qBGelJkHcJAhzPgbbYA076"
 #define kAppSecret       @"thrXL7FrFO7T1f5sIR7rH6"
+
+//页面背景颜色
+#define APP_BACKGROUND_COLOR    RGBA(238,238,238,1)
+//分割线颜色
+#define APP_DIVIDELINE_COLOR    RGBA(226,226,226,1)
 
 //================= associative reference keys=============
 static const NSString * OrderCancelAssociatedKey         = @"OrderCancelAssociatedKey";

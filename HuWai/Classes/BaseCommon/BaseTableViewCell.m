@@ -30,22 +30,22 @@
     self.contentView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     
     if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
-        self.backgroundColor = RGBA(242, 242, 242, 1);
+        self.backgroundColor = APP_BACKGROUND_COLOR;//RGBA(242, 242, 242, 1);
     }else{
         self.backgroundView = [[UIView alloc] initWithFrame:self.bounds];
-        self.backgroundView.backgroundColor = RGBA(242, 242, 242, 1);
+        self.backgroundView.backgroundColor = APP_BACKGROUND_COLOR;//RGBA(242, 242, 242, 1);
     }
     self.contentView.backgroundColor = [UIColor whiteColor];
     
     if (!_topLayer) {
         _topLayer = [CALayer layer];
-        _topLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+        _topLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
         [self.contentView.layer addSublayer:_topLayer];
     }
     _topLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
     if (!_bottomLayer) {
         _bottomLayer = [CALayer layer];
-        _bottomLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+        _bottomLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
         [self.contentView.layer addSublayer:_bottomLayer];
     }
     _bottomLayer.frame = CGRectMake(0, self.contentView.bounds.size.height, SCREEN_WIDTH, 0.5);

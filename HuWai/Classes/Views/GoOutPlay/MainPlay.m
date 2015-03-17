@@ -28,7 +28,7 @@
     
     LocationHelper *_locationHelper;
     UIView *backgroundPopView;
-    NSArray *destinationArray;
+    NSMutableArray *destinationArray;
     NSArray *timeArray;
     NSArray *playArray;
     
@@ -62,13 +62,10 @@
         [[UIApplication sharedApplication].keyWindow addSubview:launchview];
     }
     //---------
-    [NSThread sleepForTimeInterval:2.0];
-//    if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
-//        self.automaticallyAdjustsScrollViewInsets = NO;
-//    }
+    [NSThread sleepForTimeInterval:2.0]; //延迟启动图片显示
+
     if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
-//        self.automaticallyAdjustsScrollViewInsets = NO;
-//        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.edgesForExtendedLayout = UIRectEdgeNone;//貌似是可有可无
     }
     WEAKSELF;
     timeArray = @[@"全部",@"1日行程",@"2日行程",@"3日行程",@"4-7日行程",@"7日以上"];
@@ -76,13 +73,14 @@
     //下拉、上拉注册
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     [self.tableView addHeaderWithCallback:^{
-        self.currentPage = 1;
+        weakSelf.currentPage = 1;
         [weakSelf loadDataSource];
     } dateKey:@"mainplay"];
     // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
     [self.tableView addFooterWithCallback:^{
-        self.currentPage = self.currentPage + 1;
-        [weakSelf loadDataSource];
+        if (![weakSelf checkIsLastPage]) {
+            [weakSelf loadDataSource];
+        }
     }];
     
     //获取目的地城市列表
@@ -107,20 +105,25 @@
     locationBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     locationBtn.frame = CGRectMake(15, navViewHeight - 67, 100, 30);//CGRectMake(15, 7, 100, 30)
     [locationBtn setImage:[UIImage imageNamed:@"place-i"] forState:UIControlStateNormal];
-    [locationBtn setTitleColor:RGBA(54, 178, 214, 1) forState:UIControlStateNormal];
+    [locationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     locationBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
     [locationBtn setTitle:[CacheBox getCache:LOCATION_CITY_NAME] forState:UIControlStateNormal];
     [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:4];
     [locationBtn addTarget:self action:@selector(selectDestCity:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:locationBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
 //    [navigationView addSubview:locationBtn];
     //搜索按钮
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(SCREEN_WIDTH - 45, navViewHeight - 67, 30, 30);
     [searchBtn setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchActivity:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
+    self.navigationItem.rightBarButtonItem = searchItem;
 //    [navigationView addSubview:searchBtn];
 
     /////-----title
+    /*
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 00, 100, 24)];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -129,7 +132,8 @@
     titleLabel.font = [UIFont boldSystemFontOfSize:18.0];
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = @"出去玩";
-//    [navigationView addSubview:titleLabel];
+    [navigationView addSubview:titleLabel];
+     */
     /////------1
     UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn1.tag = 1001;
@@ -261,7 +265,8 @@
         [self.tableView reloadData];
     }else if (tag == DestinationAction){
         DestinationCityModel *desModel = [[DestinationCityModel alloc] initWithJsonDict:response.data];
-        destinationArray = [desModel.data copy];
+        destinationArray = [desModel.data mutableCopy];
+        [destinationArray insertObject:@"全部" atIndex:0];
     }else if (tag == AppRegistrationAction){
         self.hideShowMessage = YES;
     }

@@ -16,7 +16,7 @@
 
 @interface NotScoreCell : BaseTableViewCell
 
-@property (nonatomic, strong) ScoreCellView *scoreBackView;
+//@property (nonatomic, strong) ScoreCellView *scoreBackView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *subTitleLabel;
 @property (nonatomic, strong) TTTAttributedLabel *describeLabel;
