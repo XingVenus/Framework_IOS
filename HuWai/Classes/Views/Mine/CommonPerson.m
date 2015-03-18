@@ -20,9 +20,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    NSArray *dataArray = @[@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd",@"aa",@"bb",@"cc",@"dd"];
-//    [self.dataSource addObjectsFromArray:dataArray];
     // Do any additional setup after loading the view.
+    if (CURRENT_SYS_VERSION>=7.0) {
+        self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated

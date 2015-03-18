@@ -12,7 +12,7 @@
 @interface Profile ()<ImagePickerDelegate>
 - (IBAction)avatarChange:(id)sender;
 
-- (IBAction)passwordChange:(id)sender;
+//- (IBAction)passwordChange:(id)sender;
 @end
 
 @implementation Profile
@@ -50,7 +50,7 @@
     [aobj steupWithView:self.view];
 }
 
-- (IBAction)passwordChange:(id)sender {
-    
-}
+//- (IBAction)passwordChange:(id)sender {
+//    
+//}
 @end

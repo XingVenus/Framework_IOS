@@ -1957,7 +1957,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3BV-5M-kxa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1371" y="2514"/>
+            <point key="canvasLocation" x="1511" y="2514"/>
         </scene>
         <!--Segment Controller View Controller-->
         <scene sceneID="0NF-as-Nuz">
@@ -1994,7 +1994,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXw-v2-fbU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1371" y="3135"/>
+            <point key="canvasLocation" x="1511" y="3139"/>
         </scene>
         <!--用户协议-->
         <scene sceneID="Jcr-X1-CdM">
@@ -2013,7 +2013,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r6d-1J-j9u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1371" y="3771"/>
+            <point key="canvasLocation" x="1511" y="3779"/>
         </scene>
         <!--我的订单-->
         <scene sceneID="a1k-1C-Je2">
@@ -2250,7 +2250,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YwU-2k-IAt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2041" y="1235"/>
+            <point key="canvasLocation" x="1521" y="1598"/>
         </scene>
         <!--出去玩Nav-->
         <scene sceneID="9Ls-3z-OiZ">
@@ -2358,9 +2358,6 @@
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="avatarChange:" destination="ftE-Qx-7eg" eventType="touchUpInside" id="KWE-Ch-dhO"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O9g-6O-ZSR">
                                 <rect key="frame" x="0.0" y="180" width="320" height="40"/>
@@ -2555,7 +2552,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BQN-rC-sfO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1971" y="-147"/>
+            <point key="canvasLocation" x="1531" y="938"/>
         </scene>
         <!--收藏活动-->
         <scene sceneID="8i5-zi-xRp">

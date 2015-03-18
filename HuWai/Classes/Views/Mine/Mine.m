@@ -50,6 +50,10 @@
 -(void)initHeaderView
 {
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120)];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToProfile:)];
+    singleTap.numberOfTapsRequired = 1;
+    [backView addGestureRecognizer:singleTap];
+    
     backView.backgroundColor = APP_BACKGROUND_COLOR;
     UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"head-img"]];
     imageview.frame = CGRectMake(0, 10, SCREEN_WIDTH, 100);
@@ -69,7 +73,7 @@
         nameLabel.text = [CacheBox getCache:USERNAME_CACHE];
         
         UIImageView *arrowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow-r-g"]];
-        arrowImage.frame = CGRectMake(SCREEN_WIDTH - 40, 0, 12, 20);
+        arrowImage.frame = CGRectMake(SCREEN_WIDTH - 30, 0, 12, 20);
         arrowImage.centerY = backView.height/2;
         [backView addSubview:arrowImage];
         [backView addSubview:nameLabel];
@@ -80,6 +84,10 @@
     self.tableView.tableHeaderView = backView;
 }
 
+-(void)tapToProfile:(UITapGestureRecognizer*)recognizer
+{
+    [self performSegueWithIdentifier:@"profile" sender:self];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
