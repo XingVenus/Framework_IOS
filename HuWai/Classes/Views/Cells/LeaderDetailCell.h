@@ -14,9 +14,9 @@
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *nameLabel;
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *infoLabel;
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *gradeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *leaderStartLabel;
-@property (weak, nonatomic) IBOutlet UILabel *leaderNumberLabel;
-@property (weak, nonatomic) IBOutlet UILabel *leaderGradeLabel;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *leaderStartLabel;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *leaderNumberLabel;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *leaderGradeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *subscribeActivityBtn;
 
 

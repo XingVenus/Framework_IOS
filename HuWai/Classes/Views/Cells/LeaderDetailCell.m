@@ -45,7 +45,20 @@ static NSString *LeaderGrade = @"共收到%@位小伙伴给Ta打了分";
     self.infoLabel.lineSpacing = 6;
     self.infoLabel.text = infoString;
     NSString *gradeStr = [NSString stringWithFormat:@"%@分",data.score];
-    self.gradeLabel.text = gradeStr;
+    
+    [self.gradeLabel setText:gradeStr afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange fontRange = [[mutableAttributedString string] rangeOfString:data.score options:NSCaseInsensitiveSearch];
+        // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+        UIFont *boldSystemFont = [UIFont systemFontOfSize:18];
+        CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+        if (font) {
+            [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:fontRange];
+            [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(__bridge id)[[UIColor orangeColor] CGColor] range:fontRange];
+            CFRelease(font);
+        }
+        
+        return mutableAttributedString;
+    }];
     
     self.leaderStartLabel.text = [NSString stringWithFormat:LeaderStart,data.times];
     self.leaderNumberLabel.text = [NSString stringWithFormat:LeaderNumber,data.participants];

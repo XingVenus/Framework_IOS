@@ -92,10 +92,12 @@
     return _describeLabel;
 }
 
--(UILabel *)scoreLabel
+-(TTTAttributedLabel *)scoreLabel
 {
     if (!_scoreLabel) {
-        _scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, 0, 60, 30)];
+        _scoreLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, 0, 60, 30)];
+        _scoreLabel.textColor = [UIColor darkGrayColor];
+        _scoreLabel.font = [UIFont systemFontOfSize:14.0];
         _scoreLabel.centerY = CGRectGetMidY(self.describeLabel.frame);
     }
     return _scoreLabel;
@@ -106,7 +108,20 @@
     ScoreInfo *data = (ScoreInfo *)item;
     self.subTitleLabel.text = [NSString stringWithFormat:@"领队:%@",data.leader];
     self.describeLabel.text = data.title;
-    self.scoreLabel.text = data.score;
+    NSString *scoreString = [NSString stringWithFormat:@"%@分",data.score];
+    [self.scoreLabel setText:scoreString afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange fontRange = [[mutableAttributedString string] rangeOfString:data.score options:NSCaseInsensitiveSearch];
+        // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+        UIFont *boldSystemFont = [UIFont systemFontOfSize:18];
+        CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+        if (font) {
+            [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:fontRange];
+            [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(__bridge id)[[UIColor orangeColor] CGColor] range:fontRange];
+            CFRelease(font);
+        }
+        
+        return mutableAttributedString;
+    }];
 }
 
 @end

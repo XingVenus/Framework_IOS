@@ -19,9 +19,12 @@
 #import "DestinationCityModel.h"
 #import "LocationHelper.h"
 #import "LaunchView.h"
-#define PageSize    20
+#import "SLButton.h"
 
-@interface MainPlay ()<CityListDelegate, SelectListViewDelegate>
+#define PageSize    20
+const static NSInteger kTabHeight = 40;
+
+@interface MainPlay ()<CityListDelegate, SelectListViewDelegate,UIGestureRecognizerDelegate>
 {
     NavView *navigationView;
     SelectListView *listPopView;
@@ -51,6 +54,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.backgroundColor = [UIColor whiteColor];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRegistration:) name:UserRegistrationNotification object:nil];
     //引导页面
     NSString *lastBuildversion = [CacheBox getCache:LAUNCH_BUILD_VERSION];
@@ -99,11 +103,16 @@
     navigationView.backgroundColor = RGBA(247, 247, 248, 1);
     [self.view addSubview:navigationView];
      */
-    CGFloat navViewHeight = CGRectGetHeight(navigationView.bounds);
+    navigationView = [[NavView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kTabHeight)];
+    [self.view addSubview:navigationView];
+//    if (CURRENT_SYS_VERSION>=7.0) {
+//        navigationView.top = 64;
+//    }
+//    CGFloat navViewHeight = CGRectGetHeight(navigationView.bounds);
     //定位按钮
     locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     locationBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    locationBtn.frame = CGRectMake(15, navViewHeight - 67, 100, 30);//CGRectMake(15, 7, 100, 30)
+    locationBtn.frame = CGRectMake(0, 0, 100, 30);//CGRectMake(15, navViewHeight - 67, 100, 30);//CGRectMake(15, 7, 100, 30)
     [locationBtn setImage:[UIImage imageNamed:@"place-i"] forState:UIControlStateNormal];
     [locationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     locationBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
@@ -115,7 +124,7 @@
 //    [navigationView addSubview:locationBtn];
     //搜索按钮
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchBtn.frame = CGRectMake(SCREEN_WIDTH - 45, navViewHeight - 67, 30, 30);
+    searchBtn.frame = CGRectMake(0, 0, 30, 30);//CGRectMake(SCREEN_WIDTH - 45, navViewHeight - 67, 30, 30);
     [searchBtn setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchActivity:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
@@ -135,46 +144,47 @@
     [navigationView addSubview:titleLabel];
      */
     /////------1
-    UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    SLButton *btn1 = [SLButton buttonWithType:UIButtonTypeCustom];
     btn1.tag = 1001;
     [btn1 addTarget:self action:@selector(showSelectView:) forControlEvents:UIControlEventTouchUpInside];
-    btn1.frame = CGRectMake(0, navViewHeight - 35, SCREEN_WIDTH/3, 30);
     btn1.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [btn1 setTitle:@"目的地" forState:UIControlStateNormal];
     [btn1 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [btn1 setImage:[UIImage imageNamed:@"down"] forState:UIControlStateNormal];
+    UIImage *downImg = [UIImage imageNamed:@"down"];
+    [btn1 setImage:downImg forState:UIControlStateNormal];
     [btn1 setImage:[UIImage imageNamed:@"up"] forState:UIControlStateSelected];
-    [btn1 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
-    [btn1 setContentEdgeInsets:UIEdgeInsetsMake(0, 50, 0, 0)];
-//    [navigationView addSubview:btn1];
+    btn1.frame = CGRectMake(0, 0, SCREEN_WIDTH/3, kTabHeight);//CGRectMake(0, navViewHeight - 35, SCREEN_WIDTH/3, 30);
+//    [btn1 setImageEdgeInsets:UIEdgeInsetsMake(0, btn1.titleLabel.bounds.size.width, 0, -btn1.titleLabel.bounds.size.width)];
+//    [btn1 setTitleEdgeInsets:UIEdgeInsetsMake(0, -downImg.size.width, 0, downImg.size.width)];
+//    [btn1 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
+//    [btn1 setContentEdgeInsets:UIEdgeInsetsMake(0, 50, 0, 0)];
+    [navigationView addSubview:btn1];
     ////-----2
-    UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    SLButton *btn2 = [SLButton buttonWithType:UIButtonTypeCustom];
     btn2.tag = 1002;
     [btn2 addTarget:self action:@selector(showSelectView:) forControlEvents:UIControlEventTouchUpInside];
-    btn2.frame = CGRectMake(CGRectGetMaxX(btn1.frame), navViewHeight - 35, SCREEN_WIDTH/3, 30);
     btn2.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [btn2 setTitle:@"行程" forState:UIControlStateNormal];
     [btn2 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [btn2 setImage:[UIImage imageNamed:@"down"] forState:UIControlStateNormal];
     [btn2 setImage:[UIImage imageNamed:@"up"] forState:UIControlStateSelected];
-    [btn2 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
-    [btn2 setContentEdgeInsets:UIEdgeInsetsMake(0, 45, 0, 0)];
-//    [navigationView addSubview:btn2];
+    btn2.frame = CGRectMake(SCREEN_WIDTH/3, 0, SCREEN_WIDTH/3, kTabHeight);//CGRectMake(CGRectGetMaxX(btn1.frame), navViewHeight - 35, SCREEN_WIDTH/3, 30);
+//    [btn2 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
+//    [btn2 setContentEdgeInsets:UIEdgeInsetsMake(0, 45, 0, 0)];
+    [navigationView addSubview:btn2];
     /////--------3
-    UIButton *btn3 = [UIButton buttonWithType:UIButtonTypeCustom];
+    SLButton *btn3 = [SLButton buttonWithType:UIButtonTypeCustom];
     btn3.tag = 1003;
     [btn3 addTarget:self action:@selector(showSelectView:) forControlEvents:UIControlEventTouchUpInside];
-    btn3.frame = CGRectMake(CGRectGetMaxX(btn2.frame), navViewHeight - 35, SCREEN_WIDTH/3, 30);
-
     btn3.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [btn3 setTitle:@"玩法" forState:UIControlStateNormal];
     [btn3 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [btn3 setImage:[UIImage imageNamed:@"down"] forState:UIControlStateNormal];
     [btn3 setImage:[UIImage imageNamed:@"up"] forState:UIControlStateSelected];
-    [btn3 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
-    [btn3 setContentEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
-//    [navigationView addSubview:btn3];
-    [btn3 setContentEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
+    btn3.frame = CGRectMake(SCREEN_WIDTH/3*2, 0, SCREEN_WIDTH/3, kTabHeight);//CGRectMake(CGRectGetMaxX(btn2.frame), navViewHeight - 35, SCREEN_WIDTH/3, 30);
+//    [btn3 setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
+//    [btn3 setContentEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
+    [navigationView addSubview:btn3];
     //定位
     _locationHelper = [[LocationHelper alloc] init];
     [_locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks, NSError *error) {
@@ -203,14 +213,21 @@
     // Do any additional setup after loading the view.
     //-----弹出层列表展示
     if (!backgroundPopView) {
-        backgroundPopView = [[UIView alloc] initWithFrame:CGRectMake(0, 64 - [CommonFoundation getStateBarHeight] + 30, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 30)];
+//        backgroundPopView = [[UIView alloc] initWithFrame:CGRectMake(0, 64 - [CommonFoundation getStateBarHeight] + 30, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 30)];
+        backgroundPopView = [[UIView alloc] initWithFrame:CGRectMake(0,kTabHeight, SCREEN_WIDTH, SCREEN_HEIGHT-64-kTabHeight-49)];
         backgroundPopView.backgroundColor = [UIColor colorWithWhite:0.3 alpha:.6];
-        listPopView = [[SelectListView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, CGRectGetHeight(backgroundPopView.frame) - 100)];
-        listPopView.top -= listPopView.height;
+        
+        UITapGestureRecognizer *hideTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidePopView:)];
+        hideTap.numberOfTapsRequired = 1;
+        hideTap.delegate = self;
+        [backgroundPopView addGestureRecognizer:hideTap];
+//        listPopView = [[SelectListView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, CGRectGetHeight(backgroundPopView.frame) - 100)];
+        listPopView = [[SelectListView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
+        //listPopView.top -= listPopView.height;
         listPopView.delegate = self;
         [backgroundPopView addSubview:listPopView];
-//        [self.view insertSubview:backgroundPopView belowSubview:navigationView];
-        [self.view addSubview:backgroundPopView];
+        [self.view insertSubview:backgroundPopView belowSubview:navigationView];
+//        [self.view addSubview:backgroundPopView];
         backgroundPopView.hidden = YES;
     }
     
@@ -265,8 +282,9 @@
         [self.tableView reloadData];
     }else if (tag == DestinationAction){
         DestinationCityModel *desModel = [[DestinationCityModel alloc] initWithJsonDict:response.data];
+        DestCityInfo *destDic = [[DestCityInfo alloc] initWithJsonDict:@{@"cid":@"0",@"name":@"全部"}];
         destinationArray = [desModel.data mutableCopy];
-        [destinationArray insertObject:@"全部" atIndex:0];
+        [destinationArray insertObject:destDic atIndex:0];
     }else if (tag == AppRegistrationAction){
         self.hideShowMessage = YES;
     }
@@ -289,6 +307,27 @@
 }
 
 #pragma mark - method implement
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if ([NSStringFromClass(touch.view.class) isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    }
+    
+    return YES;
+    
+}
+
+-(void)hidePopView:(UITapGestureRecognizer*)recognizer
+{
+
+    [UIView animateWithDuration:0.3 animations:^{
+        listPopView.top = -listPopView.height;
+        lastSelected.selected = NO;
+    } completion:^(BOOL finished) {
+        backgroundPopView.hidden = YES;
+        lastSelected = nil;
+    }];
+}
 
 -(void)userRegistration:(NSNotification *)notification
 {
@@ -328,7 +367,7 @@
 -(void)showSelectView:(UIButton *)sender
 {
     NSInteger btnTag = sender.tag;
-    
+
     if (btnTag == 1001) {
         listPopView.listType = ListTypeDestination;
         listPopView.listData = destinationArray;
@@ -339,28 +378,36 @@
         listPopView.listType = ListTypePlay;
         listPopView.listData = playArray;
     }
+    
+    CGFloat popViewHeight = listPopView.listData.count*45;
+    if (popViewHeight>315) {
+        popViewHeight = 315;
+    }
+    listPopView.height = popViewHeight;
+    listPopView.tableView.height = popViewHeight;
+    
     if (sender.selected) {
         //隐藏
-        lastSelected = nil;
         [UIView animateWithDuration:0.3 animations:^{
-            listPopView.top -= listPopView.height;
+            listPopView.top = -listPopView.height;
         } completion:^(BOOL finished) {
             backgroundPopView.hidden = YES;
+            lastSelected = nil;
         }];
     }else{
         //显示
+        backgroundPopView.hidden = NO;
+        listPopView.top =-listPopView.height;
+        
         if (lastSelected && ![lastSelected isEqual:sender]) {
-            listPopView.top -= listPopView.height;
-            backgroundPopView.hidden = YES;
+            listPopView.top =-listPopView.height;
             lastSelected.selected = NO;
         }
         
-        lastSelected = sender;
-        backgroundPopView.hidden = NO;
         [UIView animateWithDuration:0.3 animations:^{
             listPopView.top = 0;
         } completion:^(BOOL finished) {
-            
+            lastSelected = sender;
         }];
     }
     [sender setSelected:!sender.selected];
@@ -398,9 +445,9 @@
 {
     _destCity = destCity.cid;
     NSString *name = destCity.name;
-    if (destCity.name.length>5) {
-        name = [destCity.name substringWithRange:NSMakeRange(0, 5)];
-    }
+//    if (destCity.name.length>5) {
+//        name = [destCity.name substringWithRange:NSMakeRange(0, 5)];
+//    }
 
     [self refreshBtnToSelectedValue:name];
 }
@@ -409,7 +456,7 @@
 {
     [lastSelected setTitle:value forState:UIControlStateNormal];
     [lastSelected setSelected:NO];
-    [lastSelected setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
+    //[lastSelected setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
     lastSelected = nil;
     [UIView animateWithDuration:0.3 animations:^{
         listPopView.top -= listPopView.height;

@@ -112,6 +112,7 @@
 		04CEE1861AB18DEC00895DCF /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CEE1851AB18DEC00895DCF /* Security.framework */; };
 		04CEE1881AB18E0600895DCF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CEE1871AB18E0600895DCF /* SystemConfiguration.framework */; };
 		04CEE18A1AB18E1300895DCF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CEE1891AB18E1300895DCF /* CFNetwork.framework */; };
+		04CF6D0D1AB982E3006B1C23 /* SLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF6D0C1AB982E2006B1C23 /* SLButton.m */; };
 		04E8C0931A80A31800145FF0 /* Feedback.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C0921A80A31800145FF0 /* Feedback.m */; };
 		04EA26A61A77804600CCB35E /* MyOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA26A51A77804600CCB35E /* MyOrder.m */; };
 		04EA26A91A7780BD00CCB35E /* LeaderScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA26A81A7780BD00CCB35E /* LeaderScore.m */; };
@@ -354,6 +355,8 @@
 		04CEE1851AB18DEC00895DCF /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		04CEE1871AB18E0600895DCF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		04CEE1891AB18E1300895DCF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		04CF6D0B1AB982E2006B1C23 /* SLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLButton.h; sourceTree = "<group>"; };
+		04CF6D0C1AB982E2006B1C23 /* SLButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLButton.m; sourceTree = "<group>"; };
 		04E8C0911A80A31800145FF0 /* Feedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feedback.h; sourceTree = "<group>"; };
 		04E8C0921A80A31800145FF0 /* Feedback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feedback.m; sourceTree = "<group>"; };
 		04EA26A41A77804600CCB35E /* MyOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrder.h; sourceTree = "<group>"; };
@@ -464,7 +467,6 @@
 		04F4D7421AB03C7E001E5861 /* ActivityDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailCell.m; sourceTree = "<group>"; };
 		04FBF45E1A79EC7F004A0A74 /* CityList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityList.h; sourceTree = "<group>"; };
 		04FBF45F1A79EC7F004A0A74 /* CityList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityList.m; sourceTree = "<group>"; };
-		04FBF46A1A7A0D39004A0A74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		04FBF46B1A7A0D39004A0A74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		04FBF46C1A7A320B004A0A74 /* ActivityDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetail.h; sourceTree = "<group>"; };
 		04FBF46D1A7A320B004A0A74 /* ActivityDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetail.m; sourceTree = "<group>"; };
@@ -581,6 +583,8 @@
 				041CC4BD1AA4407A0079088C /* ConfirmToPayment.m */,
 				0431D5FC1AA9989100221AA3 /* SegmentControllerViewController.h */,
 				0431D5FD1AA9989100221AA3 /* SegmentControllerViewController.m */,
+				04CF6D0B1AB982E2006B1C23 /* SLButton.h */,
+				04CF6D0C1AB982E2006B1C23 /* SLButton.m */,
 			);
 			path = GoOutPlay;
 			sourceTree = "<group>";
@@ -1467,6 +1471,7 @@
 				04EA26A91A7780BD00CCB35E /* LeaderScore.m in Sources */,
 				0408F6CD1A9EEF6000C04961 /* HMSegmentedControl.m in Sources */,
 				0451FAE31A8B520700529EEC /* LocationHelper.m in Sources */,
+				04CF6D0D1AB982E3006B1C23 /* SLButton.m in Sources */,
 				0431D5F61AA984FA00221AA3 /* LeaderDetailCell.m in Sources */,
 				0431D5F21AA8349900221AA3 /* PayTypeCell.m in Sources */,
 				048337CA1A7F50BA00E2F889 /* BaseViewWithSeparateLine.m in Sources */,
@@ -1497,7 +1502,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				04C2B1F91A65163E004E8F73 /* Base */,
-				04FBF46A1A7A0D39004A0A74 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1596,8 +1600,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Lei Tang (7P67LPBG62)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lei Tang (7P67LPBG62)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/AliPaySDK",
@@ -1621,7 +1625,7 @@
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/GeTui",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "194de9ca-c5b5-44dc-9c20-4a332c8a84ec";
+				PROVISIONING_PROFILE = "86a867a1-2187-4591-b8ae-4a9d0f0feb74";
 			};
 			name = Debug;
 		};
@@ -1631,8 +1635,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Lei Tang (7P67LPBG62)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lei Tang (7P67LPBG62)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/AliPaySDK",
@@ -1656,7 +1660,7 @@
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/GeTui",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "194de9ca-c5b5-44dc-9c20-4a332c8a84ec";
+				PROVISIONING_PROFILE = "86a867a1-2187-4591-b8ae-4a9d0f0feb74";
 			};
 			name = Release;
 		};

@@ -340,7 +340,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 -(void)drawRect:(CGRect)rect
 {
     CALayer *verticalDividerLayer = [CALayer layer];
-    verticalDividerLayer.frame = CGRectMake(SCREEN_WIDTH - 100, 10, 1, 50);
+    verticalDividerLayer.frame = CGRectMake(SCREEN_WIDTH - 120, 10, 1, 50);
     verticalDividerLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
     [self.layer addSublayer:verticalDividerLayer];
     
@@ -357,8 +357,10 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 -(TTTAttributedLabel *)titleLabel
 {
     if (!_titleLabel) {
-        _titleLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(15, 10, SCREEN_WIDTH - 100 - 15*2, 44)];
+        _titleLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(15, 10, SCREEN_WIDTH - 120 - 15*2, 44)];
         _titleLabel.lineSpacing = 5.0;
+        _titleLabel.textColor = [UIColor darkGrayColor];
+        _titleLabel.font = [UIFont systemFontOfSize:14.0];
         _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _titleLabel.numberOfLines = 0;
         _titleLabel.centerY = self.height/2;
@@ -369,8 +371,10 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 -(TTTAttributedLabel *)priceLabel
 {
     if (!_priceLabel) {
-        _priceLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 90 - 10, 0, 90, 30)];
+        _priceLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 110 - 10, 0, 110, 30)];
         _priceLabel.centerY = self.height/2;
+        _priceLabel.textColor = [UIColor darkGrayColor];
+        _priceLabel.font = [UIFont systemFontOfSize:12.0];
         _priceLabel.textAlignment = NSTextAlignmentRight;
     }
     return _priceLabel;
@@ -379,7 +383,20 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 -(void)setDataInViews:(ActivityDetailModel *)model
 {
     self.titleLabel.text = model.title;
-    self.priceLabel.text = model.price;
+    NSString *text = [NSString stringWithFormat:@"%@元/人",model.price];
+    [self.priceLabel setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange fontRange = [[mutableAttributedString string] rangeOfString:model.price options:NSCaseInsensitiveSearch];
+        // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+        UIFont *boldSystemFont = [UIFont boldSystemFontOfSize:18];
+        CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+        if (font) {
+            [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:fontRange];
+            [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(__bridge id)[[UIColor orangeColor] CGColor] range:fontRange];
+            CFRelease(font);
+        }
+        
+        return mutableAttributedString;
+    }];
     
     [self setNeedsDisplay];
 }
