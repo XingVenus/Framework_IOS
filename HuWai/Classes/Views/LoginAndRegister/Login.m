@@ -20,12 +20,22 @@
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *xiciLoginBtn;
+@property (weak, nonatomic) IBOutlet UIButton *weixinLoginBtn;
+@property (weak, nonatomic) IBOutlet UIButton *qqLoginBtn;
 @end
 
 @implementation Login
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.xiciLoginBtn.layer.cornerRadius = 25;
+    self.xiciLoginBtn.layer.masksToBounds = YES;
+    self.weixinLoginBtn.layer.cornerRadius = 25;
+    self.weixinLoginBtn.layer.masksToBounds = YES;
+    self.qqLoginBtn.layer.cornerRadius = 25;
+    self.qqLoginBtn.layer.masksToBounds = YES;
     //下划线设置
     [self.forgetPasswordButton underSingleLineWithTitle];
     //注册下划线
@@ -54,10 +64,11 @@
     }
     if (errorStr) {
         [self showMessageWithThreeSecondAtCenter:errorStr];
+    }else{
+        [self postActionWithHUD:UserEntryAction params:@"phone",_phoneStr,@"password",_pwdStr,nil];
     }
 
 //    [self loadAction:GettokenAction params:nil];
-    [self postActionWithHUD:UserEntryAction params:@"phone",_phoneStr,@"password",_pwdStr,nil];
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
@@ -78,7 +89,7 @@
         [CacheBox saveCache:CACHE_USER_PHONE value:_phoneStr];
         [CacheBox saveCache:CACHE_USER_PASSWORD value:_pwdStr];
         
-        [self dismissLoginVC];
+        [self dismissNavigationView:YES];
     }
 
 }
@@ -90,8 +101,4 @@
     // Pass the selected object to the new view controller.
 }
 
--(void)dismissLoginVC
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 @end

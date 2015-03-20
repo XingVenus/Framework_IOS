@@ -94,6 +94,7 @@
 		04A5395A1A84B2B9006BA09D /* ActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A539591A84B2B9006BA09D /* ActivityModel.m */; };
 		04A5395D1A84B3B4006BA09D /* SubscribeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A5395C1A84B3B4006BA09D /* SubscribeModel.m */; };
 		04B09FA81A89EC260077394C /* UITextField+CursorRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B09FA71A89EC260077394C /* UITextField+CursorRange.m */; };
+		04BE943F1ABBFC9B00223F5C /* Loginxici.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BE943E1ABBFC9B00223F5C /* Loginxici.m */; };
 		04BE95AE1AB2A4B50084E055 /* libGexinSdk-1.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BE95AD1AB2A4B50084E055 /* libGexinSdk-1.1.1.a */; };
 		04BE95B21AB2E9010084E055 /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BE95B11AB2E9010084E055 /* LKBadgeView.m */; };
 		04BE95B51AB2E98D0084E055 /* UIView+XHBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BE95B41AB2E98D0084E055 /* UIView+XHBadgeView.m */; };
@@ -324,6 +325,8 @@
 		04A5395C1A84B3B4006BA09D /* SubscribeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeModel.m; sourceTree = "<group>"; };
 		04B09FA61A89EC260077394C /* UITextField+CursorRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+CursorRange.h"; sourceTree = "<group>"; };
 		04B09FA71A89EC260077394C /* UITextField+CursorRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+CursorRange.m"; sourceTree = "<group>"; };
+		04BE943D1ABBFC9B00223F5C /* Loginxici.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loginxici.h; sourceTree = "<group>"; };
+		04BE943E1ABBFC9B00223F5C /* Loginxici.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loginxici.m; sourceTree = "<group>"; };
 		04BE95AB1AB2A4B50084E055 /* GexinSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GexinSdk.h; sourceTree = "<group>"; };
 		04BE95AC1AB2A4B50084E055 /* GXSdkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXSdkError.h; sourceTree = "<group>"; };
 		04BE95AD1AB2A4B50084E055 /* libGexinSdk-1.1.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGexinSdk-1.1.1.a"; sourceTree = "<group>"; };
@@ -602,6 +605,8 @@
 				048E97FA1A723313003697D1 /* ResetPassword.m */,
 				042390071AAEF00200D60CD7 /* LaunchView.h */,
 				042390081AAEF00200D60CD7 /* LaunchView.m */,
+				04BE943D1ABBFC9B00223F5C /* Loginxici.h */,
+				04BE943E1ABBFC9B00223F5C /* Loginxici.m */,
 			);
 			path = LoginAndRegister;
 			sourceTree = "<group>";
@@ -1419,6 +1424,7 @@
 				042B3F7E1A66792A000E896D /* UIView+SimplifyExtend.m in Sources */,
 				04F4D7431AB03C7E001E5861 /* ActivityDetailCell.m in Sources */,
 				04F4D73D1AB02F42001E5861 /* NSDataEx.m in Sources */,
+				04BE943F1ABBFC9B00223F5C /* Loginxici.m in Sources */,
 				043F6AEA1A76487700EEA0B3 /* MessageList.m in Sources */,
 				044C6BA01A88AA94000BF100 /* UIScrollView+MJExtension.m in Sources */,
 				04FBF4601A79EC7F004A0A74 /* CityList.m in Sources */,

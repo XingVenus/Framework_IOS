@@ -86,9 +86,9 @@ NSDictionary *argsTpMap(id firstObject,...)
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)dismissNavigationView:(id)sender
+-(void)dismissNavigationView:(BOOL)animated
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:animated completion:nil];
 }
 #pragma mark - 消息提示
 -(void)showMessageWithThreeSecondAtCenter:(NSString *)message

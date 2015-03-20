@@ -51,7 +51,7 @@
         }else{
             self.dataSource = [NSMutableArray arrayWithArray:listmodel.data];
         }
-        self.maxPage = listmodel.pager.pagemax;
+        self.maxPage = listmodel.pager.pagemax;//当前列表最大页数
         [self.tableView reloadData];
     }else if (tag == ScoreNewAction){
         [self loadActionWithHUD:ScoreListAction params:@"page",@1,@"pagesize",[NSNumber numberWithInteger:self.pageSize*self.currentPage],nil];

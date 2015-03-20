@@ -111,6 +111,15 @@
     }
     return NO;
 }
+
+-(void)endHeaderOrFooterRefreshing
+{
+    if (self.tableView.headerRefreshing) {
+        [self.tableView headerEndRefreshing];
+    }else if(self.tableView.footerRefreshing){
+        [self.tableView footerEndRefreshing];
+    }
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -196,9 +205,11 @@
 #pragma mark alert delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
-        if (self.didChangeLocationCityBlock) {
-            self.didChangeLocationCityBlock();
+    if (self.didChangeLocationCityBlock) {
+        if (buttonIndex == 1) {
+            self.didChangeLocationCityBlock(YES);
+        }else{
+            self.didChangeLocationCityBlock(NO);
         }
     }
 }

@@ -60,10 +60,10 @@
     [backView addSubview:imageview];
     if ([CacheBox getCache:CACHE_TOKEN]) {
         //显示头像以及名称
-        PAAImageView *avatar = [[PAAImageView alloc] initWithFrame:CGRectMake(20, 0, 55, 55) backgroundProgressColor:[UIColor whiteColor] progressColor:[UIColor grayColor]];
+        PAAImageView *avatar = [[PAAImageView alloc] initWithFrame:CGRectMake(20, 0, 55, 55) backgroundProgressColor:[UIColor whiteColor] progressColor:[UIColor whiteColor]];
         avatar.centerY = backView.height/2;
         avatar.placeHolderImage = [UIImage imageNamed:@"avatar"];
-        //            [avatar setImageURL:[CacheBox getCache:CACHE_TOKEN]];
+        [avatar setImageURL:[NSURL URLWithString:[APPInfo shareInit].avatar]];
         [backView addSubview:avatar];
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 0, 120, 30)];
         nameLabel.textColor = [UIColor whiteColor];

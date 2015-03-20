@@ -39,7 +39,7 @@
 
 -(NSMutableDictionary *)argsToMap:(va_list)args firstObj:(id)firstObj;
 -(IBAction)popToLastView:(id)sender;
--(IBAction)dismissNavigationView:(id)sender;
+-(IBAction)dismissNavigationView:(BOOL)animated;
 
 //-----custom method to use
 -(NSString *)genderToString:(NSInteger)gender;

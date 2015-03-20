@@ -180,6 +180,16 @@
             uristring = MessageList_Uri;
             break;
         }
+        case LoginXiciAction:
+        {
+            uristring = LoginXici_Uri;
+            break;
+        }
+        case LoginPerfectinfoAction:
+        {
+            uristring = LoginPerfectinfo_Uri;
+            break;
+        }
         default:
             break;
     }

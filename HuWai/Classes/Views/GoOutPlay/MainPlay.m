@@ -71,6 +71,7 @@ const static NSInteger kTabHeight = 40;
     if (NSFoundationVersionNumber>NSFoundationVersionNumber_iOS_6_1) {
         self.edgesForExtendedLayout = UIRectEdgeNone;//貌似是可有可无
     }
+    //////////////////==============================================
     WEAKSELF;
     timeArray = @[@"全部",@"1日行程",@"2日行程",@"3日行程",@"4-7日行程",@"7日以上"];
     playArray = @[@"全部",@"徒步",@"摄影",@"登山",@"露营",@"越野",@"溯溪",@"攀冰",@"骑行",@"潜水",@"自驾",@"滑雪",@"漂流",@"其他"];
@@ -83,6 +84,7 @@ const static NSInteger kTabHeight = 40;
     // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
     [self.tableView addFooterWithCallback:^{
         if (![weakSelf checkIsLastPage]) {
+            weakSelf.currentPage++;
             [weakSelf loadDataSource];
         }
     }];
@@ -194,14 +196,16 @@ const static NSInteger kTabHeight = 40;
                 NSDictionary *addressDictionary = placemark.addressDictionary;
                 NSString  *City = addressDictionary[@"City"];
                 [APPInfo shareInit].GPSCity = addressDictionary[@"City"];
-                [self alertChangeLocationCity:City didChangeCityBlock:^{
-                    [CacheBox saveCache:LOCATION_CITY_NAME value:City];
-                    [locationBtn setTitle:City forState:UIControlStateNormal];
-//                    [self.tableView headerBeginRefreshing];
-                    self.currentPage = 1;
-                    [self loadDataSource];
-                }];
-
+                //如果有原定位城市需要提示用户切换，否则直接设置为当前定位城市
+                if ([CacheBox getCache:LOCATION_CITY_NAME]) {
+                    [self alertChangeLocationCity:City didChangeCityBlock:^(BOOL exchange) {
+                        if (exchange) {
+                            [weakSelf locateCurrentCity:City];
+                        }
+                    }];
+                }else{
+                    [weakSelf locateCurrentCity:City];
+                }
             }
         }else{
             //显示上次缓存的城市
@@ -259,10 +263,10 @@ const static NSInteger kTabHeight = 40;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UserRegistrationNotification object:nil];
 }
-#pragma mark 刷新数据
+#pragma mark 加载数据
 -(void)loadDataSource
 {
-    [self loadActionWithHUD:ActivityAction params:@"from",[CacheBox getCache:LOCATION_CITY_NAME],@"city",_destCity,@"time",_time,@"play",_play,@"page",[NSNumber numberWithInteger:self.currentPage],@"pagesize",[NSNumber numberWithInteger:PageSize],nil];
+    [self loadAction:ActivityAction params:@"from",[CacheBox getCache:LOCATION_CITY_NAME],@"city",_destCity,@"time",_time,@"play",_play,@"page",@(self.currentPage),@"pagesize",@(self.pageSize),nil];
 }
 #pragma mark - data response block
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
@@ -279,6 +283,7 @@ const static NSInteger kTabHeight = 40;
         }else{
             self.dataSource = [NSMutableArray arrayWithArray:model.data];
         }
+        self.maxPage = model.pager.pagemax;
         [self.tableView reloadData];
     }else if (tag == DestinationAction){
         DestinationCityModel *desModel = [[DestinationCityModel alloc] initWithJsonDict:response.data];
@@ -289,12 +294,8 @@ const static NSInteger kTabHeight = 40;
         self.hideShowMessage = YES;
     }
 
+    [self endHeaderOrFooterRefreshing];
     
-    if (self.tableView.headerRefreshing) {
-        [self.tableView headerEndRefreshing];
-    }else{
-        [self.tableView footerEndRefreshing];
-    }
 }
 -(void)onRequestFailed:(HttpRequestAction)tag response:(Response *)response
 {
@@ -307,6 +308,14 @@ const static NSInteger kTabHeight = 40;
 }
 
 #pragma mark - method implement
+#pragma mark 定位当前城市
+- (void)locateCurrentCity:(NSString *)city
+{
+    [CacheBox saveCache:LOCATION_CITY_NAME value:city];
+    [locationBtn setTitle:city forState:UIControlStateNormal];
+    self.currentPage = 1;
+    [self loadDataSource];
+}
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     if ([NSStringFromClass(touch.view.class) isEqualToString:@"UITableViewCellContentView"]) {
@@ -433,18 +442,38 @@ const static NSInteger kTabHeight = 40;
 -(void)selectedValueForListType:(ListType)listType Value:(NSString *)value
 {
     //隐藏
+    NSString *showValue = @"";
     if (listType == ListTypeTime) {
-        _time = value;
+        if ([value isEqualToString:@"全部"]) {
+            _time = @"";
+            showValue = @"行程";
+        }else{
+            _time = value;
+            showValue = value;
+        }
     }else if (listType == ListTypePlay){
-        _play = value;
+        if ([value isEqualToString:@"全部"]) {
+            _play = @"";
+            showValue = @"玩法";
+        }else{
+            _play = value;
+            showValue = value;
+        }
     }
-    [self refreshBtnToSelectedValue:value];
+    [self refreshBtnToSelectedValue:showValue];
 }
 #pragma mark 目的城市选择
 -(void)selectedDestCity:(DestCityInfo *)destCity
 {
-    _destCity = destCity.cid;
-    NSString *name = destCity.name;
+    NSString *name;
+    if ([destCity.cid intValue] == 0) {
+        _destCity = @"";
+        name = @"目的地";
+    }else{
+        _destCity = destCity.cid;
+        name = destCity.name;
+    }
+
 //    if (destCity.name.length>5) {
 //        name = [destCity.name substringWithRange:NSMakeRange(0, 5)];
 //    }
@@ -456,15 +485,14 @@ const static NSInteger kTabHeight = 40;
 {
     [lastSelected setTitle:value forState:UIControlStateNormal];
     [lastSelected setSelected:NO];
-    //[lastSelected setTitlePositionWithType:ButtonTitlePostionTypeLeft withSpacing:5];
-    lastSelected = nil;
+    
     [UIView animateWithDuration:0.3 animations:^{
         listPopView.top -= listPopView.height;
-    } completion:^(BOOL finished) {
         backgroundPopView.hidden = YES;
+    } completion:^(BOOL finished) {
+        lastSelected = nil;
     }];
     //数据过滤
-//    [self.tableView headerBeginRefreshing];
     self.currentPage = 1;
     [self loadDataSource];
 }

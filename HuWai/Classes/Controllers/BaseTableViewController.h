@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "MJRefresh.h"
-typedef void(^DidChangeLocationCityBlock)();
+typedef void(^DidChangeLocationCityBlock)(BOOL exchange);
 
 @interface BaseTableViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource>
 /**
@@ -57,6 +57,12 @@ typedef void(^DidChangeLocationCityBlock)();
 
 //custom method for this app
 - (void)alertChangeLocationCity:(NSString *)cityName didChangeCityBlock:(DidChangeLocationCityBlock)changeBlock;
-
+/**
+ *  check is last page
+ */
 - (BOOL)checkIsLastPage;
+/**
+ *  end the refreshing action(header or footer)
+ */
+- (void)endHeaderOrFooterRefreshing;
 @end

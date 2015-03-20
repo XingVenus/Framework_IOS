@@ -42,6 +42,8 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
     ActivityReplyAction,    //活动内容 回复
     AppRegistrationAction,  //客户端消息组件注册
     MessageListAction,      //我的消息 列表
+    LoginXiciAction,        //西祠用户登录
+    LoginPerfectinfoAction  //完善信息xici 、qq
 };
 
 
@@ -49,7 +51,9 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
 //我的
 #define MessageList_Uri     @"/v1/message/list"     //我的消息 列表 get
 #define UserRegister_Uri    @"/v1/register"
-#define UserEntry_Uri       @"/v1/login/entry"
+#define UserEntry_Uri       @"/v1/login/entry"      //用户登录
+#define LoginXici_Uri       @"/v1/login/xici"       //西祠用户登录-
+#define LoginPerfectinfo_Uri    @"/v1/login/perfectinfo" //用户登录-完善信息
 #define SendSms_Uri         @"/v1/notification/sms"
 #define SmsToken_Uri        @"/v1/notification/sms/:smsToken"
 #define Gettoken_Uri        @"/v1/login/gettoken"

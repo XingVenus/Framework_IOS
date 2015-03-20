@@ -10,10 +10,11 @@
 
 @interface APPInfo : NSObject
 
+@property (nonatomic, strong) NSString *avatar;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *create_time;
-@property (nonatomic, strong) NSString *tel;
+@property (nonatomic, strong) NSString *phone;
 @property (nonatomic, strong) NSString *uid;
 @property (nonatomic, strong) NSString *star;
 @property (nonatomic, strong) NSString *role_id;

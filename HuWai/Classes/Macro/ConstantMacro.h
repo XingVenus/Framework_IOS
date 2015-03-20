@@ -36,6 +36,7 @@
 #define CACHE_USER_INFO     @"CACHE_USER_INFO"
 
 //----用户信息缓存字段
+#define USER_AVATAR         @"USER_AVATAR"
 #define USERNAME_CACHE      @"USERNAME_CACHE"
 #define EMAIL_CACHE         @"EMAIL_CACHE"
 #define CREATETIME_CACHE    @"CREATETIME_CACHE"
