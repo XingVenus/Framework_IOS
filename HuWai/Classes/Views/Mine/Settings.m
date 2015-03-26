@@ -52,7 +52,7 @@
     if (_loginOrOutBtn.selected) {
         [CacheBox removeObjectValue:CACHE_TOKEN];
     }
-    UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
+    BaseNavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
     [self presentViewController:loginNav animated:YES completion:nil];
 }
 

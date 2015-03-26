@@ -38,7 +38,7 @@
 
 -(void)loadDataSource
 {
-    [self loadActionWithHUD:ScoreListAction params:@"page",[NSNumber numberWithInteger:self.currentPage],@"pagesize",[NSNumber numberWithInteger:self.pageSize],nil];
+    [self loadActionWithHUD:ScoreListAction params:@"page",@(self.currentPage),@"pagesize",@(self.pageSize),nil];
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
@@ -54,7 +54,7 @@
         self.maxPage = listmodel.pager.pagemax;//当前列表最大页数
         [self.tableView reloadData];
     }else if (tag == ScoreNewAction){
-        [self loadActionWithHUD:ScoreListAction params:@"page",@1,@"pagesize",[NSNumber numberWithInteger:self.pageSize*self.currentPage],nil];
+        [self loadActionWithHUD:ScoreListAction params:@"page",@1,@"pagesize",@(self.pageSize*self.currentPage),nil];
     }
 }
 /*

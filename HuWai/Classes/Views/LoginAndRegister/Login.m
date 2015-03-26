@@ -30,11 +30,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.xiciLoginBtn.layer.cornerRadius = 25;
+    self.xiciLoginBtn.layer.cornerRadius = 48/2;
     self.xiciLoginBtn.layer.masksToBounds = YES;
-    self.weixinLoginBtn.layer.cornerRadius = 25;
+    self.weixinLoginBtn.layer.cornerRadius = 48/2;
     self.weixinLoginBtn.layer.masksToBounds = YES;
-    self.qqLoginBtn.layer.cornerRadius = 25;
+    self.qqLoginBtn.layer.cornerRadius = 48/2;
     self.qqLoginBtn.layer.masksToBounds = YES;
     //下划线设置
     [self.forgetPasswordButton underSingleLineWithTitle];

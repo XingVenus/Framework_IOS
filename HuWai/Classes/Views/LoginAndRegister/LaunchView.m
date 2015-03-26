@@ -40,10 +40,10 @@
     NSInteger pages = imgArray.count;
     for (int i = 0; i < pages; i++) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.scrollView.bounds) * i, 0, CGRectGetWidth(self.scrollView.bounds), CGRectGetHeight(self.scrollView.bounds))];
-        view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+        view.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
         
         UIImageView *bgImgView = [[UIImageView alloc] initWithFrame:self.scrollView.bounds];
-        bgImgView.contentMode = UIViewContentModeScaleAspectFit;
+//        bgImgView.contentMode = UIViewContentModeScaleAspectFit;
         bgImgView.tag = i;
         bgImgView.userInteractionEnabled = YES;
         //对UIImageView添加点击响应

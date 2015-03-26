@@ -18,6 +18,7 @@
     [self.contentView addSubview:self.describeLabel];
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.subTitleLabel];
+    [self.contentView addSubview:self.activityIcon];
     [self.contentView addSubview:self.selectLabel1];
     [self.contentView addSubview:self.selectLabel2];
     [self.contentView addSubview:self.starControl1];
@@ -93,13 +94,25 @@
     return _subTitleLabel;
 }
 
+
+-(UIImageView *)activityIcon
+{
+    if (!_activityIcon) {
+        _activityIcon = [[UIImageView alloc] initWithFrame:CGRectMake(15, 50, 50, 50)];
+        _activityIcon.contentMode = UIViewContentModeScaleAspectFill;
+        _activityIcon.clipsToBounds = YES;
+    }
+    return _activityIcon;
+}
+
 -(TTTAttributedLabel *)describeLabel
 {
     if (!_describeLabel) {
-        _describeLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(15, 50, SCREEN_WIDTH - 15*2, 45)];
+        _describeLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(75, 50, SCREEN_WIDTH - 15 - 75, 50)];
         _describeLabel.backgroundColor = [UIColor clearColor];
-        _describeLabel.lineSpacing = 5;
+        _describeLabel.lineSpacing = 3;
         _describeLabel.numberOfLines = 0;
+        _describeLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
         _describeLabel.font = [UIFont systemFontOfSize:14.0];
         _describeLabel.textColor = [UIColor darkGrayColor];
     }
@@ -184,6 +197,7 @@
     ScoreInfo *data = (ScoreInfo *)item;
     self.scoreButton.tag = indexPath.row;
     self.subTitleLabel.text = [NSString stringWithFormat:@"领队:%@",data.leader];
+    [self.activityIcon sd_setImageWithURL:[NSURL URLWithString:data.image] placeholderImage:nil];
     self.describeLabel.text = data.title;
     self.starControl1.rating = data.accuracyRate;
     self.starControl2.rating = data.satisfiedRate;

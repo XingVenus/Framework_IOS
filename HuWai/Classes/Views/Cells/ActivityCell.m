@@ -120,6 +120,7 @@
 
     [self setNeedsDisplay];
     [self.contentView setNeedsDisplay];
+
 }
 
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath

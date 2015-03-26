@@ -40,9 +40,9 @@
     if (!_topLayer) {
         _topLayer = [CALayer layer];
         _topLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
+        _topLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
         [self.contentView.layer addSublayer:_topLayer];
     }
-    _topLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
     if (!_bottomLayer) {
         _bottomLayer = [CALayer layer];
         _bottomLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;

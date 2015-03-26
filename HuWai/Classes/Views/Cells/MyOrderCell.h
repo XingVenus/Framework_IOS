@@ -25,4 +25,8 @@
 @property (nonatomic, strong) UIButton *cancelBtn;
 @property (nonatomic, strong) UIButton *paymentBtn;
 
+@property (nonatomic, strong) UIImageView *activityImage;
+@property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UILabel *totalLabel;
+
 @end

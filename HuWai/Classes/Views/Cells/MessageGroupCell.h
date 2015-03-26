@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "BaseTableViewCell.h"
 
-@interface MessageListCell : BaseTableViewCell
+@interface MessageGroupCell : BaseTableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (nonatomic, weak) IBOutlet TTTAttributedLabel *describeLabel;
-
 
 @end

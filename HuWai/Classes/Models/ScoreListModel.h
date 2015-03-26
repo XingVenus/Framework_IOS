@@ -22,6 +22,8 @@ JProperty(NSString *leader, leader);
 JProperty(NSString *score, score);
 JProperty(NSString *status, status);
 JProperty(NSString *title, title);
+JProperty(NSString *time, time);
+JProperty(NSString *image, image);
 @property(nonatomic) CGFloat  accuracyRate;
 @property(nonatomic) CGFloat  satisfiedRate;
 @end

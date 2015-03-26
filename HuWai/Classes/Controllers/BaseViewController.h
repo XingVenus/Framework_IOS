@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MBProgressHUD/MBProgressHUD.h>
+#import "BaseNavigationController.h"
 #import "ApiServer.h"
 #import "BlankView.h"
 

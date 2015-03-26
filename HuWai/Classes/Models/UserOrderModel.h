@@ -28,4 +28,6 @@ JProperty(NSString *leader_username, leader_username);
 JProperty(NSString *insurance, insurance);
 JProperty(NSString *insurance_price, insurance_price);
 JProperty(NSString *insurance_num, insurance_num);
+JProperty(NSString *image, image);
+JProperty(NSString *time, time);
 @end

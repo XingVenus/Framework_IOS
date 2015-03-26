@@ -321,9 +321,12 @@ NSDictionary *argsTpMap(id firstObject,...)
         [self showMessageWithThreeSecondAtCenter:response.error.localizedDescription];
         return;
     }else if (response.code == 50002){
-        UINavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
+        BaseNavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
         //        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:loginNav animated:YES completion:nil];
-        [self.navigationController presentViewController:loginNav animated:YES completion:nil];
+        [self.navigationController presentViewController:loginNav animated:YES completion:^{
+            //监听登录，完成登录刷新页面
+
+        }];
         return;
     }else if ((response.code == 40000) ||(response.code == 40001)){
         DLog(@"%@",response);

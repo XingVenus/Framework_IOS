@@ -24,6 +24,7 @@
 //    [self.contentView addSubview:self.hasScoreBackView];
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.subTitleLabel];
+    [self.contentView addSubview:self.imageScore];
     [self.contentView addSubview:self.describeLabel];
     [self.contentView addSubview:self.scoreLabel];
     
@@ -58,10 +59,10 @@
 -(UILabel *)titleLabel
 {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 21)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 140, 21)];
         _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
-        _titleLabel.text = @"已打分";
+        _titleLabel.font = [UIFont systemFontOfSize:14.0];
+        _titleLabel.textColor = [UIColor lightGrayColor];
     }
     return _titleLabel;
 }
@@ -74,18 +75,28 @@
         _subTitleLabel.textAlignment = NSTextAlignmentRight;
         _subTitleLabel.font = [UIFont systemFontOfSize:14.0];
         _subTitleLabel.textColor = [UIColor lightGrayColor];
-        
     }
     return _subTitleLabel;
+}
+
+-(UIImageView *)imageScore
+{
+    if (!_imageScore) {
+        _imageScore = [[UIImageView alloc] initWithFrame:CGRectMake(15, 50, 50, 50)];
+        _imageScore.contentMode = UIViewContentModeScaleAspectFill;
+        _imageScore.clipsToBounds = YES;
+    }
+    return _imageScore;
 }
 
 -(TTTAttributedLabel *)describeLabel
 {
     if (!_describeLabel) {
-        _describeLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(15, 50, SCREEN_WIDTH - 100, 50)];
+        _describeLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(75, 50, SCREEN_WIDTH - 75 - 60, 50)];
         _describeLabel.backgroundColor = [UIColor clearColor];
         _describeLabel.lineSpacing = 6;
         _describeLabel.numberOfLines = 0;
+        _describeLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
         _describeLabel.font = [UIFont systemFontOfSize:14.0];
         _describeLabel.textColor = [UIColor darkGrayColor];
     }
@@ -95,7 +106,7 @@
 -(TTTAttributedLabel *)scoreLabel
 {
     if (!_scoreLabel) {
-        _scoreLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, 0, 60, 30)];
+        _scoreLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, 0, 50, 30)];
         _scoreLabel.textColor = [UIColor darkGrayColor];
         _scoreLabel.font = [UIFont systemFontOfSize:14.0];
         _scoreLabel.centerY = CGRectGetMidY(self.describeLabel.frame);
@@ -106,7 +117,9 @@
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
 {
     ScoreInfo *data = (ScoreInfo *)item;
+    self.titleLabel.text = data.time;
     self.subTitleLabel.text = [NSString stringWithFormat:@"领队:%@",data.leader];
+    [self.imageScore sd_setImageWithURL:[NSURL URLWithString:data.image] placeholderImage:nil];
     self.describeLabel.text = data.title;
     NSString *scoreString = [NSString stringWithFormat:@"%@分",data.score];
     [self.scoreLabel setText:scoreString afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {

@@ -7,7 +7,7 @@
 //
 
 #import "MessageList.h"
-#import "MessageListCell.h"
+#import "MessageGroupCell.h"
 #import "UserMessageModel.h"
 #import "NSString+RectSize.h"
 
@@ -23,7 +23,7 @@
     // Do any additional setup after loading the view.
     WEAKSELF;
     [self.tableView addFooterWithCallback:^{
-        weakSelf.currentPage = weakSelf.currentPage + 1;
+        weakSelf.currentPage ++;
         [weakSelf loadDataSource];
     }];
     
@@ -79,7 +79,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"messagelistcell";
-    MessageListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    MessageGroupCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     MessageInfo *info = self.dataSource[indexPath.row];

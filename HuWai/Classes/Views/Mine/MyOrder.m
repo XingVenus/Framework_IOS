@@ -53,9 +53,12 @@
     } dateKey:@"myorderlist"];
     // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
     [self.tableView addFooterWithCallback:^{
-        weakSelf.currentPage = weakSelf.currentPage+1;
-        [weakSelf loadDataSource];
+        if (![self checkIsLastPage]) {
+            weakSelf.currentPage ++;
+            [weakSelf loadDataSource];
+        }
     }];
+    //加载页面数据
     [self loadDataSource];
     // Do any additional setup after loading the view.
 }
@@ -111,6 +114,7 @@
             self.currentPage = 1;
             self.dataSource = [NSMutableArray arrayWithArray:orderModel.data];
         }
+        self.maxPage = orderModel.pager.pagemax;
         [self.tableView reloadData];
     }else if (tag == OrderCancelAction){
         [self loadDataSource];
@@ -164,14 +168,14 @@
     OrderInfo *info = self.dataSource[indexPath.row];
     if (self.statusType == OrderStatusWating) {
         if (info.insurance) {
-            return 210.0;
+            return 210.0+40;
         }
-        return 150.0;
+        return 150.0+40;
     }else{
         if (info.insurance) {
-            return 165.0;
+            return 165.0+40;
         }
-        return 105.0;
+        return 105.0+40;
     }
 }
 

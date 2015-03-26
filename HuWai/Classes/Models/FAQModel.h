@@ -22,6 +22,7 @@ JProperty(NSString *fid, id);
 JProperty(NSString *avatar, avatar);
 JProperty(NSString *username, username);
 JProperty(NSString *time, time);
+JProperty(NSString *content, content);
 JProperty(NSString *reply, reply);
 JProperty(NSString *reply_time, reply_time);
 @end

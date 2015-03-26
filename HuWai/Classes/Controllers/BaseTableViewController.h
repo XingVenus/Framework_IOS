@@ -35,7 +35,7 @@ typedef void(^DidChangeLocationCityBlock)(BOOL exchange);
  */
 @property (nonatomic, assign) NSInteger maxPage;
 /**
- *  每页的数量
+ *  每页的数量:默认10
  */
 @property (nonatomic, assign) NSInteger pageSize;
 /**

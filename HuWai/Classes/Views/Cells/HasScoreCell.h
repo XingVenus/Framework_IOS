@@ -18,5 +18,5 @@
 @property (nonatomic, strong) UILabel *subTitleLabel;
 @property (nonatomic, strong) TTTAttributedLabel *describeLabel;
 @property (nonatomic, strong) TTTAttributedLabel *scoreLabel;
-
+@property (nonatomic, strong) UIImageView *imageScore;
 @end

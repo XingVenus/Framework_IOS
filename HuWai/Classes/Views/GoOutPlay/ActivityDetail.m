@@ -15,6 +15,8 @@
 
 #import "LeaderDetailCell.h"
 #import "ActivityDetailCell.h"
+#import "FAQ.h"
+#import "FAQCell.h"
 
 static inline NSRegularExpression * NumbersRegularExpression() {
     static NSRegularExpression *_regularExpression = nil;
@@ -26,18 +28,20 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     return _regularExpression;
 }
 
-@interface ActivityDetail ()
+@interface ActivityDetail ()<FAQDelegate>
 {
     TitleAndPriceView *titleAndPrice;
     UIButton *favoriteBtn;
     UIButton *shareBtn;
     ActivityDetailModel *detailModel;
     FAQModel *faqModel; //问答数据模型
+    FAQ *faqController; //问答视图
 }
 
 @property (nonatomic, strong) MaskedPageView *maskPageView;
 //@property (nonatomic, strong) RTLabel *titleLabel;//标题label
 @property (nonatomic, weak) IBOutlet TTTAttributedLabel *overdueLabel;//倒计时label
+@property (nonatomic, strong) UIButton *faqBtn;   //问答提问按钮
 
 @property (nonatomic, strong) HMSegmentedControl *segmentControl;
 @property (weak, nonatomic) IBOutlet UIButton *signupBtn;
@@ -51,13 +55,13 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //图片列表
     UIView *headerView = [[UIView alloc] init];
-    self.maskPageView = [[MaskedPageView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, SCREEN_WIDTH/1.7)];
+    self.maskPageView = [[MaskedPageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH/1.7)];
 
     titleAndPrice = [[TitleAndPriceView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.maskPageView.frame)+10, SCREEN_WIDTH, 70)];
     titleAndPrice.backgroundColor = [UIColor whiteColor];
     [headerView addSubview:self.maskPageView];
     [headerView addSubview:titleAndPrice];
-    headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, CGRectGetHeight(self.maskPageView.frame)+70+30);
+    headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, CGRectGetHeight(self.maskPageView.frame)+70+20);
     self.tableView.tableHeaderView = headerView;
     
     [self loadActionWithHUD:ActivityDetailAction message:@"正在加载..." params:@"id",self.activityId,nil];
@@ -77,9 +81,18 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     UIBarButtonItem *r2 = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
     self.navigationItem.rightBarButtonItems = @[r2,r1];
     // Do any additional setup after loading the view.
+    //问答按钮
+    self.faqBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.faqBtn.frame = CGRectMake(SCREEN_WIDTH - 70, SCREEN_HEIGHT - 120, 50, 50);
+    [self.faqBtn setImage:[UIImage imageNamed:@"quiz"] forState:UIControlStateNormal];
+    [self.faqBtn addTarget:self action:@selector(openFaqView:) forControlEvents:UIControlEventTouchUpInside];
+    self.faqBtn.hidden = YES;
+    [self.view addSubview:self.faqBtn];
+    //获取问答列表数据
     [self loadFAQList];
 }
 
+#pragma mark 获取问答列表数据
 -(void)loadFAQList
 {
     [self loadAction:ActivityFAQAction params:@"id",self.activityId,nil];
@@ -100,6 +113,9 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     }else if (tag == ActivityFAQAction){
         self.hideShowMessage = YES;
         faqModel = [[FAQModel alloc] initWithJsonDict:response.data];
+        if (_segmentControl.selectedSegmentIndex == 2) {
+            [self.tableView reloadData];
+        }
     }else if (tag == RssAddAction){
         
     }
@@ -119,11 +135,22 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"enroll"]) {
-        UINavigationController *enrollNavController = segue.destinationViewController;
+        BaseNavigationController *enrollNavController = segue.destinationViewController;
         Enroll *enrollView = (Enroll *)enrollNavController.topViewController;
         enrollView.activityID = self.activityId;
+    }else if ([segue.identifier isEqualToString:@"faq"]){
+        faqController = segue.destinationViewController;
+        faqController.delegate = self;
+        faqController.actID = self.activityId;
     }
 }
+
+#pragma mark faq delegate
+-(void)didSubmitFAQ
+{
+    [self loadFAQList];
+}
+
 #pragma mark - custom methon implement
 -(void)favoriteAction:(UIButton *)sender
 {
@@ -160,6 +187,12 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         [self.signupBtn setEnabled:NO];
     }
 
+}
+
+#pragma mark 打开问答页面
+-(void)openFaqView:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:@"faq" sender:self];
 }
 
 #pragma mark -
@@ -255,7 +288,11 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         WEAKSELF;
         [_segmentControl setIndexChangeBlock:^(NSInteger index) {
             DLog(@"selected index is:%d",(int)index);
-            //            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            if (index == 2) {
+                weakSelf.faqBtn.hidden = NO;
+            }else{
+                weakSelf.faqBtn.hidden = YES;
+            }
             [weakSelf.tableView reloadData];
         }];
     }
@@ -280,15 +317,21 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (detailModel) {
+    if (_segmentControl.selectedSegmentIndex !=2 && detailModel) {
         return 1;
+    }else if(faqModel.data.count>0 && _segmentControl.selectedSegmentIndex == 2){
+        return faqModel.data.count;
     }
     return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 400.0;
+    if (_segmentControl.selectedSegmentIndex == 2) {
+        return [FAQCell heightForCellWithText:faqModel.data[indexPath.row] availableWidth:0];
+    }else{
+        return 400.0;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -308,15 +351,24 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         }
         [cell configureCellWithItem:detailModel.leader atIndexPath:indexPath];
         return cell;
-    }else{
-        
-        static NSString *identity = @"detailCell";
+    }else if(_segmentControl.selectedSegmentIndex == 2){
+        static NSString *identity = @"faqlistCell";
+        FAQCell *cell = [tableView dequeueReusableCellWithIdentifier:identity];
+        if (!cell) {
+            cell = [[FAQCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        [cell configureCellWithItem:faqModel.data[indexPath.row] atIndexPath:indexPath];
+        return cell;
+    }else if (_segmentControl.selectedSegmentIndex == 3){
+        static NSString *identity = @"declareCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identity];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
         }
         return cell;
     }
+    return nil;
 }
 @end
 

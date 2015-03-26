@@ -19,6 +19,8 @@
 //@property (nonatomic, strong) ScoreCellView *scoreBackView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *subTitleLabel;
+
+@property (nonatomic, strong) UIImageView *activityIcon;
 @property (nonatomic, strong) TTTAttributedLabel *describeLabel;
 
 @property (nonatomic, strong) UILabel *selectLabel1;

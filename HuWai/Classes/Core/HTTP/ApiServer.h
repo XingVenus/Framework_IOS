@@ -43,12 +43,15 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
     AppRegistrationAction,  //客户端消息组件注册
     MessageListAction,      //我的消息 列表
     LoginXiciAction,        //西祠用户登录
-    LoginPerfectinfoAction  //完善信息xici 、qq
+    LoginPerfectinfoAction, //完善信息xici 、qq
+    MessageGroupAction,     //我的消息 分组
+    FeedbackAction,         //意见反馈
 };
 
 
 #define AppRegistration_Uri @"/v1/app/registration" //客户端消息组件注册
 //我的
+#define MessageGroup_Uri    @"/v1/message/group"    //我的消息 分组 get
 #define MessageList_Uri     @"/v1/message/list"     //我的消息 列表 get
 #define UserRegister_Uri    @"/v1/register"
 #define UserEntry_Uri       @"/v1/login/entry"      //用户登录
@@ -73,6 +76,9 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
 #define OrderMy_Uri         @"/v1/order/my"         //我的订单 get
 #define ScoreList_Uri       @"/v1/score/list"   //领队打分 已（待）打分列表 get
 #define ScoreNew_Uri        @"/v1/score/new"    //领队打分 评分
+
+#define Feedback_Uri        @"/v1/feedback"     //意见反馈
+
 //活动
 #define Activity_Uri        @"/v1/activity/list"
 #define Hotcity_Uri         @"/v1/region/hotcity"

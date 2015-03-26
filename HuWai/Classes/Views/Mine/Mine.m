@@ -8,6 +8,10 @@
 
 #import "Mine.h"
 #import "PAAImageView.h"
+#import "Login.h"
+#import "Register.h"
+
+#import "JSBadgeView.h"
 
 @interface Mine ()
 {
@@ -32,7 +36,7 @@
     NSDictionary *dic6 = @{@"icon":@"setup",@"title":@"系统设置"};
     [_arrayCells addObject:@[dic5,dic6]];
     
-    [self initHeaderView];
+    
 //    self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
 //    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     // Uncomment the following line to preserve selection between presentations.
@@ -42,6 +46,12 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self initHeaderView];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -49,16 +59,17 @@
 
 -(void)initHeaderView
 {
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120)];
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToProfile:)];
-    singleTap.numberOfTapsRequired = 1;
-    [backView addGestureRecognizer:singleTap];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 86)];//106
     
     backView.backgroundColor = APP_BACKGROUND_COLOR;
-    UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"head-img"]];
-    imageview.frame = CGRectMake(0, 10, SCREEN_WIDTH, 100);
+    UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"head-bg"]];
+    imageview.frame = CGRectMake(0, 0, SCREEN_WIDTH, 86);
     [backView addSubview:imageview];
     if ([CacheBox getCache:CACHE_TOKEN]) {
+        //添加触摸手势
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToProfile:)];
+        singleTap.numberOfTapsRequired = 1;
+        [backView addGestureRecognizer:singleTap];
         //显示头像以及名称
         PAAImageView *avatar = [[PAAImageView alloc] initWithFrame:CGRectMake(20, 0, 55, 55) backgroundProgressColor:[UIColor whiteColor] progressColor:[UIColor whiteColor]];
         avatar.centerY = backView.height/2;
@@ -79,7 +90,34 @@
         [backView addSubview:nameLabel];
     }else{
         //提示语以及登录按钮
+        UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 100, 24)];
+        textLabel.centerX = backView.centerX;
+        textLabel.text = @"您还没有登录";
+        textLabel.textAlignment = NSTextAlignmentCenter;
+        textLabel.font = [UIFont systemFontOfSize:16.0];
+        textLabel.textColor = [UIColor whiteColor];
+        [backView addSubview:textLabel];
+        UIButton *lgBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        lgBtn.tag = 1;
+        [lgBtn setTitle:@"登录" forState:UIControlStateNormal];
+        lgBtn.frame = CGRectMake(SCREEN_WIDTH/2-80, 40, 60, 28);
+        lgBtn.layer.cornerRadius = 3.0;
+        lgBtn.layer.borderWidth = 1.0;
+        lgBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+        lgBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        [lgBtn addTarget:self action:@selector(loginOrRegister:) forControlEvents:UIControlEventTouchUpInside];
+        [backView addSubview:lgBtn];
         
+        UIButton *regBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        regBtn.tag = 2;
+        [regBtn setTitle:@"注册" forState:UIControlStateNormal];
+        regBtn.frame = CGRectMake(SCREEN_WIDTH/2+80 - 60, 40, 60, 28);
+        regBtn.layer.cornerRadius = 3.0;
+        regBtn.layer.borderWidth = 1.0;
+        regBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+        regBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        [regBtn addTarget:self action:@selector(loginOrRegister:) forControlEvents:UIControlEventTouchUpInside];
+        [backView addSubview:regBtn];
     }
     self.tableView.tableHeaderView = backView;
 }
@@ -87,6 +125,18 @@
 -(void)tapToProfile:(UITapGestureRecognizer*)recognizer
 {
     [self performSegueWithIdentifier:@"profile" sender:self];
+}
+
+- (void)loginOrRegister:(UIButton *)sender
+{
+    BaseNavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
+    if (sender.tag == 1) {
+        [self presentViewController:loginNav animated:YES completion:nil];
+    }else if (sender.tag == 2){
+        [self presentViewController:loginNav animated:YES completion:^{
+            [loginNav.topViewController performSegueWithIdentifier:@"userRegister" sender:loginNav];
+        }];
+    }
 }
 #pragma mark - Table view data source
 
@@ -115,7 +165,14 @@
     UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier2 forIndexPath:indexPath];
     cell2.imageView.image = [UIImage imageNamed:dic[@"icon"]];
     cell2.textLabel.text = dic[@"title"];
-        return cell2;
+    if (row == 1) {
+        JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:cell2.contentView alignment:JSBadgeViewAlignmentCenterLeft];
+        badgeView.badgeText = @"new";
+        badgeView.badgePositionAdjustment = CGPointMake(150, 0);
+    }
+    
+    return cell2;
+    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -144,7 +201,7 @@
             break;
         case 2:
             if (row == 0) {
-                [self performSegueWithIdentifier:@"messagelist" sender:self];
+                [self performSegueWithIdentifier:@"messagegroup" sender:self];
             }else if (row == 1){
                 [self performSegueWithIdentifier:@"settings" sender:self];
                 break;

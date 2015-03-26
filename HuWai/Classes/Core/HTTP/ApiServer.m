@@ -190,6 +190,16 @@
             uristring = LoginPerfectinfo_Uri;
             break;
         }
+        case MessageGroupAction:
+        {
+            uristring = MessageGroup_Uri;
+            break;
+        }
+        case FeedbackAction:
+        {
+            uristring = Feedback_Uri;
+            break;
+        }
         default:
             break;
     }
