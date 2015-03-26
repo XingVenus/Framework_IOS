@@ -70,7 +70,7 @@
 
 -(void)loadDataSource
 {
-    [self loadActionWithHUD:OrderMyAction params:@"type",statusArray[self.statusType],@"page",[NSString stringWithInteger:self.currentPage],@"pagesize",@"10",nil];
+    [self loadActionWithHUD:OrderMyAction params:@"type",statusArray[self.statusType],@"page",@(self.currentPage),@"pagesize",@(self.pageSize),nil];
 }
 #pragma mark - custom method 
 #pragma mark 取消支付

@@ -10,7 +10,14 @@
 #import "MessageGroupModel.h"
 #import "MessageGroupCell.h"
 
-@interface MessageGroup ()
+#import "CommentList.h"
+#import "NoticeList.h"
+
+@interface MessageGroup ()<CommentListDelegate, NoticeListDelegate>
+{
+    CommentList *comment;
+    NoticeList *notice;
+}
 
 @end
 
@@ -26,6 +33,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)dealloc
+{
+    comment.delegate = nil;
+    notice.delegate = nil;
 }
 
 -(void)loadDataSource
@@ -49,9 +62,41 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    
+    if ([segue.identifier isEqualToString:@"commentlist"]) {
+        comment = segue.destinationViewController;
+        if (!comment.delegate) {
+            comment.delegate = self;
+        }
+    }else if ([segue.identifier isEqualToString:@"noticelist"]){
+        notice = segue.destinationViewController;
+        if (!notice.delegate) {
+            notice.delegate = self;
+        }
+    }
 }
 
+#pragma mark delegate method
+-(void)didGetCommentList
+{
+    [self.dataSource enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        GroupInfo *info = (GroupInfo *)obj;
+        if ([info.type isEqualToString:@"comment"]) {
+            info.num = @"0";
+        }
+    }];
+    [self.tableView reloadData];
+}
+
+-(void)didGetNoticeList
+{
+    [self.dataSource enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        GroupInfo *info = (GroupInfo *)obj;
+        if ([info.type isEqualToString:@"notice"]) {
+            info.num = @"0";
+        }
+    }];
+    [self.tableView reloadData];
+}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

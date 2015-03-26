@@ -21,11 +21,12 @@
     [super viewDidLoad];
     WEAKSELF;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self loadActionWithHUD:FavoriteListAction params:nil];
-    
+    [self loadDataSource];
     [self.tableView addFooterWithCallback:^{
-        self.currentPage = self.currentPage + 1;
-        [weakSelf loadActionWithHUD:FavoriteListAction params:@"page",[NSString stringWithInteger:self.currentPage],nil];
+        if (![self checkIsLastPage]) {
+            weakSelf.currentPage ++;
+            [weakSelf loadDataSource];
+        }
     }];
     // Do any additional setup after loading the view.
 }
@@ -34,8 +35,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
+#pragma mark 数据请求
+-(void)loadDataSource
+{
+    [self loadActionWithHUD:FavoriteListAction params:@"page",@(self.currentPage),@"pagesize",@(self.pageSize),nil];
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -70,10 +74,9 @@
                 self.blankView.textTitle = @"您还未收藏任何活动";
                 self.blankView.imageIcon = [UIImage imageNamed:@"expression-wu"];
                 self.blankView.hidden = NO;
-            }else{
-                [self.tableView footerEndRefreshing];
             }
         }
+        self.maxPage = aModel.pager.pagemax;
     }
 
 }

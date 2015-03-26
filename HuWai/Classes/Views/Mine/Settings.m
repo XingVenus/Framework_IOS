@@ -12,6 +12,7 @@
 {
     NSArray *_settingList;
     UIButton *_loginOrOutBtn;
+    UISwitch *switchBtn;
 }
 
 @end
@@ -35,6 +36,12 @@
     [footerview addSubview:_loginOrOutBtn];
     
     self.tableView.tableFooterView = footerview;
+    
+
+    [[[SDWebImageManager sharedManager] imageCache] calculateSizeWithCompletionBlock:^(NSUInteger fileCount, NSUInteger totalSize) {
+        DLog(@"total:%lu,Size:%lu",(unsigned long)fileCount,(unsigned long)totalSize);
+    }];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -78,13 +85,19 @@
     static NSString *cellIdentifier = @"settingcell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
-    if (section == 0 && row == 0) {
-        UISwitch *switchBtn = [[UISwitch alloc] init];
-        switchBtn.center = CGPointMake(SCREEN_WIDTH - 45, cell.centerY);
-        [switchBtn addTarget:self action:@selector(oneSwitchValueChanged:) forControlEvents:UIControlEventValueChanged]; // 添加事件监听器的方法
-        [cell addSubview:switchBtn];
+    if (section == 0) {
+        if (row == 0) {
+            if (!switchBtn) {
+                switchBtn = [[UISwitch alloc] init];
+                switchBtn.center = CGPointMake(SCREEN_WIDTH - 40, cell.centerY);
+                [switchBtn addTarget:self action:@selector(oneSwitchValueChanged:) forControlEvents:UIControlEventValueChanged]; // 添加事件监听器的方法
+                [cell addSubview:switchBtn];
+            }
+        }else if (row == 1){
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%.1fM",(float)([[SDImageCache sharedImageCache] getSize]/1024.0/1024.0)];
+        }
     }
     cell.textLabel.text = _settingList[section][row];
     return cell;
@@ -100,6 +113,10 @@
         {
             if (row == 1) {
                 //清除图片缓存
+                [[[SDWebImageManager sharedManager] imageCache] clearDisk];
+                [[[SDWebImageManager sharedManager] imageCache] clearMemory];
+                [self showMessageWithThreeSecondAtCenter:@"清理完成"];
+                [self.tableView reloadData];
             }
         }
             break;

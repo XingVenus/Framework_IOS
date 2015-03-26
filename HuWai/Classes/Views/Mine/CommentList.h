@@ -8,6 +8,14 @@
 
 #import "BaseTableViewController.h"
 
+@protocol CommentListDelegate <NSObject>
+
+@optional
+-(void)didGetCommentList;
+
+@end
+
 @interface CommentList : BaseTableViewController
 
+@property(nonatomic, strong) id<CommentListDelegate> delegate;
 @end

@@ -28,8 +28,10 @@ const static NSInteger kTabHeight = 40;
 {
     NavView *navigationView;
     SelectListView *listPopView;
+    CityList *clist;
     
     LocationHelper *_locationHelper;
+
     UIView *backgroundPopView;
     NSMutableArray *destinationArray;
     NSArray *timeArray;
@@ -261,12 +263,14 @@ const static NSInteger kTabHeight = 40;
 */
 -(void)dealloc
 {
+    listPopView.delegate = nil;
+    clist.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UserRegistrationNotification object:nil];
 }
 #pragma mark 加载数据
 -(void)loadDataSource
 {
-    [self loadAction:ActivityAction params:@"from",[CacheBox getCache:LOCATION_CITY_NAME],@"city",_destCity,@"time",_time,@"play",_play,@"page",@(self.currentPage),@"pagesize",@(self.pageSize),nil];
+    [self loadAction:ActivityAction params:@"from",_fromCity?_fromCity:[CacheBox getCache:LOCATION_CITY_NAME],@"city",_destCity,@"time",_time,@"play",_play,@"page",@(self.currentPage),@"pagesize",@(self.pageSize),nil];
 }
 #pragma mark - data response block
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
@@ -311,6 +315,7 @@ const static NSInteger kTabHeight = 40;
 #pragma mark 定位当前城市
 - (void)locateCurrentCity:(NSString *)city
 {
+    _fromCity = city;
     [CacheBox saveCache:LOCATION_CITY_NAME value:city];
     [locationBtn setTitle:city forState:UIControlStateNormal];
     self.currentPage = 1;
@@ -509,7 +514,7 @@ const static NSInteger kTabHeight = 40;
         activityController.activityId = infoModel.aid;
         activityController.detailTitle = @"活动详情";
     }else if([segue.identifier isEqualToString:@"citylist"]){
-        CityList *clist = segue.destinationViewController;
+        clist = segue.destinationViewController;
         clist.delegate = self;
     }
 }

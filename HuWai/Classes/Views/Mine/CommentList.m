@@ -47,8 +47,12 @@
             [self.dataSource addObjectsFromArray:comment.data];
         }else{
             self.dataSource = [comment.data mutableCopy];
+            if (_delegate && [_delegate respondsToSelector:@selector(didGetCommentList)]) {
+                [_delegate didGetCommentList];
+            }
         }
         [self.tableView reloadData];
+        
     }
 }
 /*

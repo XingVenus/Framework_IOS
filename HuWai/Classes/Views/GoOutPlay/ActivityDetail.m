@@ -127,7 +127,10 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     // Dispose of any resources that can be recreated.
 }
 
-
+-(void)dealloc
+{
+    faqController.delegate = nil;
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

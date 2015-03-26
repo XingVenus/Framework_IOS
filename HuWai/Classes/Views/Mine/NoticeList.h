@@ -8,6 +8,14 @@
 
 #import "BaseTableViewController.h"
 
+@protocol NoticeListDelegate <NSObject>
+
+@optional
+-(void)didGetNoticeList;
+@end
+
 @interface NoticeList : BaseTableViewController
+
+@property(nonatomic, strong) id<NoticeListDelegate> delegate;
 
 @end

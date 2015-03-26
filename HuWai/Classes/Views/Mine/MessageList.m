@@ -37,7 +37,7 @@
 
 -(void)loadDataSource
 {
-    [self loadAction:MessageListAction params:@"page",[NSNumber numberWithInteger:self.currentPage],@"pagesize",@"10",nil];
+    [self loadAction:MessageListAction params:@"page",@(self.currentPage),@"pagesize",@(self.pageSize),nil];
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response

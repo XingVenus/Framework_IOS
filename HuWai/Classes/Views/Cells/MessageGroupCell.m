@@ -11,10 +11,14 @@
 #import "JSBadgeView.h"
 
 @implementation MessageGroupCell
+{
+    JSBadgeView *badgeView;
+}
 
 
 - (void)awakeFromNib {
     // Initialization code
+    badgeView = [[JSBadgeView alloc] initWithParentView:self.iconImage alignment:JSBadgeViewAlignmentTopRight];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -42,9 +46,10 @@
     }else{
         self.iconImage.image = [UIImage imageNamed:@"news"];
     }
-    if (info.num.intValue) {
-        JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:self.iconImage alignment:JSBadgeViewAlignmentTopRight];
+    if (info.num.intValue>0) {
         badgeView.badgeText = [NSString stringWithFormat:@"%d",info.num.intValue];
+    }else{
+        badgeView.badgeText = nil;
     }
     self.titleLabel.text = info.title;
     self.dateLabel.text = info.time;

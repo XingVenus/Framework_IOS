@@ -23,8 +23,10 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self loadDataSource];
     [self.tableView addFooterWithCallback:^{
-        weakSelf.currentPage = weakSelf.currentPage + 1;
-        [weakSelf loadDataSource];
+        if (![self checkIsLastPage]) {
+            weakSelf.currentPage ++;
+            [weakSelf loadDataSource];
+        }
     }];
     // Do any additional setup after loading the view.
 }
@@ -36,7 +38,7 @@
 
 -(void)loadDataSource
 {
-    [self loadActionWithHUD:RssListAction params:@"page",[NSString stringWithInteger:self.currentPage],@"pagesize",@"10",nil];
+    [self loadActionWithHUD:RssListAction params:@"page",@(self.currentPage),@"pagesize",@(self.pageSize),nil];
 }
 #pragma mark - request data response
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
@@ -57,11 +59,8 @@
                 self.blankView.imageIcon = [UIImage imageNamed:@"expression-wu"];
                 self.blankView.hidden = NO;
             }
-            if (self.tableView.isFooterRefreshing) {
-                [self showMessageWithThreeSecondAtCenter:@"没有更多数据了"];
-                [self.tableView footerEndRefreshing];
-            }
         }
+        self.maxPage = aModel.pager.pagemax;
     }
 }
 

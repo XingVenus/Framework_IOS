@@ -47,6 +47,9 @@
             [self.dataSource addObjectsFromArray:notice.data];
         }else{
             self.dataSource = [notice.data mutableCopy];
+            if (_delegate && [_delegate respondsToSelector:@selector(didGetNoticeList)]) {
+                [_delegate didGetNoticeList];
+            }
         }
         [self.tableView reloadData];
         
