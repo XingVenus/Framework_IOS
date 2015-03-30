@@ -53,6 +53,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = [UIColor whiteColor];
     //图片列表
     UIView *headerView = [[UIView alloc] init];
     self.maskPageView = [[MaskedPageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH/1.7)];
@@ -63,8 +64,6 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     [headerView addSubview:titleAndPrice];
     headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, CGRectGetHeight(self.maskPageView.frame)+70+20);
     self.tableView.tableHeaderView = headerView;
-    
-    [self loadActionWithHUD:ActivityDetailAction message:@"正在加载..." params:@"id",self.activityId,nil];
     
     //收藏按钮
     favoriteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -88,8 +87,15 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     [self.faqBtn addTarget:self action:@selector(openFaqView:) forControlEvents:UIControlEventTouchUpInside];
     self.faqBtn.hidden = YES;
     [self.view addSubview:self.faqBtn];
+    //加载页面数据
+    [self loadDataSource];
     //获取问答列表数据
     [self loadFAQList];
+}
+
+-(void)loadDataSource
+{
+    [self loadActionWithHUD:ActivityDetailAction message:@"正在加载..." params:@"id",self.activityId,nil];
 }
 
 #pragma mark 获取问答列表数据
@@ -320,17 +326,18 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_segmentControl.selectedSegmentIndex !=2 && detailModel) {
-        return 1;
-    }else if(faqModel.data.count>0 && _segmentControl.selectedSegmentIndex == 2){
+    
+    if(faqModel.data.count>0 && _segmentControl.selectedSegmentIndex == 2){
         return faqModel.data.count;
+    }else if (_segmentControl.selectedSegmentIndex != 2 && detailModel) {
+        return 1;
     }
     return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_segmentControl.selectedSegmentIndex == 2) {
+    if (_segmentControl.selectedSegmentIndex == 2 && faqModel.data.count>0) {
         return [FAQCell heightForCellWithText:faqModel.data[indexPath.row] availableWidth:0];
     }else{
         return 400.0;

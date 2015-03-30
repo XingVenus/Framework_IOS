@@ -13,4 +13,6 @@
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *activityTimeLabel;
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *playLabel;
 
+@property (nonatomic, strong) RTLabel *contentLabel;
+
 @end

@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.avatar sd_setImageWithURL:[NSURL URLWithString:[APPInfo shareInit].avatar] placeholderImage:[UIImage imageNamed:@"avatar"]];
     // Do any additional setup after loading the view.
 }
 

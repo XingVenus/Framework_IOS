@@ -142,6 +142,8 @@
 		04F4D73F1AB02F42001E5861 /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F4D7311AB02F42001E5861 /* RSADataSigner.m */; };
 		04F4D7401AB02F42001E5861 /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F4D7331AB02F42001E5861 /* RSADataVerifier.m */; };
 		04F4D7431AB03C7E001E5861 /* ActivityDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F4D7421AB03C7E001E5861 /* ActivityDetailCell.m */; };
+		04F7176A1AC4FD0200664F43 /* About.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F717691AC4FD0200664F43 /* About.m */; };
+		04F7176D1AC4FD4F00664F43 /* Agreement.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F7176C1AC4FD4F00664F43 /* Agreement.m */; };
 		04FBF4601A79EC7F004A0A74 /* CityList.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FBF45F1A79EC7F004A0A74 /* CityList.m */; };
 		04FBF46E1A7A320B004A0A74 /* ActivityDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FBF46D1A7A320B004A0A74 /* ActivityDetail.m */; };
 		04FBF4711A7A3F0A004A0A74 /* SelectListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FBF4701A7A3F0A004A0A74 /* SelectListView.m */; };
@@ -498,6 +500,10 @@
 		04F4D7331AB02F42001E5861 /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
 		04F4D7411AB03C7E001E5861 /* ActivityDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailCell.h; sourceTree = "<group>"; };
 		04F4D7421AB03C7E001E5861 /* ActivityDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailCell.m; sourceTree = "<group>"; };
+		04F717681AC4FD0200664F43 /* About.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = About.h; sourceTree = "<group>"; };
+		04F717691AC4FD0200664F43 /* About.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = About.m; sourceTree = "<group>"; };
+		04F7176B1AC4FD4F00664F43 /* Agreement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Agreement.h; sourceTree = "<group>"; };
+		04F7176C1AC4FD4F00664F43 /* Agreement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Agreement.m; sourceTree = "<group>"; };
 		04FBF45E1A79EC7F004A0A74 /* CityList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityList.h; sourceTree = "<group>"; };
 		04FBF45F1A79EC7F004A0A74 /* CityList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityList.m; sourceTree = "<group>"; };
 		04FBF46B1A7A0D39004A0A74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -685,6 +691,10 @@
 				04C677FA1AC0FF53001A56CA /* CommentList.m */,
 				04C677FC1AC0FF67001A56CA /* NoticeList.h */,
 				04C677FD1AC0FF67001A56CA /* NoticeList.m */,
+				04F717681AC4FD0200664F43 /* About.h */,
+				04F717691AC4FD0200664F43 /* About.m */,
+				04F7176B1AC4FD4F00664F43 /* Agreement.h */,
+				04F7176C1AC4FD4F00664F43 /* Agreement.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -1473,6 +1483,7 @@
 				04C678051AC10901001A56CA /* NoticeCell.m in Sources */,
 				041CC4CB1AA57F5D0079088C /* TTTAttributedLabel.m in Sources */,
 				04C677FB1AC0FF53001A56CA /* CommentList.m in Sources */,
+				04F7176A1AC4FD0200664F43 /* About.m in Sources */,
 				04C2B1F41A65163E004E8F73 /* AppDelegate.m in Sources */,
 				04605F3A1A6E4B52004EBB2D /* UIButton+ButtonUtility.m in Sources */,
 				048337DD1A807AA200E2F889 /* BaseTableViewCell.m in Sources */,
@@ -1553,6 +1564,7 @@
 				042B3F731A666C8B000E896D /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */,
 				04A5394E1A84AB27006BA09D /* UserMessageModel.m in Sources */,
 				043F5C561A691B0D0009D939 /* NSString+RectSize.m in Sources */,
+				04F7176D1AC4FD4F00664F43 /* Agreement.m in Sources */,
 				0408F6DA1AA0783800C04961 /* FMDBFactory.m in Sources */,
 				040862821AC007BA00A90433 /* MessageGroupModel.m in Sources */,
 				0420D1561A9DB6D400F22C3E /* MaskedPageView.m in Sources */,

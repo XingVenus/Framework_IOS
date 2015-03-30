@@ -117,6 +117,9 @@
                 [[[SDWebImageManager sharedManager] imageCache] clearMemory];
                 [self showMessageWithThreeSecondAtCenter:@"清理完成"];
                 [self.tableView reloadData];
+                /*不过这里要特别注意一下，在IOS7中你会发现使用这两个方法缓存总清除不干净，即使断网下还是会有数据。这是因为在IOS7中，缓存机制做了修改，使用上述两个方法只清除了SDWebImage的缓存，没有清除系统的缓存，所以我们可以在清除缓存的代理中额外添加以下：
+                 */
+                //[[NSURLCache sharedURLCache] removeAllCachedResponses];
             }
         }
             break;

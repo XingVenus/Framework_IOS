@@ -60,6 +60,12 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.imageView.image = nil;
+    self.imageView.hidden = YES;
+    self.textLabel.text = nil;
+    self.textLabel.hidden = YES;
+    self.detailTextLabel.text = nil;
+    self.detailTextLabel.hidden = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

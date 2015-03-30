@@ -212,7 +212,7 @@
                                             <outlet property="subscribeActivityBtn" destination="CRC-Ly-omf" id="bSC-la-oeL"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="activitydetailcell" id="eG8-Nh-VXu" customClass="ActivityDetailCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="activitydetailcell" rowHeight="140" id="eG8-Nh-VXu" customClass="ActivityDetailCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eG8-Nh-VXu" id="NSD-Oh-SqW">
@@ -295,7 +295,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZV-x4-c2V" customClass="TTTAttributedLabel">
                                         <rect key="frame" x="15" y="5" width="150" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="LgY-C0-jMW"/>
+                                            <constraint firstAttribute="height" constant="50" id="TbZ-Gz-aIE"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -304,8 +304,8 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kfz-AQ-TY2">
                                         <rect key="frame" x="175" y="8" width="127" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="ASy-BD-Ct4"/>
-                                            <constraint firstAttribute="width" constant="127" id="ht7-7n-lWz"/>
+                                            <constraint firstAttribute="width" constant="127" id="aZ4-7R-ziU"/>
+                                            <constraint firstAttribute="height" constant="44" id="tO7-2A-YXt"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <state key="normal" title="我要报名" backgroundImage="signup">
@@ -320,12 +320,12 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="ZZV-x4-c2V" secondAttribute="trailing" constant="155" id="497-Em-6yg"/>
-                                    <constraint firstItem="ZZV-x4-c2V" firstAttribute="leading" secondItem="i5Q-Jg-RBY" secondAttribute="leading" constant="15" id="7g5-h5-QzU"/>
-                                    <constraint firstItem="kfz-AQ-TY2" firstAttribute="top" secondItem="i5Q-Jg-RBY" secondAttribute="top" constant="8" id="FLg-9r-UAE"/>
-                                    <constraint firstAttribute="height" constant="60" id="On8-2X-eYi"/>
-                                    <constraint firstAttribute="trailing" secondItem="kfz-AQ-TY2" secondAttribute="trailing" constant="18" id="hbm-Sh-e2f"/>
-                                    <constraint firstAttribute="bottom" secondItem="ZZV-x4-c2V" secondAttribute="bottom" constant="5" id="nyo-dK-VKl"/>
+                                    <constraint firstAttribute="trailing" secondItem="kfz-AQ-TY2" secondAttribute="trailing" constant="18" id="RGy-NH-t8J"/>
+                                    <constraint firstItem="ZZV-x4-c2V" firstAttribute="trailing" secondItem="kfz-AQ-TY2" secondAttribute="trailing" constant="-137" id="YoD-Cx-8yl"/>
+                                    <constraint firstAttribute="height" constant="60" id="dxn-yk-G3A"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZZV-x4-c2V" secondAttribute="bottom" constant="5" id="ll6-S3-jdo"/>
+                                    <constraint firstItem="ZZV-x4-c2V" firstAttribute="leading" secondItem="i5Q-Jg-RBY" secondAttribute="leading" constant="15" id="pFH-Qn-guy"/>
+                                    <constraint firstAttribute="bottom" secondItem="kfz-AQ-TY2" secondAttribute="bottom" constant="8" id="qJj-Ua-VcD"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -334,9 +334,9 @@
                             <constraint firstItem="nFU-LR-wue" firstAttribute="top" secondItem="y8m-Hi-hLt" secondAttribute="bottom" constant="63" id="68g-SB-TZi"/>
                             <constraint firstItem="y8m-Hi-hLt" firstAttribute="leading" secondItem="Eq0-cu-D1F" secondAttribute="leading" id="HcZ-vQ-hZD"/>
                             <constraint firstItem="y8m-Hi-hLt" firstAttribute="top" secondItem="Eq0-cu-D1F" secondAttribute="top" id="R7R-VO-WFW"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="i5Q-Jg-RBY" secondAttribute="trailing" constant="-16" id="YPB-tx-ycu"/>
-                            <constraint firstItem="i5Q-Jg-RBY" firstAttribute="leading" secondItem="Eq0-cu-D1F" secondAttribute="leadingMargin" constant="-16" id="nTt-Bq-f2M"/>
-                            <constraint firstItem="nFU-LR-wue" firstAttribute="top" secondItem="i5Q-Jg-RBY" secondAttribute="bottom" id="u6D-Dr-jjh"/>
+                            <constraint firstItem="i5Q-Jg-RBY" firstAttribute="leading" secondItem="Eq0-cu-D1F" secondAttribute="leadingMargin" constant="-16" id="dhF-M2-sat"/>
+                            <constraint firstItem="nFU-LR-wue" firstAttribute="top" secondItem="i5Q-Jg-RBY" secondAttribute="bottom" id="iLn-2W-0s9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="i5Q-Jg-RBY" secondAttribute="trailing" constant="-16" id="ohM-ni-SiK"/>
                             <constraint firstAttribute="trailing" secondItem="y8m-Hi-hLt" secondAttribute="trailing" id="xPX-du-qhB"/>
                         </constraints>
                     </view>
@@ -1072,7 +1072,13 @@
                             <constraint firstItem="cz1-MZ-nEK" firstAttribute="top" secondItem="ePZ-Uo-ZH8" secondAttribute="top" id="hME-0J-ggL"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="活动召集地" id="STL-iz-i3s"/>
+                    <navigationItem key="navigationItem" title="活动召集地" id="STL-iz-i3s">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="cpe-y4-4bV">
+                            <connections>
+                                <action selector="popToLastView:" destination="HCc-zo-pb2" id="DOg-pu-M9Y"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="cz1-MZ-nEK" id="cKy-7M-Zqs"/>
                     </connections>
@@ -1464,6 +1470,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="忘记密码" id="bx6-RU-YLs">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="Lh2-FW-Be2">
+                            <connections>
+                                <action selector="popToLastView:" destination="E4m-yv-FMB" id="P3s-vN-Ixl"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="下一步" id="smx-af-S96">
                             <connections>
                                 <action selector="toResetPassword:" destination="E4m-yv-FMB" id="7pj-qB-72w"/>
@@ -1574,7 +1585,13 @@
                             <constraint firstItem="gNg-88-nMK" firstAttribute="centerX" secondItem="Mkd-UA-ZPQ" secondAttribute="centerX" id="zZH-KF-QOe"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="新密码" id="RWJ-ET-jzN"/>
+                    <navigationItem key="navigationItem" title="新密码" id="RWJ-ET-jzN">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="d7f-PV-lvi">
+                            <connections>
+                                <action selector="popToLastView:" destination="sYw-ea-tFz" id="YKW-YB-dqa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="confirmField" destination="bJG-Ui-k1V" id="Sw6-t7-71d"/>
                         <outlet property="passwordField" destination="GSj-rC-dVV" id="7Yu-oC-A15"/>
@@ -1771,7 +1788,13 @@
                             <constraint firstItem="RXJ-Lr-ZkM" firstAttribute="trailing" secondItem="vl5-yz-o0H" secondAttribute="trailing" id="yYi-X2-vTA"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="注册" id="41f-s2-0JX"/>
+                    <navigationItem key="navigationItem" title="注册" id="41f-s2-0JX">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="gLW-oh-iR3">
+                            <connections>
+                                <action selector="popToLastView:" destination="YE0-sG-Osj" id="iAb-Tb-y6o"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="nickName" destination="bUz-Ho-geU" id="yCd-2a-mgI"/>
                         <outlet property="password" destination="p21-gk-wnh" id="pgq-rD-t24"/>
@@ -1844,7 +1867,13 @@
                             <constraint firstItem="maw-sh-10S" firstAttribute="top" secondItem="mSm-Cs-ggg" secondAttribute="bottom" constant="-64" id="pE9-1o-dGT"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="常用出行人" id="Fw3-LM-jr0"/>
+                    <navigationItem key="navigationItem" title="常用出行人" id="Fw3-LM-jr0">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="Qcy-ge-ISg">
+                            <connections>
+                                <action selector="popToLastView:" destination="6UL-ZV-3E5" id="iwP-JE-xbK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="maw-sh-10S" id="VQW-U9-57I"/>
                     </connections>
@@ -1943,6 +1972,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="消息" id="QLZ-u5-i2b">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="PLQ-fV-0P0">
+                            <connections>
+                                <action selector="popToLastView:" destination="ZTU-1U-pjd" id="Sf4-WQ-0F5"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="清除未读" id="EJk-t9-D8r"/>
                     </navigationItem>
                     <connections>
@@ -2060,7 +2094,13 @@
                             <constraint firstAttribute="trailing" secondItem="9A0-5l-NhX" secondAttribute="trailing" id="hXm-IX-d4F"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="设置" id="3bu-2F-C4s"/>
+                    <navigationItem key="navigationItem" title="设置" id="3bu-2F-C4s">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="EIb-4j-fbI">
+                            <connections>
+                                <action selector="popToLastView:" destination="EWr-F7-ci2" id="voy-0v-v5T"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="9A0-5l-NhX" id="LVt-aN-ddy"/>
                         <segue destination="Igh-fG-YZW" kind="push" identifier="aboutus" id="sPX-si-M9y"/>
@@ -2142,7 +2182,7 @@
         <!--关于我们-->
         <scene sceneID="rYl-LP-KR4">
             <objects>
-                <viewController title="关于我们" id="Igh-fG-YZW" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="aboutBoard" title="关于我们" id="Igh-fG-YZW" customClass="About" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="u9N-r9-4o2"/>
                         <viewControllerLayoutGuide type="bottom" id="uUq-FC-F8a"/>
@@ -2152,7 +2192,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="关于我们" id="OJQ-Cq-9so"/>
+                    <navigationItem key="navigationItem" title="关于我们" id="OJQ-Cq-9so">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="jmx-S7-DJS">
+                            <connections>
+                                <action selector="popToLastView:" destination="Igh-fG-YZW" id="dy9-65-3qT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXw-v2-fbU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2161,7 +2207,7 @@
         <!--用户协议-->
         <scene sceneID="Jcr-X1-CdM">
             <objects>
-                <viewController storyboardIdentifier="agreementBoard" title="用户协议" id="wgr-3e-AFM" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="agreementBoard" title="用户协议" id="wgr-3e-AFM" customClass="Agreement" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xbu-QQ-4CG"/>
                         <viewControllerLayoutGuide type="bottom" id="fRs-lx-pJT"/>
@@ -2171,7 +2217,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="用户协议" id="9kQ-f2-slg"/>
+                    <navigationItem key="navigationItem" title="用户协议" id="9kQ-f2-slg">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="Wfx-EJ-9Rg">
+                            <connections>
+                                <action selector="popToLastView:" destination="wgr-3e-AFM" id="b9D-p8-4Km"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r6d-1J-j9u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2202,7 +2254,13 @@
                             <constraint firstItem="IfI-Fn-PRX" firstAttribute="leading" secondItem="IjB-wO-GNq" secondAttribute="leading" id="Nka-ex-i9J"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="我的订单" id="3wx-gJ-VDi"/>
+                    <navigationItem key="navigationItem" title="我的订单" id="3wx-gJ-VDi">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="ioF-se-sgO">
+                            <connections>
+                                <action selector="popToLastView:" destination="KOz-aH-ZCT" id="BIA-nd-85d"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="IfI-Fn-PRX" id="P1W-oP-yeJ"/>
                     </connections>
@@ -2236,7 +2294,13 @@
                             <constraint firstItem="GZs-Fu-Ula" firstAttribute="top" secondItem="Ota-ZC-9CK" secondAttribute="top" id="f7s-fz-gd0"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="领队打分" id="ahF-W7-sFP"/>
+                    <navigationItem key="navigationItem" title="领队打分" id="ahF-W7-sFP">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="uNs-3U-0Hh">
+                            <connections>
+                                <action selector="popToLastView:" destination="gl4-Uz-TDL" id="TSp-LQ-mIw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="GZs-Fu-Ula" id="QMX-uP-4l9"/>
                     </connections>
@@ -2402,7 +2466,13 @@
                             <constraint firstItem="uvQ-xK-pmE" firstAttribute="leading" secondItem="p1N-Iw-tZR" secondAttribute="leading" id="zin-MZ-woF"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Rb3-3O-NoD"/>
+                    <navigationItem key="navigationItem" id="Rb3-3O-NoD">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="mwK-vL-Gmx">
+                            <connections>
+                                <action selector="popToLastView:" destination="4Uh-Sr-Rpw" id="wDi-eh-Ghn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="gender" destination="CmL-HH-ORv" id="el6-IZ-fcY"/>
                         <outlet property="identityNo" destination="cja-dl-M3X" id="RfZ-HZ-PSL"/>
@@ -2580,7 +2650,16 @@
                             <constraint firstItem="rgP-Vz-5oM" firstAttribute="centerY" secondItem="V0d-U0-8YZ" secondAttribute="centerY" id="tTi-25-Hkc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="个人资料" id="3pW-ti-KBe"/>
+                    <navigationItem key="navigationItem" title="个人资料" id="3pW-ti-KBe">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="uy1-NW-FJX">
+                            <connections>
+                                <action selector="popToLastView:" destination="ftE-Qx-7eg" id="kIR-p2-NCw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="avatar" destination="rgP-Vz-5oM" id="rD7-Le-X3E"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Cr-ie-ncq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2611,7 +2690,13 @@
                             <constraint firstAttribute="trailing" secondItem="Tcw-7D-dNp" secondAttribute="trailing" id="rvH-X7-ORo"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="我的订阅" id="qmt-5w-d6q"/>
+                    <navigationItem key="navigationItem" title="我的订阅" id="qmt-5w-d6q">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="1rY-55-taf">
+                            <connections>
+                                <action selector="popToLastView:" destination="924-s8-rU4" id="fgl-mC-7dt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Tcw-7D-dNp" id="Vtv-Ge-SmU"/>
                         <segue destination="U85-3M-9v8" kind="push" identifier="subscribeActivityDetail" id="Jmw-ND-0vo"/>
@@ -2701,6 +2786,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="修改密码" id="f0S-bT-pZn">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="LTi-pC-AE7">
+                            <connections>
+                                <action selector="popToLastView:" destination="JRS-ET-dLl" id="DKb-cd-k9q"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="提交" id="Xvk-4c-HMD">
                             <connections>
                                 <action selector="submitPassword:" destination="JRS-ET-dLl" id="pr1-74-Bhj"/>
@@ -2741,7 +2831,13 @@
                             <constraint firstAttribute="trailing" secondItem="GTP-dT-At8" secondAttribute="trailing" id="nbZ-dy-KRD"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="收藏活动" id="vhf-ZX-hna"/>
+                    <navigationItem key="navigationItem" title="收藏活动" id="vhf-ZX-hna">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="WsU-EC-7Mi">
+                            <connections>
+                                <action selector="popToLastView:" destination="xoo-oY-91T" id="IMZ-Rc-UxF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="GTP-dT-At8" id="QTd-rO-RCd"/>
                         <segue destination="U85-3M-9v8" kind="push" identifier="favoriteActivityDetail" id="zQ5-Ym-Vzg"/>
@@ -2861,7 +2957,13 @@
                             <constraint firstItem="YAX-l8-Lsr" firstAttribute="top" secondItem="53k-Qk-73E" secondAttribute="bottom" constant="9" id="z3N-7t-I8N"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="西祠账号登录" id="3cT-7m-Rpz"/>
+                    <navigationItem key="navigationItem" title="西祠账号登录" id="3cT-7m-Rpz">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="Zqa-XD-2ya">
+                            <connections>
+                                <action selector="popToLastView:" destination="u2O-3q-Yv8" id="9lo-iP-2yC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="xiciAcount" destination="JBv-6m-a8F" id="1vl-A8-nZ9"/>
                         <outlet property="xiciPwd" destination="eEj-Ag-MNW" id="pCC-dP-UpV"/>
@@ -2995,6 +3097,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="zQ5-Ym-Vzg"/>
         <segue reference="28T-xj-yOn"/>
-        <segue reference="A6G-v3-sCm"/>
+        <segue reference="SfK-TJ-zLu"/>
     </inferredMetricsTieBreakers>
 </document>

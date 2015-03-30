@@ -30,10 +30,13 @@ JProperty(BOOL isRss, isRss);
 JProperty(NSString *city, city);
 JProperty(NSString *time, time);
 JProperty(NSString *mode, mode);
+JProperty(NSString *intro, intro);
+JProperty(NSString *content, content);
 
 @end
 
 @interface LeaderInfo : RFJModel
+JProperty(NSString *uid, uid);
 JProperty(NSString *avatar, avatar);
 JProperty(NSString *username, username);
 JProperty(BOOL verified, verified);

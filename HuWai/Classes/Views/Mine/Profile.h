@@ -10,4 +10,5 @@
 
 @interface Profile : BaseViewController
 
+@property (nonatomic, weak) IBOutlet UIImageView *avatar;
 @end
