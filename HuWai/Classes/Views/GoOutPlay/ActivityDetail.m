@@ -17,6 +17,7 @@
 #import "ActivityDetailCell.h"
 #import "FAQ.h"
 #import "FAQCell.h"
+#import "UMSocial.h"
 
 static inline NSRegularExpression * NumbersRegularExpression() {
     static NSRegularExpression *_regularExpression = nil;
@@ -28,7 +29,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     return _regularExpression;
 }
 
-@interface ActivityDetail ()<FAQDelegate>
+@interface ActivityDetail ()<FAQDelegate,UMSocialUIDelegate>
 {
     TitleAndPriceView *titleAndPrice;
     UIButton *favoriteBtn;
@@ -36,6 +37,8 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     ActivityDetailModel *detailModel;
     FAQModel *faqModel; //问答数据模型
     FAQ *faqController; //问答视图
+    
+    UIButton *subscribeBtn;
 }
 
 @property (nonatomic, strong) MaskedPageView *maskPageView;
@@ -116,6 +119,9 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         [favoriteBtn setSelected:YES];
     }else if (tag == CancelFavoriteAction){
         [favoriteBtn setSelected:NO];
+        if (_delegate && [_delegate respondsToSelector:@selector(didCancelCollected)]) {
+            [_delegate didCancelCollected];
+        }
     }else if (tag == ActivityFAQAction){
         self.hideShowMessage = YES;
         faqModel = [[FAQModel alloc] initWithJsonDict:response.data];
@@ -123,9 +129,13 @@ static inline NSRegularExpression * NumbersRegularExpression() {
             [self.tableView reloadData];
         }
     }else if (tag == RssAddAction){
-        
+        [subscribeBtn setSelected:YES];
+    }else if (tag == RssCancelAction){
+        [subscribeBtn setSelected:NO];
+        if (_delegate && [_delegate respondsToSelector:@selector(didCancelSubscribe)]) {
+            [_delegate didCancelSubscribe];
+        }
     }
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -173,7 +183,27 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 
 -(void)shareAction:(UIButton *)sender
 {
-    
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:UM_SOCIAL_KEY
+                                      shareText:@"友盟社会化分享让您快速实现分享等社会化功能，http://umeng.com/social"
+                                     shareImage:nil
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,nil]
+                                       delegate:self];
+}
+
+-(BOOL)isDirectShareInIconActionSheet
+{
+    return YES;
+}
+
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    //根据`responseCode`得到发送结果,如果分享成功
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        //得到分享到的微博平台名
+        NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
+    }
 }
 
 -(void)fillDataHeaderView:(ActivityDetailModel *)data
@@ -277,7 +307,11 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 
 -(void)subscribeAction:(UIButton *)sender
 {
-    [self postActionWithHUD:RssAddAction params:@"id",detailModel.aid,nil];
+    if (sender.selected) {
+        [self postActionWithHUD:RssCancelAction params:@"id",detailModel.aid,nil];
+    }else{
+        [self postActionWithHUD:RssAddAction params:@"id",detailModel.aid,nil];
+    }
 }
 #pragma mark 切换标签segment
 -(HMSegmentedControl *)segmentControl
@@ -355,9 +389,11 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     }else if (_segmentControl.selectedSegmentIndex == 1) {
         LeaderDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"leaderdetailcell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.subscribeActivityBtn addTarget:self action:@selector(subscribeAction:) forControlEvents:UIControlEventTouchUpInside];
+        subscribeBtn = cell.subscribeActivityBtn;
+        [subscribeBtn addTarget:self action:@selector(subscribeAction:) forControlEvents:UIControlEventTouchUpInside];
         if (detailModel.isRss) {
-            [cell.subscribeActivityBtn setTitle:@"取消订阅" forState:UIControlStateNormal];
+//            [subscribeBtn setTitle:@"取消订阅" forState:UIControlStateNormal];
+            [subscribeBtn setSelected:YES];
         }
         [cell configureCellWithItem:detailModel.leader atIndexPath:indexPath];
         return cell;

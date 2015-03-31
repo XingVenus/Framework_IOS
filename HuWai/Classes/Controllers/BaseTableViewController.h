@@ -12,6 +12,8 @@
 typedef void(^DidChangeLocationCityBlock)(BOOL exchange);
 
 @interface BaseTableViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) BlankView *blankView;  //默认空白页面的显示
 /**
  *  显示大量数据的控件
  */
@@ -55,7 +57,14 @@ typedef void(^DidChangeLocationCityBlock)(BOOL exchange);
  */
 - (void)loadDataSource;
 
+/**
+ *  自适应显示空白模板层
+ */
+- (void)adapterShowBlankView:(NSString *)title image:(UIImage *)image;
 //custom method for this app
+/**
+ *  切换定位城市
+ */
 - (void)alertChangeLocationCity:(NSString *)cityName didChangeCityBlock:(DidChangeLocationCityBlock)changeBlock;
 /**
  *  check is last page

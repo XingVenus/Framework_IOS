@@ -335,6 +335,7 @@ NSDictionary *argsTpMap(id firstObject,...)
     
     if (!self.hideShowMessage) {
         [self showMessageWithThreeSecondAtCenter:response.message];
+    }else{
         self.hideShowMessage = NO;
     }
 }
@@ -349,21 +350,6 @@ NSDictionary *argsTpMap(id firstObject,...)
 -(void)onRequestFailed:(HttpRequestAction)tag response:(Response *)response
 {
     
-}
-
-#pragma mark - set method this view for none data response
-/**
- *  默认空白页面
- */
--(UIView *)blankView
-{
-    if (!_blankView) {
-        _blankView = [[BlankView alloc] initWithFrame:CGRectMake(0, 100 - [CommonFoundation getAdapter64Height], SCREEN_WIDTH, 200)];
-        _blankView.backgroundColor = [UIColor clearColor];
-        _blankView.hidden = YES;
-        [self.view addSubview:_blankView];
-    }
-    return _blankView;
 }
 
 #pragma mark - custom method

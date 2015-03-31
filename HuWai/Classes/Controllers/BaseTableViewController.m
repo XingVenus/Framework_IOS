@@ -61,6 +61,27 @@
     return _dataSource;
 }
 
+#pragma mark - set method this view for none data response
+/**
+ *  默认空白页面
+ */
+- (void)adapterShowBlankView:(NSString *)title image:(UIImage *)image
+{
+    if (!_blankView) {
+        _blankView = [[BlankView alloc] initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, 200)];
+        _blankView.backgroundColor = [UIColor clearColor];
+    }
+    if (self.dataSource.count==0) {
+        _blankView.textTitle = title;
+        _blankView.imageIcon = image;
+        if (!_blankView.superview) {
+            [self.tableView addSubview:_blankView];
+        }
+    }else{
+        [_blankView removeFromSuperview];
+    }
+}
+
 #pragma mark
 - (void)viewDidLoad {
     [super viewDidLoad];

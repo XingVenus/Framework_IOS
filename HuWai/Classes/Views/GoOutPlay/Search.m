@@ -27,6 +27,7 @@
     self.navigationItem.titleView = self.searchField;
     self.searchField.background = [UIImage imageNamed:@"search-bg"];
     self.searchField.returnKeyType = UIReturnKeySearch;
+    self.searchField.enablesReturnKeyAutomatically = YES;
     _searchField.delegate = self;
     UIImageView *searchImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search-icon"]];
     searchImage.contentMode = UIViewContentModeScaleAspectFit;

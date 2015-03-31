@@ -25,9 +25,10 @@
 #define NO_MORE_DATA_MESSAGE    @"没有更多数据了"
 
 //==================应用沙盒的缓存key定义==============
+#define HOT_CITY_LIST_CACHE @"HOT_CITY_LIST_CACHE"   //热门城市
 
 //----定位城市
-#define LOCATION_CITY_NAME   @"LOCATION_CITY_NAME"  //选择的定位城市
+#define LOCATION_CITY_NAME  @"LOCATION_CITY_NAME"  //选择的定位城市
 
 //----用户属性字段
 #define CACHE_USER_PHONE    @"CACHE_USER_PHONE"
@@ -57,6 +58,13 @@
 //----用于引导页面显示判断的应用build版本
 #define LAUNCH_BUILD_VERSION    @"LAUNCH_BUILD_VERSION"
 
+//----用于推动记录新消息提示
+#define MESSAGE_PUSH    @"MESSAGE_PUSH" //系统群发、留言被回复
+#define SUBSCRIBE_PUSH  @"SUBSCRIBE_PUSH" //订阅领队有新活动
+#define SCORE_PUSH      @"SCORE_PUSH" //活动打分提醒
+
+//-----消息提醒设置--------
+#define OPEN_MESSAGE_ALERT  @"OPEN_MESSAGE_ALERT"
 
 //======================通知常量的定义==================
 static NSString *UserRegistrationNotification = @"user_registration_notification";//用户推送通知注册
@@ -75,6 +83,9 @@ static NSString *PageRefreshNotification    = @"page_refresh_notification"; //�
 #define APP_BACKGROUND_COLOR    RGBA(238,238,238,1)
 //分割线颜色
 #define APP_DIVIDELINE_COLOR    RGBA(226,226,226,1)
+
+//====================友盟================
+#define UM_SOCIAL_KEY    @"5507807cfd98c5ef21000382"
 
 //================= associative reference keys=============
 static const NSString * OrderCancelAssociatedKey         = @"OrderCancelAssociatedKey";

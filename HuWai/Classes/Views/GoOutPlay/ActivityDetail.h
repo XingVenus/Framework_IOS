@@ -10,12 +10,20 @@
 @class ActivityDetailModel;
 @class TitleAndPriceView;
 
+@protocol ActivityDataDelegate <NSObject>
+
+@optional
+-(void)didCancelSubscribe;
+-(void)didCancelCollected;
+
+@end
 
 @interface ActivityDetail : BaseTableViewController
 
 @property (nonatomic, strong) NSString *detailTitle;
 @property (nonatomic, strong) NSString *activityId;
 
+@property (nonatomic, weak) id<ActivityDataDelegate> delegate;
 @end
 
 @interface TitleAndPriceView : UIView

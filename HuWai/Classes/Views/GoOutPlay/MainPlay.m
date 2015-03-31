@@ -275,19 +275,21 @@ const static NSInteger kTabHeight = 40;
 #pragma mark - data response block
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-
     if (tag == ActivityAction) {
         ActivityModel *model = [[ActivityModel alloc] initWithJsonDict:response.data];
+        self.maxPage = model.pager.pagemax;
         //显示数据
         if (self.tableView.headerRefreshing) {
             self.currentPage = 1;
             self.dataSource = [model.data mutableCopy];
-        }else if (self.tableView.footerRefreshing && model.data){
+        }else if (self.tableView.footerRefreshing && model.data.count>0){
             [self.dataSource addObjectsFromArray:model.data];
         }else{
             self.dataSource = [NSMutableArray arrayWithArray:model.data];
         }
-        self.maxPage = model.pager.pagemax;
+        
+        [self adapterShowBlankView:@"没有活动信息" image:[UIImage imageNamed:@"expression-wu"]];
+        
         [self.tableView reloadData];
     }else if (tag == DestinationAction){
         DestinationCityModel *desModel = [[DestinationCityModel alloc] initWithJsonDict:response.data];

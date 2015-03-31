@@ -18,7 +18,6 @@
 
 @property (nonatomic, assign) BOOL hideShowMessage;
 @property (strong, nonatomic) MBProgressHUD * hud;
-@property (nonatomic, strong) BlankView *blankView;  //默认空白页面的显示
 
 -(void)showMessageWithThreeSecondAtCenter:(NSString *)message;
 //post action method

@@ -9,5 +9,5 @@
 #import "BaseTableViewController.h"
 
 @interface Search : BaseTableViewController
-//@property (nonatomic, weak) IBOutlet UITableView *tableView;
+
 @end

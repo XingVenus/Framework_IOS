@@ -16,6 +16,9 @@
 @interface Mine ()
 {
     NSMutableArray *_arrayCells;
+    JSBadgeView *subscribeBadgeView;
+    JSBadgeView *scoreBadgeView;
+    JSBadgeView *messageBadgeView;
 }
 
 @end
@@ -165,14 +168,28 @@
     UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier2 forIndexPath:indexPath];
     cell2.imageView.image = [UIImage imageNamed:dic[@"icon"]];
     cell2.textLabel.text = dic[@"title"];
-    if (row == 1) {
-        JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:cell2.contentView alignment:JSBadgeViewAlignmentCenterLeft];
-        badgeView.badgeText = @"new";
-        badgeView.badgePositionAdjustment = CGPointMake(150, 0);
+    if (section == 1) {
+        if (row == 0 && [CacheBox getCache:SUBSCRIBE_PUSH]) {
+            subscribeBadgeView = [[JSBadgeView alloc] initWithParentView:cell2.contentView alignment:JSBadgeViewAlignmentCenterLeft];
+            subscribeBadgeView.badgeText = @"new";
+            subscribeBadgeView.badgeTextFont = [UIFont systemFontOfSize:12.0];
+            subscribeBadgeView.badgePositionAdjustment = CGPointMake(150, 0);
+        }else if (row == 1 && [CacheBox getCache:SCORE_PUSH]) {
+            scoreBadgeView = [[JSBadgeView alloc] initWithParentView:cell2.contentView alignment:JSBadgeViewAlignmentCenterLeft];
+            scoreBadgeView.badgeText = @"new";
+            scoreBadgeView.badgeTextFont = [UIFont systemFontOfSize:12.0];
+            scoreBadgeView.badgePositionAdjustment = CGPointMake(150, 0);
+        }
+    }else if (section == 2){
+        if (row == 0 && [CacheBox getCache:MESSAGE_PUSH]) {
+            messageBadgeView = [[JSBadgeView alloc] initWithParentView:cell2.contentView alignment:JSBadgeViewAlignmentCenterLeft];
+            messageBadgeView.badgeText = @"new";
+            messageBadgeView.badgeTextFont = [UIFont systemFontOfSize:12.0];
+            messageBadgeView.badgePositionAdjustment = CGPointMake(120, 0);
+        }
     }
     
     return cell2;
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -191,8 +208,12 @@
         case 1:
             if (row == 0) {
                 [self performSegueWithIdentifier:@"subscribe" sender:self];
+                [CacheBox removeObjectValue:SUBSCRIBE_PUSH];
+                [subscribeBadgeView removeFromSuperview];
             }else if(row == 1){
                 [self performSegueWithIdentifier:@"leaderscore" sender:self];
+                [CacheBox removeObjectValue:SCORE_PUSH];
+                [scoreBadgeView removeFromSuperview];
             }else if (row == 2){
                 [self performSegueWithIdentifier:@"collected" sender:self];
             }else if (row == 3){
@@ -202,6 +223,8 @@
         case 2:
             if (row == 0) {
                 [self performSegueWithIdentifier:@"messagegroup" sender:self];
+                [CacheBox removeObjectValue:MESSAGE_PUSH];
+                [messageBadgeView removeFromSuperview];
             }else if (row == 1){
                 [self performSegueWithIdentifier:@"settings" sender:self];
                 break;

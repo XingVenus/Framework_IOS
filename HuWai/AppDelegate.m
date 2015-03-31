@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "NSString+JSON.h"
+#import "UMSocial.h"
 
 @interface AppDelegate ()
 
@@ -16,16 +17,19 @@
 @implementation AppDelegate
 
 
--(void)alertRemoteMessage:(NSString *)message
+-(void)alertRemoteMessage:(NSString *)message withTitle:(NSString *)title
 {
     if (message) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:@"ok" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"ok" otherButtonTitles: nil];
         [alert show];
     }
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //友盟分享注册
+    [UMSocialData setAppKey:UM_SOCIAL_KEY];
     
     // [1]:使用APPID/APPKEY/APPSECRENT创建个推实例
     [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
@@ -38,7 +42,7 @@
     if (message) {
         NSString *payloadMsg = [message objectForKey:@"payload"];
         NSString *record = [NSString stringWithFormat:@"[APN]%@, %@", [NSDate date], payloadMsg];
-        [self alertRemoteMessage:record];
+        [self alertRemoteMessage:record withTitle:nil];
         DLog(@"%@",message);
     }
     
@@ -105,7 +109,7 @@
                                            delegate:self
                                               error:&err];
         if (!_gexinPusher) {
-            [self alertRemoteMessage:[err localizedDescription]];
+            [self alertRemoteMessage:[err localizedDescription] withTitle:nil];
         } else {
             _sdkStatus = SdkStatusStarting;
         }
@@ -133,7 +137,7 @@
         [_gexinPusher registerDeviceToken:@""];
     }
     
-    [self alertRemoteMessage:[NSString stringWithFormat:@"didFailToRegisterForRemoteNotificationsWithError:%@", [error localizedDescription]]];
+    [self alertRemoteMessage:[NSString stringWithFormat:@"didFailToRegisterForRemoteNotificationsWithError:%@", [error localizedDescription]] withTitle:nil];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userinfo
@@ -144,7 +148,7 @@
     // [4-EXT]:处理APN
     NSString *payloadMsg = [userinfo objectForKey:@"payload"];
     NSString *record = [NSString stringWithFormat:@"[APN]%@, %@", [NSDate date], payloadMsg];
-    [self alertRemoteMessage:record];
+    [self alertRemoteMessage:record withTitle:nil];
     DLog(@"%@",userinfo);
 }
 
@@ -155,14 +159,14 @@
     // [4-EXT]:处理APN
 //    NSString *payloadMsg = [userInfo objectForKey:@"payload"];
     
-    NSDictionary *aps = [userInfo objectForKey:@"aps"];
-//    NSNumber *contentAvailable = aps == nil ? nil : [aps objectForKeyedSubscript:@"content-available"];
+//    NSDictionary *aps = [userInfo objectForKey:@"aps"];
+        //    NSNumber *contentAvailable = aps == nil ? nil : [aps objectForKeyedSubscript:@"content-available"];
     
-//    NSString *record = [NSString stringWithFormat:@"[APN]%@, %@, [content-available: %@]", [NSDate date], payloadMsg, contentAvailable];
-//    [self alertRemoteMessage:record];
-//    DLog(@"%@",userInfo);
-    NSDictionary *bodyDic = aps[@"alert"];
-    [self alertRemoteMessage:bodyDic[@"body"]];
+        //    NSString *record = [NSString stringWithFormat:@"[APN]%@, %@, [content-available: %@]", [NSDate date], payloadMsg, contentAvailable];
+        //    [self alertRemoteMessage:record];
+        //    DLog(@"%@",userInfo);
+//    NSDictionary *bodyDic = aps[@"alert"];
+//    [self alertRemoteMessage:bodyDic[@"body"] withTitle:nil];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -195,18 +199,34 @@
                                               length:payload.length
                                             encoding:NSUTF8StringEncoding];
     }
-    
+    /*
+     {
+     "from_uid" = 1;
+     "from_username" = "\U5c0f\U79d8\U4e66";
+     message = "\U5e8a\U524d\U660e\U6708\U5149\Uff0c\U7591\U662f\U5730\U4e0a\U971c\U3002";
+     msgtype = 1;
+     time = "2015-03-31 10:45:05";
+     title = "\U9759\U591c\U601d";
+     "to_uid" = 57;
+     }
+     */
     NSDictionary *msgDic = [payloadMsg JSONValue];
-    [self alertRemoteMessage:msgDic[@"message"]];
-//    NSString *record = [NSString stringWithFormat:@" %@, %@", [NSDate date], payloadMsg];
-//    DLog(@"%@",record);
+    if ([[CacheBox getCache:OPEN_MESSAGE_ALERT] isEqualToString:@"ON"]) {
+        [self alertRemoteMessage:msgDic[@"message"] withTitle:msgDic[@"from_username"]];
+    }
     
-
+    if ([msgDic[@"msgtype"] isEqualToString:@"1"] || [msgDic[@"msgtype"] isEqualToString:@"2"]) {
+        [CacheBox saveCache:MESSAGE_PUSH value:msgDic[@"msgtype"]];
+    }else if([msgDic[@"msgtype"] isEqualToString:@"3"]){
+        [CacheBox saveCache:SUBSCRIBE_PUSH value:msgDic[@"msgtype"]];
+    }else{
+        [CacheBox saveCache:SCORE_PUSH value:msgDic[@"msgtype"]];
+    }
 }
 
 - (void)GexinSdkDidOccurError:(NSError *)error
 {
     // [EXT]:个推错误报告，集成步骤发生的任何错误都在这里通知，如果集成后，无法正常收到消息，查看这里的通知。
-    [self alertRemoteMessage:[NSString stringWithFormat:@">>>[GexinSdk error]:%@", [error localizedDescription]]];
+    [self alertRemoteMessage:[NSString stringWithFormat:@">>>[GexinSdk error]:%@", [error localizedDescription]] withTitle:nil];
 }
 @end

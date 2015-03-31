@@ -14,6 +14,7 @@
     LocationHelper *_location;
     UIActivityIndicatorView *_activityIndicator;
     UIButton *refreshBtn;
+    NSDictionary *dataList; //热门城市列表
 }
 
 @end
@@ -25,7 +26,11 @@
     self.gpsCity = [APPInfo shareInit].GPSCity;
     _location = [[LocationHelper alloc] init];
     //判断热门城市列表，存在并相同则不请求，否则请求数据
-    
+    dataList = [CacheBox getCache:HOT_CITY_LIST_CACHE];
+    if (dataList) {
+        HotCityModel *infoDic = [[HotCityModel alloc] initWithJsonDict:@{@"data":dataList}];
+        self.dataSource = [infoDic.data mutableCopy];
+    }
     [self loadAction:HotcityAction params:nil];
     //定位风火轮
     _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -36,45 +41,18 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //定位当前城市
-/*
-    __weak UIActivityIndicatorView *weakindicator = _activityIndicator;
-    __weak UITableView *weaktableview = self.tableView;
-    [weakindicator startAnimating];
-    [_location getCurrentGeolocationsCompled:^(NSArray *placemarks, NSError *error) {
-        [weakindicator stopAnimating];
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
-        UITableViewCell *blockcell = [weaktableview cellForRowAtIndexPath:indexpath];
-        //返回位置信息的实现
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (placemarks) {
-                CLPlacemark *placemark = [placemarks lastObject];
-                if (placemark) {
-                    NSDictionary *addressDictionary = placemark.addressDictionary;
-                    blockcell.textLabel.text = addressDictionary[@"City"];
-                }
-            }else{
-                blockcell.textLabel.text = @"定位失败";
-            }
-            [self.tableView reloadData];
-            // 更新界面  - 在这里很耗内存，待检查原因
-//            [weaktableview beginUpdates];
-//            [weaktableview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
-//            [weaktableview endUpdates];
-        });
-    }];
- */
 }
+
 #pragma mark - request delegate
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-
-    HotCityModel *hotModel = [[HotCityModel alloc] initWithJsonDict:response.data];
-    self.dataSource = [hotModel.data mutableCopy];
-    //此处需写入缓存
-    
-    [self.tableView reloadData];
-
+    if (![response.data[@"data"] isEqual:dataList]) {
+        //此处需写入缓存
+        [CacheBox saveCache:HOT_CITY_LIST_CACHE value:response.data[@"data"]];
+        HotCityModel *hotModel = [[HotCityModel alloc] initWithJsonDict:response.data];
+        self.dataSource = [hotModel.data mutableCopy];
+        [self.tableView reloadData];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -145,7 +123,7 @@
         if (self.gpsCity) {
             cell.textLabel.text = self.gpsCity;
         }else{
-            cell.textLabel.text = @"无法定位";
+            cell.textLabel.text = @"定位失败";
         }
         
         return cell;

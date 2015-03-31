@@ -93,6 +93,11 @@
                 switchBtn = [[UISwitch alloc] init];
                 switchBtn.center = CGPointMake(SCREEN_WIDTH - 40, cell.centerY);
                 [switchBtn addTarget:self action:@selector(oneSwitchValueChanged:) forControlEvents:UIControlEventValueChanged]; // 添加事件监听器的方法
+                if ([[CacheBox getCache:OPEN_MESSAGE_ALERT] isEqualToString:@"ON"]) {
+                    [switchBtn setOn:YES];
+                }else{
+                    [switchBtn setOn:NO];
+                }
                 [cell addSubview:switchBtn];
             }
         }else if (row == 1){
@@ -156,6 +161,7 @@
 -(void)oneSwitchValueChanged:(UISwitch *) sender
 {
     NSLog(@"%@", sender.isOn ? @"ON" : @"OFF");
+    [CacheBox saveCache:OPEN_MESSAGE_ALERT value:sender.isOn?@"ON":@"OFF"];
 }
 /*
 #pragma mark - Navigation

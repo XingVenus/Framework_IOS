@@ -11,7 +11,10 @@
 #import "ActivityModel.h"
 #import "ActivityDetail.h"
 
-@interface Subscribe ()
+@interface Subscribe ()<ActivityDataDelegate>
+{
+    ActivityDetail *activityController;
+}
 
 @end
 
@@ -36,6 +39,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)dealloc
+{
+    activityController.delegate = nil;
+}
+
 -(void)loadDataSource
 {
     [self loadActionWithHUD:RssListAction params:@"page",@(self.currentPage),@"pagesize",@(self.pageSize),nil];
@@ -44,23 +52,20 @@
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
     if (tag == RssListAction) {
+        self.hideShowMessage = YES;
         ActivityModel *aModel = [[ActivityModel alloc] initWithJsonDict:response.data];
-        if (aModel.data) {
-            if (self.tableView.isFooterRefreshing) {
-                [self.dataSource addObjectsFromArray:aModel.data];
-                [self.tableView footerEndRefreshing];
-            }else{
-                self.dataSource = [NSMutableArray arrayWithArray:aModel.data];
-            }
-            [self.tableView reloadData];
-        }else{
-            if (self.currentPage == 1) {
-                self.blankView.textTitle = @"您还未订阅任何领队";
-                self.blankView.imageIcon = [UIImage imageNamed:@"expression-wu"];
-                self.blankView.hidden = NO;
-            }
-        }
         self.maxPage = aModel.pager.pagemax;
+        if (self.tableView.isFooterRefreshing && (aModel.data.count>0)) {
+            [self.dataSource addObjectsFromArray:aModel.data];
+            [self.tableView footerEndRefreshing];
+        }else{
+            self.dataSource = [NSMutableArray arrayWithArray:aModel.data];
+        }
+        
+        [self adapterShowBlankView:@"您还未订阅任何领队" image:[UIImage imageNamed:@"expression-wu"]];
+        
+        [self.tableView reloadData];
+        
     }
 }
 
@@ -105,12 +110,16 @@
     // Pass the selected object to the new view controller.
     NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
     if ([segue.identifier isEqualToString:@"subscribeActivityDetail"]) {
-        ActivityDetail *activityController = segue.destinationViewController;
+        activityController = segue.destinationViewController;
         ActivityInfo *infoModel = self.dataSource[selectedRowIndex.row];
         activityController.activityId = infoModel.aid;
         activityController.detailTitle = @"活动详情";
+        activityController.delegate = self;
     }
 }
 
-
+-(void)didCancelSubscribe
+{
+    [self loadActionWithHUD:RssListAction params:@"page",@"1",@"pagesize",@(self.pageSize*self.currentPage),nil];
+}
 @end
