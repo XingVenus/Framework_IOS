@@ -37,7 +37,7 @@ const static NSInteger kTabHeight = 40;
     NSArray *timeArray;
     NSArray *playArray;
     
-    UIButton *locationBtn;
+    SLButton *locationBtn;
     UIButton *lastSelected;//记录当前选中的按钮
     
     //数据帅选字段
@@ -114,14 +114,15 @@ const static NSInteger kTabHeight = 40;
 //    }
 //    CGFloat navViewHeight = CGRectGetHeight(navigationView.bounds);
     //定位按钮
-    locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    locationBtn = [SLButton buttonWithType:UIButtonTypeCustom];
     locationBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    locationBtn.frame = CGRectMake(0, 0, 100, 30);//CGRectMake(15, navViewHeight - 67, 100, 30);//CGRectMake(15, 7, 100, 30)
-    [locationBtn setImage:[UIImage imageNamed:@"place-i"] forState:UIControlStateNormal];
+    //CGRectMake(15, navViewHeight - 67, 100, 30);//CGRectMake(15, 7, 100, 30)
+    [locationBtn setImage:[UIImage imageNamed:@"down-d"] forState:UIControlStateNormal];
     [locationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
     locationBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
-    [locationBtn setTitle:[CacheBox getCache:LOCATION_CITY_NAME] forState:UIControlStateNormal];
-    [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:4];
+    [locationBtn setTitle:[self replaceTitleString:[CacheBox getCache:LOCATION_CITY_NAME]] forState:UIControlStateNormal];
+    locationBtn.frame = CGRectMake(0, 0, 100, 30);
     [locationBtn addTarget:self action:@selector(selectDestCity:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:locationBtn];
     self.navigationItem.leftBarButtonItem = leftItem;
@@ -151,9 +152,9 @@ const static NSInteger kTabHeight = 40;
     SLButton *btn1 = [SLButton buttonWithType:UIButtonTypeCustom];
     btn1.tag = 1001;
     [btn1 addTarget:self action:@selector(showSelectView:) forControlEvents:UIControlEventTouchUpInside];
-    btn1.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    btn1.titleLabel.font = [UIFont systemFontOfSize:14];
     [btn1 setTitle:@"目的地" forState:UIControlStateNormal];
-    [btn1 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     UIImage *downImg = [UIImage imageNamed:@"down"];
     [btn1 setImage:downImg forState:UIControlStateNormal];
     [btn1 setImage:[UIImage imageNamed:@"up"] forState:UIControlStateSelected];
@@ -167,9 +168,9 @@ const static NSInteger kTabHeight = 40;
     SLButton *btn2 = [SLButton buttonWithType:UIButtonTypeCustom];
     btn2.tag = 1002;
     [btn2 addTarget:self action:@selector(showSelectView:) forControlEvents:UIControlEventTouchUpInside];
-    btn2.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    btn2.titleLabel.font = [UIFont systemFontOfSize:14];
     [btn2 setTitle:@"行程" forState:UIControlStateNormal];
-    [btn2 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [btn2 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [btn2 setImage:[UIImage imageNamed:@"down"] forState:UIControlStateNormal];
     [btn2 setImage:[UIImage imageNamed:@"up"] forState:UIControlStateSelected];
     btn2.frame = CGRectMake(SCREEN_WIDTH/3, 0, SCREEN_WIDTH/3, kTabHeight);//CGRectMake(CGRectGetMaxX(btn1.frame), navViewHeight - 35, SCREEN_WIDTH/3, 30);
@@ -180,9 +181,9 @@ const static NSInteger kTabHeight = 40;
     SLButton *btn3 = [SLButton buttonWithType:UIButtonTypeCustom];
     btn3.tag = 1003;
     [btn3 addTarget:self action:@selector(showSelectView:) forControlEvents:UIControlEventTouchUpInside];
-    btn3.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    btn3.titleLabel.font = [UIFont systemFontOfSize:14];
     [btn3 setTitle:@"玩法" forState:UIControlStateNormal];
-    [btn3 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [btn3 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [btn3 setImage:[UIImage imageNamed:@"down"] forState:UIControlStateNormal];
     [btn3 setImage:[UIImage imageNamed:@"up"] forState:UIControlStateSelected];
     btn3.frame = CGRectMake(SCREEN_WIDTH/3*2, 0, SCREEN_WIDTH/3, kTabHeight);//CGRectMake(CGRectGetMaxX(btn2.frame), navViewHeight - 35, SCREEN_WIDTH/3, 30);
@@ -211,7 +212,7 @@ const static NSInteger kTabHeight = 40;
             }
         }else{
             //显示上次缓存的城市
-            [locationBtn setTitle:[CacheBox getCache:LOCATION_CITY_NAME] forState:UIControlStateNormal];
+            [locationBtn setTitle:[self replaceTitleString:[CacheBox getCache:LOCATION_CITY_NAME]] forState:UIControlStateNormal];
         }
     }];
 
@@ -319,7 +320,7 @@ const static NSInteger kTabHeight = 40;
 {
     _fromCity = city;
     [CacheBox saveCache:LOCATION_CITY_NAME value:city];
-    [locationBtn setTitle:city forState:UIControlStateNormal];
+    [locationBtn setTitle:[self replaceTitleString:city] forState:UIControlStateNormal];
     self.currentPage = 1;
     [self loadDataSource];
 }
@@ -429,6 +430,14 @@ const static NSInteger kTabHeight = 40;
     [sender setSelected:!sender.selected];
 }
 
+#pragma mark trim to "市"
+-(NSString *)replaceTitleString:(NSString *)title
+{
+    if ([title hasSuffix:@"市"]) {
+        return [title substringWithRange:NSMakeRange(0, title.length - 1)];
+    }
+    return title;
+}
 #pragma mark - hotcity delegate
 #pragma mark 定位城市更改
 -(void)didSelectedHotCity:(NSString *)hotcityID cityName:(NSString *)hotcityName
@@ -438,7 +447,7 @@ const static NSInteger kTabHeight = 40;
     }else{
         _fromCity = hotcityName;
     }
-    [locationBtn setTitle:hotcityName forState:UIControlStateNormal];
+    [locationBtn setTitle:[self replaceTitleString:hotcityName] forState:UIControlStateNormal];
     [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:4];
 //    [self.tableView headerBeginRefreshing];
     self.currentPage = 1;

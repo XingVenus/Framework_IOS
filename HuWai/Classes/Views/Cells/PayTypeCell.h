@@ -9,5 +9,5 @@
 #import "BaseTableViewCell.h"
 
 @interface PayTypeCell : BaseTableViewCell
-
+@property (weak, nonatomic) IBOutlet UIButton *aliPayBtn;
 @end

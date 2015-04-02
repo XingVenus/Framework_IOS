@@ -32,12 +32,12 @@
         
         OrderDetailModel *data = (OrderDetailModel *)item;
         self.activityLabel.text = data.activity_info.title;
-        self.activityPriceLabel.text = data.activity_info.price;
+        self.activityPriceLabel.text = [NSString stringWithFormat:@"￥%@",data.activity_info.price];
         self.aNumLabel.text = [NSString stringWithFormat:@"x %@",data.order_info.num];
         //    self.totalPriceLabel.text = [NSString stringWithFormat:@"合计:%@元",data.order_info.money];
         if (data.order_info.insurance) {
             self.insuranceLabel.text = data.order_info.insurance;
-            self.insurancePriceLabel.text = data.order_info.insurance_price;
+            self.insurancePriceLabel.text = [NSString stringWithFormat:@"￥%@",data.order_info.insurance_price];
             self.inNumLabel.text = [NSString stringWithFormat:@"x %@",data.order_info.insurance_num];
         }else{
             self.insuranceLabel.hidden = YES;
@@ -46,7 +46,7 @@
             self.lineLabel.hidden  = YES;
         }
         if (data.order_info.money) {
-            NSString *text = [NSString stringWithFormat:@"合计:%@元",data.order_info.money];
+            NSString *text = [NSString stringWithFormat:@"合计:￥%@",data.order_info.money];
             [self.totalPriceLabel setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
                 NSRange boldRange = [[mutableAttributedString string] rangeOfString:data.order_info.money options:NSRegularExpressionSearch];
                 

@@ -17,12 +17,35 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tabBarController.tabBar.delegate = self;
+    UITabBar *tabBar = self.tabBar;
+    UITabBarItem *item0 = [tabBar.items objectAtIndex:0];
+    UITabBarItem *item1 = [tabBar.items objectAtIndex:1];
+    UITabBarItem *item2 = [tabBar.items objectAtIndex:2];
+    UIImage *play_b = [UIImage imageNamed:@"play-blue"];
+    UIImage *play_g = [UIImage imageNamed:@"play-gray"];
+    UIImage *circle_b = [UIImage imageNamed:@"circle-b"];
+    UIImage *circle_g = [UIImage imageNamed:@"circle-g"];
+    UIImage *my_b = [UIImage imageNamed:@"my-blue"];
+    UIImage *my_g = [UIImage imageNamed:@"my-gray"];
     //--------设置选中时的图片颜色tintColor-------
     if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) {
         [UITabBar appearance].tintColor = RGBA(46, 181, 220, 1);
         [UITabBar appearance].barTintColor = [UIColor whiteColor];
+        // 对item设置相应地图片
+        item0.selectedImage = [play_b imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];;
+        item0.image = [play_g imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
+        item1.selectedImage = [circle_b imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];;
+        item1.image = [circle_g imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
+        item2.selectedImage = [my_b imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];;
+        item2.image = [my_g imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }else{
+        [item0 setFinishedSelectedImage:play_b withFinishedUnselectedImage:play_g];
+        [item1 setFinishedSelectedImage:circle_b withFinishedUnselectedImage:circle_g];
+        [item2 setFinishedSelectedImage:my_b withFinishedUnselectedImage:my_g];
     }
-    
+//    DLog(@"%lu",(unsigned long)self.tabBar.items.count);
 //    self.tabBarController.tabBar.backgroundColor = [UIColor greenColor];
     //设置选中tab的文字的颜色,默认为tintcolor的颜色一致
 //    [[UITabBarItem appearance] setTitleTextAttributes:@{UITextAttributeTextColor : RGBA(46, 181, 220, 1)} forState:UIControlStateSelected];

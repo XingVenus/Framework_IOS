@@ -17,9 +17,12 @@
 @interface ConfirmToPayment ()
 {
     OrderDetailModel *orderDetailModel;
+    NSString *payType;
 }
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *confirmTotalMoneyLabel;
-- (IBAction)confirmPayAction:(id)sender;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *confirmPayBtn;
 
 @end
 
@@ -29,6 +32,8 @@
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self loadActionWithHUD:OrderDetailAction params:@"order_id",self.order_id,nil];
+    [self.confirmPayBtn addTarget:self action:@selector(confirmPayAction) forControlEvents:UIControlEventTouchUpInside];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -131,13 +136,29 @@
     }else if (section == 3){
         PayTypeCell *typecell = [tableView dequeueReusableCellWithIdentifier:@"paytypecell" forIndexPath:indexPath];
         typecell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [typecell.aliPayBtn addTarget:self action:@selector(payTypeSelection:) forControlEvents:UIControlEventTouchUpInside];
         return typecell;
     }else{
         return nil;
     }
 }
-- (IBAction)confirmPayAction:(id)sender
+
+-(void)payTypeSelection:(UIButton *)btn
 {
-    [self showMessageWithThreeSecondAtCenter:@"暂不支持付款"];
+    [btn setSelected:!btn.selected];
+    if (btn.selected) {
+        payType = @"alipay";
+    }else{
+        payType = nil;
+    }
+}
+
+- (void)confirmPayAction
+{
+    if (payType) {
+        
+    }else{
+        [self showMessageWithThreeSecondAtCenter:@"请选择支付方式"];
+    }
 }
 @end

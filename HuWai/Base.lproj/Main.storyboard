@@ -33,7 +33,7 @@
                             <constraint firstItem="82a-Hb-rn5" firstAttribute="leading" secondItem="hlg-y2-7qM" secondAttribute="leading" id="sd7-WZ-gpN"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="tq3-wr-eNc"/>
+                    <navigationItem key="navigationItem" title="出去玩" id="tq3-wr-eNc"/>
                     <connections>
                         <outlet property="tableView" destination="82a-Hb-rn5" id="fqA-3e-Dd5"/>
                         <segue destination="HCc-zo-pb2" kind="push" identifier="citylist" id="P4g-za-ybD"/>
@@ -981,6 +981,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="aliPayBtn" destination="lwa-we-2bE" id="aOC-Nc-c6s"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -1003,9 +1006,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="confirmPayAction:" destination="7Iu-mF-Yl7" eventType="touchUpInside" id="ojT-wI-VaE"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1040,6 +1040,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="confirmPayBtn" destination="1eh-KL-yb3" id="Kfv-kv-PPc"/>
                         <outlet property="confirmTotalMoneyLabel" destination="47t-gW-Dc1" id="hyl-6N-nbc"/>
                         <outlet property="tableView" destination="Osm-b3-o79" id="kKl-pt-goW"/>
                     </connections>
@@ -1164,6 +1165,25 @@
             </objects>
             <point key="canvasLocation" x="1809" y="-3500"/>
         </scene>
+        <!--圈子-->
+        <scene sceneID="Bh6-yJ-4qf">
+            <objects>
+                <viewController storyboardIdentifier="webviewBoard" title="圈子" id="Qvu-cR-fGP" customClass="WebViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6jo-LB-cng"/>
+                        <viewControllerLayoutGuide type="bottom" id="rek-si-VZP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TUX-FQ-e10">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="圈子" id="dtd-kG-XWU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0OS-tA-VWM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1871" y="409"/>
+        </scene>
         <!--MainTab-->
         <scene sceneID="RyB-cJ-0po">
             <objects>
@@ -1176,12 +1196,13 @@
                     </tabBar>
                     <connections>
                         <segue destination="S7u-7k-KaB" kind="relationship" relationship="viewControllers" id="ioY-or-vYC"/>
+                        <segue destination="7E0-yJ-vMU" kind="relationship" relationship="viewControllers" id="tAh-p6-KcB"/>
                         <segue destination="IHj-qC-bwz" kind="relationship" relationship="viewControllers" id="Sah-xR-SDn"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="olT-4H-aIS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-925" y="-308"/>
+            <point key="canvasLocation" x="-1121" y="-1020"/>
         </scene>
         <!--登录-->
         <scene sceneID="ufC-wZ-h7g">
@@ -2508,7 +2529,7 @@
         <scene sceneID="hmq-pA-XIE">
             <objects>
                 <navigationController storyboardIdentifier="minNav" title="我的Nav" automaticallyAdjustsScrollViewInsets="NO" id="IHj-qC-bwz" customClass="BaseNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="1" title="我的" image="my-gray" id="1LU-mz-ICf"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="我的" image="my-gray" id="1LU-mz-ICf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Uqs-L7-yT1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2521,7 +2542,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7f6-Ll-rnb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-59" y="409"/>
+            <point key="canvasLocation" x="-411" y="289"/>
         </scene>
         <!--我的-->
         <scene sceneID="wOI-4I-Vzz">
@@ -2566,7 +2587,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBe-kE-Xdh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="409" y="409"/>
+            <point key="canvasLocation" x="109" y="289"/>
         </scene>
         <!--个人资料-->
         <scene sceneID="h8x-Sy-Ogx">
@@ -2846,7 +2867,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y4I-qv-qaj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="977" y="289"/>
+            <point key="canvasLocation" x="1509" y="289"/>
         </scene>
         <!--登录Nav-->
         <scene sceneID="rNO-RL-500">
@@ -2864,7 +2885,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ta-br-3wo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-925" y="1027"/>
+            <point key="canvasLocation" x="-1381" y="1435"/>
         </scene>
         <!--西祠账号-->
         <scene sceneID="aYc-Bs-DT7">
@@ -3060,6 +3081,25 @@
             </objects>
             <point key="canvasLocation" x="858" y="-3500"/>
         </scene>
+        <!--圈子-->
+        <scene sceneID="gDv-BX-Hb7">
+            <objects>
+                <navigationController storyboardIdentifier="aroundNavBoard" title="圈子" automaticallyAdjustsScrollViewInsets="NO" id="7E0-yJ-vMU" customClass="BaseNavigationController" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" tag="1" title="圈子" image="circle-g" id="bcV-IE-1ri"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tp7-Oz-jmM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Qvu-cR-fGP" kind="relationship" relationship="rootViewController" id="Zqa-Vp-5re"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zHS-Ie-fxA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1349" y="409"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Alipay" width="49" height="28"/>
@@ -3069,6 +3109,7 @@
         <image name="avatar" width="61" height="61"/>
         <image name="cellphone" width="27" height="27"/>
         <image name="check" width="20" height="20"/>
+        <image name="circle-g" width="25" height="25"/>
         <image name="close" width="13" height="13"/>
         <image name="d-qq" width="48" height="48"/>
         <image name="d-weixin" width="48" height="48"/>
@@ -3096,7 +3137,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="zQ5-Ym-Vzg"/>
+        <segue reference="P97-Mn-Li6"/>
         <segue reference="28T-xj-yOn"/>
         <segue reference="SfK-TJ-zLu"/>
     </inferredMetricsTieBreakers>

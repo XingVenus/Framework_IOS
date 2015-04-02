@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04029A151ACB8EE500AAAC8B /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04029A141ACB8EE500AAAC8B /* WebViewController.m */; };
 		040862821AC007BA00A90433 /* MessageGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 040862811AC007BA00A90433 /* MessageGroupModel.m */; };
 		0408F6CD1A9EEF6000C04961 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0408F6CC1A9EEF6000C04961 /* HMSegmentedControl.m */; };
 		0408F6D01AA05D1600C04961 /* Enroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 0408F6CF1AA05D1600C04961 /* Enroll.m */; };
@@ -177,6 +178,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04029A131ACB8EE500AAAC8B /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		04029A141ACB8EE500AAAC8B /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		040862801AC007BA00A90433 /* MessageGroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageGroupModel.h; sourceTree = "<group>"; };
 		040862811AC007BA00A90433 /* MessageGroupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageGroupModel.m; sourceTree = "<group>"; };
 		0408F6CB1A9EEF6000C04961 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
@@ -598,6 +601,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04029A121ACB8EE500AAAC8B /* AroundWeb */ = {
+			isa = PBXGroup;
+			children = (
+				04029A131ACB8EE500AAAC8B /* WebViewController.h */,
+				04029A141ACB8EE500AAAC8B /* WebViewController.m */,
+			);
+			path = AroundWeb;
+			sourceTree = "<group>";
+		};
 		0408F6CA1A9EEF6000C04961 /* HMSegmentedControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -650,6 +662,7 @@
 		042719221A6CFD16001645AA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				04029A121ACB8EE500AAAC8B /* AroundWeb */,
 				04EA26AA1A77949600CCB35E /* Cells */,
 				042719231A6CFD16001645AA /* GoOutPlay */,
 				042719241A6CFD16001645AA /* LoginAndRegister */,
@@ -1659,6 +1672,7 @@
 				040C6A0A1A917F7900A484FF /* HotCityModel.m in Sources */,
 				04C2B1F11A65163E004E8F73 /* main.m in Sources */,
 				048337C71A7F49FB00E2F889 /* HasScoreCell.m in Sources */,
+				04029A151ACB8EE500AAAC8B /* WebViewController.m in Sources */,
 				0427192F1A6D01FB001645AA /* MainPlay.m in Sources */,
 				04E8C0931A80A31800145FF0 /* Feedback.m in Sources */,
 				04A539481A846845006BA09D /* CommonPersonModel.m in Sources */,
@@ -1862,7 +1876,7 @@
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/UMAnalytics_Sdk_3.4.6",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "86a867a1-2187-4591-b8ae-4a9d0f0feb74";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1899,7 +1913,7 @@
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/UMAnalytics_Sdk_3.4.6",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "86a867a1-2187-4591-b8ae-4a9d0f0feb74";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

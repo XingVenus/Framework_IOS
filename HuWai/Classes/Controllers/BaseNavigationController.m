@@ -30,7 +30,7 @@
      */
     // Do any additional setup after loading the view.
     if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) {
-        [[UINavigationBar appearance] setBarTintColor:[UIColor colorFromHexString:@"#29B5D8"]];//整个背景
+        [[UINavigationBar appearance] setBarTintColor:[UIColor colorFromHexString:@"#21b5de"]];//整个背景[UIColor colorFromHexString:@"#29B5D8"]
         [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];//RGBA(46, 181, 220, 1)];//item字体颜色RGBA(54, 178, 214, 1)
     }
     else {

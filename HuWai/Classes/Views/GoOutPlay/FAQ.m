@@ -51,6 +51,7 @@
         if (_delegate && [_delegate respondsToSelector:@selector(didSubmitFAQ)]) {
             [_delegate didSubmitFAQ];
         }
+        [self performSelector:@selector(popToLastView:) withObject:nil afterDelay:2];
     }
 }
 #pragma mark - Navigation
