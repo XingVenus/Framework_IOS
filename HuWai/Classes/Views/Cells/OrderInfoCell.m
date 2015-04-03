@@ -11,9 +11,40 @@
 
 @implementation OrderInfoCell
 
+
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     
+}
+
+-(CALayer *)firstLayer
+{
+    if (!_firstLayer) {
+        _firstLayer = [CALayer layer];
+        _firstLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
+        _firstLayer.frame = CGRectMake(0, 40, SCREEN_WIDTH, 0.5);
+    }
+    return _firstLayer;
+}
+
+-(CALayer *)secondLayer
+{
+    if (!_secondLayer) {
+        _secondLayer = [CALayer layer];
+        _secondLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
+        _secondLayer.frame = CGRectMake(0, 100, SCREEN_WIDTH, 0.5);
+    }
+    return _secondLayer;
+}
+
+-(CALayer *)thirdLayer
+{
+    if (!_thirdLayer) {
+        _thirdLayer = [CALayer layer];
+        _thirdLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
+        _thirdLayer.frame = CGRectMake(0, 160, SCREEN_WIDTH, 0.5);
+    }
+    return _thirdLayer;
 }
 
 -(void)layoutSubviews
@@ -35,10 +66,13 @@
         self.activityPriceLabel.text = [NSString stringWithFormat:@"￥%@",data.activity_info.price];
         self.aNumLabel.text = [NSString stringWithFormat:@"x %@",data.order_info.num];
         //    self.totalPriceLabel.text = [NSString stringWithFormat:@"合计:%@元",data.order_info.money];
+        [self.layer addSublayer:self.firstLayer];
+        [self.layer addSublayer:self.secondLayer];
         if (data.order_info.insurance) {
             self.insuranceLabel.text = data.order_info.insurance;
             self.insurancePriceLabel.text = [NSString stringWithFormat:@"￥%@",data.order_info.insurance_price];
             self.inNumLabel.text = [NSString stringWithFormat:@"x %@",data.order_info.insurance_num];
+            [self.layer addSublayer:self.thirdLayer];
         }else{
             self.insuranceLabel.hidden = YES;
             self.insurancePriceLabel.hidden = YES;

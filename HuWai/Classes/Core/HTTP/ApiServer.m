@@ -200,6 +200,11 @@
             uristring = Feedback_Uri;
             break;
         }
+        case OrderGoAction:
+        {
+            uristring = OrderGo_Uri;
+            break;
+        }
         default:
             break;
     }

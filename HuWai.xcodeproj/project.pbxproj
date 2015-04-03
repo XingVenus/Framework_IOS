@@ -41,6 +41,9 @@
 		042B3F7A1A667920000E896D /* NSString+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B3F791A667920000E896D /* NSString+JSON.m */; };
 		042B3F7E1A66792A000E896D /* UIView+SimplifyExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B3F7D1A66792A000E896D /* UIView+SimplifyExtend.m */; };
 		042B68261A67C32D009CA824 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B68251A67C32D009CA824 /* Response.m */; };
+		042F89F41ACE2E3F0056A8D9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 042F89F31ACE2E3F0056A8D9 /* Info.plist */; };
+		042F89F71ACE2E970056A8D9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 042F89F91ACE2E970056A8D9 /* InfoPlist.strings */; };
+		042F8A0A1ACE3A5E0056A8D9 /* PayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F8A091ACE3A5E0056A8D9 /* PayView.m */; };
 		0431D5EE1AA7E93C00221AA3 /* OrderGoOutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5ED1AA7E93C00221AA3 /* OrderGoOutCell.m */; };
 		0431D5F21AA8349900221AA3 /* PayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5F11AA8349900221AA3 /* PayTypeCell.m */; };
 		0431D5F61AA984FA00221AA3 /* LeaderDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5F51AA984FA00221AA3 /* LeaderDetailCell.m */; };
@@ -123,7 +126,6 @@
 		04BE95B51AB2E98D0084E055 /* UIView+XHBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BE95B41AB2E98D0084E055 /* UIView+XHBadgeView.m */; };
 		04C2B1F11A65163E004E8F73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2B1F01A65163E004E8F73 /* main.m */; };
 		04C2B1F41A65163E004E8F73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2B1F31A65163E004E8F73 /* AppDelegate.m */; };
-		04C2B1F71A65163E004E8F73 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2B1F61A65163E004E8F73 /* ViewController.m */; };
 		04C2B1FA1A65163E004E8F73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04C2B1F81A65163E004E8F73 /* Main.storyboard */; };
 		04C2B1FC1A65163E004E8F73 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C2B1FB1A65163E004E8F73 /* Images.xcassets */; };
 		04C2B1FF1A65163E004E8F73 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C2B1FD1A65163E004E8F73 /* LaunchScreen.xib */; };
@@ -248,6 +250,11 @@
 		042B3F7D1A66792A000E896D /* UIView+SimplifyExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SimplifyExtend.m"; sourceTree = "<group>"; };
 		042B68241A67C32D009CA824 /* Response.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
 		042B68251A67C32D009CA824 /* Response.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Response.m; sourceTree = "<group>"; };
+		042F89F31ACE2E3F0056A8D9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		042F89F81ACE2E970056A8D9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		042F89FA1ACE2E9A0056A8D9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		042F8A081ACE3A5E0056A8D9 /* PayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PayView.h; path = ../Mine/PayView.h; sourceTree = "<group>"; };
+		042F8A091ACE3A5E0056A8D9 /* PayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PayView.m; path = ../Mine/PayView.m; sourceTree = "<group>"; };
 		0431D5EC1AA7E93C00221AA3 /* OrderGoOutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderGoOutCell.h; sourceTree = "<group>"; };
 		0431D5ED1AA7E93C00221AA3 /* OrderGoOutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderGoOutCell.m; sourceTree = "<group>"; };
 		0431D5F01AA8349900221AA3 /* PayTypeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayTypeCell.h; sourceTree = "<group>"; };
@@ -408,12 +415,9 @@
 		04BE95B31AB2E98D0084E055 /* UIView+XHBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XHBadgeView.h"; sourceTree = "<group>"; };
 		04BE95B41AB2E98D0084E055 /* UIView+XHBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XHBadgeView.m"; sourceTree = "<group>"; };
 		04C2B1EB1A65163E004E8F73 /* HuWai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HuWai.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		04C2B1EF1A65163E004E8F73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04C2B1F01A65163E004E8F73 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04C2B1F21A65163E004E8F73 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		04C2B1F31A65163E004E8F73 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		04C2B1F51A65163E004E8F73 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		04C2B1F61A65163E004E8F73 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		04C2B1F91A65163E004E8F73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04C2B1FB1A65163E004E8F73 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		04C2B1FE1A65163E004E8F73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -700,6 +704,8 @@
 				04CF6D0C1AB982E2006B1C23 /* SLButton.m */,
 				042166671AC258C900D9F38B /* FAQ.h */,
 				042166681AC258C900D9F38B /* FAQ.m */,
+				042F8A081ACE3A5E0056A8D9 /* PayView.h */,
+				042F8A091ACE3A5E0056A8D9 /* PayView.m */,
 			);
 			path = GoOutPlay;
 			sourceTree = "<group>";
@@ -1209,8 +1215,6 @@
 				042B3F611A664338000E896D /* Classes */,
 				04C2B1F21A65163E004E8F73 /* AppDelegate.h */,
 				04C2B1F31A65163E004E8F73 /* AppDelegate.m */,
-				04C2B1F51A65163E004E8F73 /* ViewController.h */,
-				04C2B1F61A65163E004E8F73 /* ViewController.m */,
 				04C2B1F81A65163E004E8F73 /* Main.storyboard */,
 				04C2B1FB1A65163E004E8F73 /* Images.xcassets */,
 				04C2B1FD1A65163E004E8F73 /* LaunchScreen.xib */,
@@ -1222,8 +1226,9 @@
 		04C2B1EE1A65163E004E8F73 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				042F89F31ACE2E3F0056A8D9 /* Info.plist */,
+				042F89F91ACE2E970056A8D9 /* InfoPlist.strings */,
 				0408F6DB1AA07CDC00C04961 /* huwai.sqlite */,
-				04C2B1EF1A65163E004E8F73 /* Info.plist */,
 				04C2B1F01A65163E004E8F73 /* main.m */,
 				043F5C471A68AF9C0009D939 /* HuwaiHeader.pch */,
 			);
@@ -1527,6 +1532,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				042F89F71ACE2E970056A8D9 /* InfoPlist.strings in Resources */,
 				04F4D7341AB02F42001E5861 /* AlipaySDK.bundle in Resources */,
 				04C2B1FA1A65163E004E8F73 /* Main.storyboard in Resources */,
 				049E8D331AC8F15C0027B08D /* UMShareEditViewControlleriPad.xib in Resources */,
@@ -1537,6 +1543,7 @@
 				044C6B9B1A88AA94000BF100 /* MJRefresh.bundle in Resources */,
 				04C2B1FC1A65163E004E8F73 /* Images.xcassets in Resources */,
 				049E8D301AC8F15C0027B08D /* UMSCommentInputController.xib in Resources */,
+				042F89F41ACE2E3F0056A8D9 /* Info.plist in Resources */,
 				049E8D371AC8F15C0027B08D /* UMSocialSDKResourcesNew.bundle in Resources */,
 				049E8D2F1AC8F15C0027B08D /* UMSCommentDetailController.xib in Resources */,
 				049E8D321AC8F15C0027B08D /* UMShareEditViewController.xib in Resources */,
@@ -1611,7 +1618,6 @@
 				044C6BA51A88BEA8000BF100 /* Search.m in Sources */,
 				041CC4BE1AA4407A0079088C /* ConfirmToPayment.m in Sources */,
 				0431D5EE1AA7E93C00221AA3 /* OrderGoOutCell.m in Sources */,
-				04C2B1F71A65163E004E8F73 /* ViewController.m in Sources */,
 				043F6AED1A76491E00EEA0B3 /* Settings.m in Sources */,
 				043F5C461A68AEEF0009D939 /* BaseViewController.m in Sources */,
 				0408F6D91AA0783800C04961 /* DatabaseUtil.m in Sources */,
@@ -1675,6 +1681,7 @@
 				04029A151ACB8EE500AAAC8B /* WebViewController.m in Sources */,
 				0427192F1A6D01FB001645AA /* MainPlay.m in Sources */,
 				04E8C0931A80A31800145FF0 /* Feedback.m in Sources */,
+				042F8A0A1ACE3A5E0056A8D9 /* PayView.m in Sources */,
 				04A539481A846845006BA09D /* CommonPersonModel.m in Sources */,
 				043F5C501A68EA4A0009D939 /* CommonFoundation.m in Sources */,
 				0451FAD21A8B230300529EEC /* BlankView.m in Sources */,
@@ -1738,6 +1745,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		042F89F91ACE2E970056A8D9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				042F89F81ACE2E970056A8D9 /* en */,
+				042F89FA1ACE2E9A0056A8D9 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		049E8D131AC8F15C0027B08D /* UMSocialLocalizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

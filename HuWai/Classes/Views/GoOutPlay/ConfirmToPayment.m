@@ -13,6 +13,7 @@
 #import "OrderContactCell.h"
 #import "OrderGoOutCell.h"
 #import "PayTypeCell.h"
+#import "PayView.h"
 
 @interface ConfirmToPayment ()
 {
@@ -64,6 +65,11 @@
             return mutableAttributedString;
         }];
         [self.tableView reloadData];
+    }else if (tag == OrderGoAction){
+        PayView *paycontroller = [[PayView alloc] init];
+        paycontroller.urlString = response.data[@"href"];
+        paycontroller.title = @"支付宝";
+        [self.navigationController pushViewController:paycontroller animated:YES];
     }
 }
 /*
@@ -109,7 +115,10 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    if ([orderDetailModel.order_status.value isEqualToString:@"1"]) {
+        return 4;
+    }
+    return 3;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -156,7 +165,7 @@
 - (void)confirmPayAction
 {
     if (payType) {
-        
+        [self postActionWithHUD:OrderGoAction params:@"order_id",self.order_id,nil];
     }else{
         [self showMessageWithThreeSecondAtCenter:@"请选择支付方式"];
     }

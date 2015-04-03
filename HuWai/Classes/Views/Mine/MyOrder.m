@@ -239,9 +239,15 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//    OrderInfo *info = self.dataSource[indexPath.row];
+//    ActivityDetail *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"activityDetailBoard"];
+//    detail.activityId = info.goods_id;
+//    [self.navigationController pushViewController:detail animated:YES];
+    
     OrderInfo *info = self.dataSource[indexPath.row];
-    ActivityDetail *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"activityDetailBoard"];
-    detail.activityId = info.goods_id;
-    [self.navigationController pushViewController:detail animated:YES];
+    ConfirmToPayment *payController = [self.storyboard instantiateViewControllerWithIdentifier:@"confirmToPaymentBoard"];
+    payController.order_id = info.order_id;
+    BaseNavigationController *payNav = [[BaseNavigationController alloc] initWithRootViewController:payController];
+    [self presentViewController:payNav animated:YES completion:nil];
 }
 @end

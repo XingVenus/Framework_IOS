@@ -247,7 +247,7 @@
     self.aNumLabel.text = [NSString stringWithFormat:@"x %@",data.num];
     if (data.insurance) {
         self.insuranceLabel.text = data.insurance;
-        self.insurancePriceLabel.text = data.insurance_price;
+        self.insurancePriceLabel.text = [NSString stringWithFormat:@"￥%@",data.insurance_price];
         self.inNumLabel.text = [NSString stringWithFormat:@"x %@",data.insurance_num];
     }
     self.timeLabel.text = data.time;

@@ -10,4 +10,5 @@
 
 @interface PayTypeCell : BaseTableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *aliPayBtn;
+@property (nonatomic, strong) CALayer *separateLineLayer;
 @end

@@ -26,4 +26,8 @@
 @property (nonatomic, weak) IBOutlet TTTAttributedLabel *totalPriceLabel;
 
 @property (nonatomic, weak) IBOutlet UILabel *lineLabel;
+
+@property (nonatomic, strong) CALayer *firstLayer;
+@property (nonatomic, strong) CALayer *secondLayer;
+@property (nonatomic, strong) CALayer *thirdLayer;
 @end

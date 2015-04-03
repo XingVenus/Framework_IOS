@@ -46,6 +46,7 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
     LoginPerfectinfoAction, //完善信息xici 、qq
     MessageGroupAction,     //我的消息 分组
     FeedbackAction,         //意见反馈
+    OrderGoAction,          //订单支付
 };
 
 
@@ -76,8 +77,8 @@ typedef NS_ENUM(NSInteger, HttpRequestAction){
 #define OrderMy_Uri         @"/v1/order/my"         //我的订单 get
 #define ScoreList_Uri       @"/v1/score/list"   //领队打分 已（待）打分列表 get
 #define ScoreNew_Uri        @"/v1/score/new"    //领队打分 评分
-
 #define Feedback_Uri        @"/v1/feedback"     //意见反馈
+#define OrderGo_Uri         @"/v1/order/go"     //订单支付
 
 //活动
 #define Activity_Uri        @"/v1/activity/list"
