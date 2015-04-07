@@ -79,8 +79,8 @@
 //        [self postActionWithHUD:UserEntryAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"password",[CommonFoundation trimString:self.password.text],@"loginToken",response.data[@"loginToken"],nil];
 //        return;
     }else if (tag == UserEntryAction){
+        [self.view endEditing:YES];
         APPInfo *infoObj = [APPInfo shareInit];
-//            infoObj.login = YES;
         //保存token
         [CacheBox saveCache:CACHE_TOKEN value:response.token];
         //赋值更新用户信息

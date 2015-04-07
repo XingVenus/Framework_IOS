@@ -39,20 +39,26 @@
 
 - (IBAction)submitPassword:(UIBarButtonItem *)sender {
     NSString *message = nil;
-    if ([CommonFoundation isEmptyString:self.firstPassword.text] || [CommonFoundation isEmptyString:self.secondPassword.text]) {
+    NSString *firstP = [CommonFoundation trimString:self.firstPassword.text];
+    NSString *secondP = [CommonFoundation trimString:self.secondPassword.text];
+    if ([CommonFoundation isEmptyString:firstP] || [CommonFoundation isEmptyString:secondP]) {
         message = @"密码信息不能为空";
-    }else if(![self.firstPassword.text isEqualToString:self.secondPassword.text]){
+    }else if(![firstP isEqualToString:secondP]){
         message = @"两次密码不一致,请重新输入";
     }
-    [self showMessageWithThreeSecondAtCenter:message];
+    
     if (!message) {
         //提交
-        [self postActionWithHUD:ModifyPasswordAction params:@"new_password",[CommonFoundation trimString:self.secondPassword.text],nil];
+        [self postActionWithHUD:ModifyPasswordAction params:@"password",secondP,nil];
+    }else{
+        [self showMessageWithThreeSecondAtCenter:message];
     }
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-    
+    if (tag == ModifyPasswordAction) {
+        [self performSelector:@selector(popToLastView:) withObject:nil afterDelay:1.5];
+    }
 }
 @end

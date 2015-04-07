@@ -818,6 +818,7 @@
                                             <outlet property="insuranceLabel" destination="8Eg-PH-JSN" id="Iwr-JQ-2LK"/>
                                             <outlet property="insurancePriceLabel" destination="6bZ-fk-ydE" id="rkw-3z-4tn"/>
                                             <outlet property="lineLabel" destination="xes-mY-KP1" id="BeP-7f-NO7"/>
+                                            <outlet property="orderStatusLabel" destination="lSZ-hK-q15" id="rPA-NE-tAg"/>
                                             <outlet property="totalPriceLabel" destination="xtP-y5-A2c" id="Lu0-WQ-hET"/>
                                         </connections>
                                     </tableViewCell>
@@ -1040,6 +1041,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bottomPayTab" destination="g6l-aw-Cmy" id="UKc-do-uCX"/>
                         <outlet property="confirmPayBtn" destination="1eh-KL-yb3" id="Kfv-kv-PPc"/>
                         <outlet property="confirmTotalMoneyLabel" destination="47t-gW-Dc1" id="hyl-6N-nbc"/>
                         <outlet property="tableView" destination="Osm-b3-o79" id="kKl-pt-goW"/>

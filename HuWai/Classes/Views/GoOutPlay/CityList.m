@@ -86,19 +86,35 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45.0;
+    return 40.0;
 }
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    if (section == 0) {
+//        return @"定位城市";
+//    }
+//    return @"热门城市";
+//}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
+    view.backgroundColor = APP_BACKGROUND_COLOR;
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 100, 30)];
+    [view addSubview:titleLabel];
+    titleLabel.font = [UIFont systemFontOfSize:14.0];
+    titleLabel.textColor = [UIColor darkGrayColor];
     if (section == 0) {
-        return @"定位城市";
+        titleLabel.text = @"定位城市";
+    }else if (section == 1){
+        titleLabel.text = @"热门城市";
     }
-    return @"热门城市";
+    return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    return 30;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -111,6 +127,7 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identity2];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity2];
+            cell.textLabel.font = [UIFont systemFontOfSize:14.0];
             [cell addSubview:_activityIndicator];
             refreshBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             refreshBtn.frame = CGRectMake(SCREEN_WIDTH - 80, 0, 80, 45);
@@ -132,6 +149,7 @@
         if (row<self.dataSource.count) {
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
+                cell.textLabel.font = [UIFont systemFontOfSize:14.0];
             }
             HotCityInfo *dic = self.dataSource[row];
             cell.textLabel.text = dic.name;

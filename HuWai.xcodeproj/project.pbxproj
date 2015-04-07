@@ -41,7 +41,6 @@
 		042B3F7A1A667920000E896D /* NSString+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B3F791A667920000E896D /* NSString+JSON.m */; };
 		042B3F7E1A66792A000E896D /* UIView+SimplifyExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B3F7D1A66792A000E896D /* UIView+SimplifyExtend.m */; };
 		042B68261A67C32D009CA824 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B68251A67C32D009CA824 /* Response.m */; };
-		042F89F41ACE2E3F0056A8D9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 042F89F31ACE2E3F0056A8D9 /* Info.plist */; };
 		042F89F71ACE2E970056A8D9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 042F89F91ACE2E970056A8D9 /* InfoPlist.strings */; };
 		042F8A0A1ACE3A5E0056A8D9 /* PayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F8A091ACE3A5E0056A8D9 /* PayView.m */; };
 		0431D5EE1AA7E93C00221AA3 /* OrderGoOutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5ED1AA7E93C00221AA3 /* OrderGoOutCell.m */; };
@@ -250,7 +249,6 @@
 		042B3F7D1A66792A000E896D /* UIView+SimplifyExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SimplifyExtend.m"; sourceTree = "<group>"; };
 		042B68241A67C32D009CA824 /* Response.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
 		042B68251A67C32D009CA824 /* Response.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Response.m; sourceTree = "<group>"; };
-		042F89F31ACE2E3F0056A8D9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		042F89F81ACE2E970056A8D9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		042F89FA1ACE2E9A0056A8D9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		042F8A081ACE3A5E0056A8D9 /* PayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PayView.h; path = ../Mine/PayView.h; sourceTree = "<group>"; };
@@ -564,6 +562,7 @@
 		04FBF46D1A7A320B004A0A74 /* ActivityDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetail.m; sourceTree = "<group>"; };
 		04FBF46F1A7A3F0A004A0A74 /* SelectListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectListView.h; sourceTree = "<group>"; };
 		04FBF4701A7A3F0A004A0A74 /* SelectListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectListView.m; sourceTree = "<group>"; };
+		04FEDC991AD3872200EA8F19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59094FCF7084AF5E34F759EA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CFC618B8A95FAC3AC591B8A6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D2326C7CAC01BA5D0F91806D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1226,7 +1225,7 @@
 		04C2B1EE1A65163E004E8F73 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				042F89F31ACE2E3F0056A8D9 /* Info.plist */,
+				04FEDC991AD3872200EA8F19 /* Info.plist */,
 				042F89F91ACE2E970056A8D9 /* InfoPlist.strings */,
 				0408F6DB1AA07CDC00C04961 /* huwai.sqlite */,
 				04C2B1F01A65163E004E8F73 /* main.m */,
@@ -1543,7 +1542,6 @@
 				044C6B9B1A88AA94000BF100 /* MJRefresh.bundle in Resources */,
 				04C2B1FC1A65163E004E8F73 /* Images.xcassets in Resources */,
 				049E8D301AC8F15C0027B08D /* UMSCommentInputController.xib in Resources */,
-				042F89F41ACE2E3F0056A8D9 /* Info.plist in Resources */,
 				049E8D371AC8F15C0027B08D /* UMSocialSDKResourcesNew.bundle in Resources */,
 				049E8D2F1AC8F15C0027B08D /* UMSCommentDetailController.xib in Resources */,
 				049E8D321AC8F15C0027B08D /* UMShareEditViewController.xib in Resources */,

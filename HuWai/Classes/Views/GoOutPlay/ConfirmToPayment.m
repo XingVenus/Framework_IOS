@@ -14,6 +14,7 @@
 #import "OrderGoOutCell.h"
 #import "PayTypeCell.h"
 #import "PayView.h"
+#import "ActivityDetail.h"
 
 @interface ConfirmToPayment ()
 {
@@ -24,6 +25,7 @@
 
 
 @property (weak, nonatomic) IBOutlet UIButton *confirmPayBtn;
+@property (weak, nonatomic) IBOutlet UIView *bottomPayTab;
 
 @end
 
@@ -50,24 +52,30 @@
         if (orderDetailModel.joins_info) {
             self.dataSource = [NSMutableArray arrayWithArray:orderDetailModel.joins_info];
         }
-        NSString *text = [NSString stringWithFormat:@"合计:%@元",orderDetailModel.order_info.money];
-        [self.confirmTotalMoneyLabel setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-            NSRange boldRange = [[mutableAttributedString string] rangeOfString:orderDetailModel.order_info.money options:NSRegularExpressionSearch];
-            
-            // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
-            UIFont *boldSystemFont = [UIFont boldSystemFontOfSize:20];
-            CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
-            if (font) {
-                [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:boldRange];
-                [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(__bridge id)[[UIColor orangeColor] CGColor] range:boldRange];
-                CFRelease(font);
-            }
-            return mutableAttributedString;
-        }];
+        if ([orderDetailModel.order_status.value isEqualToString:@"1"]) {
+            NSString *text = [NSString stringWithFormat:@"合计:%@元",orderDetailModel.order_info.money];
+            [self.confirmTotalMoneyLabel setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+                NSRange boldRange = [[mutableAttributedString string] rangeOfString:orderDetailModel.order_info.money options:NSRegularExpressionSearch];
+                
+                // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+                UIFont *boldSystemFont = [UIFont boldSystemFontOfSize:20];
+                CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+                if (font) {
+                    [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:boldRange];
+                    [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(__bridge id)[[UIColor orangeColor] CGColor] range:boldRange];
+                    CFRelease(font);
+                }
+                return mutableAttributedString;
+            }];
+        }else{
+            self.bottomPayTab.hidden = YES;
+            self.tableView.frame = self.view.bounds;
+        }
         [self.tableView reloadData];
     }else if (tag == OrderGoAction){
         PayView *paycontroller = [[PayView alloc] init];
         paycontroller.urlString = response.data[@"href"];
+        paycontroller.orderId = self.order_id;
         paycontroller.title = @"支付宝";
         [self.navigationController pushViewController:paycontroller animated:YES];
     }
@@ -101,7 +109,6 @@
         }
     }
     return 0;
-    
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -149,6 +156,15 @@
         return typecell;
     }else{
         return nil;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ((indexPath.section == 0) && (indexPath.row == 0)) {
+        ActivityDetail *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"activityDetailBoard"];
+        detail.activityId = orderDetailModel.activity_info.aid;
+        [self.navigationController pushViewController:detail animated:YES];
     }
 }
 

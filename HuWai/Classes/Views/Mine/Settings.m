@@ -21,9 +21,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (CURRENT_SYS_VERSION>=7.0) {
-        self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
-    }
+//    if (CURRENT_SYS_VERSION>=7.0) {
+//        self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+//    }
     _settingList = @[@[@"开启消息提醒",@"清除图片缓存"],@[@"意见反馈",@"用户协议"],@[@"关于我们",@"鼓励我们"]];
     UIView *footerview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 70)];
     _loginOrOutBtn = [UIButton buttonWithType:UIButtonTypeCustom];

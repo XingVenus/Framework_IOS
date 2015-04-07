@@ -81,9 +81,9 @@ NSDictionary *argsTpMap(id firstObject,...)
     // Dispose of any resources that can be recreated.
 }
 #pragma mark - custom method
--(void)popToLastView:(id)sender
+-(void)popToLastView:(BOOL)animated
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:animated];
 }
 
 -(void)dismissNavigationView:(BOOL)animated

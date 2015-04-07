@@ -35,6 +35,14 @@
         [self postActionWithHUD:FeedbackAction params:@"type",@"ios",@"content",content,@"uid",[APPInfo shareInit].uid,@"username",[APPInfo shareInit].username,nil];
     }
 }
+
+-(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
+{
+    if (tag == FeedbackAction) {
+        [self.view endEditing:YES];
+        [self performSelector:@selector(popToLastView:) withObject:nil afterDelay:1.5];
+    }
+}
 /*
 #pragma mark - Navigation
 

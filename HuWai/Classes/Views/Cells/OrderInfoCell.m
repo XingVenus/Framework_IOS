@@ -60,8 +60,8 @@
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
 {
     if (item) {
-        
         OrderDetailModel *data = (OrderDetailModel *)item;
+        self.orderStatusLabel.text = data.order_status.text;
         self.activityLabel.text = data.activity_info.title;
         self.activityPriceLabel.text = [NSString stringWithFormat:@"￥%@",data.activity_info.price];
         self.aNumLabel.text = [NSString stringWithFormat:@"x %@",data.order_info.num];

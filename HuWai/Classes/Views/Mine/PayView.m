@@ -8,6 +8,9 @@
 
 #import "PayView.h"
 
+static NSString *successUrl = @"http://xx.huwai.ixici.info/order/success?oid=%@&isMobile=1";
+static NSString *failUrl = @"http://xx.huwai.ixici.info/order/fail?oid=%@&isMobile=1";
+
 @interface PayView ()
 
 @end
@@ -101,7 +104,14 @@
 #pragma mark UIWebView delegate methods
 
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
-    
+    //
+    NSString *formatSuccess = [NSString stringWithFormat:successUrl,self.orderId];
+    if ([request.URL.absoluteString isEqualToString:formatSuccess]) {
+        //跳转到成功页面
+        
+        return NO;
+    }
+    DLog(@"%@",request.URL.absoluteString);
     return YES;
 }
 

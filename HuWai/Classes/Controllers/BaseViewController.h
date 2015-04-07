@@ -38,7 +38,7 @@
 -(void)onRequestFailed:(HttpRequestAction)tag response:(Response *)response;
 
 -(NSMutableDictionary *)argsToMap:(va_list)args firstObj:(id)firstObj;
--(IBAction)popToLastView:(id)sender;
+-(IBAction)popToLastView:(BOOL)animated;
 -(IBAction)dismissNavigationView:(BOOL)animated;
 
 //-----custom method to use
