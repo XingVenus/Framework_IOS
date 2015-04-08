@@ -62,6 +62,18 @@ static NSString *failUrl = @"http://xx.huwai.ixici.info/order/fail?oid=%@&isMobi
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:self.title];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController setToolbarHidden:YES animated:YES];
+    [MobClick endLogPageView:self.title];
+}
+
 -(void)updateToolbar {
     
     UIBarButtonItem *backButton =	[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backIcon.png"] style:UIBarButtonItemStylePlain target:theWebView action:@selector(goBack)];
@@ -85,13 +97,6 @@ static NSString *failUrl = @"http://xx.huwai.ixici.info/order/fail?oid=%@&isMobi
     
     [self setToolbarItems:contents animated:NO];
     
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [self.navigationController setToolbarHidden:YES animated:YES];
     
 }
 

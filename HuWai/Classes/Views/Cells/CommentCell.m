@@ -113,7 +113,7 @@
 {
     if (!_userBackView) {
         _userBackView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 10*2, 60)];
-        _userBackView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.6];
+//        _userBackView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.6];
     }
     return _userBackView;
 }
@@ -122,6 +122,7 @@
     if (!_userIcon) {
         _userIcon = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.userBackView.frame) - 55, 5, 50, 50)];
         _userIcon.contentMode = UIViewContentModeScaleAspectFill;
+        _userIcon.clipsToBounds = YES;
     }
     return _userIcon;
 }
@@ -153,7 +154,7 @@
 {
     if (!_leaderBackView) {
         _leaderBackView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 10*2, 60)];
-        _leaderBackView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.6];
+        _leaderBackView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.2];
     }
     return _leaderBackView;
 }
@@ -163,6 +164,7 @@
     if (!_leaderIcon) {
         _leaderIcon = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 50, 50)];
         _leaderIcon.contentMode = UIViewContentModeScaleAspectFill;
+        _leaderIcon.clipsToBounds = YES;
     }
     return _leaderIcon;
 }
@@ -179,7 +181,7 @@
 -(TTTAttributedLabel *)leaderAnswer
 {
     if (!_leaderAnswer) {
-        _leaderAnswer = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(60, CGRectGetMaxY(self.leaderNameLabel.frame)+2, CGRectGetWidth(self.leaderBackView.frame) - 50-5-5-5, 28)];
+        _leaderAnswer = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.leaderIcon.frame)+5, CGRectGetMaxY(self.leaderNameLabel.frame)+2, CGRectGetWidth(self.leaderBackView.frame) - 50-5-5-5, 28)];
         _leaderAnswer.numberOfLines = 0;
         _leaderAnswer.lineSpacing = 4.0;
         _leaderAnswer.textColor = [UIColor grayColor];

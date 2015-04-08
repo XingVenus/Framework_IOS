@@ -18,6 +18,7 @@
 #import "FAQ.h"
 #import "FAQCell.h"
 #import "UMSocial.h"
+#import "ActivityDetailWebCell.h"
 
 static inline NSRegularExpression * NumbersRegularExpression() {
     static NSRegularExpression *_regularExpression = nil;
@@ -29,7 +30,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     return _regularExpression;
 }
 
-@interface ActivityDetail ()<FAQDelegate,UMSocialUIDelegate>
+@interface ActivityDetail ()<FAQDelegate,UMSocialUIDelegate,UIWebViewDelegate>
 {
     TitleAndPriceView *titleAndPrice;
     UIButton *favoriteBtn;
@@ -39,6 +40,8 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     FAQ *faqController; //问答视图
     
     UIButton *subscribeBtn;
+    
+    CGFloat webCellHeight;
 }
 
 @property (nonatomic, strong) MaskedPageView *maskPageView;
@@ -99,6 +102,17 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 -(void)loadDataSource
 {
     [self loadActionWithHUD:ActivityDetailAction message:@"正在加载..." params:@"id",self.activityId,nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:self.title];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:self.title];
 }
 
 #pragma mark 获取问答列表数据
@@ -373,8 +387,15 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 {
     if (_segmentControl.selectedSegmentIndex == 2 && faqModel.data.count>0) {
         return [FAQCell heightForCellWithText:faqModel.data[indexPath.row] availableWidth:0];
+    }else if(_segmentControl.selectedSegmentIndex == 1){
+        return SCREEN_HEIGHT - 64 - 45 - 50;
     }else{
-        return 400.0;
+        CGFloat screenCellheight = SCREEN_HEIGHT - 64 - 45 - 50;
+        if (webCellHeight>screenCellheight) {
+            return webCellHeight;
+        }else{
+            return screenCellheight;
+        }
     }
 }
 
@@ -382,9 +403,18 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 {
 //    NSInteger section = [indexPath section];
     if (_segmentControl.selectedSegmentIndex == 0) {
+        /*
         ActivityDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"activitydetailcell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell configureCellWithItem:detailModel.detail atIndexPath:indexPath];
+         */
+        static NSString *identifier1 = @"webdetailcell";
+        ActivityDetailWebCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
+        if (!cell) {
+            cell = [[ActivityDetailWebCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier1];
+        }
+        cell.WebView.delegate = self;
+        [cell configureCellWithItem:detailModel.aid atIndexPath:indexPath];
         return cell;
     }else if (_segmentControl.selectedSegmentIndex == 1) {
         LeaderDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"leaderdetailcell" forIndexPath:indexPath];
@@ -415,6 +445,14 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         return cell;
     }
     return nil;
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight"] floatValue];
+    webCellHeight = height;
+    webView.height = height;
+    [self.tableView reloadData];
 }
 @end
 

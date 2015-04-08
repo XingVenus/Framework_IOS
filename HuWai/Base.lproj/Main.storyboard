@@ -629,6 +629,71 @@
             </objects>
             <point key="canvasLocation" x="2519" y="-2545"/>
         </scene>
+        <!--支付完成-->
+        <scene sceneID="a06-e3-jbO">
+            <objects>
+                <viewController storyboardIdentifier="orderdoneBoard" title="支付完成" id="wxE-X4-a5M" customClass="OrderDone" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OTK-pN-xhh"/>
+                        <viewControllerLayoutGuide type="bottom" id="5so-aZ-18C"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Xee-V1-A6V">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TTr-cI-PfQ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TTr-cI-PfQ" firstAttribute="top" secondItem="Xee-V1-A6V" secondAttribute="top" id="DFk-rw-QgH"/>
+                            <constraint firstItem="TTr-cI-PfQ" firstAttribute="leading" secondItem="Xee-V1-A6V" secondAttribute="leading" id="XUk-qX-X1Z"/>
+                            <constraint firstAttribute="trailing" secondItem="TTr-cI-PfQ" secondAttribute="trailing" id="dLZ-k5-IOS"/>
+                            <constraint firstItem="TTr-cI-PfQ" firstAttribute="bottom" secondItem="5so-aZ-18C" secondAttribute="top" id="dYU-s1-6Rd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="支付完成" id="iqK-gT-RDw">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="YEH-4P-Mdn">
+                            <connections>
+                                <action selector="dismissNavigationView:" destination="wxE-X4-a5M" id="FD9-jK-uSx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="TTr-cI-PfQ" id="9dn-Ox-4ya"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f02-gP-O1W" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2950" y="-1774"/>
+        </scene>
+        <!--支付宝-->
+        <scene sceneID="mlU-4D-Wc2">
+            <objects>
+                <viewController storyboardIdentifier="payviewBoard" title="支付宝" id="HLO-b7-b65" customClass="PayView" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TbM-bB-bye"/>
+                        <viewControllerLayoutGuide type="bottom" id="eLf-7V-t7q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8Mu-Rg-cSP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="支付宝" id="0ah-Le-npA">
+                        <barButtonItem key="leftBarButtonItem" image="arrow-back" id="tub-cD-Amb">
+                            <connections>
+                                <action selector="popToLastView:" destination="HLO-b7-b65" id="EuI-9w-l50"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H3j-TR-5P4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3382" y="-2545"/>
+        </scene>
         <!--订单确认-->
         <scene sceneID="Q7O-J3-cFl">
             <objects>
@@ -1045,6 +1110,8 @@
                         <outlet property="confirmPayBtn" destination="1eh-KL-yb3" id="Kfv-kv-PPc"/>
                         <outlet property="confirmTotalMoneyLabel" destination="47t-gW-Dc1" id="hyl-6N-nbc"/>
                         <outlet property="tableView" destination="Osm-b3-o79" id="kKl-pt-goW"/>
+                        <segue destination="HLO-b7-b65" kind="push" identifier="payview" id="Xdy-hQ-mpk"/>
+                        <segue destination="wxE-X4-a5M" kind="push" identifier="orderdone" id="jFV-lB-bTr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f6H-Eb-vuc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2001,7 +2068,6 @@
                                 <action selector="popToLastView:" destination="ZTU-1U-pjd" id="Sf4-WQ-0F5"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="清除未读" id="EJk-t9-D8r"/>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="eC1-mL-TLM" id="kF8-8w-uml"/>

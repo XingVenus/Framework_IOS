@@ -30,6 +30,13 @@
 {
     [super viewWillAppear:animated];
     [self loadDataSource];
+    [MobClick beginLogPageView:self.title];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:self.title];
 }
 
 -(void)loadDataSource

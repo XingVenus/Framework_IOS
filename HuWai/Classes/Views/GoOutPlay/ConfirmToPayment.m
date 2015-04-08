@@ -16,10 +16,13 @@
 #import "PayView.h"
 #import "ActivityDetail.h"
 
+#import "OrderDone.h"
+
 @interface ConfirmToPayment ()
 {
     OrderDetailModel *orderDetailModel;
     NSString *payType;
+    NSString *_urlString;
 }
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *confirmTotalMoneyLabel;
 
@@ -38,6 +41,17 @@
     [self.confirmPayBtn addTarget:self action:@selector(confirmPayAction) forControlEvents:UIControlEventTouchUpInside];
     
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:self.title];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:self.title];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,22 +87,36 @@
         }
         [self.tableView reloadData];
     }else if (tag == OrderGoAction){
+        _urlString = response.data[@"href"];
+//        [self performSegueWithIdentifier:@"payview" sender:self];
+        [self performSegueWithIdentifier:@"orderdone" sender:self];
+        /*
         PayView *paycontroller = [[PayView alloc] init];
         paycontroller.urlString = response.data[@"href"];
         paycontroller.orderId = self.order_id;
         paycontroller.title = @"支付宝";
         [self.navigationController pushViewController:paycontroller animated:YES];
+         */
+        
     }
 }
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"payview"]) {
+        PayView *paycontroller = segue.destinationViewController;
+        paycontroller.urlString = _urlString;
+        paycontroller.orderId = self.order_id;
+    }else if ([segue.identifier isEqualToString:@"orderdone"]){
+        OrderDone *orderDoneView = segue.destinationViewController;
+        orderDoneView.orderDetailModel = orderDetailModel;
+    }
 }
-*/
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (orderDetailModel) {

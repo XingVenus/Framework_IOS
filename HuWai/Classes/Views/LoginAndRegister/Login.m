@@ -90,6 +90,7 @@
         [CacheBox saveCache:CACHE_USER_PASSWORD value:_pwdStr];
         
         [self dismissNavigationView:YES];
+        
     }
 
 }

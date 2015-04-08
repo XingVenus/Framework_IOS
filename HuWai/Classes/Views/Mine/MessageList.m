@@ -35,6 +35,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:self.title];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:self.title];
+}
+
 -(void)loadDataSource
 {
     [self loadAction:MessageListAction params:@"page",@(self.currentPage),@"pagesize",@(self.pageSize),nil];

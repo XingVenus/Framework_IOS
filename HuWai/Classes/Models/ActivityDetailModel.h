@@ -17,6 +17,7 @@ JProperty(NSString *aid, id);
 JProperty(NSString *title, title);
 JProperty(NSString *price, price);
 JProperty(NSArray *flash, flash);
+JProperty(NSString *image, image);
 JProperty(DetailInfo *detail, detail);
 JProperty(LeaderInfo *leader, leader);
 JProperty(NSString *starttime, starttime);

@@ -28,4 +28,5 @@
 #import "RTLabel.h"
 #import "TTTAttributedLabel.h"
 
+#import "MobClick.h"
 #endif

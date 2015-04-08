@@ -17,6 +17,9 @@
 		0408F6DC1AA07CDC00C04961 /* huwai.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 0408F6DB1AA07CDC00C04961 /* huwai.sqlite */; };
 		0408F6DF1AA158E400C04961 /* EnrollMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0408F6DE1AA158E400C04961 /* EnrollMemberCell.m */; };
 		040C6A0A1A917F7900A484FF /* HotCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 040C6A091A917F7900A484FF /* HotCityModel.m */; };
+		04161A3A1AD4F7770061F6FA /* ActivityDetailWebCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04161A391AD4F7770061F6FA /* ActivityDetailWebCell.m */; };
+		04161A3E1AD512380061F6FA /* PayDoneForActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04161A3D1AD512380061F6FA /* PayDoneForActivityCell.m */; };
+		04161A411AD518890061F6FA /* OrderDone.m in Sources */ = {isa = PBXBuildFile; fileRef = 04161A401AD518890061F6FA /* OrderDone.m */; };
 		041CC4BE1AA4407A0079088C /* ConfirmToPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 041CC4BD1AA4407A0079088C /* ConfirmToPayment.m */; };
 		041CC4C11AA44BF40079088C /* OrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 041CC4C01AA44BF40079088C /* OrderDetailModel.m */; };
 		041CC4C71AA46D310079088C /* OrderContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 041CC4C61AA46D310079088C /* OrderContactCell.m */; };
@@ -198,6 +201,12 @@
 		0408F6DE1AA158E400C04961 /* EnrollMemberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnrollMemberCell.m; sourceTree = "<group>"; };
 		040C6A081A917F7900A484FF /* HotCityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotCityModel.h; sourceTree = "<group>"; };
 		040C6A091A917F7900A484FF /* HotCityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotCityModel.m; sourceTree = "<group>"; };
+		04161A381AD4F7770061F6FA /* ActivityDetailWebCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailWebCell.h; sourceTree = "<group>"; };
+		04161A391AD4F7770061F6FA /* ActivityDetailWebCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailWebCell.m; sourceTree = "<group>"; };
+		04161A3C1AD512380061F6FA /* PayDoneForActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayDoneForActivityCell.h; sourceTree = "<group>"; };
+		04161A3D1AD512380061F6FA /* PayDoneForActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayDoneForActivityCell.m; sourceTree = "<group>"; };
+		04161A3F1AD518890061F6FA /* OrderDone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDone.h; sourceTree = "<group>"; };
+		04161A401AD518890061F6FA /* OrderDone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDone.m; sourceTree = "<group>"; };
 		041CC4BC1AA4407A0079088C /* ConfirmToPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmToPayment.h; sourceTree = "<group>"; };
 		041CC4BD1AA4407A0079088C /* ConfirmToPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmToPayment.m; sourceTree = "<group>"; };
 		041CC4BF1AA44BF40079088C /* OrderDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailModel.h; sourceTree = "<group>"; };
@@ -633,6 +642,15 @@
 			path = DataBase;
 			sourceTree = "<group>";
 		};
+		04161A3B1AD512100061F6FA /* PaymentDone */ = {
+			isa = PBXGroup;
+			children = (
+				04161A3C1AD512380061F6FA /* PayDoneForActivityCell.h */,
+				04161A3D1AD512380061F6FA /* PayDoneForActivityCell.m */,
+			);
+			name = PaymentDone;
+			sourceTree = "<group>";
+		};
 		041CC4C81AA57F5D0079088C /* TTTAttributedLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -705,6 +723,8 @@
 				042166681AC258C900D9F38B /* FAQ.m */,
 				042F8A081ACE3A5E0056A8D9 /* PayView.h */,
 				042F8A091ACE3A5E0056A8D9 /* PayView.m */,
+				04161A3F1AD518890061F6FA /* OrderDone.h */,
+				04161A401AD518890061F6FA /* OrderDone.m */,
 			);
 			path = GoOutPlay;
 			sourceTree = "<group>";
@@ -935,6 +955,8 @@
 				04F4D7421AB03C7E001E5861 /* ActivityDetailCell.m */,
 				0429ADF21AC2B05D000BE506 /* FAQCell.h */,
 				0429ADF31AC2B05D000BE506 /* FAQCell.m */,
+				04161A381AD4F7770061F6FA /* ActivityDetailWebCell.h */,
+				04161A391AD4F7770061F6FA /* ActivityDetailWebCell.m */,
 			);
 			name = ActivityDetailCell;
 			sourceTree = "<group>";
@@ -1274,6 +1296,7 @@
 		04EA26AA1A77949600CCB35E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				04161A3B1AD512100061F6FA /* PaymentDone */,
 				04C677FF1AC108C4001A56CA /* MessageCells */,
 				0431D5F31AA984D500221AA3 /* ActivityDetailCell */,
 				0431D5EF1AA8346200221AA3 /* ConfirmPaymentCell */,
@@ -1616,6 +1639,7 @@
 				044C6BA51A88BEA8000BF100 /* Search.m in Sources */,
 				041CC4BE1AA4407A0079088C /* ConfirmToPayment.m in Sources */,
 				0431D5EE1AA7E93C00221AA3 /* OrderGoOutCell.m in Sources */,
+				04161A3E1AD512380061F6FA /* PayDoneForActivityCell.m in Sources */,
 				043F6AED1A76491E00EEA0B3 /* Settings.m in Sources */,
 				043F5C461A68AEEF0009D939 /* BaseViewController.m in Sources */,
 				0408F6D91AA0783800C04961 /* DatabaseUtil.m in Sources */,
@@ -1669,6 +1693,7 @@
 				04FBF4711A7A3F0A004A0A74 /* SelectListView.m in Sources */,
 				04F4D73E1AB02F42001E5861 /* openssl_wrapper.m in Sources */,
 				04CCA7C51A7B65CE0034A21D /* NavView.m in Sources */,
+				04161A411AD518890061F6FA /* OrderDone.m in Sources */,
 				043899D31AAD67910035A113 /* SearchResultList.m in Sources */,
 				042719281A6CFDE0001645AA /* Login.m in Sources */,
 				043F6AE41A762CF900EEA0B3 /* AvatarObject.m in Sources */,
@@ -1698,6 +1723,7 @@
 				044C6B9F1A88AA94000BF100 /* MJRefreshHeaderView.m in Sources */,
 				0420D1551A9DB6D400F22C3E /* KVNMaskedPageControl.m in Sources */,
 				048337C11A7F465D00E2F889 /* EDStarRating.m in Sources */,
+				04161A3A1AD4F7770061F6FA /* ActivityDetailWebCell.m in Sources */,
 				041CC4C11AA44BF40079088C /* OrderDetailModel.m in Sources */,
 				04A539421A8308DF006BA09D /* RFJModel.m in Sources */,
 				041CC4CE1AA583FE0079088C /* OrderInfoCell.m in Sources */,

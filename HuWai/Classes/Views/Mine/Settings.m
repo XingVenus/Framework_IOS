@@ -52,6 +52,13 @@
     if (token) {
         [_loginOrOutBtn setSelected:YES];
     }
+    [MobClick beginLogPageView:self.title];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:self.title];
 }
 
 -(void)loginOrOutAction:(UIButton *)sender
