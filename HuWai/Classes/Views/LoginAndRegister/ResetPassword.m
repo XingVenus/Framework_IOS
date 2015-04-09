@@ -46,7 +46,7 @@
     }else if (![self.passwordField.text isEqualToString:self.confirmField.text]){
         errorMessage = @"两次输入的密码不正确";
     }
-    [self showMessageWithThreeSecondAtCenter:errorMessage];
+    [self showMessageWithThreeSecondAtCenter:errorMessage afterDelay:1];
     if (_resetToken && _phoneNumber) {
         [self postActionWithHUD:ResetpasswordAction params:@"phone",_phoneNumber,@"password",[CommonFoundation trimString:self.confirmField.text],@"verify_token",_resetToken,nil];
     }

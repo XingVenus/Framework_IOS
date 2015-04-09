@@ -16,8 +16,6 @@
 #import "PayView.h"
 #import "ActivityDetail.h"
 
-#import "OrderDone.h"
-
 @interface ConfirmToPayment ()
 {
     OrderDetailModel *orderDetailModel;
@@ -47,6 +45,14 @@
 {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:self.title];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
+    label.textColor = [UIColor orangeColor];
+    label.font = [UIFont systemFontOfSize:14.0];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.text = @"温馨提醒：45分钟内未支付将自动取消订单";
+//    self.tableView.tableHeaderView.height = 50;
+    self.tableView.tableFooterView = label;
+//    [self.tableView.tableFooterView addSubview:label];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -88,8 +94,8 @@
         [self.tableView reloadData];
     }else if (tag == OrderGoAction){
         _urlString = response.data[@"href"];
-//        [self performSegueWithIdentifier:@"payview" sender:self];
-        [self performSegueWithIdentifier:@"orderdone" sender:self];
+        [self performSegueWithIdentifier:@"payview" sender:self];
+        
         /*
         PayView *paycontroller = [[PayView alloc] init];
         paycontroller.urlString = response.data[@"href"];
@@ -111,9 +117,7 @@
         PayView *paycontroller = segue.destinationViewController;
         paycontroller.urlString = _urlString;
         paycontroller.orderId = self.order_id;
-    }else if ([segue.identifier isEqualToString:@"orderdone"]){
-        OrderDone *orderDoneView = segue.destinationViewController;
-        orderDoneView.orderDetailModel = orderDetailModel;
+        paycontroller.orderDetailModel = orderDetailModel;
     }
 }
 
@@ -180,6 +184,7 @@
     }else if (section == 3){
         PayTypeCell *typecell = [tableView dequeueReusableCellWithIdentifier:@"paytypecell" forIndexPath:indexPath];
         typecell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self payTypeSelection:typecell.aliPayBtn];
         [typecell.aliPayBtn addTarget:self action:@selector(payTypeSelection:) forControlEvents:UIControlEventTouchUpInside];
         return typecell;
     }else{
@@ -211,7 +216,7 @@
     if (payType) {
         [self postActionWithHUD:OrderGoAction params:@"order_id",self.order_id,nil];
     }else{
-        [self showMessageWithThreeSecondAtCenter:@"请选择支付方式"];
+        [self showMessageWithThreeSecondAtCenter:@"请选择支付方式" afterDelay:1];
     }
 }
 @end

@@ -126,7 +126,7 @@
 -(BOOL)checkIsLastPage
 {
     if (self.currentPage>=self.maxPage) {
-        [self showMessageWithThreeSecondAtCenter:NO_MORE_DATA_MESSAGE];
+        [self showMessageWithThreeSecondAtCenter:NO_MORE_DATA_MESSAGE afterDelay:1.5];
         [self.tableView footerEndRefreshing];
         return YES;
     }

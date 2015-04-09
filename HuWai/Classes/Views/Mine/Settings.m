@@ -7,6 +7,7 @@
 //
 
 #import "Settings.h"
+#import "LoadHTMLView.h"
 
 @interface Settings ()
 {
@@ -127,7 +128,7 @@
                 //清除图片缓存
                 [[[SDWebImageManager sharedManager] imageCache] clearDisk];
                 [[[SDWebImageManager sharedManager] imageCache] clearMemory];
-                [self showMessageWithThreeSecondAtCenter:@"清理完成"];
+                [self showMessageWithThreeSecondAtCenter:@"清理完成" afterDelay:1];
                 [self.tableView reloadData];
                 /*不过这里要特别注意一下，在IOS7中你会发现使用这两个方法缓存总清除不干净，即使断网下还是会有数据。这是因为在IOS7中，缓存机制做了修改，使用上述两个方法只清除了SDWebImage的缓存，没有清除系统的缓存，所以我们可以在清除缓存的代理中额外添加以下：
                  */
@@ -166,14 +167,21 @@
     NSLog(@"%@", sender.isOn ? @"ON" : @"OFF");
     [CacheBox saveCache:OPEN_MESSAGE_ALERT value:sender.isOn?@"ON":@"OFF"];
 }
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"agreement"]) {
+        LoadHTMLView *agreement = segue.destinationViewController;
+        agreement.urlString = AGREEMENT_URL;
+    }else if([segue.identifier isEqualToString:@"aboutus"]){
+        LoadHTMLView *aboutus = segue.destinationViewController;
+        aboutus.urlString = ABOUT_US_URL;
+    }
 }
-*/
+
 
 @end

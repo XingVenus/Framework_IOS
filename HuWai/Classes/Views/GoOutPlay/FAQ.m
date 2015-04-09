@@ -52,7 +52,7 @@
     if (self.actID && ![CommonFoundation isEmptyString:contentText]) {
         [self postActionWithHUD:ActivityAskAction params:@"id",self.actID,@"content",contentText,nil];
     }else{
-        [self showMessageWithThreeSecondAtCenter:@"请填写提问内容"];
+        [self showMessageWithThreeSecondAtCenter:@"请填写提问内容" afterDelay:1];
     }
 }
 
@@ -62,7 +62,7 @@
         if (_delegate && [_delegate respondsToSelector:@selector(didSubmitFAQ)]) {
             [_delegate didSubmitFAQ];
         }
-        [self performSelector:@selector(popToLastView:) withObject:nil afterDelay:2];
+        [self performSelector:@selector(popToLastView:) withObject:nil afterDelay:1];
     }
 }
 #pragma mark - Navigation

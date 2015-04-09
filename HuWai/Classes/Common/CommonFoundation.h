@@ -174,5 +174,9 @@
 + (BOOL)isIOS7;
 //版本检测
 + (id)onCheckVersion;
+/**
+ *  获得Ios系统版本号的函数
+ */
++ (float)getIOSVersion;
 @end
 

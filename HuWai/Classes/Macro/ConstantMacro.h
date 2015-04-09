@@ -20,6 +20,10 @@
 //
 //#define REQUEST_BASE_URL    @"http://api.huwai.com"
 //#define HTTP_BASE_PATH      @"http://172.23.69.2:8080/localization/"
+//用户协议
+#define AGREEMENT_URL   @"http://xx.huwai.ixici.info/agreement/mobile_regist.html"
+//关于我们
+#define ABOUT_US_URL    @"http://xx.huwai.ixici.info/about/us.html"
 
 #define LOAD_PROMPT_MESSAGE  @"正在加载"
 #define NO_MORE_DATA_MESSAGE    @"没有更多数据了"
@@ -69,7 +73,7 @@
 //======================通知常量的定义==================
 static NSString *UserRegistrationNotification = @"user_registration_notification";//用户推送通知注册
 static NSString *PageRefreshNotification    = @"page_refresh_notification"; //用户登录后的页面刷新 unused
-
+static NSString *MyOrderListLoadNotification = @"MyOrderListLoadNotification";
 //=======================xmpp配置=================
 #define XMPP_SERVER     @"112.21.190.46"
 #define XMPP_PORT       5322

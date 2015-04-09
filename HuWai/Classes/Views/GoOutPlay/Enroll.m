@@ -66,7 +66,7 @@
     emergencyPerson = [CommonFoundation trimString:self.emergencyPersonField.text];
     emergencyPersonPhone = [CommonFoundation trimString:self.emergencyPersonPhoneField.text];
     if ([CommonFoundation isEmptyString:orderPerson] || [CommonFoundation isEmptyString:orderPersonPhone] || [CommonFoundation isEmptyString:emergencyPerson] || [CommonFoundation isEmptyString:emergencyPersonPhone]) {
-        [self showMessageWithThreeSecondAtCenter:@"信息填写不完整"];
+        [self showMessageWithThreeSecondAtCenter:@"信息填写不完整" afterDelay:1];
         return;
     }
     

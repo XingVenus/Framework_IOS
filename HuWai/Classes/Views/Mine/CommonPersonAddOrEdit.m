@@ -64,6 +64,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self.view endEditing:YES];
     [MobClick endLogPageView:self.title];
 }
 
@@ -73,7 +74,7 @@
     idNo = [CommonFoundation trimString:self.identityNo.text];
     phone = [CommonFoundation trimString:self.phoneNo.text];
     if ([CommonFoundation isEmptyString:pName] || [CommonFoundation isEmptyString:idNo] || [CommonFoundation isEmptyString:phone] || !genderStr) {
-        [self showMessageWithThreeSecondAtCenter:@"请填写完整信息"];
+        [self showMessageWithThreeSecondAtCenter:@"请填写完整信息" afterDelay:1];
         return;
     }
     
@@ -97,7 +98,10 @@
     }else{
         [[DatabaseUtil shareDatabase] updateToTableName:COMMON_PERSON_TABLE kValues:@{@"name":pName,@"gender":genderStr,@"identity":idNo,@"phone":phone} condition:@{@"id":successID,@"ownerid":[APPInfo shareInit].uid}];
     }
-    
+    if (_delegate && [_delegate respondsToSelector:@selector(addOrEditDone)]) {
+        [_delegate addOrEditDone];
+    }
+    [self performSelector:@selector(popToLastView:) withObject:nil afterDelay:1];
 }
 
 -(void)changeGender:(UIButton *)sender

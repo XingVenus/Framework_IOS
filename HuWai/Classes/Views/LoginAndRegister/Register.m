@@ -31,6 +31,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.textCode.returnKeyType = UIReturnKeyDone;
+    self.textCode.delegate = self;
     if (self.fromType == AcountTypeXiCi) {
         self.password.text = self.xiciPwd;
         self.nickName.text = self.xiciInfo[@"username"];
@@ -58,7 +60,7 @@
 
 - (IBAction)getTextCode:(id)sender {
     if (![CommonFoundation checkPhoneNo:self.phoneNumber.text]) {
-        [self showMessageWithThreeSecondAtCenter:@"请输入正确的手机号码"];
+        [self showMessageWithThreeSecondAtCenter:@"请输入正确的手机号码" afterDelay:1];
         return;
     }
     
@@ -82,7 +84,7 @@
     }
     
     if (errorString) {
-        [self showMessageWithThreeSecondAtCenter:errorString];
+        [self showMessageWithThreeSecondAtCenter:errorString afterDelay:1];
         return;
     }
     
@@ -112,5 +114,17 @@
         [infoObj updateUserInfo:response.data];
         [self dismissNavigationView:YES];
     }
+}
+
+//点击return 按钮 去掉
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.nickName resignFirstResponder];
+    [self.textCode resignFirstResponder];
 }
 @end

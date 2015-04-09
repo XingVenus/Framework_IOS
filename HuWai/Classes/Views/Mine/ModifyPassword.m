@@ -62,14 +62,17 @@
         //提交
         [self postActionWithHUD:ModifyPasswordAction params:@"password",secondP,nil];
     }else{
-        [self showMessageWithThreeSecondAtCenter:message];
+        [self showMessageWithThreeSecondAtCenter:message afterDelay:1];
     }
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
     if (tag == ModifyPasswordAction) {
-        [self performSelector:@selector(popToLastView:) withObject:nil afterDelay:1.5];
+        BaseNavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
+        [self.navigationController presentViewController:loginNav animated:YES completion:^{
+            [self.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:nil];
+        }];
     }
 }
 @end

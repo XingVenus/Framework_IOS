@@ -63,7 +63,7 @@
         errorStr = @"密码不能为空";
     }
     if (errorStr) {
-        [self showMessageWithThreeSecondAtCenter:errorStr];
+        [self showMessageWithThreeSecondAtCenter:errorStr afterDelay:1];
     }else{
         [self postActionWithHUD:UserEntryAction params:@"phone",_phoneStr,@"password",_pwdStr,nil];
     }

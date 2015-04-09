@@ -91,7 +91,7 @@
         NSString *fromcity = [CacheBox getCache:LOCATION_CITY_NAME];
         [self loadActionWithHUD:ActivityAction params:@"from",fromcity,@"keyword",keyword,nil];
     }else{
-        [self showMessageWithThreeSecondAtCenter:@"请输入搜索内容"];
+        [self showMessageWithThreeSecondAtCenter:@"请输入搜索内容" afterDelay:1];
     }
 }
 
@@ -114,7 +114,7 @@
         if (dataModel.data.count>0) {
             [self performSegueWithIdentifier:@"searchresultlist" sender:self];
         }else{
-            [self showMessageWithThreeSecondAtCenter:@"亲，没有找到相关出行内容"];
+            [self showMessageWithThreeSecondAtCenter:@"亲，没有找到相关出行内容" afterDelay:1];
         }
         
 //        if (self.tableView.headerRefreshing) {

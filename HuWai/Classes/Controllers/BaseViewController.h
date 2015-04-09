@@ -19,7 +19,7 @@
 @property (nonatomic, assign) BOOL hideShowMessage;
 @property (strong, nonatomic) MBProgressHUD * hud;
 
--(void)showMessageWithThreeSecondAtCenter:(NSString *)message;
+-(void)showMessageWithThreeSecondAtCenter:(NSString *)message afterDelay:(NSTimeInterval)interval;
 //post action method
 -(void)postAction:(HttpRequestAction) action params:(id)firstObject, ...;
 -(void)postActionWithHUD:(HttpRequestAction) action params:(id)firstObject, ...;

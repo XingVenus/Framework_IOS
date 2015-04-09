@@ -76,7 +76,7 @@ const static NSInteger kTabHeight = 40;
     //////////////////==============================================
     WEAKSELF;
     timeArray = @[@"全部",@"1日行程",@"2日行程",@"3日行程",@"4-7日行程",@"7日以上"];
-    playArray = @[@"全部",@"徒步",@"摄影",@"登山",@"露营",@"越野",@"溯溪",@"攀冰",@"骑行",@"潜水",@"自驾",@"滑雪",@"漂流",@"其他"];
+    playArray = @[@"全部",@"徒步",@"摄影",@"登山",@"露营",@"越野",@"溯溪",@"攀冰",@"骑行",@"潜水",@"自驾",@"滑雪",@"漂流",@"腐败",@"重装",@"自虐",@"亲子",@"休闲",@"度假",@"其他"];
     //下拉、上拉注册
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     [self.tableView addHeaderWithCallback:^{
@@ -91,8 +91,6 @@ const static NSInteger kTabHeight = 40;
         }
     }];
     
-    //获取目的地城市列表
-    [self loadAction:DestinationAction params:nil];
     //初始化获取活动列表
     [self loadDataSource];
     //添加 隐藏导航条 通知
@@ -237,7 +235,7 @@ const static NSInteger kTabHeight = 40;
 //        [self.view addSubview:backgroundPopView];
         backgroundPopView.hidden = YES;
     }
-    
+    [self loadDestinationCityList:[CacheBox getCache:LOCATION_CITY_NAME]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -249,6 +247,13 @@ const static NSInteger kTabHeight = 40;
 {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:self.title];
+    [self hidePopView:nil];
+}
+
+-(void)loadDestinationCityList:(NSString *)from
+{
+    //获取目的地城市列表
+    [self loadAction:DestinationAction params:@"from",from,nil];
 }
 
 /*
@@ -333,6 +338,8 @@ const static NSInteger kTabHeight = 40;
     _fromCity = city;
     [CacheBox saveCache:LOCATION_CITY_NAME value:city];
     [locationBtn setTitle:[self replaceTitleString:city] forState:UIControlStateNormal];
+    //目的城市列表
+    [self loadDestinationCityList:city];
     self.currentPage = 1;
     [self loadDataSource];
 }
@@ -461,7 +468,8 @@ const static NSInteger kTabHeight = 40;
     }
     [locationBtn setTitle:[self replaceTitleString:hotcityName] forState:UIControlStateNormal];
     [locationBtn setTitlePositionWithType:ButtonTitlePostionTypeRight withSpacing:4];
-//    [self.tableView headerBeginRefreshing];
+    //目的城市跳转
+    [self loadDestinationCityList:_fromCity];
     self.currentPage = 1;
     [self loadDataSource];
 }

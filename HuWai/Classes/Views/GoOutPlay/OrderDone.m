@@ -8,6 +8,7 @@
 
 #import "OrderDone.h"
 #import "PayDoneForActivityCell.h"
+#import "MyOrder.h"
 
 @interface OrderDone ()
 
@@ -17,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Do any additional setup after loading the view.
 }
 
@@ -32,6 +34,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"orderdonetolist"]) {
+        MyOrder *orderController = segue.destinationViewController;
+//        orderController.fromOrderDone = YES;
+        [orderController loadOrderDoneList];
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -42,9 +49,9 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.orderDetailModel.order_info.insurance) {
-        return 260.f;
+        return 270.f;
     }
-    return 200;
+    return 210;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -53,9 +60,20 @@
     PayDoneForActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[PayDoneForActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier withInsurance:self.orderDetailModel.order_info.insurance?YES:NO];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    [cell.forwardOrderBtn addTarget:self action:@selector(goToOrderList:) forControlEvents:UIControlEventTouchUpInside];
     [cell configureCellWithItem:self.orderDetailModel atIndexPath:indexPath];
     return cell;
+}
+
+-(void)goToOrderList:(UIButton *)sender
+{
+    if (self.tabBarController.selectedIndex == 2) {
+        [self dismissNavigationView:nil];
+    }else if(self.tabBarController.selectedIndex == 0){
+        [self performSegueWithIdentifier:@"orderdonetolist" sender:self];
+    }
 }
 
 @end

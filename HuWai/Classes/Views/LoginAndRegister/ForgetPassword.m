@@ -49,19 +49,22 @@
 
 - (IBAction)getTextCodeAction:(id)sender {
     if (![CommonFoundation checkPhoneNo:self.phoneNumber.text]) {
-        [self showMessageWithThreeSecondAtCenter:@"手机号码格式不正确"];
+        [self showMessageWithThreeSecondAtCenter:@"手机号码格式不正确" afterDelay:1];
         return;
     }
     [self postActionWithHUD:SendSmsAction params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"type",@"lostpasswd",nil];
 }
 
 - (IBAction)toResetPassword:(id)sender {
-    [self postAppendUriActionWithHUD:SmsTokenAction withValue:_smsToken params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"code",[CommonFoundation trimString:self.textCode.text],@"type",@"lostpasswd",nil];
+    if (!_smsToken || !_token || [CommonFoundation isEmptyString:self.phoneNumber.text] || [CommonFoundation isEmptyString:self.textCode.text]) {
+        [self showMessageWithThreeSecondAtCenter:@"信息不完整，不能继续" afterDelay:1];
+    }else{
+        [self postAppendUriActionWithHUD:SmsTokenAction withValue:_smsToken params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"code",[CommonFoundation trimString:self.textCode.text],@"type",@"lostpasswd",nil];
+    }
 }
 
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
-
     if (tag == SendSmsAction) {
         _smsToken = [response.data objectForKey:@"smsToken"];
     }else if (tag == SmsTokenAction){

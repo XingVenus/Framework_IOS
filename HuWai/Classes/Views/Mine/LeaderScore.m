@@ -154,7 +154,7 @@
     if (rate1>0 && rate2>0) {
         [self postActionWithHUD:ScoreNewAction params:@"id",data.sid,@"description",[NSNumber numberWithFloat:rate1],@"server",[NSNumber numberWithFloat:rate2],nil];
     }else{
-        [self showMessageWithThreeSecondAtCenter:@"亲，请打分"];
+        [self showMessageWithThreeSecondAtCenter:@"亲，请打分" afterDelay:1];
     }
 }
 

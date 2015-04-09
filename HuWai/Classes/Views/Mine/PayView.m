@@ -7,6 +7,7 @@
 //
 
 #import "PayView.h"
+#import "OrderDone.h"
 
 static NSString *successUrl = @"http://xx.huwai.ixici.info/order/success?oid=%@&isMobile=1";
 static NSString *failUrl = @"http://xx.huwai.ixici.info/order/fail?oid=%@&isMobile=1";
@@ -110,13 +111,14 @@ static NSString *failUrl = @"http://xx.huwai.ixici.info/order/fail?oid=%@&isMobi
 
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
     //
+    DLog(@"%@",request.URL.absoluteString);
     NSString *formatSuccess = [NSString stringWithFormat:successUrl,self.orderId];
     if ([request.URL.absoluteString isEqualToString:formatSuccess]) {
         //跳转到成功页面
-        
+        [self performSegueWithIdentifier:@"orderdone" sender:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MyOrderListLoadNotification object:nil];
         return NO;
     }
-    DLog(@"%@",request.URL.absoluteString);
     return YES;
 }
 
@@ -196,5 +198,13 @@ static NSString *failUrl = @"http://xx.huwai.ixici.info/order/fail?oid=%@&isMobi
     
 }
 
-
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"orderdone"]){
+        OrderDone *orderDoneView = segue.destinationViewController;
+        orderDoneView.orderDetailModel = self.orderDetailModel;
+    }
+}
 @end

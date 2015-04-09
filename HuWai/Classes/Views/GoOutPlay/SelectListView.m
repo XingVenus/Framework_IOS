@@ -23,6 +23,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self addSubview:self.tableView];
+        self.tableView.bounces = NO;
     }
     return self;
 }
@@ -68,8 +69,10 @@
     if (row < self.listData.count) {
         if (self.listType == ListTypeDestination) {
             DestCityInfo *dic = self.listData[row];
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
             cell.textLabel.text = dic.name;
         }else{
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
             cell.textLabel.text = self.listData[row];
         }
     }

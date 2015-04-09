@@ -13,8 +13,16 @@ typedef NS_ENUM(NSInteger, PageShowType) {
     EditType,   //编辑
 };
 
+@protocol CommonPersonDataDelegate <NSObject>
+
+@optional
+-(void)addOrEditDone;
+
+@end
+
 @interface CommonPersonAddOrEdit : BaseViewController
 
+@property (nonatomic, weak) id<CommonPersonDataDelegate> delegate;
 @property (nonatomic) PageShowType pageType;
 @property (nonatomic) BOOL isFromEnroll; //来自订单页面
 @property (weak, nonatomic) IBOutlet UITextField *peopleName;

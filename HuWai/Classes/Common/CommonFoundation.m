@@ -330,6 +330,11 @@
     return [[[UIDevice currentDevice] systemVersion] integerValue] >= 7.0;
 }
 
++ (float)getIOSVersion
+{
+    return [[[UIDevice currentDevice] systemVersion] floatValue];
+}
+
 + (id)onCheckVersion
 {
     

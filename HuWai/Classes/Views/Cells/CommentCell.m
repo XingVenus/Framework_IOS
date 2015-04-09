@@ -70,7 +70,7 @@
         self.userQuestionLabel.height = 28;
     }
     [self.leaderIcon sd_setImageWithURL:[NSURL URLWithString:info.reply_avatar] placeholderImage:nil];
-    self.leaderNameLabel.text = info.reply_username;
+    self.leaderNameLabel.text = [NSString stringWithFormat:@"%@(领队回复)",info.reply_username];
     self.leaderAnswer.text = info.reply_content;
     CGFloat replyHeight = [info.reply_content stringRectSizeWithfontSize:14.0 andWidth:CGRectGetWidth(self.leaderBackView.frame) - 50-5-5-5 withLineSpacing:4.0].height;
     if (replyHeight>28) {

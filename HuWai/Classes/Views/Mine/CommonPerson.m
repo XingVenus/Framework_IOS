@@ -9,9 +9,10 @@
 #import "CommonPerson.h"
 #import "CommonPersonAddOrEdit.h"
 #import "CommonPersonModel.h"
-@interface CommonPerson ()
+@interface CommonPerson ()<CommonPersonDataDelegate>
 {
     CommonPersonInfo *deleteInfo;
+    CommonPersonAddOrEdit *addoreditController;
 }
 
 @end
@@ -24,12 +25,12 @@
     if (CURRENT_SYS_VERSION>=7.0) {
         self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
     }
+    [self loadDataSource];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self loadDataSource];
     [MobClick beginLogPageView:self.title];
 }
 
@@ -37,6 +38,11 @@
 {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:self.title];
+}
+
+-(void)dealloc
+{
+    addoreditController.delegate = nil;
 }
 
 -(void)loadDataSource
@@ -152,10 +158,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    CommonPersonAddOrEdit *addoreditController = segue.destinationViewController;
+    addoreditController = segue.destinationViewController;
     
     NSIndexPath *selectedRowIndex=[self.tableView indexPathForSelectedRow];
-
+    addoreditController.delegate = self;
     if (selectedRowIndex.section == 0) {
         addoreditController.pageType = AddType;
     }else{
@@ -166,5 +172,9 @@
     
 }
 
-
+#pragma mark CommonPersonDataDelegate method
+-(void)addOrEditDone
+{
+    [self loadDataSource];
+}
 @end

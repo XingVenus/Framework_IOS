@@ -35,7 +35,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.view endEditing:YES];
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -62,7 +66,7 @@
         error = @"密码不能为空";
     }
     if (error) {
-        [self showMessageWithThreeSecondAtCenter:error];
+        [self showMessageWithThreeSecondAtCenter:error afterDelay:1];
     }else{
         [self postActionWithHUD:LoginXiciAction params:@"username",_acount,@"password",_pwd,nil];
     }
@@ -79,6 +83,7 @@
             [CacheBox saveCache:CACHE_TOKEN value:response.token];
             //赋值更新用户信息
             [infoObj updateUserInfo:response.data];
+            [self dismissNavigationView:YES];
         }else{
             //完善信息
             _xiciInfo = response.data;

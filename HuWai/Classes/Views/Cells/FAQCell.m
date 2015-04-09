@@ -145,6 +145,21 @@
     if (![CommonFoundation isEmptyString:info.reply]) {
         self.replyBackView.hidden = NO;
         self.replyContentLabel.text = info.reply;
+        NSString *titleStr = [NSString stringWithFormat:@"领队回复:%@",info.reply];
+        [self.replyContentLabel setText:titleStr afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+            NSRange fontRange = [[mutableAttributedString string] rangeOfString:@"领队回复" options:NSCaseInsensitiveSearch];
+            // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+            UIFont *boldSystemFont = [UIFont systemFontOfSize:14];
+            CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+            if (font) {
+                [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:fontRange];
+                [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(__bridge id)[RGBA(78, 144, 207, 1) CGColor] range:fontRange];
+                CFRelease(font);
+            }
+            
+            return mutableAttributedString;
+        }];
+        
         self.replyContentLabel.height = [info.reply stringRectSizeWithfontSize:14.0 andWidth:SCREEN_WIDTH - 80 -10 -10 withLineSpacing:3.0].height;
         self.replyTimeLabel.text = info.reply_time;
         

@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "OrderDetailModel.h"
 
 @interface PayView : BaseViewController<UIWebViewDelegate, UIActionSheetDelegate> {
     
@@ -20,4 +21,6 @@
 
 @property (nonatomic, strong) NSString *urlString;
 @property (nonatomic, strong) NSString *orderId;
+@property (nonatomic, strong) OrderDetailModel *orderDetailModel;
+
 @end

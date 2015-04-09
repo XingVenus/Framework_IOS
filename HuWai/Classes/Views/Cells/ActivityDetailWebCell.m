@@ -9,7 +9,6 @@
 #import "ActivityDetailWebCell.h"
 
 static NSString *detailUrl = @"http://xx.huwai.ixici.info/activity/get?actid=%@";
-static CGFloat webHeight;
 
 @implementation ActivityDetailWebCell
 

@@ -132,6 +132,7 @@
 		04C2B1FC1A65163E004E8F73 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C2B1FB1A65163E004E8F73 /* Images.xcassets */; };
 		04C2B1FF1A65163E004E8F73 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C2B1FD1A65163E004E8F73 /* LaunchScreen.xib */; };
 		04C2B20B1A65163E004E8F73 /* HuWaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C2B20A1A65163E004E8F73 /* HuWaiTests.m */; };
+		04C363531AD665DA00E19C9F /* LoadHTMLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C363521AD665DA00E19C9F /* LoadHTMLView.m */; };
 		04C677FB1AC0FF53001A56CA /* CommentList.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C677FA1AC0FF53001A56CA /* CommentList.m */; };
 		04C677FE1AC0FF67001A56CA /* NoticeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C677FD1AC0FF67001A56CA /* NoticeList.m */; };
 		04C678021AC108F3001A56CA /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C678011AC108F3001A56CA /* CommentCell.m */; };
@@ -431,6 +432,8 @@
 		04C2B2041A65163E004E8F73 /* HuWaiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HuWaiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C2B2091A65163E004E8F73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04C2B20A1A65163E004E8F73 /* HuWaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HuWaiTests.m; sourceTree = "<group>"; };
+		04C363511AD665DA00E19C9F /* LoadHTMLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadHTMLView.h; sourceTree = "<group>"; };
+		04C363521AD665DA00E19C9F /* LoadHTMLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadHTMLView.m; sourceTree = "<group>"; };
 		04C677F91AC0FF53001A56CA /* CommentList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentList.h; sourceTree = "<group>"; };
 		04C677FA1AC0FF53001A56CA /* CommentList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentList.m; sourceTree = "<group>"; };
 		04C677FC1AC0FF67001A56CA /* NoticeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeList.h; sourceTree = "<group>"; };
@@ -785,6 +788,8 @@
 				04F717691AC4FD0200664F43 /* About.m */,
 				04F7176B1AC4FD4F00664F43 /* Agreement.h */,
 				04F7176C1AC4FD4F00664F43 /* Agreement.m */,
+				04C363511AD665DA00E19C9F /* LoadHTMLView.h */,
+				04C363521AD665DA00E19C9F /* LoadHTMLView.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -1624,6 +1629,7 @@
 				0499ADFD1ABFEB1C0095364D /* JSBadgeView.m in Sources */,
 				04F4D7401AB02F42001E5861 /* RSADataVerifier.m in Sources */,
 				044C6B9E1A88AA94000BF100 /* MJRefreshFooterView.m in Sources */,
+				04C363531AD665DA00E19C9F /* LoadHTMLView.m in Sources */,
 				048E97FE1A723B04003697D1 /* BaseTableViewController.m in Sources */,
 				04BE95B21AB2E9010084E055 /* LKBadgeView.m in Sources */,
 				04FBF46E1A7A320B004A0A74 /* ActivityDetail.m in Sources */,
@@ -1889,8 +1895,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lei Tang (7P67LPBG62)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lei Tang (7P67LPBG62)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/AliPaySDK",
@@ -1916,7 +1922,7 @@
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/UMAnalytics_Sdk_3.4.6",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ddf26f16-e218-4fcc-8d5e-80bafca32dac";
 			};
 			name = Debug;
 		};
@@ -1926,8 +1932,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lei Tang (7P67LPBG62)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lei Tang (7P67LPBG62)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/AliPaySDK",
@@ -1953,7 +1959,7 @@
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/UMAnalytics_Sdk_3.4.6",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ddf26f16-e218-4fcc-8d5e-80bafca32dac";
 			};
 			name = Release;
 		};

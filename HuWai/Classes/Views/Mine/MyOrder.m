@@ -60,12 +60,17 @@
     }];
     //加载页面数据
     [self loadDataSource];
+    //添加支付完成刷新通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadOrderDoneList) name:MyOrderListLoadNotification object:nil];
     // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    DLog(@"%lu",(unsigned long)self.tabBarController.selectedIndex);
+//    [self.navigationController popToRootViewControllerAnimated:NO];
+//    [self.tabBarController setSelectedIndex:1];
     [MobClick beginLogPageView:self.title];
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -79,9 +84,44 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MyOrderListLoadNotification object:nil];
+}
+
 -(void)loadDataSource
 {
-    [self loadActionWithHUD:OrderMyAction params:@"type",statusArray[self.statusType],@"page",@(self.currentPage),@"pagesize",@(self.pageSize),nil];
+    [self loadAction:OrderMyAction params:@"type",statusArray[self.statusType],@"page",@(self.currentPage),@"pagesize",@(self.pageSize*2),nil];
+}
+
+-(void)loadOrderDoneList
+{
+    [self.segmentControl setSelectedSegmentIndex:1 animated:NO];
+    self.statusType = 1;
+
+    [self loadDataSource];
+}
+
+-(void)popCurrentNavigationOrderController
+{
+//    if (self.fromOrderDone) {
+//        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+//            
+//        }];
+//    }else{
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+//    
+    if (self.tabBarController.selectedIndex == 0) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+        [self.tabBarController setSelectedIndex:2];
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 #pragma mark - custom method 
 #pragma mark 取消支付

@@ -83,7 +83,7 @@ NSDictionary *argsTpMap(id firstObject,...)
 #pragma mark - custom method
 -(void)popToLastView:(BOOL)animated
 {
-    [self.navigationController popViewControllerAnimated:animated];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)dismissNavigationView:(BOOL)animated
@@ -91,10 +91,10 @@ NSDictionary *argsTpMap(id firstObject,...)
     [self.navigationController dismissViewControllerAnimated:animated completion:nil];
 }
 #pragma mark - 消息提示
--(void)showMessageWithThreeSecondAtCenter:(NSString *)message
+-(void)showMessageWithThreeSecondAtCenter:(NSString *)message afterDelay:(NSTimeInterval)interval
 {
     if (![CommonFoundation isEmptyString:message]) {
-        [self.view makeToast:message duration:3.0 position:CSToastPositionCenter];
+        [self.view makeToast:message duration:interval position:CSToastPositionCenter];
     }
 }
 
@@ -318,7 +318,7 @@ NSDictionary *argsTpMap(id firstObject,...)
         [self onRequestFinished:actionType response:response];
     }else if (response.error){
         [self onRequestFailed:actionType response:response];
-        [self showMessageWithThreeSecondAtCenter:response.error.localizedDescription];
+        [self showMessageWithThreeSecondAtCenter:response.error.localizedDescription afterDelay:2.0];
         return;
     }else if (response.code == 50002){
         BaseNavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
@@ -334,7 +334,7 @@ NSDictionary *argsTpMap(id firstObject,...)
     }
     
     if (!self.hideShowMessage) {
-        [self showMessageWithThreeSecondAtCenter:response.message];
+        [self showMessageWithThreeSecondAtCenter:response.message afterDelay:2.0];
     }else{
         self.hideShowMessage = NO;
     }

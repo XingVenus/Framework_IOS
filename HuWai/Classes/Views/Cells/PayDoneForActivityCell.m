@@ -30,7 +30,7 @@
         
         [self.contentView addSubview:self.activityImage];
         [self.contentView addSubview:self.noticeLabel];
-        [self.contentView addSubview:self.totalLabel];
+//        [self.contentView addSubview:self.totalLabel];
         
         if (insurance) {
             [self.contentView addSubview:self.insuranceLabel];
@@ -38,7 +38,7 @@
             [self.contentView addSubview:self.inNumLabel];
             if (!_fourthLayer) {
                 _fourthLayer = [CALayer layer];
-                _fourthLayer.frame = CGRectMake(0, 155+8, SCREEN_WIDTH, 0.5);
+                _fourthLayer.frame = CGRectMake(0, 155, SCREEN_WIDTH, 0.5);
                 _fourthLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
                 [self.contentView.layer addSublayer:_fourthLayer];
             }
@@ -63,22 +63,22 @@
     [super layoutSubviews];
     self.contentView.frame = CGRectInset(self.bounds, 0, 5);
     
-    self.forwardOrderBtn.top = self.height - 7 - 31 - 10;
-    self.noticeLabel.top = self.height - 7  - 10 - 30 - 50;
-    self.totalLabel.top = self.height - 7 - 10 - 24;
+    self.noticeLabel.top = self.contentView.height - 10 - 40 - 50;
+    self.forwardOrderBtn.top = self.contentView.height - 10 - 40;
+//    self.totalLabel.top = self.height - 7 - 10 - 24;
     
     [self setLayerLineAndBackground];
     
     if (!_secondLayer) {
         _secondLayer = [CALayer layer];
-        _secondLayer.frame = CGRectMake(0, 37, SCREEN_WIDTH, 0.5);
+        _secondLayer.frame = CGRectMake(0, 35, SCREEN_WIDTH, 0.5);
         _secondLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
         [self.contentView.layer addSublayer:_secondLayer];
     }
     
     if (!_thirdLayer) {
         _thirdLayer = [CALayer layer];
-        _thirdLayer.frame = CGRectMake(0, 95+8, SCREEN_WIDTH, 0.5);
+        _thirdLayer.frame = CGRectMake(0, 95, SCREEN_WIDTH, 0.5);
         _thirdLayer.backgroundColor = APP_DIVIDELINE_COLOR.CGColor;
         [self.contentView.layer addSublayer:_thirdLayer];
     }
@@ -102,7 +102,7 @@
 -(UIImageView *)activityImage
 {
     if (!_activityImage) {
-        _activityImage = [[UIImageView alloc] initWithFrame:CGRectMake(8, 44, 65, 50)];
+        _activityImage = [[UIImageView alloc] initWithFrame:CGRectMake(8, 42, 65, 48)];
         _activityImage.contentMode = UIViewContentModeScaleAspectFill;
         _activityImage.clipsToBounds = YES;
     }
@@ -161,7 +161,7 @@
 -(TTTAttributedLabel *)insuranceLabel
 {
     if (!_insuranceLabel) {
-        _insuranceLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(8, 104+8, SCREEN_WIDTH - 110, 42)];
+        _insuranceLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(8, 104, SCREEN_WIDTH - 110, 42)];
         _insuranceLabel.numberOfLines = 0;
         _insuranceLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _insuranceLabel.textColor = [UIColor darkGrayColor];
@@ -175,7 +175,7 @@
 -(UILabel *)insurancePriceLabel
 {
     if (!_insurancePriceLabel) {
-        _insurancePriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 80 - 8, 104+8, 80, 24)];
+        _insurancePriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 80 - 8, 104, 80, 24)];
         _insurancePriceLabel.backgroundColor = [UIColor clearColor];
         _insurancePriceLabel.font = [UIFont systemFontOfSize:14.0];
         _insurancePriceLabel.textAlignment = NSTextAlignmentRight;
@@ -187,7 +187,7 @@
 -(UILabel *)inNumLabel
 {
     if (!_inNumLabel) {
-        _inNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 42 - 8, 126+8, 42, 20)];
+        _inNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 42 - 8, 126, 42, 20)];
         _inNumLabel.textAlignment = NSTextAlignmentRight;
         _inNumLabel.font = [UIFont systemFontOfSize:14.0];
         _inNumLabel.textColor = [UIColor lightGrayColor];
@@ -238,7 +238,7 @@
     OrderDetailModel *model = (OrderDetailModel *)item;
     OrderInfo *orderInfo = (OrderInfo *)model.order_info;
     
-    [self.activityImage sd_setImageWithURL:[NSURL URLWithString:orderInfo.image] placeholderImage:nil];
+    [self.activityImage sd_setImageWithURL:[NSURL URLWithString:model.activity_info.image] placeholderImage:nil];
     self.activityLabel.text = model.activity_info.title;
     self.activityPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.activity_info.price];
     self.aNumLabel.text = [NSString stringWithFormat:@"x %@",orderInfo.num];
@@ -251,6 +251,6 @@
 //    self.totalLabel.text = [NSString stringWithFormat:@"共计￥%@",orderInfo.money];
     self.totalPayLabel.text = [NSString stringWithFormat:@"支付金额￥%@",orderInfo.money];
     NSString *noteText = @"亲，请保持电话畅通本\n活动领队：%@将尽快与您确认出行事宜";
-    self.noticeLabel.text = [NSString stringWithFormat:noteText,orderInfo.leader_username];
+    self.noticeLabel.text = [NSString stringWithFormat:noteText,model.activity_info.leader.username];
 }
 @end
