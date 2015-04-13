@@ -57,6 +57,7 @@
 
 - (IBAction)xiciLoginAction:(id)sender
 {
+    [MobClick event:@"xcdl"];
     _acount = [CommonFoundation trimString:self.xiciAcount.text];
     _pwd = [CommonFoundation trimString:self.xiciPwd.text];
     NSString *error = nil;

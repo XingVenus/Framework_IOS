@@ -80,6 +80,7 @@
     
     if (self.pageType == AddType) {
         //添加
+        [MobClick event:@"cxr_tj"];
         [self postActionWithHUD:CommonPersonAddAction params:@"name",pName,@"gender",genderStr,@"identity",idNo,@"phone",phone,nil];
     }else{
         //编辑常用联系人

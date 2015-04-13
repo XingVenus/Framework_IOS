@@ -18,7 +18,7 @@
 
 - (void)loadView
 {	
-	urlString = @"http://dz.huwai.ixici.info/forum.php";
+	urlString = @"http://huwai.xici.net";
     UIView *contentView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
 	contentView.autoresizesSubviews = YES;
 	self.view = contentView;

@@ -215,7 +215,7 @@
         _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _cancelBtn.frame = CGRectMake(SCREEN_WIDTH - 100 - 8 - 8 - 100, 0, 100, 31);
         [_cancelBtn setBackgroundImage:[UIImage imageNamed:@"cancel"] forState:UIControlStateNormal];
-        [_cancelBtn setTitle:@"取消定单" forState:UIControlStateNormal];
+        [_cancelBtn setTitle:@"取消订单" forState:UIControlStateNormal];
         [_cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
     }

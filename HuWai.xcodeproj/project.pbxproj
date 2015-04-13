@@ -44,6 +44,8 @@
 		042B3F7A1A667920000E896D /* NSString+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B3F791A667920000E896D /* NSString+JSON.m */; };
 		042B3F7E1A66792A000E896D /* UIView+SimplifyExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B3F7D1A66792A000E896D /* UIView+SimplifyExtend.m */; };
 		042B68261A67C32D009CA824 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B68251A67C32D009CA824 /* Response.m */; };
+		042B76331AD76890003B8A94 /* DisclaimerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B76321AD76890003B8A94 /* DisclaimerCell.m */; };
+		042B76351AD769DD003B8A94 /* disclaimer.txt in Resources */ = {isa = PBXBuildFile; fileRef = 042B76341AD769DD003B8A94 /* disclaimer.txt */; };
 		042F89F71ACE2E970056A8D9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 042F89F91ACE2E970056A8D9 /* InfoPlist.strings */; };
 		042F8A0A1ACE3A5E0056A8D9 /* PayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F8A091ACE3A5E0056A8D9 /* PayView.m */; };
 		0431D5EE1AA7E93C00221AA3 /* OrderGoOutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431D5ED1AA7E93C00221AA3 /* OrderGoOutCell.m */; };
@@ -259,6 +261,9 @@
 		042B3F7D1A66792A000E896D /* UIView+SimplifyExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SimplifyExtend.m"; sourceTree = "<group>"; };
 		042B68241A67C32D009CA824 /* Response.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
 		042B68251A67C32D009CA824 /* Response.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Response.m; sourceTree = "<group>"; };
+		042B76311AD76890003B8A94 /* DisclaimerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisclaimerCell.h; sourceTree = "<group>"; };
+		042B76321AD76890003B8A94 /* DisclaimerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisclaimerCell.m; sourceTree = "<group>"; };
+		042B76341AD769DD003B8A94 /* disclaimer.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = disclaimer.txt; sourceTree = "<group>"; };
 		042F89F81ACE2E970056A8D9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		042F89FA1ACE2E9A0056A8D9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		042F8A081ACE3A5E0056A8D9 /* PayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PayView.h; path = ../Mine/PayView.h; sourceTree = "<group>"; };
@@ -962,6 +967,8 @@
 				0429ADF31AC2B05D000BE506 /* FAQCell.m */,
 				04161A381AD4F7770061F6FA /* ActivityDetailWebCell.h */,
 				04161A391AD4F7770061F6FA /* ActivityDetailWebCell.m */,
+				042B76311AD76890003B8A94 /* DisclaimerCell.h */,
+				042B76321AD76890003B8A94 /* DisclaimerCell.m */,
 			);
 			name = ActivityDetailCell;
 			sourceTree = "<group>";
@@ -1252,6 +1259,7 @@
 		04C2B1EE1A65163E004E8F73 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				042B76341AD769DD003B8A94 /* disclaimer.txt */,
 				04FEDC991AD3872200EA8F19 /* Info.plist */,
 				042F89F91ACE2E970056A8D9 /* InfoPlist.strings */,
 				0408F6DB1AA07CDC00C04961 /* huwai.sqlite */,
@@ -1572,6 +1580,7 @@
 				049E8D301AC8F15C0027B08D /* UMSCommentInputController.xib in Resources */,
 				049E8D371AC8F15C0027B08D /* UMSocialSDKResourcesNew.bundle in Resources */,
 				049E8D2F1AC8F15C0027B08D /* UMSCommentDetailController.xib in Resources */,
+				042B76351AD769DD003B8A94 /* disclaimer.txt in Resources */,
 				049E8D321AC8F15C0027B08D /* UMShareEditViewController.xib in Resources */,
 				049E8D311AC8F15C0027B08D /* UMSCommentInputControlleriPad.xib in Resources */,
 				049E8D2D1AC8F15C0027B08D /* UMSocialLocalizable.strings in Resources */,
@@ -1666,6 +1675,7 @@
 				044C6B9C1A88AA94000BF100 /* MJRefreshBaseView.m in Sources */,
 				04C678021AC108F3001A56CA /* CommentCell.m in Sources */,
 				04F4D73C1AB02F42001E5861 /* MD5DataSigner.m in Sources */,
+				042B76331AD76890003B8A94 /* DisclaimerCell.m in Sources */,
 				04C677FE1AC0FF67001A56CA /* NoticeList.m in Sources */,
 				0448D4EA1AB138670023275B /* FAQModel.m in Sources */,
 				04F4D7381AB02F42001E5861 /* Order.m in Sources */,
@@ -1895,8 +1905,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Lei Tang (7P67LPBG62)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lei Tang (7P67LPBG62)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Xi Ci Interactive Information Technology Co., Ltd. (543V9395HR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Xi Ci Interactive Information Technology Co., Ltd. (543V9395HR)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/AliPaySDK",
@@ -1922,7 +1932,7 @@
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/UMAnalytics_Sdk_3.4.6",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ddf26f16-e218-4fcc-8d5e-80bafca32dac";
+				PROVISIONING_PROFILE = "7c72408c-cda1-4f41-959b-ad826c7ba460";
 			};
 			name = Debug;
 		};
@@ -1932,8 +1942,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Lei Tang (7P67LPBG62)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lei Tang (7P67LPBG62)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Xi Ci Interactive Information Technology Co., Ltd. (543V9395HR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Xi Ci Interactive Information Technology Co., Ltd. (543V9395HR)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/AliPaySDK",
@@ -1959,7 +1969,7 @@
 					"$(PROJECT_DIR)/HuWai/Classes/Vendor/UMAnalytics_Sdk_3.4.6",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ddf26f16-e218-4fcc-8d5e-80bafca32dac";
+				PROVISIONING_PROFILE = "7c72408c-cda1-4f41-959b-ad826c7ba460";
 			};
 			name = Release;
 		};

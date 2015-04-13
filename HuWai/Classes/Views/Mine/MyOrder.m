@@ -59,7 +59,11 @@
         }
     }];
     //加载页面数据
-    [self loadDataSource];
+    if (self.fromOrderDone) {
+        [self loadOrderDoneList];
+    }else{
+        [self loadDataSource];
+    }
     //添加支付完成刷新通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadOrderDoneList) name:MyOrderListLoadNotification object:nil];
     // Do any additional setup after loading the view.
@@ -97,8 +101,8 @@
 -(void)loadOrderDoneList
 {
     [self.segmentControl setSelectedSegmentIndex:1 animated:NO];
-    self.statusType = 1;
-
+    self.statusType = OrderStatusCompleted;
+//    [self loadAction:OrderMyAction params:@"type",@"completed",@"page",@(self.currentPage),@"pagesize",@(self.pageSize*2),nil];
     [self loadDataSource];
 }
 
@@ -112,16 +116,22 @@
 //        [self.navigationController popViewControllerAnimated:YES];
 //    }
 //    
-    if (self.tabBarController.selectedIndex == 0) {
-        [self.navigationController popToRootViewControllerAnimated:NO];
-        [self.tabBarController setSelectedIndex:2];
-        [self.navigationController dismissViewControllerAnimated:YES completion:^{
-            
-        }];
+//    if (self.tabBarController.selectedIndex == 0) {
+//        [self.navigationController popToRootViewControllerAnimated:NO];
+//        [self.tabBarController setSelectedIndex:2];
+//        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+//            
+//        }];
+//    }else{
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+    if (self.fromOrderDone) {
+        if ([[APPInfo shareInit].payFromType isEqualToString:@"enroll"]) {
+            [self dismissNavigationView:YES];
+        }
     }else{
-        [self.navigationController popViewControllerAnimated:YES];
+        [self popToLastView:YES];
     }
-    
 }
 #pragma mark - custom method 
 #pragma mark 取消支付
@@ -136,6 +146,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
+        [MobClick event:@"dd_qx"];
         OrderInfo *orderinfo = objc_getAssociatedObject(self, &OrderCancelAssociatedKey);
         [self postActionWithHUD:OrderCancelAction params:@"order_id",orderinfo.order_id,nil];
     }
@@ -145,6 +156,7 @@
 {
     OrderInfo *info = self.dataSource[sender.tag];
     ConfirmToPayment *payController = [self.storyboard instantiateViewControllerWithIdentifier:@"confirmToPaymentBoard"];
+    [APPInfo shareInit].payFromType = @"orderlist";
     payController.order_id = info.order_id;
     BaseNavigationController *payNav = [[BaseNavigationController alloc] initWithRootViewController:payController];
     [self presentViewController:payNav animated:YES completion:nil];

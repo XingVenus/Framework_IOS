@@ -15,7 +15,7 @@
 {
     
     [self.contentView addSubview:self.backImageView];
-    [self.contentView.layer insertSublayer:self.backLayer below:self.backImageView.layer];
+//    [self.contentView.layer insertSublayer:self.backLayer below:self.backImageView.layer];
     [self.contentView addSubview:self.priceBtn];
     [self.backImageView addSubview:self.grayBackLabel];
     [self.backImageView addSubview:self.avatarImageView];

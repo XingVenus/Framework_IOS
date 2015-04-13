@@ -25,7 +25,7 @@
 //    if (CURRENT_SYS_VERSION>=7.0) {
 //        self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
 //    }
-    _settingList = @[@[@"开启消息提醒",@"清除图片缓存"],@[@"意见反馈",@"用户协议"],@[@"关于我们",@"鼓励我们"]];
+    _settingList = @[@[@"开启消息提醒"],@[@"清除图片缓存"],@[@"意见反馈",@"用户协议"],@[@"关于我们",@"鼓励我们"]];
     UIView *footerview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 70)];
     _loginOrOutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _loginOrOutBtn.frame = CGRectMake(20, 10, SCREEN_WIDTH - 20*2, 40);
@@ -76,9 +76,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if (section == 0) {
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+        label.text = @"请在iPhone的“设置” - “通知”中进行修改";
+        label.textColor = [UIColor darkGrayColor];
+        label.font = [UIFont systemFontOfSize:12.0];
+        label.textAlignment = NSTextAlignmentCenter;
+        return label;
+    }else{
+        return nil;
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 40;
+    }
+    return 0;
+}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return _settingList.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -95,19 +118,28 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
-    if (section == 0) {
+    if (section == 1) {
         if (row == 0) {
-            if (!switchBtn) {
-                switchBtn = [[UISwitch alloc] init];
-                switchBtn.center = CGPointMake(SCREEN_WIDTH - 40, cell.centerY);
-                [switchBtn addTarget:self action:@selector(oneSwitchValueChanged:) forControlEvents:UIControlEventValueChanged]; // 添加事件监听器的方法
-                if ([[CacheBox getCache:OPEN_MESSAGE_ALERT] isEqualToString:@"ON"]) {
-                    [switchBtn setOn:YES];
-                }else{
-                    [switchBtn setOn:NO];
-                }
-                [cell addSubview:switchBtn];
+            /*
+            UIRemoteNotificationType type = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+            if (type != UIRemoteNotificationTypeNone) {
+                cell.detailTextLabel.text = @"已开启";
+            }else{
+                cell.detailTextLabel.text = @"未开启";
             }
+            cell.detailTextLabel.textAlignment = NSTextAlignmentRight;
+             */
+//            if (!switchBtn) {
+//                switchBtn = [[UISwitch alloc] init];
+//                switchBtn.center = CGPointMake(SCREEN_WIDTH - 40, cell.centerY);
+//                [switchBtn addTarget:self action:@selector(oneSwitchValueChanged:) forControlEvents:UIControlEventValueChanged]; // 添加事件监听器的方法
+//                if ([[CacheBox getCache:OPEN_MESSAGE_ALERT] isEqualToString:@"ON"]) {
+//                    [switchBtn setOn:YES];
+//                }else{
+//                    [switchBtn setOn:NO];
+//                }
+//                [cell addSubview:switchBtn];
+//            }
         }else if (row == 1){
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%.1fM",(float)([[SDImageCache sharedImageCache] getSize]/1024.0/1024.0)];
         }
@@ -122,7 +154,7 @@
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     switch (section) {
-        case 0:
+        case 1:
         {
             if (row == 1) {
                 //清除图片缓存
@@ -136,7 +168,7 @@
             }
         }
             break;
-        case 1:
+        case 2:
         {
             if (row == 0) {
                 //意见反馈
@@ -147,7 +179,7 @@
             }
         }
             break;
-        case 2:
+        case 3:
         {
             if (row == 0) {
                 //关于我们

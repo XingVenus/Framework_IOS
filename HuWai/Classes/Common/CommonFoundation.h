@@ -178,5 +178,7 @@
  *  获得Ios系统版本号的函数
  */
 + (float)getIOSVersion;
+
++ (NSString *)deviceString;
 @end
 

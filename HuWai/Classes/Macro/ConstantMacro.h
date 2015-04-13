@@ -15,15 +15,17 @@
 //应用在itunes的信息地址,用于版本检测
 #define APP_ITUNES_URL     @"http://itunes.apple.com/lookup?id=956085496" //http://itunes.apple.com/lookup?id=你的应用程序的ID
 
-#define REQUEST_BASE_URL    @"http://api.huwai.ixici.info"//@"http://api.huwai.com"
+#define REQUEST_BASE_URL    @"http://szapp.xici.net"//@"http://api.huwai.com"//api.huwai.ixici.info
 //#define HTTP_BASE_PATH      @"http://api.huwai.com/"
 //
 //#define REQUEST_BASE_URL    @"http://api.huwai.com"
 //#define HTTP_BASE_PATH      @"http://172.23.69.2:8080/localization/"
 //用户协议
-#define AGREEMENT_URL   @"http://xx.huwai.ixici.info/agreement/mobile_regist.html"
+#define AGREEMENT_URL   @"http://wan.xici.net/agreement/mobile_regist.html"//@"http://xx.huwai.ixici.info/agreement/mobile_regist.html"
 //关于我们
-#define ABOUT_US_URL    @"http://xx.huwai.ixici.info/about/us.html"
+#define ABOUT_US_URL    @"http://wan.xici.net/about/us.html"//@"http://xx.huwai.ixici.info/about/us.html"
+//用于活动详情、支付成功判断
+#define APP_MINI_PUBLISH_HTTP_URL    @"http://wan.xici.net"
 
 #define LOAD_PROMPT_MESSAGE  @"正在加载"
 #define NO_MORE_DATA_MESSAGE    @"没有更多数据了"

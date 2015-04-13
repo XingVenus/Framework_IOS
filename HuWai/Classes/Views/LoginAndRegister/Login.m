@@ -54,6 +54,7 @@
 #pragma mark 开始登录动作
 -(void)loginAction:(UIButton *)sender
 {
+    [MobClick event:@"denglu"];
     NSString *errorStr = nil;
     _phoneStr = [CommonFoundation trimString:self.phoneNumber.text];
     _pwdStr = [CommonFoundation trimString:self.password.text];

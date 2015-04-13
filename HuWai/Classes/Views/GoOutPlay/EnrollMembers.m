@@ -160,7 +160,11 @@ NSString *const EnrollMembersAddNewNotification = @"EnrollMembersAddNewNotificat
     if (section == 0) {
         return 1;
     }
-    return self.dataSource.count;
+    if (self.dataSource.count>0) {
+        return self.dataSource.count;
+    }else{
+        return 1;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -180,11 +184,22 @@ NSString *const EnrollMembersAddNewNotification = @"EnrollMembersAddNewNotificat
         cell.textLabel.font = [UIFont boldSystemFontOfSize:15.0];
         return cell;
     }else{
-        EnrollMemberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"enrollMemeberCell" forIndexPath:indexPath];
-        [cell.checkBtn addTarget:self action:@selector(selectedItem:) forControlEvents:UIControlEventTouchUpInside];
-        CommonPersonInfo *info = self.dataSource[row];
-        [cell configureCellWithItem:info atIndexPath:indexPath];
-        return cell;
+        if (self.dataSource.count>0) {
+            EnrollMemberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"enrollMemeberCell" forIndexPath:indexPath];
+            [cell.checkBtn addTarget:self action:@selector(selectedItem:) forControlEvents:UIControlEventTouchUpInside];
+            CommonPersonInfo *info = self.dataSource[row];
+            [cell configureCellWithItem:info atIndexPath:indexPath];
+            return cell;
+        }else{
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellone"];
+            cell.textLabel.numberOfLines = 0;
+            cell.textLabel.text = @"请点击下方“添加新出行人”按钮进行添加";
+            cell.textLabel.font = [UIFont systemFontOfSize:13.0];
+            cell.textLabel.textColor = [UIColor darkGrayColor];
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            return cell;
+        }
+        
     }
 }
 
@@ -206,6 +221,7 @@ NSString *const EnrollMembersAddNewNotification = @"EnrollMembersAddNewNotificat
 }
 #pragma mark 提交订单
 - (IBAction)submitOrderAction:(id)sender {
+    [MobClick event:@"baoming3"];
     __block NSMutableArray *memberIDs = [NSMutableArray arrayWithCapacity:1];
     NSString *memberIDString = @"";
     [self.dataSource enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -217,8 +233,11 @@ NSString *const EnrollMembersAddNewNotification = @"EnrollMembersAddNewNotificat
     if (memberIDs) {
         memberIDString = [memberIDs componentsJoinedByString:@","];
     }
-    
-    [self postActionWithHUD:OrderCreateAction message:@"提交订单" params:@"id",self.activityID,@"realname",self.realname,@"phone",self.phone,@"o_realname",self.o_realname,@"o_phone",self.o_phone,@"message",@"",@"joins",memberIDString ,nil];
+    if ([CommonFoundation isEmptyString:memberIDString]) {
+        [self showMessageWithThreeSecondAtCenter:@"请勾选出行人姓名" afterDelay:1];
+    }else{
+        [self postActionWithHUD:OrderCreateAction message:@"提交订单" params:@"id",self.activityID,@"realname",self.realname,@"phone",self.phone,@"o_realname",self.o_realname,@"o_phone",self.o_phone,@"message",@"",@"joins",memberIDString ,nil];
+    }
     
 }
 @end

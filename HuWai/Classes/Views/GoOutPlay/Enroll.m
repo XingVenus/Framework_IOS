@@ -50,6 +50,7 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"enrollMember"]) {
+        [MobClick event:@"baoming2"];
         EnrollMembers *enMemberController = segue.destinationViewController;
         enMemberController.realname = orderPerson;
         enMemberController.phone = orderPersonPhone;

@@ -90,7 +90,7 @@
         [response fillWithJsonDict:(NSDictionary *)responseObject];
         response.url = [operation.request.URL absoluteString];
         response.contentText = operation.responseString;
-        
+
     }else{
         
         response.url = [operation.request.URL absoluteString];

@@ -63,6 +63,8 @@
             self.dataSource = [NSMutableArray arrayWithArray:listmodel.data];
         }
         self.maxPage = listmodel.pager.pagemax;//当前列表最大页数
+        
+        [self adapterShowBlankView:@"您还没有打分信息" image:[UIImage imageNamed:@"expression-wu"]];
         [self.tableView reloadData];
     }else if (tag == ScoreNewAction){
         [self loadActionWithHUD:ScoreListAction params:@"page",@1,@"pagesize",@(self.pageSize*self.currentPage),nil];
@@ -147,6 +149,7 @@
 //}
 -(void)submitScore:(UIButton *)sender
 {
+    [MobClick event:@"df_tj"];
     ScoreInfo *data = (ScoreInfo *)self.dataSource[sender.tag];
     NotScoreCell *cell = (NotScoreCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
     CGFloat rate1 = cell.starControl1.rating;

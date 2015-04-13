@@ -9,8 +9,8 @@
 #import "PayView.h"
 #import "OrderDone.h"
 
-static NSString *successUrl = @"http://xx.huwai.ixici.info/order/success?oid=%@&isMobile=1";
-static NSString *failUrl = @"http://xx.huwai.ixici.info/order/fail?oid=%@&isMobile=1";
+static NSString *successUrl = @"%@/order/success?oid=%@&isMobile=1";
+static NSString *failUrl = @"%@/order/fail?oid=%@&isMobile=1";
 
 @interface PayView ()
 
@@ -112,11 +112,17 @@ static NSString *failUrl = @"http://xx.huwai.ixici.info/order/fail?oid=%@&isMobi
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
     //
     DLog(@"%@",request.URL.absoluteString);
-    NSString *formatSuccess = [NSString stringWithFormat:successUrl,self.orderId];
+    NSString *formatSuccess = [NSString stringWithFormat:successUrl,APP_MINI_PUBLISH_HTTP_URL,self.orderId];
+    NSString *formatFail = [NSString stringWithFormat:failUrl,APP_MINI_PUBLISH_HTTP_URL,self.orderId];
     if ([request.URL.absoluteString isEqualToString:formatSuccess]) {
         //跳转到成功页面
         [self performSegueWithIdentifier:@"orderdone" sender:self];
-        [[NSNotificationCenter defaultCenter] postNotificationName:MyOrderListLoadNotification object:nil];
+        if ([[APPInfo shareInit].payFromType isEqualToString:@"orderlist"]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:MyOrderListLoadNotification object:nil];
+        }
+        return NO;
+    }else if([request.URL.absoluteString isEqualToString:formatFail]){
+        [self showMessageWithThreeSecondAtCenter:@"支付失败" afterDelay:1];
         return NO;
     }
     return YES;

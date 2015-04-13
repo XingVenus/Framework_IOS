@@ -76,6 +76,14 @@ NSDictionary *argsTpMap(id firstObject,...)
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    if ([APPInfo shareInit].apnsType) {
+        [APPInfo shareInit].apnsType = nil;
+        
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -288,6 +296,11 @@ NSDictionary *argsTpMap(id firstObject,...)
     if (token) {
         [params setObject:token forKey:@"token"];
     }
+    //系统统计需求加入的统计信息字段
+    [params setObject:@"ios" forKey:@"system"];
+    [params setObject:[[UIDevice currentDevice] systemVersion] forKey:@"systemversion"];
+    [params setObject:[CommonFoundation deviceString] forKey:@"model"];
+    [params setObject:APP_VERSION forKey:@"appversion"];
 #ifdef DEBUG
     if (method == RequestMethodPost) {
         DLog(@"Post data:%@",params);

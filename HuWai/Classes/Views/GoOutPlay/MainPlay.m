@@ -97,7 +97,6 @@ const static NSInteger kTabHeight = 40;
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavBarWithNoAnimate) name:@"hideNavBarWithNoAnimate" object:nil];
 //    self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0);
 //    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //////-------左边定位按钮
     /*
@@ -392,11 +391,13 @@ const static NSInteger kTabHeight = 40;
 
 -(void)selectDestCity:(UIButton *)sender
 {
+    [MobClick event:@"s_csdw"];
     [self performSegueWithIdentifier:@"citylist" sender:self];
 }
 
 -(void)searchActivity:(UIButton *)sender
 {
+    [MobClick event:@"s_ss"];
     [self performSegueWithIdentifier:@"search" sender:self];
 }
 
@@ -405,12 +406,15 @@ const static NSInteger kTabHeight = 40;
     NSInteger btnTag = sender.tag;
 
     if (btnTag == 1001) {
+        [MobClick event:@"s_mdd"];
         listPopView.listType = ListTypeDestination;
         listPopView.listData = destinationArray;
     }else if (btnTag == 1002){
+        [MobClick event:@"s_xc"];
         listPopView.listType = ListTypeTime;
         listPopView.listData = timeArray;
     }else if (btnTag == 1003){
+        [MobClick event:@"s_wf"];
         listPopView.listType = ListTypePlay;
         listPopView.listData = playArray;
     }

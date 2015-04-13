@@ -19,15 +19,17 @@
 
 -(void)alertRemoteMessage:(NSString *)message withTitle:(NSString *)title
 {
+#ifdef DEBUG
     if (message) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"ok" otherButtonTitles: nil];
         [alert show];
     }
+#endif
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    [APPInfo shareInit].firstLaunch = YES;
     //友盟分享注册
     [UMSocialData setAppKey:UM_SOCIAL_KEY];
     //友盟统计分析
@@ -39,12 +41,15 @@
     [self registerRemoteNotification];
     
     // [2-EXT]: 获取启动时收到的APN
-    NSDictionary* message = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    NSDictionary *message = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (message) {
         NSString *payloadMsg = [message objectForKey:@"payload"];
-        NSString *record = [NSString stringWithFormat:@"[APN]%@, %@", [NSDate date], payloadMsg];
-        [self alertRemoteMessage:record withTitle:nil];
-        DLog(@"%@",message);
+        [APPInfo shareInit].apnsType = payloadMsg;
+//        NSString *record = [NSString stringWithFormat:@"[APN]%@, %@", [NSDate date], payloadMsg];
+        [self alertRemoteMessage:[CommonFoundation dataToUTF8String:[message JSONString]] withTitle:@"launch"];
+        UITabBarController *rootTab = (UITabBarController *)self.window.rootViewController;
+        [self handlePushUserInfo:payloadMsg viewController:(UINavigationController *)rootTab.viewControllers[0]];
+        DLog(@"launch%@",message);
     }
     
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
@@ -83,6 +88,7 @@
     
     // [EXT] 切后台关闭SDK，让SDK第一时间断线，让个推先用APN推送
     [self stopSdk];
+    [APPInfo shareInit].firstLaunch = NO;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -174,12 +180,13 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
+    //从后台运行中打开调用
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    
+
     // [4-EXT]:处理APN
-//    NSString *payloadMsg = [userInfo objectForKey:@"payload"];
-    
+    NSString *payloadMsg = [userInfo objectForKey:@"payload"];
+    [APPInfo shareInit].apnsType = payloadMsg;
 //    NSDictionary *aps = [userInfo objectForKey:@"aps"];
         //    NSNumber *contentAvailable = aps == nil ? nil : [aps objectForKeyedSubscript:@"content-available"];
     
@@ -187,7 +194,23 @@
         //    [self alertRemoteMessage:record];
         //    DLog(@"%@",userInfo);
 //    NSDictionary *bodyDic = aps[@"alert"];
-//    [self alertRemoteMessage:bodyDic[@"body"] withTitle:nil];
+    [self alertRemoteMessage:[CommonFoundation dataToUTF8String:[userInfo JSONString]] withTitle:@"completionHandler"];
+    
+    if (![APPInfo shareInit].firstLaunch) {
+        if ([APPInfo shareInit].apnsType) {
+            UINavigationController *selectedNaviVC=nil;
+            id rootViewController = self.window.rootViewController;
+            if ([rootViewController isKindOfClass:[UITabBarController class]]) {
+                UITabBarController *rootTab = (UITabBarController *)rootViewController;
+                
+                if ([rootTab.selectedViewController isKindOfClass:[UINavigationController class]]) {
+                    selectedNaviVC = (UINavigationController *)rootTab.selectedViewController;
+                }
+            }
+            [self handlePushUserInfo:[APPInfo shareInit].apnsType viewController:selectedNaviVC];
+        }
+        
+    }
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -205,7 +228,7 @@
 {
     // [4-EXT-1]: 个推SDK已注册
     _sdkStatus = SdkStatusStarted;
-    //通知并注册服务器
+    //通知并注册服务器 - 优化已经注册不再执行
     [[NSNotificationCenter defaultCenter] postNotificationName:UserRegistrationNotification object:nil userInfo:@{@"clientId":clientId?clientId:@"",@"devicetoken":_deviceToken?_deviceToken:@""}];
 }
 
@@ -249,5 +272,38 @@
 {
     // [EXT]:个推错误报告，集成步骤发生的任何错误都在这里通知，如果集成后，无法正常收到消息，查看这里的通知。
     [self alertRemoteMessage:[NSString stringWithFormat:@">>>[GexinSdk error]:%@", [error localizedDescription]] withTitle:nil];
+}
+
+-(void)handlePushUserInfo:(NSString *)apnsType viewController:(UINavigationController *)vc
+{
+    if (apnsType) {
+        if (vc) {
+            UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UIViewController *controller = nil;
+            switch ([apnsType intValue]) {
+                case 1:
+                case 2:
+                {
+                    controller = [story instantiateViewControllerWithIdentifier:@"messagegroupBoard"];
+                    break;
+                }
+                case 3:
+                {
+                    controller = [story instantiateViewControllerWithIdentifier:@"SubscribeBoard"];
+                    break;
+                }
+                case 4:
+                {
+                    controller = [story instantiateViewControllerWithIdentifier:@"leaderScoreBoard"];
+                    break;
+                }
+                default:
+                    break;
+            }
+            if (controller) {
+                [vc.visibleViewController.navigationController pushViewController:controller animated:YES];
+            }
+        }
+    }
 }
 @end

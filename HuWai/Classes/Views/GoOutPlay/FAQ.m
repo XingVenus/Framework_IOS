@@ -47,6 +47,7 @@
 
 -(void)submitFAQ:(id)sender
 {
+    [MobClick event:@"h_wdtj"];
     [self.textView resignFirstResponder];
     NSString *contentText = [CommonFoundation trimString:self.textView.text];
     if (self.actID && ![CommonFoundation isEmptyString:contentText]) {

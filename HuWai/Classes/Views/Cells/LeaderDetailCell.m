@@ -38,9 +38,22 @@ static NSString *LeaderGrade = @"共收到%@位小伙伴给Ta打了分";
     [self.avatarView setImageURL:[NSURL URLWithString:data.avatar]];
     NSString *namestring = data.username;
     if (data.verified) {
-        namestring = [namestring stringByAppendingString:@"(已认证)"];
+        namestring = [namestring stringByAppendingString:@"（已认证）"];
     }
-    self.nameLabel.text = namestring;
+//    self.nameLabel.text = namestring;
+    [self.nameLabel setText:namestring afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange fontRange = [[mutableAttributedString string] rangeOfString:@"（已认证）" options:NSCaseInsensitiveSearch];
+        // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+        UIFont *boldSystemFont = [UIFont systemFontOfSize:12];
+        CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+        if (font && fontRange.location) {
+            [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:fontRange];
+//            [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(__bridge id)[[UIColor orangeColor] CGColor] range:fontRange];
+            CFRelease(font);
+        }
+        
+        return mutableAttributedString;
+    }];
     NSString *infoString = [NSString stringWithFormat:@"%@ | %@ | %@\n认证信息:%@",data.gender,data.age,data.fromCity,data.validationMessage];
     self.infoLabel.lineSpacing = 6;
     self.infoLabel.text = infoString;

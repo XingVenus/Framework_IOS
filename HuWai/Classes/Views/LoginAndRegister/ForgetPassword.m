@@ -56,6 +56,7 @@
 }
 
 - (IBAction)toResetPassword:(id)sender {
+    [MobClick event:@"wjmm"];
     if (!_smsToken || !_token || [CommonFoundation isEmptyString:self.phoneNumber.text] || [CommonFoundation isEmptyString:self.textCode.text]) {
         [self showMessageWithThreeSecondAtCenter:@"信息不完整，不能继续" afterDelay:1];
     }else{

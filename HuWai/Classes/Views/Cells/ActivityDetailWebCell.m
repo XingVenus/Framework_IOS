@@ -8,7 +8,7 @@
 
 #import "ActivityDetailWebCell.h"
 
-static NSString *detailUrl = @"http://xx.huwai.ixici.info/activity/get?actid=%@";
+static NSString *detailUrl = @"%@/activity/get?actid=%@";//@"http://xx.huwai.ixici.info/activity/get?actid=%@";
 
 @implementation ActivityDetailWebCell
 
@@ -49,7 +49,7 @@ static NSString *detailUrl = @"http://xx.huwai.ixici.info/activity/get?actid=%@"
 
 -(void)configureCellWithItem:(id)item atIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *weburl = [NSString stringWithFormat:detailUrl,(NSString *)item];
+    NSString *weburl = [NSString stringWithFormat:detailUrl,APP_MINI_PUBLISH_HTTP_URL,(NSString *)item];
     DLog(@"%@",weburl);
     NSURL *url = [NSURL URLWithString:weburl];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];

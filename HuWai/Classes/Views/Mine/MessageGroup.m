@@ -134,8 +134,10 @@
 {
     NSInteger row = [indexPath row];
     if (row == 0) {
+        [MobClick event:@"xiaoxi1"];
         [self performSegueWithIdentifier:@"commentlist" sender:self];
     }else if (row == 1){
+        [MobClick event:@"xiaoxi2"];
         [self performSegueWithIdentifier:@"noticelist" sender:self];
     }
 }

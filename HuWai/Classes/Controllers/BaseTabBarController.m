@@ -77,6 +77,13 @@
 //        //消除全屏动画的影响
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideNavBarWithNoAnimate" object:nil];
 //    }
+    if (item.tag == 0) {
+        [MobClick event:@"s_cqw"];
+    }else if (item.tag == 1){
+        [MobClick event:@"s_qz"];
+    }else{
+        [MobClick event:@"s_wd"];
+    }
 }
 /*
 #pragma mark - Navigation

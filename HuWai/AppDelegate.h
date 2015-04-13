@@ -24,6 +24,6 @@ typedef enum {
 
 @property (strong, nonatomic) GexinSdk *gexinPusher;
 @property (assign, nonatomic) SdkStatus sdkStatus;
-
+-(void)handlePushUserInfo:(NSString *)apnsType viewController:(UINavigationController *)vc;
 @end
 

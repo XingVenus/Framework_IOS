@@ -208,31 +208,38 @@
     switch (section) {
         case 0:
             if (row == 0) {
+                [MobClick event:@"w_dd"];
                 [self performSegueWithIdentifier:@"myorder" sender:self];
                 break;
             }
             break;
         case 1:
             if (row == 0) {
+                [MobClick event:@"w_dy"];
                 [self performSegueWithIdentifier:@"subscribe" sender:self];
                 [CacheBox removeObjectValue:SUBSCRIBE_PUSH];
                 [subscribeBadgeView removeFromSuperview];
             }else if(row == 1){
+                [MobClick event:@"w_df"];
                 [self performSegueWithIdentifier:@"leaderscore" sender:self];
                 [CacheBox removeObjectValue:SCORE_PUSH];
                 [scoreBadgeView removeFromSuperview];
             }else if (row == 2){
+                [MobClick event:@"w_sc"];
                 [self performSegueWithIdentifier:@"collected" sender:self];
             }else if (row == 3){
+                [MobClick event:@"w_cxr"];
                 [self performSegueWithIdentifier:@"commonperson" sender:self];
             }
             break;
         case 2:
             if (row == 0) {
+                [MobClick event:@"w_xx"];
                 [self performSegueWithIdentifier:@"messagegroup" sender:self];
                 [CacheBox removeObjectValue:MESSAGE_PUSH];
                 [messageBadgeView removeFromSuperview];
             }else if (row == 1){
+                [MobClick event:@"w_sz"];
                 [self performSegueWithIdentifier:@"settings" sender:self];
                 break;
             }

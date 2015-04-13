@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, OrderStatusType)
 
 @interface MyOrder : BaseTableViewController
 @property (nonatomic, assign) OrderStatusType statusType;
-//@property (nonatomic, assign, getter=isFromOrderDone) BOOL fromOrderDone;
+@property (nonatomic, assign, getter=isFromOrderDone) BOOL fromOrderDone;
 
 -(IBAction)popCurrentNavigationOrderController;
 

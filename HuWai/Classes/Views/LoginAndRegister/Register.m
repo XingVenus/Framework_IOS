@@ -68,6 +68,7 @@
 }
 #pragma mark 发起注册
 - (IBAction)registerAction:(id)sender {
+    [MobClick event:@"zhuce"];
     NSString *errorString = nil;
     _phone = [CommonFoundation trimString:self.phoneNumber.text];
     _pwd = [CommonFoundation trimString:self.password.text];
@@ -112,7 +113,7 @@
         [CacheBox saveCache:CACHE_TOKEN value:response.token];
         //赋值更新用户信息
         [infoObj updateUserInfo:response.data];
-        [self dismissNavigationView:YES];
+        [self popToLastView:YES];
     }
 }
 

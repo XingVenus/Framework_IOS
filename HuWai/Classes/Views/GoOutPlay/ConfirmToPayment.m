@@ -213,6 +213,7 @@
 
 - (void)confirmPayAction
 {
+    [MobClick event:@"baoming4"];
     if (payType) {
         [self postActionWithHUD:OrderGoAction params:@"order_id",self.order_id,nil];
     }else{

@@ -36,8 +36,7 @@
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"orderdonetolist"]) {
         MyOrder *orderController = segue.destinationViewController;
-//        orderController.fromOrderDone = YES;
-        [orderController loadOrderDoneList];
+        orderController.fromOrderDone = YES;
     }
 }
 
@@ -69,10 +68,10 @@
 
 -(void)goToOrderList:(UIButton *)sender
 {
-    if (self.tabBarController.selectedIndex == 2) {
-        [self dismissNavigationView:nil];
-    }else if(self.tabBarController.selectedIndex == 0){
+    if ([[APPInfo shareInit].payFromType isEqualToString:@"enroll"]) {
         [self performSegueWithIdentifier:@"orderdonetolist" sender:self];
+    }else if([[APPInfo shareInit].payFromType isEqualToString:@"orderlist"]){
+        [self dismissNavigationView:NO];
     }
 }
 

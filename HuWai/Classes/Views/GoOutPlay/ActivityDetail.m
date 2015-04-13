@@ -20,6 +20,9 @@
 #import "UMSocial.h"
 #import "ActivityDetailWebCell.h"
 
+#import "DisclaimerCell.h"
+#import "NSString+RectSize.h"
+
 static inline NSRegularExpression * NumbersRegularExpression() {
     static NSRegularExpression *_regularExpression = nil;
     static dispatch_once_t onceToken;
@@ -84,7 +87,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     [shareBtn setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
     UIBarButtonItem *r1 = [[UIBarButtonItem alloc] initWithCustomView:favoriteBtn];
     UIBarButtonItem *r2 = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
-    self.navigationItem.rightBarButtonItems = @[r2,r1];
+    self.navigationItem.rightBarButtonItems = @[r1];
     // Do any additional setup after loading the view.
     //问答按钮
     self.faqBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -168,8 +171,10 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"enroll"]) {
+        [MobClick event:@"baoming1"];
         BaseNavigationController *enrollNavController = segue.destinationViewController;
         Enroll *enrollView = (Enroll *)enrollNavController.topViewController;
+        [APPInfo shareInit].payFromType = @"enroll";
         enrollView.activityID = self.activityId;
     }else if ([segue.identifier isEqualToString:@"faq"]){
         faqController = segue.destinationViewController;
@@ -187,6 +192,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 #pragma mark - custom methon implement
 -(void)favoriteAction:(UIButton *)sender
 {
+    [MobClick event:@"h_sc"];
     if (sender.isSelected) {
         [self postActionWithHUD:CancelFavoriteAction params:@"id",self.activityId,nil];
     }else{
@@ -321,6 +327,7 @@ static inline NSRegularExpression * NumbersRegularExpression() {
 
 -(void)subscribeAction:(UIButton *)sender
 {
+    [MobClick event:@"h_dy"];
     if (sender.selected) {
         [self postActionWithHUD:RssCancelAction params:@"id",detailModel.aid,nil];
     }else{
@@ -389,6 +396,11 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         return [FAQCell heightForCellWithText:faqModel.data[indexPath.row] availableWidth:0];
     }else if(_segmentControl.selectedSegmentIndex == 1){
         return SCREEN_HEIGHT - 64 - 45 - 50;
+    }else if (_segmentControl.selectedSegmentIndex == 3){
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"disclaimer" ofType:@"txt"];
+        NSError *error;
+        NSString *content = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+        return [content stringRectSizeWithfontSize:14 andWidth:SCREEN_WIDTH - 5*2 withLineSpacing:2].height;
     }else{
         CGFloat screenCellheight = SCREEN_HEIGHT - 64 - 45 - 50;
         if (webCellHeight>screenCellheight) {
@@ -438,9 +450,9 @@ static inline NSRegularExpression * NumbersRegularExpression() {
         return cell;
     }else if (_segmentControl.selectedSegmentIndex == 3){
         static NSString *identity = @"declareCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identity];
+        DisclaimerCell *cell = [tableView dequeueReusableCellWithIdentifier:identity];
         if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
+            cell = [[DisclaimerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
         }
         return cell;
     }
