@@ -180,5 +180,9 @@
 + (float)getIOSVersion;
 
 + (NSString *)deviceString;
+/**
+ *  判断通知开启状态
+ */
++(BOOL)isAllowRemoteNotifications;
 @end
 

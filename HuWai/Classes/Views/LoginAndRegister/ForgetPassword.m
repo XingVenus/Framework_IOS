@@ -57,7 +57,7 @@
 
 - (IBAction)toResetPassword:(id)sender {
     [MobClick event:@"wjmm"];
-    if (!_smsToken || !_token || [CommonFoundation isEmptyString:self.phoneNumber.text] || [CommonFoundation isEmptyString:self.textCode.text]) {
+    if (!_smsToken || [CommonFoundation isEmptyString:self.phoneNumber.text] || [CommonFoundation isEmptyString:self.textCode.text]) {
         [self showMessageWithThreeSecondAtCenter:@"信息不完整，不能继续" afterDelay:1];
     }else{
         [self postAppendUriActionWithHUD:SmsTokenAction withValue:_smsToken params:@"phone",[CommonFoundation trimString:self.phoneNumber.text],@"code",[CommonFoundation trimString:self.textCode.text],@"type",@"lostpasswd",nil];
@@ -72,6 +72,9 @@
         _token = [response.data objectForKey:@"token"];
         [self performSegueWithIdentifier:@"resetpassword" sender:self];
     }
-
+}
+#pragma mark 隐藏键盘
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
 }
 @end

@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HuWai/Classes/Views/GoOutPlay/MainPlay.m"
-            timestampString = "450356272.91398"
+            timestampString = "450669218.171794"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "487"
-            endingLineNumber = "487"
+            startingLineNumber = "491"
+            endingLineNumber = "491"
             landmarkName = "-selectedValueForListType:Value:"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,22 +138,6 @@
             startingLineNumber = "103"
             endingLineNumber = "103"
             landmarkName = "-loadOrderDoneList"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HuWai/Classes/Views/Mine/Settings.m"
-            timestampString = "450356352.989598"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

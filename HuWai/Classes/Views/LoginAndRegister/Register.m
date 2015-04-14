@@ -8,7 +8,7 @@
 
 #import "Register.h"
 
-@interface Register ()
+@interface Register ()<UITextFieldDelegate>
 {
     NSString *_smsToken;
     

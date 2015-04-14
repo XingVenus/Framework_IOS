@@ -229,7 +229,11 @@
     // [4-EXT-1]: 个推SDK已注册
     _sdkStatus = SdkStatusStarted;
     //通知并注册服务器 - 优化已经注册不再执行
-    [[NSNotificationCenter defaultCenter] postNotificationName:UserRegistrationNotification object:nil userInfo:@{@"clientId":clientId?clientId:@"",@"devicetoken":_deviceToken?_deviceToken:@""}];
+    NSString *willRegistrationParams = [NSString stringWithFormat:@"ios-%@-%@",clientId,_deviceToken];
+    NSString *cacheRegisParams = [CacheBox getCache:REGISTRATION_DEVICE_CACHE];
+    if (!cacheRegisParams || ![cacheRegisParams isEqualToString:willRegistrationParams]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:UserRegistrationNotification object:nil userInfo:@{@"clientId":clientId?clientId:@"",@"devicetoken":_deviceToken?_deviceToken:@""}];
+    }
 }
 
 - (void)GexinSdkDidReceivePayload:(NSString *)payloadId fromApplication:(NSString *)appId

@@ -23,8 +23,10 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     WEAKSELF;
     [self.tableView addFooterWithCallback:^{
-        weakSelf.currentPage ++;
-        [weakSelf loadDataSource];
+        if (![self checkIsLastPage]) {
+            weakSelf.currentPage ++;
+            [weakSelf loadDataSource];
+        }
     }];
 }
 
@@ -54,6 +56,7 @@
     if (tag == MessageListAction) {
         [self endHeaderOrFooterRefreshing];
         UserMessageModel *comment = [[UserMessageModel alloc] initWithJsonDict:response.data];
+        self.maxPage = comment.pager.pagemax;
         if (self.tableView.isFooterRefreshing) {
             [self.dataSource addObjectsFromArray:comment.data];
         }else{

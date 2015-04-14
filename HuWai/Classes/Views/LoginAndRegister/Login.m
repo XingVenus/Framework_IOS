@@ -32,10 +32,10 @@
     
     self.xiciLoginBtn.layer.cornerRadius = 48/2;
     self.xiciLoginBtn.layer.masksToBounds = YES;
-    self.weixinLoginBtn.layer.cornerRadius = 48/2;
-    self.weixinLoginBtn.layer.masksToBounds = YES;
-    self.qqLoginBtn.layer.cornerRadius = 48/2;
-    self.qqLoginBtn.layer.masksToBounds = YES;
+//    self.weixinLoginBtn.layer.cornerRadius = 48/2;
+//    self.weixinLoginBtn.layer.masksToBounds = YES;
+//    self.qqLoginBtn.layer.cornerRadius = 48/2;
+//    self.qqLoginBtn.layer.masksToBounds = YES;
     //下划线设置
     [self.forgetPasswordButton underSingleLineWithTitle];
     //注册下划线
@@ -103,4 +103,8 @@
     // Pass the selected object to the new view controller.
 }
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.phoneNumber resignFirstResponder];
+    [self.password resignFirstResponder];
+}
 @end

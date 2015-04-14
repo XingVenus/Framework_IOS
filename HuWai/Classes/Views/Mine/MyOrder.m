@@ -161,7 +161,7 @@
     BaseNavigationController *payNav = [[BaseNavigationController alloc] initWithRootViewController:payController];
     [self presentViewController:payNav animated:YES completion:nil];
 }
-
+#pragma mark data request finish 网络数据请求成功
 -(void)onRequestFinished:(HttpRequestAction)tag response:(Response *)response
 {
     if (tag == OrderMyAction) {

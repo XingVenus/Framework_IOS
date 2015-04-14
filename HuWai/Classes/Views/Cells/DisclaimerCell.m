@@ -40,7 +40,7 @@
         _disclaimerLabel.numberOfLines = 0;
         _disclaimerLabel.lineSpacing = 2.0;
         _disclaimerLabel.font = [UIFont systemFontOfSize:14.0];
-        _disclaimerLabel.textColor = [UIColor lightGrayColor];
+        _disclaimerLabel.textColor = [UIColor darkGrayColor];
     }
     return _disclaimerLabel;
 }

@@ -11,28 +11,35 @@
 
 //========基本必要常量定义
 //require macro define
-#define APP_ITUNES_ID  @"956085496"//@"458318329"
+#define APP_ITUNES_ID  @"985035633" //@"956085496"//@"458318329"
+#define APP_ITUNES_URL  [NSString stringWithFormat:@"http://itunes.apple.com/app/id%@",APP_ITUNES_ID]
 //应用在itunes的信息地址,用于版本检测
-#define APP_ITUNES_URL     @"http://itunes.apple.com/lookup?id=956085496" //http://itunes.apple.com/lookup?id=你的应用程序的ID
+#define APP_ITUNES_LOOKUP_URL     [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",APP_ITUNES_ID] //http://itunes.apple.com/lookup?id=你的应用程序的ID
 
-#define REQUEST_BASE_URL    @"http://szapp.xici.net"//@"http://api.huwai.com"//api.huwai.ixici.info
-//#define HTTP_BASE_PATH      @"http://api.huwai.com/"
-//
-//#define REQUEST_BASE_URL    @"http://api.huwai.com"
-//#define HTTP_BASE_PATH      @"http://172.23.69.2:8080/localization/"
-//用户协议
-#define AGREEMENT_URL   @"http://wan.xici.net/agreement/mobile_regist.html"//@"http://xx.huwai.ixici.info/agreement/mobile_regist.html"
-//关于我们
-#define ABOUT_US_URL    @"http://wan.xici.net/about/us.html"//@"http://xx.huwai.ixici.info/about/us.html"
+#ifdef DEBUG
+#   define REQUEST_BASE_URL    @"http://szapp.xici.net" //@"http://api.huwai.com"//api.huwai.ixici.info
+#else
+#   define REQUEST_BASE_URL    @"http://szapp.xici.net" //@"http://api.huwai.com"//api.huwai.ixici.info
+#endif
+
 //用于活动详情、支付成功判断
 #define APP_MINI_PUBLISH_HTTP_URL    @"http://wan.xici.net"
+//#define HTTP_BASE_PATH      @"http://api.huwai.com/"
+//#define HTTP_BASE_PATH      @"http://api.huwai.com/"
+
+//用户协议地址
+#define AGREEMENT_URL   @"http://wan.xici.net/agreement/mobile_regist.html"//@"http://xx.huwai.ixici.info/agreement/mobile_regist.html"
+//关于我们地址
+#define ABOUT_US_URL    @"http://wan.xici.net/about/us.html"//@"http://xx.huwai.ixici.info/about/us.html"
 
 #define LOAD_PROMPT_MESSAGE  @"正在加载"
-#define NO_MORE_DATA_MESSAGE    @"没有更多数据了"
+#define NO_MORE_DATA_MESSAGE    @"亲，已到最后一页"
 
 //==================应用沙盒的缓存key定义==============
 #define HOT_CITY_LIST_CACHE @"HOT_CITY_LIST_CACHE"   //热门城市
 
+//----服务器注册通知缓存key(注册成功有 否则不存在)----------
+#define REGISTRATION_DEVICE_CACHE   @"REGISTRATION_DEVICE_CACHE"
 //----定位城市
 #define LOCATION_CITY_NAME  @"LOCATION_CITY_NAME"  //选择的定位城市
 

@@ -464,7 +464,8 @@ static inline NSRegularExpression * NumbersRegularExpression() {
     CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight"] floatValue];
     webCellHeight = height;
     webView.height = height;
-    [self.tableView reloadData];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 @end
 

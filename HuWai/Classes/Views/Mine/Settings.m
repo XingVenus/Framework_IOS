@@ -25,7 +25,7 @@
 //    if (CURRENT_SYS_VERSION>=7.0) {
 //        self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
 //    }
-    _settingList = @[@[@"开启消息提醒"],@[@"清除图片缓存"],@[@"意见反馈",@"用户协议"],@[@"关于我们",@"鼓励我们"]];
+    _settingList = @[@[@"消息提醒"],@[@"清除图片缓存"],@[@"意见反馈",@"用户协议"],@[@"关于我们",@"鼓励我们"]];
     UIView *footerview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 70)];
     _loginOrOutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _loginOrOutBtn.frame = CGRectMake(20, 10, SCREEN_WIDTH - 20*2, 40);
@@ -80,7 +80,7 @@
 {
     if (section == 0) {
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 35)];
         label.text = @"请在iPhone的“设置” - “通知”中进行修改";
         label.textColor = [UIColor darkGrayColor];
         label.font = [UIFont systemFontOfSize:12.0];
@@ -94,7 +94,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 40;
+        return 35;
     }
     return 0;
 }
@@ -118,17 +118,15 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
-    if (section == 1) {
-        if (row == 0) {
-            /*
-            UIRemoteNotificationType type = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
-            if (type != UIRemoteNotificationTypeNone) {
-                cell.detailTextLabel.text = @"已开启";
-            }else{
-                cell.detailTextLabel.text = @"未开启";
-            }
-            cell.detailTextLabel.textAlignment = NSTextAlignmentRight;
-             */
+    
+    if ((section == 0) && (row == 0)) {
+        if ([CommonFoundation isAllowRemoteNotifications]) {
+            cell.detailTextLabel.text = @"已开启";
+        }else{
+            cell.detailTextLabel.text = @"未开启";
+        }
+        cell.detailTextLabel.textAlignment = NSTextAlignmentRight;
+    }else if ((section == 1) && (row == 0)) {
 //            if (!switchBtn) {
 //                switchBtn = [[UISwitch alloc] init];
 //                switchBtn.center = CGPointMake(SCREEN_WIDTH - 40, cell.centerY);
@@ -140,9 +138,7 @@
 //                }
 //                [cell addSubview:switchBtn];
 //            }
-        }else if (row == 1){
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%.1fM",(float)([[SDImageCache sharedImageCache] getSize]/1024.0/1024.0)];
-        }
     }
     cell.textLabel.text = _settingList[section][row];
     return cell;
@@ -186,6 +182,7 @@
                 [self performSegueWithIdentifier:@"aboutus" sender:self];
             }else if (row == 1){
                 //鼓励我们
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_ITUNES_URL]];
             }
         }
             break;

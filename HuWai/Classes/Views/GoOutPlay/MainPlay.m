@@ -48,6 +48,8 @@ const static NSInteger kTabHeight = 40;
 //    NSInteger _currentPage; //当前页
     
     LaunchView *launchview;
+    
+    NSString *registrationParams;//注册通知字符串
 }
 
 @end
@@ -314,6 +316,7 @@ const static NSInteger kTabHeight = 40;
         destinationArray = [desModel.data mutableCopy];
         [destinationArray insertObject:destDic atIndex:0];
     }else if (tag == AppRegistrationAction){
+        [CacheBox saveCache:REGISTRATION_DEVICE_CACHE value:registrationParams];
         self.hideShowMessage = YES;
     }
 
@@ -369,6 +372,7 @@ const static NSInteger kTabHeight = 40;
     NSDictionary *dic = notification.userInfo;
     NSString *clientId = dic[@"clientId"];
     NSString *devicetoken = dic[@"devicetoken"];
+    registrationParams = [NSString stringWithFormat:@"ios-%@-%@",clientId,devicetoken];
     [self postAction:AppRegistrationAction params:@"app",@"ios",@"cid",clientId,@"devicetoken",devicetoken,nil];
 }
 
