@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "NSString+JSON.h"
 #import "UMSocial.h"
-
+#import "LocationHelper.h"
 @interface AppDelegate ()
 
 @end
@@ -99,6 +99,7 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     // [EXT] 重新上线
     [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
+//    [[LocationHelper locationHelperManager].locationManager startUpdatingLocation];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

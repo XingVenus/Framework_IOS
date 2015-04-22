@@ -9,10 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-typedef void(^DidGetGeolocationsCompledBlock)(NSArray *placemarks,NSError *error);
-
 @interface LocationHelper : NSObject
 
+typedef void(^DidGetGeolocationsCompledBlock)(LocationHelper *Lhelper,NSError *error);
+@property (nonatomic, strong) NSString *addresslines;
+@property (nonatomic, strong) NSString *street;
+@property (nonatomic, strong) NSString *city;
+@property (nonatomic, strong) NSString *state;
+@property (nonatomic, strong) NSString *country;
+@property (nonatomic, strong) NSString *countryCode;
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
+
++(LocationHelper *)locationHelperManager;
 - (void)getCurrentGeolocationsCompled:(DidGetGeolocationsCompledBlock)compled;
 
 @end

@@ -24,7 +24,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.gpsCity = [APPInfo shareInit].GPSCity;
-    _location = [[LocationHelper alloc] init];
     //判断热门城市列表，存在并相同则不请求，否则请求数据
     dataList = [CacheBox getCache:HOT_CITY_LIST_CACHE];
     if (dataList) {
@@ -191,21 +190,16 @@
 //            locationCell.textLabel.text = @"正在定位...";
             __weak UITableViewCell *weakcell = locationCell;
             __weak UIActivityIndicatorView *weakindicator = _activityIndicator;
-            [_location getCurrentGeolocationsCompled:^(NSArray *placemarks, NSError *error) {
+            [[LocationHelper locationHelperManager] getCurrentGeolocationsCompled:^(LocationHelper *Lhelper, NSError *error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [weakindicator stopAnimating];
                     refreshBtn.hidden = NO;
                     //返回位置信息的实现
-                    if (placemarks) {
-                        CLPlacemark *placemark = [placemarks lastObject];
-                        if (placemark) {
-                            
-                            NSDictionary *addressDictionary = placemark.addressDictionary;
-                            [APPInfo shareInit].GPSCity = addressDictionary[@"City"];
-                            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-                        }
-                    }else{
+                    if (error) {
                         weakcell.textLabel.text = @"定位失败";
+                    }else{
+                        [APPInfo shareInit].GPSCity = Lhelper.city;
+                        weakcell.textLabel.text = Lhelper.city;
                     }
                 });
             }];

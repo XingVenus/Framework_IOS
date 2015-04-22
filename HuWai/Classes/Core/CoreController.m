@@ -1,110 +1,62 @@
 //
-//  BaseViewController.m
+//  CoreController.m
 //  HuWai
 //
-//  Created by WmVenusMac on 15-1-16.
+//  Created by WmVenusMac on 15-4-14.
 //  Copyright (c) 2015年 xici. All rights reserved.
 //
+/*
+ NSDictionary *argsTpMap(id firstObject,...)
+ {
+     NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
+     @try {
+     va_list arguments;
+     
+     id param;
+     id object;
+     NSString *key = firstObject;
+     BOOL isFrist = true;
+     if(key) {
+     va_start(arguments, firstObject);
+     
+     while((param = va_arg(arguments, id))) {
+     if(param == nil)
+     break;
+     
+     if(isFrist) {
+     object = param;
+     isFrist = false;
+     } else {
+     key = param;
+     object = va_arg(arguments, id);
+     if(key == nil) {
+     break;
+     }
+     }
+     [md setObject:object forKey:key];
+     }
+     va_end(arguments);
+     }
+     }
+     @catch (NSException *exception) {
+     DLog(@"%s\n%@", __FUNCTION__, exception);
+     }
+     @finally {
+     return md;
+     }
+ }
+ */
 
-
-
-#import "BaseViewController.h"
+#import "CoreController.h"
 #import "NSString+JSON.h"
 
-/*
-NSDictionary *argsTpMap(id firstObject,...)
-{
-    NSMutableDictionary *md = [[NSMutableDictionary alloc]init];
-    @try {
-        va_list arguments;
-        
-        id param;
-        id object;
-        NSString *key = firstObject;
-        BOOL isFrist = true;
-        if(key) {
-            va_start(arguments, firstObject);
-            
-            while((param = va_arg(arguments, id))) {
-                if(param == nil)
-                    break;
+@interface CoreController ()
 
-                if(isFrist) {
-                    object = param;
-                    isFrist = false;
-                } else {
-                    key = param;
-                    object = va_arg(arguments, id);
-                    if(key == nil) {
-                        break;
-                    }
-                }
-                [md setObject:object forKey:key];
-            }
-            va_end(arguments);
-        }
-    }
-    @catch (NSException *exception) {
-        DLog(@"%s\n%@", __FUNCTION__, exception);
-    }
-    @finally {
-        return md;
-    }
-}
-*/
-
-@interface BaseViewController ()
-
-@property (nonatomic) HttpRequestAction requestAction;
-
+@property (strong, nonatomic) MBProgressHUD * hud;
+@property (nonatomic,assign) HttpRequestAction requestAction;
 @end
 
-@implementation BaseViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.view.backgroundColor = APP_BACKGROUND_COLOR;//RGBA(242, 242, 243, 1);
-    //去掉返回按钮的文字显示
-    if (self.navigationController.viewControllers.count>0) {
-//        self.navigationItem.leftItemsSupplementBackButton = YES;
-        UIBarButtonItem *backbutton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
-//        UIBarButtonItem *backbutton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow-back"] style:UIBarButtonItemStylePlain target:self action:nil];
-        
-        self.navigationItem.backBarButtonItem = backbutton;
-    }
-
-    // Do any additional setup after loading the view.
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    if ([APPInfo shareInit].apnsType) {
-        [APPInfo shareInit].apnsType = nil;
-        
-    }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-#pragma mark - custom method
--(void)popToLastView:(BOOL)animated
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)dismissNavigationView:(BOOL)animated
-{
-    [self.navigationController dismissViewControllerAnimated:animated completion:nil];
-}
-#pragma mark - 消息提示
--(void)showMessageWithThreeSecondAtCenter:(NSString *)message afterDelay:(NSTimeInterval)interval
-{
-    if (![CommonFoundation isEmptyString:message]) {
-        [self.view makeToast:message duration:interval position:CSToastPositionCenter];
-    }
-}
+@implementation CoreController
 
 #pragma mark - 加载 一般用于get请求
 -(NSMutableDictionary *)argsToMap:(va_list)args firstObj:(id)firstObj
@@ -232,7 +184,7 @@ NSDictionary *argsTpMap(id firstObject,...)
     }
     
     self.requestAction = action;
-
+    
     NSString *uriString = [self replaceAppendUri:action value:appendValue];
     [self executeRequestWithUri:uriString method:RequestMethodPost withHUD:NO message:nil params:md];
 }
@@ -306,15 +258,11 @@ NSDictionary *argsTpMap(id firstObject,...)
         DLog(@"Post data:%@",params);
     }
 #endif
-    
     __block HttpRequestAction weakAction = self.requestAction;
+    
     [[HttpClient httpManager] executeRequest:uristring method:method params:params successBlockCallback:^(Response *response) {
         [self.hud hide:YES];
-//        //保存每次请求更新的token
-//        if (response.token) {
-//            [CacheBox saveCache:CACHE_TOKEN value:response.token];
-////            [APPInfo shareInit].token = response.token;
-//        }
+        
         DLog(@"Request url:%@\n Success Response string:%@",response.url,[response.contentText JSONValue]);
         [self requestWithResponse:weakAction response:response];
     } failBlockCallBack:^(Response *response) {
@@ -327,30 +275,7 @@ NSDictionary *argsTpMap(id firstObject,...)
 #pragma mark 请求返回调用
 -(void)requestWithResponse:(HttpRequestAction)actionType response:(Response *)response
 {
-    if (response.code == 20000) {
-        [self onRequestFinished:actionType response:response];
-    }else if (response.error){
-        [self onRequestFailed:actionType response:response];
-        [self showMessageWithThreeSecondAtCenter:response.error.localizedDescription afterDelay:2.0];
-        return;
-    }else if (response.code == 50002){
-        BaseNavigationController *loginNav = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNavBoard"];
-        //        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:loginNav animated:YES completion:nil];
-        [self.navigationController presentViewController:loginNav animated:YES completion:^{
-            //监听登录，完成登录刷新页面
-
-        }];
-        return;
-    }else if ((response.code == 40000) ||(response.code == 40001)){
-        DLog(@"%@",response);
-        return;
-    }
     
-    if (!self.hideShowMessage) {
-        [self showMessageWithThreeSecondAtCenter:response.message afterDelay:2.0];
-    }else{
-        self.hideShowMessage = NO;
-    }
 }
 
 #pragma mark - This method needs to be redefined
@@ -365,14 +290,4 @@ NSDictionary *argsTpMap(id firstObject,...)
     
 }
 
-#pragma mark - custom method
--(NSString *)genderToString:(NSInteger)gender
-{
-    if (gender == 0) {
-        return @"女";
-    }else if(gender == 1){
-        return @"男";
-    }
-    return nil;
-}
 @end

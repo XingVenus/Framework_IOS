@@ -190,28 +190,24 @@ const static NSInteger kTabHeight = 40;
 //    [btn3 setContentEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
     [navigationView addSubview:btn3];
     //定位
-    _locationHelper = [[LocationHelper alloc] init];
-    [_locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks, NSError *error) {
-        if (placemarks.count>0) {
-            CLPlacemark *placemark = [placemarks lastObject];
-            if (placemark) {
-                NSDictionary *addressDictionary = placemark.addressDictionary;
-                NSString  *City = addressDictionary[@"City"];
-                [APPInfo shareInit].GPSCity = addressDictionary[@"City"];
-                //如果有原定位城市需要提示用户切换，否则直接设置为当前定位城市
-                if ([CacheBox getCache:LOCATION_CITY_NAME]) {
-                    [self alertChangeLocationCity:City didChangeCityBlock:^(BOOL exchange) {
-                        if (exchange) {
-                            [weakSelf locateCurrentCity:City];
-                        }
-                    }];
-                }else{
-                    [weakSelf locateCurrentCity:City];
-                }
-            }
-        }else{
+    _locationHelper = [LocationHelper locationHelperManager];
+    [_locationHelper getCurrentGeolocationsCompled:^(LocationHelper *Lhelper, NSError *error) {
+        if (error) {
             //显示上次缓存的城市
             [locationBtn setTitle:[self replaceTitleString:[CacheBox getCache:LOCATION_CITY_NAME]] forState:UIControlStateNormal];
+        }else{
+            NSString  *City = Lhelper.city;
+            [APPInfo shareInit].GPSCity = City;
+            //如果有原定位城市需要提示用户切换，否则直接设置为当前定位城市
+            if ([CacheBox getCache:LOCATION_CITY_NAME]) {
+                [self alertChangeLocationCity:City didChangeCityBlock:^(BOOL exchange) {
+                    if (exchange) {
+                        [weakSelf locateCurrentCity:City];
+                    }
+                }];
+            }else{
+                [weakSelf locateCurrentCity:City];
+            }
         }
     }];
 
